@@ -1,0 +1,143 @@
+ext {
+    versions = [
+            "coreKtx"               : "1.7.0",
+            "appCompat"             : "1.4.1",
+            "activityKtx"           : "1.4.0",
+            "fragmentKtx"           : "1.4.1",
+            "material"              : "1.6.0",
+            "constraintLayout"      : "2.1.4",
+            "recyclerView"          : "1.2.1",
+            "timber"                : "5.0.1",
+            "coroutines"            : "1.6.1",
+            "calendar"              : "1.0.4",
+            "hilt"                  : "2.42",
+            "deepLink"              : "6.1.0",
+            "splashscreen"          : "1.0.0-rc01",
+            "glide"                 : "4.13.2",
+            "gson"                  : "2.9.0",
+            "lifecycle"             : "2.4.1",
+            "playServices"          : "4.3.10",
+            "junit"                 : "4.13.2",
+            "junitext"              : "1.1.3",
+            "jodaTime"              : "2.10.6",
+            "espresso"              : "3.4.0",
+            "interceptor"           : "4.9.3",
+            "kakao"                 : "2.10.0",
+            "leakcanary"            : "2.9.1",
+            "chucker"               : "3.5.2",
+            "google"                : "20.2.0"
+    ]
+    deps = [
+            "kotlin"          : [
+                    "stdlib"           : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+                    "coroutines"       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
+                    "coroutinesJvm"    : "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${versions.coroutines}",
+                    "coroutinesAndroid": "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+            ],
+            "jetpack"         : [
+                    "appCompat"            : "androidx.appcompat:appcompat:${versions.appCompat}",
+                    "recyclerView"         : "androidx.recyclerview:recyclerview:${versions.recyclerView}",
+                    "ktx"                  : "androidx.core:core-ktx:${versions.coreKtx}",
+                    "activity"             : "androidx.activity:activity-ktx:${versions.activityKtx}",
+                    "fragment"             : "androidx.fragment:fragment-ktx:${versions.fragmentKtx}",
+                    "material"             : "com.google.android.material:material:${versions.material}",
+                    "constraintLayout"     : "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}",
+                    "lifecycle"            : [
+                            "liveData"     : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}",
+                            "viewModel"    : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
+                            "runtime"      : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+                            "process"      : "androidx.lifecycle:lifecycle-process:${versions.lifecycle}",
+                            "service"      : "androidx.lifecycle:lifecycle-service:${versions.lifecycle}",
+                            "savedstate"   : "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
+                    ]
+
+            ],
+            "hilt"                         : [
+                    "core"                 : "com.google.dagger:hilt-android:${versions.hilt}",
+                    "compiler"             : "com.google.dagger:hilt-compiler:${versions.hilt}"
+            ],
+            "glide"                        : [
+                    "core"                 : "com.github.bumptech.glide:glide:${versions.glide}",
+                    "compiler"             : "com.github.bumptech.glide:compiler:${versions.glide}",
+                    "okhttp"               : "com.github.bumptech.glide:okhttp3-integration:${versions.glide}"
+            ],
+            "deepLink"                     : [
+                    "core"                 : "com.airbnb:deeplinkdispatch:${versions.deepLink}",
+                    "processor"            : "com.airbnb:deeplinkdispatch-processor:${versions.deepLink}"
+            ],
+            "firebaseBom"                  : "com.google.firebase:firebase-bom:30.0.1",
+            "remoteConfig"                 : "com.google.firebase:firebase-config-ktx",
+            "analyticsKtx"                 : "com.google.firebase:firebase-analytics-ktx",
+            "crashlyticsKtx"               : "com.google.firebase:firebase-crashlytics-ktx",
+            "messagingKtx"                 : "com.google.firebase:firebase-messaging-ktx",
+            "gson"                         : "com.google.code.gson:gson:${versions.gson}",
+            "timber"                       : "com.jakewharton.timber:timber:${versions.timber}",
+            "test"                         : [
+                    "junit"                : "junit:junit:${versions.junit}",
+                    "junitext"             : "androidx.test.ext:junit:${versions.junitext}",
+                    "espressoCore"         : "androidx.test.espresso:espresso-core:${versions.espresso}"
+            ],
+            "network"                      : [
+                    "core"                 : "com.squareup.retrofit2:retrofit:2.9.0",
+                    "adapter"              : "com.squareup.retrofit2:converter-gson:2.9.0",
+                    "interceptor"          : "com.squareup.okhttp3:logging-interceptor:${versions.interceptor}"
+            ],
+            "splashscreen"                 : "androidx.core:core-splashscreen:${versions.splashscreen}",
+            "leakcanary"                   : "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}",
+            "chucker"                      : [
+                    "library"              : "com.github.chuckerteam.chucker:library:${versions.chucker}",
+                    "noOp"                 : "com.github.chuckerteam.chucker:library-no-op:${versions.chucker}"
+            ],
+            "inject"                       : "javax.inject:javax.inject:1",
+            "jodaTime"                     : "joda-time:joda-time:${versions.jodaTime}",
+            "calendar"                     : "com.github.kizitonwose:CalendarView:${versions.calendar}",
+            "login"                        : [
+                    "kakao"                : "com.kakao.sdk:v2-user:${versions.kakao}",
+                    "google"               : "com.google.android.gms:play-services-auth:${versions.google}"
+            ]
+    ]
+
+    coroutines = [
+            deps.kotlin.coroutines,
+            deps.kotlin.coroutinesAndroid,
+            deps.kotlin.coroutinesJvm
+    ]
+
+    jetpackDeps = [
+            deps.jetpack.appCompat,
+            deps.jetpack.recyclerView,
+            deps.jetpack.ktx,
+            deps.jetpack.material,
+            deps.jetpack.constraintLayout,
+            deps.jetpack.activity,
+            deps.jetpack.fragment,
+            deps.jetpack.lifecycle.liveData,
+            deps.jetpack.lifecycle.viewModel,
+            deps.jetpack.lifecycle.runtime,
+            deps.jetpack.lifecycle.process,
+            deps.jetpack.lifecycle.service,
+            deps.jetpack.lifecycle.savedstate
+    ]
+
+    firebaseDeps = [
+            deps.analyticsKtx,
+            deps.crashlyticsKtx,
+            deps.messagingKtx,
+            deps.remoteConfig
+    ]
+
+    androidTestDeps = [
+            deps.test.junit,
+            deps.test.junitext,
+            deps.test.espressoCore
+    ]
+
+    testDeps = [
+            deps.test.junit
+    ]
+
+    loginDeps = [
+            deps.login.kakao,
+            deps.login.google
+    ]
+}
