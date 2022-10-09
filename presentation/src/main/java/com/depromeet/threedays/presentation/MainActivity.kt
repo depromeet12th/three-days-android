@@ -1,4 +1,4 @@
-package com.depromeet.threedays
+package com.depromeet.threedays.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

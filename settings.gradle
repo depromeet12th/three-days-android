@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ThreeDays"
 include ':app'
+include ':core'
+include ':core-design-system'
+include ':data'
+include ':domain'
+include ':navigator'
+include ':presentation'
