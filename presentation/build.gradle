@@ -53,7 +53,6 @@ dependencies {
     implementation deps.hilt.core
     kapt deps.hilt.compiler
 
-    // testing
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

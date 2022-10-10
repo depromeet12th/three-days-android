@@ -28,3 +28,8 @@ android {
         jvmTarget = '1.8'
     }
 }
+
+dependencies {
+    testImplementation(testDeps)
+    androidTestImplementation(androidTestDeps)
+}
