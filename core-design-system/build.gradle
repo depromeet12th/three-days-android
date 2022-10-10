@@ -33,7 +33,6 @@ dependencies {
 
     implementation(jetpackDeps)
 
-    // testing
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

@@ -62,7 +62,6 @@ dependencies {
     implementation deps.gson
     implementation deps.splashscreen
 
-    // testing
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

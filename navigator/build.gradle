@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    // testing
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

@@ -48,7 +48,6 @@ dependencies {
     implementation deps.network.adapter
     implementation deps.network.interceptor
 
-    // testing
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }
