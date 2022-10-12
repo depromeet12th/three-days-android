@@ -5,7 +5,7 @@ on:
       - develop
 jobs:
   build:
-    name: Build
+    name: Deploy debug app to firebase app distribution
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
