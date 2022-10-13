@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="ThreeDays.app" target="11" />
+      <module name="ThreeDays.core" target="11" />
+      <module name="ThreeDays.core-design-system" target="11" />
+      <module name="ThreeDays.data" target="11" />
+      <module name="ThreeDays.domain" target="1.8" />
+      <module name="ThreeDays.domain.main" target="1.8" />
+      <module name="ThreeDays.domain.test" target="1.8" />
+      <module name="ThreeDays.navigator" target="11" />
+      <module name="ThreeDays.presentation.home" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
