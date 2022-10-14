@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 디자이너 팀에서 UT 이후에 스타일 가이드를 넘겨주기로 한 관계로 -->
+    <!-- 임시로 이름을 부여해두겠습니다. -->
+    <color name="primary">#3F80FF</color>
+    <color name="press">#3266CC</color>
+    <color name="disable">#ACACAC</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
