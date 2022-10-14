@@ -37,6 +37,6 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           serviceCredentialsFile: credential_file.json
-          groups: depromeet-12th-8th, depromeet, android
+          groups: android
           file: app/build/outputs/apk/debug/app-debug.apk
           debug: true
