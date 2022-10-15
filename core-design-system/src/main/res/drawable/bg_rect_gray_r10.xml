@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- plus button에 사용되는 회색 둥근 모서리 네모 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#D4D4D4" />
+    <corners android:radius="10dp" />
+
+</shape>
