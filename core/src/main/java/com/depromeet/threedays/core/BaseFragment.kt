@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import java.lang.IllegalStateException
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(@LayoutRes layout: Int) : Fragment(layout) {
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(@LayoutRes private val layout: Int) : Fragment(layout) {
 
     protected var _binding: VB? = null
     val binding: VB
@@ -22,8 +23,13 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(@LayoutRes
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
+        _binding = DataBindingUtil.inflate(inflater, layout, container, false)
+        return _binding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding?.lifecycleOwner = viewLifecycleOwner
     }
 
     protected fun onBind(body: VB.() -> Unit) {
