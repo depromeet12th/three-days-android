@@ -54,7 +54,6 @@
 
         <!-- 등록된 목표가 없는 경우에 보여지는 레이아웃 -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
