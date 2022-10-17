@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id "kotlin-kapt"
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -8,7 +10,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        minSdk 26
+        minSdk 24
         targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,14 +30,26 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation(project(":core-design-system"))
+    implementation(project(":navigator"))
+    implementation(project(":domain"))
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation(jetpackDeps)
+    implementation(coroutines)
+
+    implementation deps.hilt.core
+    kapt deps.hilt.compiler
+
+    implementation deps.timber
+
+    testImplementation(testDeps)
+    androidTestImplementation(androidTestDeps)
 }
