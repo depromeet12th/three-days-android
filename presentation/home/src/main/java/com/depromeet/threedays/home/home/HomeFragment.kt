@@ -11,6 +11,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
     override val viewModel by viewModels<HomeViewModel>()
+    private val goalAdapter = GoalAdapter()
+    private val tempList = mutableListOf(
+        Goal(0, "이불 정리하기", 1, 2, true),
+        Goal(1, "일어나자마자 물 마시기", 3),
+        Goal(2, "코딩테스트 1문제 풀기", 2, 1),
+        Goal(3, "샐러드 먹기", 10)
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,5 +32,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fr
         binding.btnMakeGoal.setOnClickListener {
             // TODO: 만들기 페이지로 이동
         }
+
+        binding.rvGoal.adapter = goalAdapter
+        goalAdapter.submitList(tempList)
     }
 }

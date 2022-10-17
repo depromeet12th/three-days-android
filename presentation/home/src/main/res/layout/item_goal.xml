@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View" />
+        <variable
+            name="goal"
+            type="com.depromeet.threedays.home.home.Goal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,9 +26,10 @@
             android:fontFamily="@font/suit_bold"
             android:paddingHorizontal="12.5dp"
             android:paddingVertical="5dp"
-            android:text="짝심 5일"
             android:textColor="#3F80FF"
             android:textSize="13sp"
+            android:text="@{goal.days}"
+            tools:text="짝심 5일"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,49 +41,83 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/suit_bold"
-            android:text="안녕하세요안녕하세요안녕하세요"
             android:textColor="#1A1F27"
             android:textSize="18sp"
+            android:text="@{goal.title}"
+            tools:text="안녕하세요안녕하세요안녕하세요"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_day" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_first_day"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_oval_white"
             android:layout_marginTop="19dp"
+            android:src="@{goal.isFocused(0) ? @drawable/bg_oval_stroke_blue : null}"
+            android:background="@{goal.isChecked(0) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
+            tools:background="@drawable/bg_oval_gray"
             app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
-            app:srcCompat="@drawable/ic_hand_done" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_second_day"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_oval_white_stroke_blue"
+            android:src="@{goal.isFocused(1) ? @drawable/bg_oval_stroke_blue : null}"
+            android:background="@{goal.isChecked(1) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
+            tools:background="@drawable/bg_oval_gray"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_first_day"
-            app:srcCompat="@drawable/ic_hand_done" />
+            app:layout_constraintStart_toEndOf="@+id/iv_first_day" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_third_day"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_oval_gray"
+            android:src="@{goal.isFocused(2) ? @drawable/bg_oval_stroke_blue : null}"
+            android:background="@{goal.isChecked(2) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
+            tools:background="@drawable/bg_oval_gray"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_second_day"
-            app:srcCompat="@drawable/ic_hand_normal" />
+            app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{goal.isChecked(0) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_first_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_first_day"
+            tools:src="@drawable/ic_hand_done" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{goal.isChecked(1) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_second_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_second_day"
+            tools:src="@drawable/ic_hand_done" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{goal.isChecked(2) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_third_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_third_day"
+            tools:src="@drawable/ic_hand_done" />
 
         <ImageView
             android:id="@+id/iv_more"
