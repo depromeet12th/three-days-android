@@ -1,5 +1,7 @@
 package com.depromeet.threedays.home.home
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.home.R
@@ -9,6 +11,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
     override val viewModel by viewModels<HomeViewModel>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+    }
 
     private fun initView() {
         // 우선 임시로 setOnClickListener를 달아놨습니다.

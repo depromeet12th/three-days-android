@@ -51,10 +51,6 @@ dependencies {
     implementation(jetpackDeps)
     implementation(coroutines)
 
-    implementation deps.jetpack.appCompat
-    implementation deps.jetpack.material
-    implementation deps.jetpack.constraintLayout
-
     implementation deps.hilt.core
     kapt deps.hilt.compiler
 
