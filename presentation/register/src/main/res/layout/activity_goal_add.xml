@@ -232,14 +232,14 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_rect_gray1_r10"
         android:fontFamily="@font/suit_medium"
+        android:hint="@string/three_days_run_time_select_request"
         android:paddingHorizontal="20dp"
         android:paddingVertical="13dp"
         android:textColor="@color/gray3"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_run_time_title"
-        tools:text="오전 8:00" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_run_time_title" />
 
     <TextView
         android:id="@+id/tv_notification_title"
