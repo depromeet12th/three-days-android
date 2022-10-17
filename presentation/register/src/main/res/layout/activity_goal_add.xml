@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GoalAddActivity"
+    tools:ignore="ContentDescription">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/suit_bold"
+        android:text="@string/three_days_goal_create_title"
+        android:textColor="#1A1F27"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close" />
+
+    <TextView
+        android:id="@+id/tv_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/suit_semi_bold"
+        android:text="@string/three_days_goal"
+        android:textColor="@color/gray4"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <EditText
+        android:id="@+id/et_goal_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_rect_gray1_r10"
+        android:fontFamily="@font/suit_medium"
+        android:hint="@string/three_days_goal_input_request"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="15"
+        android:paddingVertical="13dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="62dp"
+        android:textColor="@color/gray3"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_goal"
+        tools:ignore="LabelFor"
+        tools:text="아침마다 물마시기" />
+
+    <TextView
+        android:id="@+id/tv_goal_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/suit_medium"
+        android:textColor="@color/gray2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_goal_name"
+        app:layout_constraintEnd_toEndOf="@+id/et_goal_name"
+        app:layout_constraintTop_toTopOf="@+id/et_goal_name"
+        tools:text="1/15" />
+
+    <TextView
+        android:id="@+id/tv_goal_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/suit_semi_bold"
+        android:text="@string/three_days_goal_period"
+        android:textColor="@color/gray4"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/et_goal_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_goal_name" />
+
+    <Switch
+        android:id="@+id/sw_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:switchMinWidth="30dp"
+        android:thumb="@drawable/selector_switch_button_thumb"
+        android:track="@drawable/selector_switch_button_track"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_goal_period"
+        app:layout_constraintEnd_toEndOf="@+id/cl_period"
+        app:layout_constraintTop_toTopOf="@+id/tv_goal_period"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_period"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_rect_gray1_r10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_goal_period">
+
+        <View
+            android:id="@+id/v_middle"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F1F1F1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="13dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/suit_semi_bold"
+            android:text="@string/three_days_goal_start"
+            android:textColor="@color/gray5"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/v_middle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="13dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/suit_medium"
+            android:textColor="@color/gray3"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/v_middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2022. 10. 13" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="13dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/suit_semi_bold"
+            android:text="@string/three_days_goal_end"
+            android:textColor="@color/gray5"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_middle" />
+
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="13dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/suit_medium"
+            android:textColor="@color/gray3"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_middle"
+            tools:text="2022. 11 .13" />
+
+        <View
+            android:id="@+id/start_click_sections"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/end_click_sections"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1" />
+
+        <View
+            android:id="@+id/end_click_sections"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/start_click_sections"
+            app:layout_constraintVertical_weight="1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_run_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/suit_semi_bold"
+        android:text="@string/three_days_run_time"
+        android:textColor="@color/gray4"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/et_goal_name"
+        app:layout_constraintTop_toBottomOf="@+id/cl_period" />
+
+    <Switch
+        android:id="@+id/sw_run_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:switchMinWidth="30dp"
+        android:thumb="@drawable/selector_switch_button_thumb"
+        android:track="@drawable/selector_switch_button_track"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_run_time_title"
+        app:layout_constraintEnd_toEndOf="@+id/cl_period"
+        app:layout_constraintTop_toTopOf="@+id/tv_run_time_title"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/tv_run_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_rect_gray1_r10"
+        android:fontFamily="@font/suit_medium"
+        android:hint="@string/three_days_run_time_select_request"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="13dp"
+        android:textColor="@color/gray3"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_run_time_title" />
+
+    <TextView
+        android:id="@+id/tv_notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/suit_semi_bold"
+        android:text="@string/three_days_push_notification"
+        android:textColor="@color/gray4"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/et_goal_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_run_time" />
+
+    <TextView
+        android:id="@+id/tv_notification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_rect_gray1_r10"
+        android:fontFamily="@font/suit_medium"
+        android:hint="@string/three_days_run_time_select_request"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="13dp"
+        android:textColor="@color/gray3"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notification_title" />
+
+    <EditText
+        android:id="@+id/tv_notification_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_rect_gray1_r10"
+        android:fontFamily="@font/suit_medium"
+        android:hint="@string/three_days_notification_content_request"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="20"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="42dp"
+        android:textColor="@color/gray3"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notification"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/tv_notification_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="@font/suit_medium"
+        android:textColor="@color/gray2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_notification_content"
+        app:layout_constraintEnd_toEndOf="@+id/tv_notification_content"
+        tools:text="20/20" />
+
+    <TextView
+        android:id="@+id/tv_goal_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/selector_goal_create_button"
+        android:fontFamily="@font/suit_bold"
+        android:gravity="center"
+        android:paddingVertical="15dp"
+        android:text="@string/three_days_goal_create"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

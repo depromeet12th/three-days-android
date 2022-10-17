@@ -1,0 +1,13 @@
+<resources>
+    <string name="three_days_goal_create_title">짝심 목표 만들기</string>
+    <string name="three_days_goal">목표</string>
+    <string name="three_days_goal_input_request">짝심 목표를 알려주세요</string>
+    <string name="three_days_goal_start">시작</string>
+    <string name="three_days_goal_end">종료</string>
+    <string name="three_days_run_time">수행 시간</string>
+    <string name="three_days_goal_create">목표 만들기</string>
+    <string name="three_days_notification_content_request">Push 알림 내용을 입력해주세요</string>
+    <string name="three_days_run_time_select_request">시간을 선택해주세요</string>
+    <string name="three_days_goal_period">목표 기간</string>
+    <string name="three_days_push_notification">Push 알림</string>
+</resources>
