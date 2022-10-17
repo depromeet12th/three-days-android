@@ -8,7 +8,7 @@ data class Goal(
     val notificationTime: String,
     val notificationContent: String,
     val status: String,
-    val create_date: String,
+    val createDate: String,
     val sequence: String,
     val lastAchievementDate: String
 )
