@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
         android:background="@color/white"
         tools:context=".home.HomeFragment">
 
@@ -46,7 +47,6 @@
             android:background="@drawable/bg_rect_gray_r10"
             android:padding="10dp"
             android:backgroundTint="#F0F0F0"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_header"
@@ -54,10 +54,12 @@
 
         <!-- 등록된 목표가 없는 경우에 보여지는 레이아웃 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_header">
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header" >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -82,37 +84,46 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/suit_bold"
                         android:text="짝심삼일 시작해볼래요?"
                         android:textColor="#1A1F27"
-                        android:textSize="17sp"
-                        android:layout_gravity="center" />
+                        android:textSize="17sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
                         android:fontFamily="@font/suit_medium"
                         android:text="3일을 채울 때 마다 짝! 박수를 쳐드려요"
                         android:textColor="#757575"
-                        android:textSize="15sp"
-                        android:layout_marginTop="5dp"
-                        android:layout_gravity="center" />
+                        android:textSize="15sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_make_goal"
                         android:layout_width="100dp"
                         android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_rect_primary_r10"
                         android:fontFamily="@font/suit_bold"
-                        android:textSize="14sp"
+                        android:gravity="center"
                         android:text="목표 만들기"
                         android:textColor="@color/white"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_rect_primary_r10" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 등록된 목표가 있는 경우에 보여지는 레이아웃 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_goal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
