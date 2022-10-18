@@ -88,6 +88,7 @@ lint/tmp/
 .idea/caches/
 .idea/libraries/
 .idea/shelf/
+.idea/sonarlint/
 .idea/.name
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
