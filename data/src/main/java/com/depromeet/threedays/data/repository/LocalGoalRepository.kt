@@ -30,11 +30,9 @@ class LocalGoalRepository @Inject constructor(
         notificationTime: String,
         notificationContent: String
     ) {
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            goalDataSource.save(
-                GoalEntity(title = title)
-            )
-        }
+        goalDataSource.save(
+            GoalEntity(title = title)
+        )
     }
 
     override suspend fun updateGoal(
@@ -46,16 +44,12 @@ class LocalGoalRepository @Inject constructor(
         notificationTime: String,
         notificationContent: String
     ) {
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            goalDataSource.save(
-                GoalEntity(goalId = goalId.toLong(), title = title)
-            )
-        }
+        goalDataSource.save(
+            GoalEntity(goalId = goalId.toLong(), title = title)
+        )
     }
 
     override suspend fun deleteGoal(goalId: Int) {
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            goalDataSource.deleteById(goalId.toLong())
-        }
+        goalDataSource.deleteById(goalId.toLong())
     }
 }
