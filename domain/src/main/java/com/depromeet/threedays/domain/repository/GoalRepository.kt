@@ -3,6 +3,7 @@ package com.depromeet.threedays.domain.repository
 import com.depromeet.threedays.domain.entity.Goal
 
 interface GoalRepository {
+    suspend fun getAllGoals(): List<Goal>
     suspend fun getGoal(goalId: Int): Goal
     suspend fun postGoal(
         title: String,
