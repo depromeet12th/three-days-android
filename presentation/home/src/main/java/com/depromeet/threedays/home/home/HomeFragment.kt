@@ -62,6 +62,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fr
         binding.ivPlus.setOnClickListener {
             viewModel.createGoal(title = "testTitle")
         }
+
+        binding.tvHeader.setOnClickListener {
+            viewModel.updateGoal()
+        }
     }
 
     private fun HomeViewModel.setObserve() {
