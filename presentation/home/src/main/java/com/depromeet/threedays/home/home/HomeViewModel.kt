@@ -3,6 +3,7 @@ package com.depromeet.threedays.home.home
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.usecase.CreateGoalUseCase
 import com.depromeet.threedays.domain.usecase.GetAllGoalsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllGoalsUseCase: GetAllGoalsUseCase
+    private val getAllGoalsUseCase: GetAllGoalsUseCase,
+    private val createGoalUseCase: CreateGoalUseCase,
 ) : BaseViewModel() {
 
     private val _goals: MutableStateFlow<List<Goal>> = MutableStateFlow(emptyList())
@@ -22,6 +24,16 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _goals.value = getAllGoalsUseCase()
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
+    fun createGoal(title: String) {
+        viewModelScope.launch {
+            try {
+                createGoalUseCase(title = title)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
