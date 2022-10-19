@@ -48,9 +48,17 @@ class GoalDaoTest {
         val goalEntity = GoalEntity(
             title = "title",
         )
-        val createdGoalEntity = goalDao.update(goalEntity)
-        val goalEntities = goalDao.selectGoals()
-        Assert.assertEquals(goalEntities.single().size, 1)
-        Assert.assertEquals(goalEntities.single().first().title, goalEntity.title)
+        launch { val createdGoalEntity = goalDao.update(goalEntity) }
+
+        launch {
+            val goalEntities = goalDao.selectGoals()
+            Assert.assertEquals(goalEntities.single().size, 1)
+            Assert.assertEquals(goalEntities.single().first().title, goalEntity.title)
+        }
+        // launch 없을 때
+        // java.lang.IllegalStateException: This job has not completed yet
+
+        // launch 있을 때
+        // kotlinx.coroutines.test.UncompletedCoroutinesError: Test finished with active jobs: [StandaloneCoroutine{Active}@4904519]
     }
 }
