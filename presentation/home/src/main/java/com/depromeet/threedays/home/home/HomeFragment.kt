@@ -31,7 +31,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fr
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        viewModel.createGoal(title = "testTitle")
         viewModel.fetchGoals()
         viewModel.setObserve()
     }
@@ -61,7 +60,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fr
         goalAdapter.submitList(tempList)
 
         binding.ivPlus.setOnClickListener {
-
+            viewModel.createGoal(title = "testTitle")
         }
     }
 

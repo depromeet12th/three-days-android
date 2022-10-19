@@ -1,5 +1,6 @@
 package com.depromeet.threedays.home.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Goal
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
     fun createGoal(title: String) {
         viewModelScope.launch {
             try {
+                Log.d("HomeViewModel", "createGoal: $title")
                 createGoalUseCase(title = title)
             } catch (exception: Exception) {
                 exception.printStackTrace()
