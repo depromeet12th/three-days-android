@@ -48,13 +48,9 @@ class GoalDaoTest {
         val goalEntity = GoalEntity(
             title = "title",
         )
-        launch {
-            val createdGoalEntity = goalDao.update(goalEntity)
-        }
-        launch {
-            val goalEntities = goalDao.selectGoals()
-            Assert.assertEquals(goalEntities.single().size, 1)
-            Assert.assertEquals(goalEntities.single().first().title, goalEntity.title)
-        }
+        val createdGoalEntity = goalDao.update(goalEntity)
+        val goalEntities = goalDao.selectGoals()
+        Assert.assertEquals(goalEntities.single().size, 1)
+        Assert.assertEquals(goalEntities.single().first().title, goalEntity.title)
     }
 }

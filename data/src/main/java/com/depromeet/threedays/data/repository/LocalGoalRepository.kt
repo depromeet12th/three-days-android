@@ -14,6 +14,10 @@ import javax.inject.Inject
 class LocalGoalRepository @Inject constructor(
     private val goalDataSource: GoalDataSource
 ) : GoalRepository {
+    override suspend fun getAllGoals(): List<Goal> {
+        return goalDataSource.getGoals().first().map { it.toGoal() }
+    }
+
     override suspend fun getGoal(goalId: Int): Goal {
         return goalDataSource.getGoalById(goalId.toLong()).first().toGoal()
     }
