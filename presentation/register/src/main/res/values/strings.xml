@@ -10,4 +10,6 @@
     <string name="three_days_run_time_select_request">시간을 선택해주세요</string>
     <string name="three_days_goal_period">목표 기간</string>
     <string name="three_days_push_notification">Push 알림</string>
+    <string name="three_days_goal_name_count_default">0/15</string>
+    <string name="three_days_notification_count_default">0/20</string>
 </resources>
