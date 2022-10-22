@@ -25,7 +25,8 @@ ext {
             "kakao"                 : "2.10.0",
             "leakcanary"            : "2.9.1",
             "chucker"               : "3.5.2",
-            "google"                : "20.2.0"
+            "google"                : "20.2.0",
+            "room"                  : "2.4.3"
     ]
     deps = [
             "kotlin"          : [
@@ -75,7 +76,8 @@ ext {
             "test"                         : [
                     "junit"                : "junit:junit:${versions.junit}",
                     "junitext"             : "androidx.test.ext:junit:${versions.junitext}",
-                    "espressoCore"         : "androidx.test.espresso:espresso-core:${versions.espresso}"
+                    "espressoCore"         : "androidx.test.espresso:espresso-core:${versions.espresso}",
+                    "coruntines"           : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
             ],
             "network"                      : [
                     "core"                 : "com.squareup.retrofit2:retrofit:2.9.0",
@@ -94,6 +96,13 @@ ext {
             "login"                        : [
                     "kakao"                : "com.kakao.sdk:v2-user:${versions.kakao}",
                     "google"               : "com.google.android.gms:play-services-auth:${versions.google}"
+            ],
+            "room": [
+                    "roomCommon"          : "androidx.room:room-common:${versions.room}",
+                    "roomCompiler"        : "androidx.room:room-compiler:${versions.room}",
+                    "roomKtx"             : "androidx.room:room-ktx:${versions.room}",
+                    "roomRuntime"         : "androidx.room:room-runtime:${versions.room}",
+                    "roomRxjava2"         : "androidx.room:room-rxjava2:${versions.room}"
             ]
     ]
 
@@ -129,7 +138,8 @@ ext {
     androidTestDeps = [
             deps.test.junit,
             deps.test.junitext,
-            deps.test.espressoCore
+            deps.test.espressoCore,
+            deps.test.coruntines
     ]
 
     testDeps = [
@@ -139,5 +149,12 @@ ext {
     loginDeps = [
             deps.login.kakao,
             deps.login.google
+    ]
+
+    roomDeps = [
+            deps.room.roomCommon,
+            deps.room.roomKtx,
+            deps.room.roomRuntime,
+            deps.room.roomRxjava2
     ]
 }

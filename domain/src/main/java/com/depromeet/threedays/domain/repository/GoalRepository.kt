@@ -3,9 +3,9 @@ package com.depromeet.threedays.domain.repository
 import com.depromeet.threedays.domain.entity.Goal
 
 interface GoalRepository {
-    suspend fun getAllGoals(): List<Goal>
-    suspend fun getGoal(goalId: Int): Goal
-    suspend fun postGoal(
+    suspend fun findAll(): List<Goal>
+    suspend fun findById(goalId: Long): Goal
+    suspend fun create(
         title: String,
         startDate: String,
         endDate: String,
@@ -13,8 +13,8 @@ interface GoalRepository {
         notificationTime: String,
         notificationContent: String
     )
-    suspend fun updateGoal(
-        goalId: Int,
+    suspend fun update(
+        goalId: Long,
         title: String,
         startDate: String,
         endDate: String,
@@ -22,5 +22,5 @@ interface GoalRepository {
         notificationTime: String,
         notificationContent: String
     )
-    suspend fun deleteGoal(goalId: Int)
+    suspend fun delete(goalId: Long)
 }

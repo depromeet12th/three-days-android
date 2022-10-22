@@ -41,6 +41,7 @@
 
         <!-- 등록된 목표가 있는 경우에 보여지는 버튼 -->
         <ImageView
+            android:id="@+id/iv_plus"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_gravity="center"

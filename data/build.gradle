@@ -9,7 +9,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        minSdk 24
+        minSdk 26
         targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -46,6 +46,9 @@ dependencies {
     implementation deps.network.core
     implementation deps.network.adapter
     implementation deps.network.interceptor
+
+    implementation(roomDeps)
+    kapt deps.room.roomCompiler
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
