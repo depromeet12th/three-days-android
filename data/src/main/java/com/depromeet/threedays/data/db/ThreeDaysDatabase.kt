@@ -1,9 +1,8 @@
-package com.depromeet.threedays.data.room
+package com.depromeet.threedays.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.depromeet.threedays.data.room.goal.GoalDao
-import com.depromeet.threedays.data.room.goal.GoalEntity
+import com.depromeet.threedays.data.entity.GoalEntity
 
 const val DATABASE_NAME_THREE_DAYS = "THREE_DAYS"
 

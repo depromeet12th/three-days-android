@@ -6,10 +6,13 @@ import javax.inject.Inject
 class UpdateGoalUseCase @Inject constructor(
     private val goalRepository: GoalRepository
 ) {
-    suspend operator fun invoke() {
-        return goalRepository.updateGoal(
-            goalId = 1,
-            title = "updatedTitle",
+    suspend operator fun invoke(
+        goalId: Long,
+        title: String,
+    ) {
+        return goalRepository.update(
+            goalId = goalId,
+            title = title,
             startDate = "",
             endDate = "",
             startTime = "",

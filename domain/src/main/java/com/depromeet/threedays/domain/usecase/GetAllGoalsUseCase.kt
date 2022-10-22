@@ -9,7 +9,7 @@ class GetAllGoalsUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): List<Goal> {
-        return goalRepository.getAllGoals()
+        return goalRepository.findAll()
     }
 
 }

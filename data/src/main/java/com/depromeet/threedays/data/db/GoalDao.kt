@@ -1,7 +1,9 @@
-package com.depromeet.threedays.data.room.goal
+package com.depromeet.threedays.data.db
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
+import com.depromeet.threedays.data.entity.GoalEntity
+import com.depromeet.threedays.data.entity.TABLE_NAME_GOAL
 import kotlinx.coroutines.flow.Flow
 
 @Dao

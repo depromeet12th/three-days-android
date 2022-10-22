@@ -1,6 +1,7 @@
-package com.depromeet.threedays.data.room.goal
+package com.depromeet.threedays.data.datasource
 
-import com.depromeet.threedays.data.datasource.GoalDataSource
+import com.depromeet.threedays.data.db.GoalDao
+import com.depromeet.threedays.data.entity.GoalEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

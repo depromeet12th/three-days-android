@@ -7,8 +7,7 @@ class CreateGoalUseCase @Inject constructor(
     private val goalRepository: GoalRepository
 ) {
     suspend operator fun invoke(title: String) {
-        println("CreateGoalUseCase.title: $title")
-        return goalRepository.postGoal(
+        return goalRepository.create(
             title = title,
             startDate = "",
             endDate = "",

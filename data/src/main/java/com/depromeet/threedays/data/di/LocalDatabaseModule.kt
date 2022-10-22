@@ -3,10 +3,10 @@ package com.depromeet.threedays.data.di
 import android.content.Context
 import androidx.room.Room
 import com.depromeet.threedays.data.datasource.GoalDataSource
-import com.depromeet.threedays.data.room.DATABASE_NAME_THREE_DAYS
-import com.depromeet.threedays.data.room.ThreeDaysDatabase
-import com.depromeet.threedays.data.room.goal.GoalDao
-import com.depromeet.threedays.data.room.goal.LocalGoalDataSource
+import com.depromeet.threedays.data.db.GoalDao
+import com.depromeet.threedays.data.datasource.LocalGoalDataSource
+import com.depromeet.threedays.data.db.DATABASE_NAME_THREE_DAYS
+import com.depromeet.threedays.data.db.ThreeDaysDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

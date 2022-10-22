@@ -1,6 +1,6 @@
 package com.depromeet.threedays.data.datasource
 
-import com.depromeet.threedays.data.room.goal.GoalEntity
+import com.depromeet.threedays.data.entity.GoalEntity
 import kotlinx.coroutines.flow.Flow
 
 interface GoalDataSource {

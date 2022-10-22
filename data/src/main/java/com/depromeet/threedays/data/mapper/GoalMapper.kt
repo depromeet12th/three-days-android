@@ -1,5 +1,6 @@
-package com.depromeet.threedays.data.room.goal
+package com.depromeet.threedays.data.mapper
 
+import com.depromeet.threedays.data.entity.GoalEntity
 import com.depromeet.threedays.domain.entity.Goal
 
 fun Goal.toGoalEntity(): GoalEntity {

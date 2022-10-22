@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.room.goal
+package com.depromeet.threedays.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
