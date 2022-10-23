@@ -2,6 +2,7 @@ package com.depromeet.threedays.data.mapper
 
 import com.depromeet.threedays.data.entity.GoalEntity
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.entity.request.SaveGoalRequest
 import java.time.ZonedDateTime
 
 fun Goal.toGoalEntity(): GoalEntity {
@@ -19,6 +20,24 @@ fun Goal.toGoalEntity(): GoalEntity {
         clapIndex = this.clapIndex,
         clapChecked = this.clapChecked,
         lastAchievementDate = this.lastAchievementDate.toString(),
+    )
+}
+
+fun SaveGoalRequest.toGoalEntity(): GoalEntity {
+    return GoalEntity(
+        goalId = 0,
+        title = this.title,
+        startDate = this.startDate.toString(),
+        endDate = this.endDate.toString(),
+        startTime = this.startTime.toString(),
+        notificationTime = this.notificationTime.toString(),
+        notificationContent = this.notificationContent,
+        status = "",
+        createDate = "",
+        sequence = 0,
+        clapIndex = 0,
+        clapChecked = false,
+        lastAchievementDate = "",
     )
 }
 

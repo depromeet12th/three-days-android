@@ -8,7 +8,7 @@ const val TABLE_NAME_GOAL = "GOAL"
 @Entity(tableName = TABLE_NAME_GOAL)
 class GoalEntity (
     @PrimaryKey(autoGenerate = true)
-    val goalId: Long,
+    val goalId: Long = 0,
     val title: String,
     val startDate: String? = null,
     val endDate: String? = null,
