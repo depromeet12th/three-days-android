@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 import java.time.ZonedDateTime
 import javax.inject.Inject
 
-class LocalGoalRepository @Inject constructor(
+class GoalRepositoryImpl @Inject constructor(
     private val goalDataSource: GoalDataSource
 ) : GoalRepository {
     override suspend fun findAll(): List<Goal> {
@@ -22,11 +22,11 @@ class LocalGoalRepository @Inject constructor(
 
     override suspend fun create(
         title: String,
-        startDate: ZonedDateTime,
-        endDate: ZonedDateTime,
-        startTime: ZonedDateTime,
-        notificationTime: ZonedDateTime,
-        notificationContent: String
+        startDate: ZonedDateTime?,
+        endDate: ZonedDateTime?,
+        startTime: ZonedDateTime?,
+        notificationTime: ZonedDateTime?,
+        notificationContent: String?,
     ) {
         goalDataSource.save(
             GoalEntity(title = title)
@@ -36,11 +36,11 @@ class LocalGoalRepository @Inject constructor(
     override suspend fun update(
         goalId: Long,
         title: String,
-        startDate: ZonedDateTime,
-        endDate: ZonedDateTime,
-        startTime: ZonedDateTime,
-        notificationTime: ZonedDateTime,
-        notificationContent: String
+        startDate: ZonedDateTime?,
+        endDate: ZonedDateTime?,
+        startTime: ZonedDateTime?,
+        notificationTime: ZonedDateTime?,
+        notificationContent: String?,
     ) {
         goalDataSource.save(
             GoalEntity(goalId = goalId, title = title)

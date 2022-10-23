@@ -1,7 +1,7 @@
 package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.datasource.GoalDataSource
-import com.depromeet.threedays.data.repository.LocalGoalRepository
+import com.depromeet.threedays.data.repository.GoalRepositoryImpl
 import com.depromeet.threedays.domain.repository.GoalRepository
 import dagger.Module
 import dagger.Provides
@@ -17,6 +17,6 @@ class RepositoryModule {
     fun provideLocalGoalRepository(
         goalDataSource: GoalDataSource
     ): GoalRepository {
-        return LocalGoalRepository(goalDataSource)
+        return GoalRepositoryImpl(goalDataSource)
     }
 }
