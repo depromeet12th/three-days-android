@@ -40,7 +40,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onDeleteClick(goal: Goal) {
+        val dialog = DeleteGoalDialog(requireContext(), goal, ::onDeleteConfirmClick)
+        dialog.show()
+    }
 
+    private fun onDeleteConfirmClick(goal: Goal) {
+        // 삭제 구현
     }
 
     private fun initAdapter() {
