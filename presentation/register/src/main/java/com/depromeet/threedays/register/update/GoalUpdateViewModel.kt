@@ -39,10 +39,11 @@ class GoalUpdateViewModel @Inject constructor(
     fun onUpdateGoalClick() {
         viewModelScope.launch {
             kotlin.runCatching {
-                goalRepository.update(
-                    goalId = goal.value.goalId,
-                    title = goal.value.title.value
-                )
+                // TODO: 바꾼 자료형에 맞지 않아 잠시 주석하겠습니다..!
+//                goalRepository.update(
+//                    goalId = goal.value.goalId,
+//                    title = goal.value.title.value
+//                )
             }.onSuccess {
                 _action.emit(Action.UpdateClick)
             }.onFailure { throwable ->
