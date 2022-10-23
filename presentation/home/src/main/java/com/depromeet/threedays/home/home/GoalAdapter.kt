@@ -3,15 +3,16 @@ package com.depromeet.threedays.home.home
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.depromeet.threedays.domain.entity.Goal
 
-class GoalAdapter : ListAdapter<Goal, GoalViewHolder>(DIFF_UTIL) {
+class GoalAdapter(val viewModel: HomeViewModel) : ListAdapter<Goal, GoalViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalViewHolder {
         return GoalViewHolder.create(parent, false)
     }
 
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), viewModel)
     }
 
     override fun getItemCount(): Int = currentList.size

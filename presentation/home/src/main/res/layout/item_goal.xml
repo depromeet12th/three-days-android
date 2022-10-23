@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="goal"
-            type="com.depromeet.threedays.home.home.Goal" />
+            type="com.depromeet.threedays.domain.entity.Goal" />
+
+        <variable
+            name="viewModel"
+            type="com.depromeet.threedays.home.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="13dp"
-        android:background="@drawable/bg_rect_light_blue_r24">
+        android:background="@drawable/bg_rect_light_blue_r24"
+        android:paddingBottom="13dp">
 
         <TextView
             android:id="@+id/tv_day"
@@ -25,13 +30,13 @@
             android:fontFamily="@font/suit_bold"
             android:paddingHorizontal="12.5dp"
             android:paddingVertical="5dp"
+            android:text="@{`짝심 ` + String.valueOf(goal.sequence) + `일`}"
             android:textColor="#3F80FF"
             android:textSize="13sp"
-            android:text="@{`짝심 ` + String.valueOf(goal.days) + `일`}"
-            tools:text="짝심 5일"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="짝심 5일" />
 
         <TextView
             android:id="@+id/tv_goal"
@@ -40,13 +45,13 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/suit_bold"
+            android:text="@{goal.title}"
             android:textColor="#1A1F27"
             android:textSize="18sp"
-            android:text="@{goal.title}"
-            tools:text="안녕하세요안녕하세요안녕하세요"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_day" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_day"
+            tools:text="안녕하세요안녕하세요안녕하세요" />
 
         <ImageButton
             android:id="@+id/iv_first_day"
@@ -54,39 +59,42 @@
             android:layout_height="84dp"
             android:layout_gravity="center"
             android:layout_marginTop="19dp"
-            android:src="@{goal.isChecked(0) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             android:background="@{goal.isChecked(0) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            tools:background="@drawable/bg_oval_gray"
+            android:onClick="@{()->viewModel.onGoalClick(goal, 0)}"
+            android:src="@{goal.isChecked(0) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
+            tools:background="@drawable/bg_oval_gray" />
 
         <ImageButton
             android:id="@+id/iv_second_day"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_gravity="center"
-            android:src="@{goal.isChecked(1) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             android:background="@{goal.isChecked(1) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            tools:background="@drawable/bg_oval_gray"
+            android:onClick="@{()->viewModel.onGoalClick(goal, 1)}"
+            android:src="@{goal.isChecked(1) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_first_day" />
+            app:layout_constraintStart_toEndOf="@+id/iv_first_day"
+            tools:background="@drawable/bg_oval_gray" />
 
         <ImageButton
             android:id="@+id/iv_third_day"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_gravity="center"
-            android:src="@{goal.isChecked(2) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             android:background="@{goal.isChecked(2) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            tools:background="@drawable/bg_oval_gray"
+            android:onClick="@{()->viewModel.onGoalClick(goal, 2)}"
+            android:src="@{goal.isChecked(2) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
+            app:layout_constraintStart_toEndOf="@+id/iv_second_day"
+            tools:background="@drawable/bg_oval_gray" />
 
         <ImageView
             android:layout_width="84dp"
