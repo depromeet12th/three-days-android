@@ -30,10 +30,12 @@ class EditGoalModal(
 
         binding.llEdit.setOnClickListener {
             onEditClick(goal)
+            dismiss()
         }
 
         binding.llDelete.setOnClickListener {
             onDeleteClick(goal)
+            dismiss()
         }
     }
 
