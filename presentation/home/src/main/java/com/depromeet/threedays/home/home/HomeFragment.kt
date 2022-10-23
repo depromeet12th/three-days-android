@@ -30,8 +30,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         viewModel.updateGoals(goal)
     }
 
+    private fun onMoreClick(goal: Goal) {
+        val modal = EditGoalModal(goal, ::onEditClick, ::onDeleteClick)
+        modal.show(parentFragmentManager, EditGoalModal.TAG)
+    }
+
+    private fun onEditClick(goal: Goal) {
+
+    }
+
+    private fun onDeleteClick(goal: Goal) {
+
+    }
+
     private fun initAdapter() {
-        goalAdapter = GoalAdapter(::onGoalClick)
+        goalAdapter = GoalAdapter(::onGoalClick, ::onMoreClick)
     }
 
     private fun initView() {
