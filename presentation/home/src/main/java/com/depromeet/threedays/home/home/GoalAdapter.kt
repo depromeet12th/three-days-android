@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.ListAdapter
 import com.depromeet.threedays.domain.entity.Goal
 import kotlin.reflect.KFunction1
 
-class GoalAdapter(private val onGoalClick: KFunction1<Goal, Unit>) : ListAdapter<Goal, GoalViewHolder>(DIFF_UTIL) {
+class GoalAdapter(
+    private val onGoalClick: KFunction1<Goal, Unit>,
+    private val onMoreClick: KFunction1<Goal, Unit>
+) : ListAdapter<Goal, GoalViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalViewHolder {
         return GoalViewHolder.create(parent, false)
     }
 
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
-        holder.onBind(getItem(position), onGoalClick)
+        holder.onBind(getItem(position), onGoalClick, onMoreClick)
     }
 
     override fun getItemCount(): Int = currentList.size
