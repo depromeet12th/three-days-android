@@ -11,8 +11,7 @@ import com.depromeet.threedays.home.databinding.DialogCompleteGoalBinding
 
 class CompleteGoalDialog(
     context: Context,
-    val goal: Goal,
-    val onCompleteClick: (Goal) -> Unit
+    val goal: Goal
 ) : Dialog(context) {
     private lateinit var binding: DialogCompleteGoalBinding
 
@@ -26,7 +25,6 @@ class CompleteGoalDialog(
         setCancelable(true)
 
         binding.btnGreat.setOnClickListener {
-            onCompleteClick(goal)
             dismiss()
         }
     }
