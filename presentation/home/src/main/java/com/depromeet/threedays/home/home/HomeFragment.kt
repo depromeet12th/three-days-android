@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
@@ -12,9 +11,6 @@ import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
@@ -24,10 +20,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        goalAdapter = GoalAdapter(viewModel)
+        initAdapter()
         viewModel.fetchGoals()
         viewModel.setObserve()
         initView()
+    }
+
+    private fun onGoalClick(goal: Goal) {
+        viewModel.updateGoals(goal)
+    }
+
+    private fun initAdapter() {
+        goalAdapter = GoalAdapter(::onGoalClick)
     }
 
     private fun initView() {
@@ -59,12 +63,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun HomeViewModel.setObserve() {
-        goals
-            .filter { it.isNotEmpty() }
-            .onEach {
-                goalAdapter.submitList(it)
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        goals.observe(viewLifecycleOwner) {
+            goalAdapter.submitList(it)
+            goalAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun tempCreateData() {

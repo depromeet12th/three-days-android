@@ -8,10 +8,6 @@
         <variable
             name="goal"
             type="com.depromeet.threedays.domain.entity.Goal" />
-
-        <variable
-            name="viewModel"
-            type="com.depromeet.threedays.home.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +56,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="19dp"
             android:background="@{goal.isChecked(0) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:onClick="@{()->viewModel.onGoalClick(goal, 0)}"
             android:src="@{goal.isChecked(0) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
             app:layout_constraintHorizontal_bias="0.5"
@@ -74,7 +69,6 @@
             android:layout_height="84dp"
             android:layout_gravity="center"
             android:background="@{goal.isChecked(1) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:onClick="@{()->viewModel.onGoalClick(goal, 1)}"
             android:src="@{goal.isChecked(1) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
@@ -88,7 +82,6 @@
             android:layout_height="84dp"
             android:layout_gravity="center"
             android:background="@{goal.isChecked(2) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:onClick="@{()->viewModel.onGoalClick(goal, 2)}"
             android:src="@{goal.isChecked(2) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="parent"
