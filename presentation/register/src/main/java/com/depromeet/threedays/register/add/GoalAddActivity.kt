@@ -1,4 +1,4 @@
-package com.depromeet.threedays.register
+package com.depromeet.threedays.register.add
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -12,7 +12,8 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
-import com.depromeet.threedays.register.GoalAddViewModel.Action.*
+import com.depromeet.threedays.register.R
+import com.depromeet.threedays.register.add.GoalAddViewModel.Action.*
 import com.depromeet.threedays.register.databinding.ActivityGoalAddBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn

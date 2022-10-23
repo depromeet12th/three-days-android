@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.depromeet.threedays.register.GoalAddViewModel" />
+            type="com.depromeet.threedays.register.add.GoalAddViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".GoalAddActivity"
+        tools:context=".add.GoalAddActivity"
         tools:ignore="ContentDescription">
 
         <ImageView
