@@ -1,4 +1,4 @@
-package com.depromeet.threedays.register
+package com.depromeet.threedays.register.update
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -12,20 +12,22 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
-import com.depromeet.threedays.register.GoalAddViewModel.Action.*
-import com.depromeet.threedays.register.databinding.ActivityGoalAddBinding
+import com.depromeet.threedays.register.R
+import com.depromeet.threedays.register.databinding.ActivityGoalUpdateBinding
+import com.depromeet.threedays.register.update.GoalUpdateViewModel.Action.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
-class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_goal_add) {
-    private val viewModel by viewModels<GoalAddViewModel>()
+class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.activity_goal_update) {
+    private val viewModel by viewModels<GoalUpdateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        getData()
         initView()
         observe()
     }
@@ -45,6 +47,12 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    private fun getData() {
+        // 홈에서 넘겨받은 id값으로 goal 데이터 불러오기
+        // val id = intent.getLongExtra("goalId", 1)
+        // viewModel.getGoalById(id)
     }
 
     private fun initView() {
@@ -75,6 +83,7 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
+                is UpdateClick -> finish()
             }
         }.launchIn(lifecycleScope)
     }

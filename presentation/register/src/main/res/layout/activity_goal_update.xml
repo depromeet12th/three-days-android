@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.depromeet.threedays.register.add.GoalAddViewModel" />
+            type="com.depromeet.threedays.register.update.GoalUpdateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".add.GoalAddActivity"
+        tools:context=".update.GoalUpdateActivity"
         tools:ignore="ContentDescription">
 
         <ImageView
@@ -33,7 +33,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="7dp"
             android:fontFamily="@font/suit_bold"
-            android:text="@string/three_days_goal_create_title"
+            android:text="@string/three_days_goal_update_title"
             android:textColor="#1A1F27"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -326,7 +326,7 @@
             app:layout_constraintEnd_toEndOf="@+id/et_notification_content" />
 
         <TextView
-            android:id="@+id/tv_goal_create"
+            android:id="@+id/tv_goal_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -335,8 +335,9 @@
             android:enabled="@{!viewModel.goal.title.empty}"
             android:fontFamily="@font/suit_bold"
             android:gravity="center"
+            android:onClick="@{()->viewModel.onUpdateGoalClick()}"
             android:paddingVertical="15dp"
-            android:text="@string/three_days_goal_create"
+            android:text="@string/three_days_goal_save"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
