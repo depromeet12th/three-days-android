@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onDeleteConfirmClick(goal: Goal) {
-        // 삭제 구현
+        viewModel.deleteGoals(goal.goalId)
     }
 
     private fun onCompleteClick(goal: Goal) {

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.domain.usecase.CreateGoalUseCase
+import com.depromeet.threedays.domain.usecase.DeleteGoalUseCase
 import com.depromeet.threedays.domain.usecase.GetAllGoalsUseCase
 import com.depromeet.threedays.domain.usecase.UpdateGoalUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getAllGoalsUseCase: GetAllGoalsUseCase,
     private val updateGoalUseCase: UpdateGoalUseCase,
-    private val createGoalUseCase: CreateGoalUseCase
+    private val createGoalUseCase: CreateGoalUseCase,
+    private val deleteGoalUseCase: DeleteGoalUseCase,
 ) : BaseViewModel() {
 
     private val _goals: MutableLiveData<List<Goal>> = MutableLiveData(emptyList())
@@ -46,6 +48,16 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 updateGoalUseCase(goal)
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
+    fun deleteGoals(goalId: Long) {
+        viewModelScope.launch {
+            try {
+                deleteGoalUseCase(goalId)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
