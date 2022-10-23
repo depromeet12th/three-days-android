@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onEditClick(goal: Goal) {
-
+        // 수정 페이지로 이동
     }
 
     private fun onDeleteClick(goal: Goal) {
@@ -46,6 +46,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onDeleteConfirmClick(goal: Goal) {
         // 삭제 구현
+    }
+
+    private fun onCompleteClick(goal: Goal) {
+        // 짝심삼일 완료 구현
     }
 
     private fun initAdapter() {
