@@ -37,6 +37,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onGoalClick(goal: Goal) {
         viewModel.updateGoals(goal)
+
+        if(goal.clapIndex == 2 && goal.clapChecked) {
+            val dialog = CompleteGoalDialog(requireContext(), goal)
+            dialog.show()
+        }
     }
 
     private fun onMoreClick(goal: Goal) {
@@ -56,10 +61,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onDeleteConfirmClick(goal: Goal) {
         viewModel.deleteGoals(goal.goalId)
-    }
-
-    private fun onCompleteClick(goal: Goal) {
-        // 짝심삼일 완료 구현
     }
 
     private fun initAdapter() {
@@ -83,13 +84,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         binding.ivPlus.setOnClickListener {
-            // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
-            // tempCreateData()
             startActivity(goalAddNavigator.intent(requireContext()))
         }
 
         binding.btnMakeGoal.setOnClickListener {
             startActivity(goalAddNavigator.intent(requireContext()))
+            // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
+            // tempCreateData()
         }
     }
 
