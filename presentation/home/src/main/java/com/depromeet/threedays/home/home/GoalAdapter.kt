@@ -17,13 +17,13 @@ class GoalAdapter : ListAdapter<Goal, GoalViewHolder>(DIFF_UTIL) {
     override fun getItemCount(): Int = currentList.size
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).id.toLong()
+        return getItem(position).goalId
     }
 
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<Goal>() {
             override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.goalId == newItem.goalId
             }
 
             override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean {
