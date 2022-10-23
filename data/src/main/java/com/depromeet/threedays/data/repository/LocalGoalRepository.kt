@@ -6,6 +6,7 @@ import com.depromeet.threedays.data.mapper.toGoal
 import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.domain.repository.GoalRepository
 import kotlinx.coroutines.flow.first
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class LocalGoalRepository @Inject constructor(
@@ -21,10 +22,10 @@ class LocalGoalRepository @Inject constructor(
 
     override suspend fun create(
         title: String,
-        startDate: String,
-        endDate: String,
-        startTime: String,
-        notificationTime: String,
+        startDate: ZonedDateTime,
+        endDate: ZonedDateTime,
+        startTime: ZonedDateTime,
+        notificationTime: ZonedDateTime,
         notificationContent: String
     ) {
         goalDataSource.save(
@@ -35,10 +36,10 @@ class LocalGoalRepository @Inject constructor(
     override suspend fun update(
         goalId: Long,
         title: String,
-        startDate: String,
-        endDate: String,
-        startTime: String,
-        notificationTime: String,
+        startDate: ZonedDateTime,
+        endDate: ZonedDateTime,
+        startTime: ZonedDateTime,
+        notificationTime: ZonedDateTime,
         notificationContent: String
     ) {
         goalDataSource.save(
