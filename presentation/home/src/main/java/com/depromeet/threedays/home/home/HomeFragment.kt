@@ -46,6 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onEditClick(goal: Goal) {
         // 수정 페이지로 이동
+        startActivity(goalUpdateNavigator.intent(requireContext()))
     }
 
     private fun onDeleteClick(goal: Goal) {
