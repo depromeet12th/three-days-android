@@ -30,9 +30,9 @@ data class SimpleGoal(
 fun Goal.toSimpleGoal() = SimpleGoal(
     goalId = this.goalId,
     title = MutableStateFlow(this.title),
-    startDate = ZonedDateTime.now(ZoneId.systemDefault()),
-    endDate = ZonedDateTime.now(ZoneId.systemDefault()),
-    startTime = ZonedDateTime.now(ZoneId.systemDefault()),
-    notificationTime = ZonedDateTime.now(ZoneId.systemDefault()),
-    notificationContent = "",
+    startDate = this.startDate ?: ZonedDateTime.now(ZoneId.systemDefault()),
+    endDate = this.endDate ?: ZonedDateTime.now(ZoneId.systemDefault()),
+    startTime = this.startTime ?: ZonedDateTime.now(ZoneId.systemDefault()),
+    notificationTime = this.notificationTime ?: ZonedDateTime.now(ZoneId.systemDefault()),
+    notificationContent = this.notificationContent ?: "",
 )
