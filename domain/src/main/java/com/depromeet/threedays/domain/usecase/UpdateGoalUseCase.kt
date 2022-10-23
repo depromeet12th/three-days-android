@@ -13,11 +13,6 @@ class UpdateGoalUseCase @Inject constructor(
         return goalRepository.update(
             goalId = goalId,
             title = title,
-            startDate = "",
-            endDate = "",
-            startTime = "",
-            notificationTime = "",
-            notificationContent = "",
         )
     }
 }

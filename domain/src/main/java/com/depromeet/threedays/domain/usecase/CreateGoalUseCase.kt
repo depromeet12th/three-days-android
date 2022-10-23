@@ -9,11 +9,6 @@ class CreateGoalUseCase @Inject constructor(
     suspend operator fun invoke(title: String) {
         return goalRepository.create(
             title = title,
-            startDate = "",
-            endDate = "",
-            startTime = "",
-            notificationTime = "",
-            notificationContent = "",
         )
     }
 }
