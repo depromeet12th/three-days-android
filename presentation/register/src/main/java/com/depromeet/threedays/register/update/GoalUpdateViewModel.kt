@@ -2,28 +2,54 @@ package com.depromeet.threedays.register.update
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.repository.GoalRepository
+import com.depromeet.threedays.register.SimpleGoal
+import com.depromeet.threedays.register.toSimpleGoal
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import javax.inject.Inject
 
-class GoalUpdateViewModel : BaseViewModel() {
+@HiltViewModel
+class GoalUpdateViewModel @Inject constructor(
+    private val goalRepository: GoalRepository
+) : BaseViewModel() {
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
         get() = _action.asSharedFlow()
 
-    private val _goal = MutableStateFlow(
-        SimpleGoal(
-            title = MutableStateFlow(""),
-            startDate = ZonedDateTime.now(ZoneId.systemDefault()),
-            endDate = ZonedDateTime.now(ZoneId.systemDefault()),
-            startTime = ZonedDateTime.now(ZoneId.systemDefault()),
-            notificationTime = ZonedDateTime.now(ZoneId.systemDefault()),
-            notificationContent = ""
-        )
-    )
+    private val _goal = MutableStateFlow(SimpleGoal.EMPTY)
     val goal: StateFlow<SimpleGoal>
         get() = _goal.asStateFlow()
+
+    fun getGoalById(id: Long) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                goalRepository.findById(id)
+            }.onSuccess {
+                _goal.value = it.toSimpleGoal()
+            }.onFailure { throwable ->
+                sendErrorMessage(throwable.message)
+            }
+        }
+    }
+
+    fun onUpdateGoalClick() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                goalRepository.update(
+                    goalId = goal.value.goalId,
+                    title = goal.value.title.value
+                )
+            }.onSuccess {
+                _action.emit(Action.UpdateClick)
+            }.onFailure { throwable ->
+                sendErrorMessage(throwable.message)
+            }
+        }
+    }
 
     fun onStartCalendarClick() {
         viewModelScope.launch {
@@ -90,14 +116,6 @@ class GoalUpdateViewModel : BaseViewModel() {
         data class StartCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class EndCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class RunTimeClick(val currentTime: ZonedDateTime) : Action()
+        object UpdateClick : Action()
     }
-
-    data class SimpleGoal(
-        val title: MutableStateFlow<String>,
-        var startDate: ZonedDateTime,
-        var endDate: ZonedDateTime,
-        var startTime: ZonedDateTime,
-        var notificationTime: ZonedDateTime,
-        var notificationContent: String
-    )
 }

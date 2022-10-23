@@ -13,8 +13,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.register.R
-import com.depromeet.threedays.register.update.GoalUpdateViewModel.Action.*
 import com.depromeet.threedays.register.databinding.ActivityGoalUpdateBinding
+import com.depromeet.threedays.register.update.GoalUpdateViewModel.Action.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +27,7 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        getData()
         initView()
         observe()
     }
@@ -46,6 +47,12 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    private fun getData() {
+        // 홈에서 넘겨받은 id값으로 goal 데이터 불러오기
+        // val id = intent.getLongExtra("goalId", 1)
+        // viewModel.getGoalById(id)
     }
 
     private fun initView() {
@@ -72,10 +79,11 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
 
     private fun observe() {
         viewModel.action.onEach { action ->
-            when(action){
+            when (action) {
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
+                is UpdateClick -> finish()
             }
         }.launchIn(lifecycleScope)
     }

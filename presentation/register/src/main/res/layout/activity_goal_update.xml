@@ -335,6 +335,7 @@
             android:enabled="@{!viewModel.goal.title.empty}"
             android:fontFamily="@font/suit_bold"
             android:gravity="center"
+            android:onClick="@{()->viewModel.onUpdateGoalClick()}"
             android:paddingVertical="15dp"
             android:text="@string/three_days_goal_save"
             android:textColor="@color/white"
