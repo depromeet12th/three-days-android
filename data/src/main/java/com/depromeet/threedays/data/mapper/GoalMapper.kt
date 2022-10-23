@@ -2,37 +2,38 @@ package com.depromeet.threedays.data.mapper
 
 import com.depromeet.threedays.data.entity.GoalEntity
 import com.depromeet.threedays.domain.entity.Goal
+import java.time.ZonedDateTime
 
 fun Goal.toGoalEntity(): GoalEntity {
     return GoalEntity(
         goalId = this.goalId,
         title = this.title,
-        startDate = this.startDate,
-        endDate = this.endDate,
-        startTime = this.startTime,
-        notificationTime = this.notificationTime,
+        startDate = this.startDate.toString(),
+        endDate = this.endDate.toString(),
+        startTime = this.startTime.toString(),
+        notificationTime = this.notificationTime.toString(),
         notificationContent = this.notificationContent,
-        status = this.status,
-        createDate = this.createDate,
+        status = this.status.toString(),
+        createDate = this.createDate.toString(),
         sequence = this.sequence,
         clapIndex = this.clapIndex,
         clapChecked = this.clapChecked,
-        lastAchievementDate = this.lastAchievementDate,
+        lastAchievementDate = this.lastAchievementDate.toString(),
     )
 }
 
 fun GoalEntity.toGoal() = Goal(
     goalId = this.goalId,
     title = this.title,
-    startDate = this.startDate,
-    endDate = this.endDate,
-    startTime = this.startTime,
-    notificationTime = this.notificationTime,
+    startDate = ZonedDateTime.parse(this.startDate),
+    endDate = ZonedDateTime.parse(this.endDate),
+    startTime = ZonedDateTime.parse(this.startTime),
+    notificationTime = ZonedDateTime.parse(this.notificationTime),
     notificationContent = this.notificationContent,
-    status = this.status,
-    createDate = this.createDate,
+    status = ZonedDateTime.parse(this.status),
+    createDate = ZonedDateTime.parse(this.createDate),
     sequence = this.sequence,
     clapIndex = this.clapIndex,
     clapChecked = this.clapChecked,
-    lastAchievementDate = this.lastAchievementDate,
+    lastAchievementDate = ZonedDateTime.parse(this.lastAchievementDate),
 )

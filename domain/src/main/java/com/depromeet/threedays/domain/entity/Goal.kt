@@ -1,17 +1,19 @@
 package com.depromeet.threedays.domain.entity
 
+import java.time.ZonedDateTime
+
 data class Goal(
     val goalId: Long,
     val title: String,
-    val startDate: String? = null,
-    val endDate: String? = null,
-    val startTime: String? = null,
-    val notificationTime: String? = null,
+    val startDate: ZonedDateTime? = null,
+    val endDate: ZonedDateTime? = null,
+    val startTime: ZonedDateTime? = null,
+    val notificationTime: ZonedDateTime? = null,
     val notificationContent: String? = null,
-    val status: String? = null,
-    val createDate: String? = null,
+    val status: ZonedDateTime? = null,
+    val createDate: ZonedDateTime? = null,
     val sequence: Int,
-    val lastAchievementDate: String? = null,
+    val lastAchievementDate: ZonedDateTime? = null,
 
     // 0,1,2 중에 오늘 몇번째 짝! 누를수 있는지
     var clapIndex: Int = 0,
