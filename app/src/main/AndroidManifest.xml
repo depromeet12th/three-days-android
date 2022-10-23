@@ -26,7 +26,11 @@
         </activity>
 
         <activity
-            android:name="com.depromeet.threedays.register.GoalAddActivity"
+            android:name="com.depromeet.threedays.register.add.GoalAddActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.depromeet.threedays.register.update.GoalUpdateActivity"
             android:exported="false"/>
     </application>
 

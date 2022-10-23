@@ -1,4 +1,4 @@
-package com.depromeet.threedays.register
+package com.depromeet.threedays.register.add
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel

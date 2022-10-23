@@ -1,5 +1,6 @@
 <resources>
-    <string name="three_days_goal_create_title">짝심 목표 만들기</string>
+    <!--짝심 목표 생성-->
+    <string name="three_days_goal_create_title">짝심목표 만들기</string>
     <string name="three_days_goal">목표</string>
     <string name="three_days_goal_input_request">짝심 목표를 알려주세요</string>
     <string name="three_days_goal_start">시작</string>
@@ -14,4 +15,8 @@
     <string name="three_days_notification_count_default">0/20</string>
     <string name="three_days_time_afternoon_format">오후 %02d:%02d</string>
     <string name="three_days_time_morning_format">오전 %02d:%02d</string>
+
+    <!--짝심 목표 수정-->
+    <string name="three_days_goal_update_title">짝심목표 수정하기</string>
+    <string name="three_days_goal_save">저장</string>
 </resources>
