@@ -2,7 +2,6 @@ package com.depromeet.threedays.register
 
 import com.depromeet.threedays.domain.entity.Goal
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.time.ZoneId
 import java.time.ZonedDateTime
 
 data class SimpleGoal(
