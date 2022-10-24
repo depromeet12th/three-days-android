@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onDeleteConfirmClick(goal: Goal) {
         viewModel.deleteGoals(goal.goalId)
+        viewModel.fetchGoals()
     }
 
     private fun initAdapter() {
