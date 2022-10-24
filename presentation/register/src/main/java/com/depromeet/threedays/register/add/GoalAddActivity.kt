@@ -18,6 +18,7 @@ import com.depromeet.threedays.register.databinding.ActivityGoalAddBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
@@ -68,6 +69,10 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         binding.swRunTime.setOnCheckedChangeListener { _, isChecked ->
             binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
+
+        val now = ZonedDateTime.now(ZoneId.systemDefault())
+        binding.tvStartDate.text = String.format(getString(R.string.three_days_date_format), now.year, now.monthValue, now.dayOfMonth)
+        binding.tvEndDate.text = String.format(getString(R.string.three_days_date_format), now.year, now.monthValue, now.dayOfMonth)
     }
 
     private fun observe() {
@@ -76,6 +81,7 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
+                is SaveClick -> finish()
             }
         }.launchIn(lifecycleScope)
     }
@@ -83,8 +89,10 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
     private fun showDatePicker(zonedDateTime: ZonedDateTime, isStart: Boolean) {
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             if (isStart) {
+                binding.tvStartDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setStartDate(year, month + 1, dayOfMonth)
             } else {
+                binding.tvEndDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setEndDate(year, month + 1, dayOfMonth)
             }
         }

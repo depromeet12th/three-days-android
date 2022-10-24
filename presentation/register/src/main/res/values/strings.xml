@@ -15,6 +15,7 @@
     <string name="three_days_notification_count_default">0/20</string>
     <string name="three_days_time_afternoon_format">오후 %02d:%02d</string>
     <string name="three_days_time_morning_format">오전 %02d:%02d</string>
+    <string name="three_days_date_format">%d. %02d. %02d</string>
 
     <!--짝심 목표 수정-->
     <string name="three_days_goal_update_title">짝심목표 수정하기</string>

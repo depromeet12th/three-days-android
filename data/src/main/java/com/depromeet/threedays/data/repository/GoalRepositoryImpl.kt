@@ -4,6 +4,7 @@ import com.depromeet.threedays.data.datasource.GoalDataSource
 import com.depromeet.threedays.data.mapper.toGoal
 import com.depromeet.threedays.data.mapper.toGoalEntity
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.entity.request.SaveGoalRequest
 import com.depromeet.threedays.domain.repository.GoalRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class GoalRepositoryImpl @Inject constructor(
         return goalDataSource.getGoalById(goalId).first().toGoal()
     }
 
-    override suspend fun create(goal: Goal) {
+    override suspend fun create(goal: SaveGoalRequest) {
         goalDataSource.save(goal.toGoalEntity())
     }
 
