@@ -16,6 +16,8 @@ import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
 import com.depromeet.threedays.navigator.GoalUpdateNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -104,6 +106,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
             // tempCreateData()
         }
+
+        val now = ZonedDateTime.now(ZoneId.systemDefault())
+        val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
+        binding.tvDate.text = String.format("%02d. %02d (%s)", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
     }
 
     private fun HomeViewModel.setObserve() {
