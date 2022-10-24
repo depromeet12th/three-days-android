@@ -5,6 +5,7 @@
     <color name="primary">#3F80FF</color>
     <color name="press">#3266CC</color>
     <color name="disable">#ACACAC</color>
+    <color name="toast">#3C3C3C</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
