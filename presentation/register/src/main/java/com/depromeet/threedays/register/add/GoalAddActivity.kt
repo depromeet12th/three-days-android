@@ -71,8 +71,8 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         }
 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
-        binding.tvStartDate.text = String.format("%d. %02d. %02d", now.year, now.monthValue, now.dayOfMonth)
-        binding.tvEndDate.text = String.format("%d. %02d. %02d", now.year, now.monthValue, now.dayOfMonth)
+        binding.tvStartDate.text = String.format(getString(R.string.three_days_date_format), now.year, now.monthValue, now.dayOfMonth)
+        binding.tvEndDate.text = String.format(getString(R.string.three_days_date_format), now.year, now.monthValue, now.dayOfMonth)
     }
 
     private fun observe() {
@@ -89,10 +89,10 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
     private fun showDatePicker(zonedDateTime: ZonedDateTime, isStart: Boolean) {
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             if (isStart) {
-                binding.tvStartDate.text = String.format("%d. %02d. %02d", year, month + 1, dayOfMonth)
+                binding.tvStartDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setStartDate(year, month + 1, dayOfMonth)
             } else {
-                binding.tvEndDate.text = String.format("%d. %02d. %02d", year, month + 1, dayOfMonth)
+                binding.tvEndDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setEndDate(year, month + 1, dayOfMonth)
             }
         }
