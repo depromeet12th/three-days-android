@@ -55,21 +55,21 @@ class GoalUpdateViewModel @Inject constructor(
     fun onStartCalendarClick() {
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
-            _action.emit(Action.StartCalendarClick(getRealDate(today, goal.value.startDate)))
+            _action.emit(Action.StartCalendarClick(getRealDate(today, goal.value.startDate ?: today)))
         }
     }
 
     fun onEndCalendarClick() {
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
-            _action.emit(Action.EndCalendarClick(getRealDate(today, goal.value.endDate)))
+            _action.emit(Action.EndCalendarClick(getRealDate(today, goal.value.endDate ?: today)))
         }
     }
 
     fun onRunTimeClick() {
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
-            _action.emit(Action.RunTimeClick(getRealDate(today, goal.value.startTime)))
+            _action.emit(Action.RunTimeClick(getRealDate(today, goal.value.startTime ?: today)))
         }
     }
 
@@ -80,7 +80,7 @@ class GoalUpdateViewModel @Inject constructor(
     fun setStartDate(newYear: Int, newMonth: Int, newDay: Int) {
         viewModelScope.launch {
             _goal.value = _goal.value.copy(
-                startDate = _goal.value.startDate
+                startDate = (_goal.value.startDate ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withYear(newYear)
                     .withMonth(newMonth)
                     .withDayOfMonth(newDay)
@@ -92,7 +92,7 @@ class GoalUpdateViewModel @Inject constructor(
     fun setEndDate(newYear: Int, newMonth: Int, newDay: Int) {
         viewModelScope.launch {
             _goal.value = _goal.value.copy(
-                endDate = _goal.value.endDate
+                endDate = (_goal.value.endDate ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withYear(newYear)
                     .withMonth(newMonth)
                     .withDayOfMonth(newDay)
@@ -103,10 +103,10 @@ class GoalUpdateViewModel @Inject constructor(
     fun setStartTimeWithNotificationTime(newHour: Int, newMin: Int) {
         viewModelScope.launch {
             _goal.value = _goal.value.copy(
-                startTime = _goal.value.startTime
+                startTime = (_goal.value.startTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin),
-                notificationTime = _goal.value.notificationTime
+                notificationTime = (_goal.value.notificationTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin)
             )
