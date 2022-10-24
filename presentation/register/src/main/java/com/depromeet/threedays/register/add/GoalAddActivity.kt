@@ -83,6 +83,8 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
                 is SaveClick -> {
+                    binding.etGoalName.text = null
+                    binding.etNotificationContent.text = null
                     setResult(RESULT_CREATE)
                     finish()
                 }
