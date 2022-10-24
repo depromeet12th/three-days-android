@@ -1,14 +1,15 @@
 package com.depromeet.threedays.home.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.domain.usecase.CreateGoalUseCase
+import com.depromeet.threedays.domain.usecase.DeleteGoalUseCase
 import com.depromeet.threedays.domain.usecase.GetAllGoalsUseCase
 import com.depromeet.threedays.domain.usecase.UpdateGoalUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,19 +17,19 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getAllGoalsUseCase: GetAllGoalsUseCase,
     private val updateGoalUseCase: UpdateGoalUseCase,
-    private val createGoalUseCase: CreateGoalUseCase
+    private val createGoalUseCase: CreateGoalUseCase,
+    private val deleteGoalUseCase: DeleteGoalUseCase,
 ) : BaseViewModel() {
 
-    private val _goals: MutableStateFlow<List<Goal>> = MutableStateFlow(emptyList())
-    val goals: StateFlow<List<Goal>>
+    private val _goals: MutableLiveData<List<Goal>> = MutableLiveData(emptyList())
+    val goals: LiveData<List<Goal>>
         get() = _goals
 
     fun fetchGoals() {
         viewModelScope.launch {
-            try {
-                _goals.value = getAllGoalsUseCase()
-            } catch (exception: Exception) {
-                exception.printStackTrace()
+            val response = getAllGoalsUseCase()
+            if (response != null) {
+                _goals.postValue(response)
             }
         }
     }
@@ -43,15 +44,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onGoalClick(goal: Goal, clickedIndex: Int) {
-        if (goal.clapIndex == clickedIndex) {
-            viewModelScope.launch {
-                try {
-                    goal.apply { clapChecked = !clapChecked }
-                    updateGoalUseCase(goal)
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
+    fun updateGoals(goal: Goal) {
+        viewModelScope.launch {
+            try {
+                updateGoalUseCase(goal)
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
+    fun deleteGoals(goalId: Long) {
+        viewModelScope.launch {
+            try {
+                deleteGoalUseCase(goalId)
+            } catch (exception: Exception) {
+                exception.printStackTrace()
             }
         }
     }
