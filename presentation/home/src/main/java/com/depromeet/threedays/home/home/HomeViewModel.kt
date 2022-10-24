@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
     fun updateGoals(goal: Goal) {
         viewModelScope.launch {
             try {
-                updateGoalUseCase(goal)
+                //updateGoalUseCase(goal)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }

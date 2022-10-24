@@ -1,18 +1,23 @@
 package com.depromeet.threedays.home.home
 
+import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.key.GOAL_ID
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
 import com.depromeet.threedays.navigator.GoalUpdateNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,6 +30,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     @Inject
     lateinit var goalUpdateNavigator: GoalUpdateNavigator
+
+    private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.fetchGoals()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +62,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onEditClick(goal: Goal) {
         // 수정 페이지로 이동
-        startActivity(goalUpdateNavigator.intent(requireContext()))
+        val intent = goalUpdateNavigator.intent(requireContext())
+        intent.putExtra(GOAL_ID, goal.goalId)
+        addResultLauncher.launch(intent)
     }
 
     private fun onDeleteClick(goal: Goal) {
@@ -61,6 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onDeleteConfirmClick(goal: Goal) {
         viewModel.deleteGoals(goal.goalId)
+        viewModel.fetchGoals()
     }
 
     private fun initAdapter() {
@@ -84,14 +98,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         binding.ivPlus.setOnClickListener {
-            startActivity(goalAddNavigator.intent(requireContext()))
+            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
         }
 
         binding.btnMakeGoal.setOnClickListener {
-            startActivity(goalAddNavigator.intent(requireContext()))
+            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
             // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
             // tempCreateData()
         }
+
+        val now = ZonedDateTime.now(ZoneId.systemDefault())
+        val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
+        binding.tvDate.text = String.format("%02d. %02d (%s)", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
     }
 
     private fun HomeViewModel.setObserve() {

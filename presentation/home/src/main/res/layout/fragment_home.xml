@@ -10,22 +10,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingHorizontal="20dp"
         android:paddingTop="20dp"
-        android:background="@color/white"
         tools:context=".home.HomeFragment">
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="49dp"
             android:fontFamily="@font/suit_bold"
-            android:text="10. 13 (목)"
             android:textColor="#8F8F8F"
             android:textSize="14sp"
-            android:layout_marginTop="53dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10. 13 (목)" />
 
         <TextView
             android:id="@+id/tv_header"
@@ -46,8 +46,8 @@
             android:layout_height="44dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_rect_gray_r10"
-            android:padding="10dp"
             android:backgroundTint="#F0F0F0"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_header"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/tv_header" >
+            app:layout_constraintTop_toBottomOf="@+id/tv_header">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
