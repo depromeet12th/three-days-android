@@ -23,7 +23,7 @@
             android:text="10. 13 (목)"
             android:textColor="#8F8F8F"
             android:textSize="14sp"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="49dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
