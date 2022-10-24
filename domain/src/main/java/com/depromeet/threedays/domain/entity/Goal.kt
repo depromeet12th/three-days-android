@@ -13,7 +13,7 @@ data class Goal(
     val status: ZonedDateTime? = null,
     val createDate: ZonedDateTime? = null,
     val sequence: Int,
-    val lastAchievementDate: ZonedDateTime? = null,
+    var lastAchievementDate: ZonedDateTime? = null,
 
     // 0,1,2 중에 오늘 몇번째 짝! 누를수 있는지
     var clapIndex: Int = 0,
