@@ -84,7 +84,7 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
         viewModel.goal.onEach { goal ->
             if(!viewModel.isInitialized.value) {
                 val now = ZonedDateTime.now(ZoneId.systemDefault())
-                val tempStartDate = if (goal.startDate == null) now else goal.startTime!!
+                val tempStartDate = if (goal.startDate == null) now else goal.startDate!!
                 val tempEndDate = if (goal.endDate == null) now else goal.endDate!!
                 binding.tvStartDate.text = String.format(
                     getString(R.string.three_days_date_format),

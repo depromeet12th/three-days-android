@@ -2,6 +2,7 @@ package com.depromeet.threedays.register.update
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
 import com.depromeet.threedays.domain.repository.GoalRepository
 import com.depromeet.threedays.register.SimpleGoal
 import com.depromeet.threedays.register.toSimpleGoal
@@ -44,11 +45,17 @@ class GoalUpdateViewModel @Inject constructor(
     fun onUpdateGoalClick() {
         viewModelScope.launch {
             kotlin.runCatching {
-                // TODO: 바꾼 자료형에 맞지 않아 잠시 주석하겠습니다..!
-//                goalRepository.update(
-//                    goalId = goal.value.goalId,
-//                    title = goal.value.title.value
-//                )
+                val newGoal = with(goal.value) {UpdateGoalRequest(
+                        goalId = goalId,
+                        title = title.value,
+                        startDate = startDate,
+                        endDate = endDate,
+                        startTime = startTime,
+                        notificationTime = notificationTime,
+                        notificationContent = notificationContent
+                    )
+                }
+                goalRepository.update(newGoal)
             }.onSuccess {
                 _action.emit(Action.UpdateClick)
             }.onFailure { throwable ->
