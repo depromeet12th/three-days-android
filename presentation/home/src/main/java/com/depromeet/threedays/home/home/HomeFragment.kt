@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.key.GOAL_ID
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
@@ -51,7 +52,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun onEditClick(goal: Goal) {
         // 수정 페이지로 이동
-        startActivity(goalUpdateNavigator.intent(requireContext()))
+        val intent = goalUpdateNavigator.intent(requireContext())
+        intent.putExtra(GOAL_ID, goal.goalId)
+        startActivity(intent)
     }
 
     private fun onDeleteClick(goal: Goal) {

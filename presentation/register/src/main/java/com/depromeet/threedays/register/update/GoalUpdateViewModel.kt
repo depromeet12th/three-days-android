@@ -24,12 +24,17 @@ class GoalUpdateViewModel @Inject constructor(
     val goal: StateFlow<SimpleGoal>
         get() = _goal.asStateFlow()
 
+    private val _isInitialized = MutableStateFlow(false)
+    val isInitialized: StateFlow<Boolean>
+        get() = _isInitialized
+
     fun getGoalById(id: Long) {
         viewModelScope.launch {
             kotlin.runCatching {
                 goalRepository.findById(id)
             }.onSuccess {
                 _goal.value = it.toSimpleGoal()
+                _isInitialized.value = true
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
             }

@@ -12,12 +12,14 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.domain.key.GOAL_ID
 import com.depromeet.threedays.register.R
 import com.depromeet.threedays.register.databinding.ActivityGoalUpdateBinding
 import com.depromeet.threedays.register.update.GoalUpdateViewModel.Action.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
@@ -50,9 +52,8 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
     }
 
     private fun getData() {
-        // 홈에서 넘겨받은 id값으로 goal 데이터 불러오기
-        // val id = intent.getLongExtra("goalId", 1)
-        // viewModel.getGoalById(id)
+        val id = intent.getLongExtra(GOAL_ID, 1)
+        viewModel.getGoalById(id)
     }
 
     private fun initView() {
@@ -75,9 +76,40 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
         binding.swRunTime.setOnCheckedChangeListener { _, isChecked ->
             binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
+
+
     }
 
     private fun observe() {
+        viewModel.goal.onEach { goal ->
+            if(!viewModel.isInitialized.value) {
+                val now = ZonedDateTime.now(ZoneId.systemDefault())
+                val tempStartDate = if (goal.startDate == null) now else goal.startTime!!
+                val tempEndDate = if (goal.endDate == null) now else goal.endDate!!
+                binding.tvStartDate.text = String.format(
+                    getString(R.string.three_days_date_format),
+                    tempStartDate.year,
+                    tempStartDate.monthValue,
+                    tempStartDate.dayOfMonth
+                )
+                binding.tvEndDate.text = String.format(
+                    getString(R.string.three_days_date_format),
+                    tempEndDate.year,
+                    tempEndDate.monthValue,
+                    tempEndDate.dayOfMonth
+                )
+
+                goal.notificationTime.let { time ->
+                    if (time != null) {
+                        binding.tvRunTime.text = getTimeFormat(
+                            time.hour,
+                            time.minute
+                        ).also { binding.tvNotification.text = it }
+                    }
+                }
+            }
+        }.launchIn(lifecycleScope)
+
         viewModel.action.onEach { action ->
             when (action) {
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
@@ -91,8 +123,10 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
     private fun showDatePicker(zonedDateTime: ZonedDateTime, isStart: Boolean) {
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             if (isStart) {
+                binding.tvStartDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setStartDate(year, month + 1, dayOfMonth)
             } else {
+                binding.tvEndDate.text = String.format(getString(R.string.three_days_date_format), year, month + 1, dayOfMonth)
                 viewModel.setEndDate(year, month + 1, dayOfMonth)
             }
         }
@@ -109,25 +143,7 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
     private fun showTimePicker(zonedDateTime: ZonedDateTime) {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
             viewModel.setStartTimeWithNotificationTime(hour, min)
-            binding.tvRunTime.text =
-                when (hour) {
-                    12 -> String.format(
-                        getString(R.string.three_days_time_afternoon_format),
-                        hour,
-                        min
-                    )
-                    in 13..23 -> String.format(
-                        getString(R.string.three_days_time_afternoon_format),
-                        hour - 12,
-                        min
-                    )
-                    24 -> String.format(getString(R.string.three_days_time_morning_format), 0, min)
-                    else -> String.format(
-                        getString(R.string.three_days_time_morning_format),
-                        hour,
-                        min
-                    )
-                }.also { binding.tvNotification.text = it }
+            binding.tvRunTime.text = getTimeFormat(hour, min).also { binding.tvNotification.text = it }
         }
         val dialog = TimePickerDialog(
             this,
@@ -139,5 +155,26 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
         )
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+    }
+
+    private fun getTimeFormat(hour: Int, min: Int): String {
+        return when (hour) {
+            12 -> String.format(
+                getString(R.string.three_days_time_afternoon_format),
+                hour,
+                min
+            )
+            in 13..23 -> String.format(
+                getString(R.string.three_days_time_afternoon_format),
+                hour - 12,
+                min
+            )
+            24 -> String.format(getString(R.string.three_days_time_morning_format), 0, min)
+            else -> String.format(
+                getString(R.string.three_days_time_morning_format),
+                hour,
+                min
+            )
+        }
     }
 }
