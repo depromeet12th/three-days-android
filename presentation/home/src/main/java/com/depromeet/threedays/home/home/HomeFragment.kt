@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.CustomToast
 import com.depromeet.threedays.domain.entity.Goal
+import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
 import com.depromeet.threedays.domain.key.GOAL_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_MODIFY
@@ -58,12 +59,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onGoalClick(goal: Goal) {
-        viewModel.updateGoals(goal)
-
         if(goal.clapIndex == 2 && goal.clapChecked) {
             val dialog = CompleteGoalDialog(requireContext(), goal)
             dialog.show()
         }
+
+        val lastAchievementDate = if (goal.clapChecked) {
+            ZonedDateTime.now(ZoneId.systemDefault())
+        } else {
+            ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1)
+        }
+
+        val updatedGoal = UpdateGoalRequest (
+            goalId = goal.goalId,
+            title = goal.title,
+            startDate = if(goal.startDate == null) null else goal.startDate,
+            endDate = if(goal.endDate == null) null else goal.endDate,
+            startTime = if(goal.startTime == null) null else goal.startTime,
+            notificationTime = if(goal.notificationTime == null) null else goal.notificationTime,
+            notificationContent = goal.notificationContent,
+            sequence = goal.sequence,
+            clapIndex = goal.clapIndex,
+            clapChecked = goal.clapChecked,
+            lastAchievementDate = lastAchievementDate,
+        )
+
+        viewModel.updateGoals(updatedGoal)
     }
 
     private fun onMoreClick(goal: Goal) {
@@ -118,8 +139,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         binding.btnMakeGoal.setOnClickListener {
             addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
-            // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
-            // tempCreateData()
         }
 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
@@ -129,6 +148,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun HomeViewModel.setObserve() {
         goals.observe(viewLifecycleOwner) {
+            //val sequenceCheckedList = checkGoalSequence(it)
             goalAdapter.submitList(it)
             goalAdapter.notifyDataSetChanged()
 
@@ -138,25 +158,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
-    private fun tempCreateData() {
-        viewModel.createGoals(
-            Goal(
-                1,
-                "일어나자마자 물 마시기",
-                sequence = 10,
-                clapIndex = 1,
-                clapChecked = false
-            )
-        )
-        viewModel.createGoals(
-            Goal(
-                2,
-                "코딩테스트 1문제 풀기",
-                sequence = 4,
-                clapIndex = 0,
-                clapChecked = true
-            )
-        )
-        viewModel.createGoals(Goal(3, "샐러드 먹기", sequence = 7, clapIndex = 2, clapChecked = false))
+    // TODO: 조금 더 연구 필요
+    private fun checkGoalSequence(goalList: List<Goal>): MutableList<Goal> {
+        val newList = mutableListOf<Goal>()
+        goalList.forEach {
+            if (it.lastAchievementDate != null && it.lastAchievementDate!!.isAfter(ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1))) {
+                newList.add(it.apply {
+                    it.clapIndex = 0
+                    it.clapChecked = false
+                    it.lastAchievementDate = null
+                })
+
+                val updatedGoal = UpdateGoalRequest (
+                    goalId = it.goalId,
+                    title = it.title,
+                    startDate = if(it.startDate == null) null else it.startDate,
+                    endDate = if(it.endDate == null) null else it.endDate,
+                    startTime = if(it.startTime == null) null else it.startTime,
+                    notificationTime = if(it.notificationTime == null) null else it.notificationTime,
+                    notificationContent = it.notificationContent,
+                    sequence = it.sequence,
+                    clapIndex = 0,
+                    clapChecked = false,
+                    lastAchievementDate = null,
+                )
+
+                viewModel.updateGoals(updatedGoal)
+            } else {
+                newList.add(it)
+            }
+        }
+
+        return newList
     }
 }

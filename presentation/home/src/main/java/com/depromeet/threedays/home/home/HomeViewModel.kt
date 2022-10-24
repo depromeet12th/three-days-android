@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Goal
-import com.depromeet.threedays.domain.usecase.CreateGoalUseCase
+import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
 import com.depromeet.threedays.domain.usecase.DeleteGoalUseCase
 import com.depromeet.threedays.domain.usecase.GetAllGoalsUseCase
 import com.depromeet.threedays.domain.usecase.UpdateGoalUseCase
@@ -17,7 +17,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getAllGoalsUseCase: GetAllGoalsUseCase,
     private val updateGoalUseCase: UpdateGoalUseCase,
-    private val createGoalUseCase: CreateGoalUseCase,
     private val deleteGoalUseCase: DeleteGoalUseCase,
 ) : BaseViewModel() {
 
@@ -34,20 +33,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun createGoals(goal: Goal) {
+    fun updateGoals(updateGoalRequest: UpdateGoalRequest) {
         viewModelScope.launch {
             try {
-                //createGoalUseCase(goal)
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-        }
-    }
-
-    fun updateGoals(goal: Goal) {
-        viewModelScope.launch {
-            try {
-                //updateGoalUseCase(goal)
+                updateGoalUseCase(updateGoalRequest)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }

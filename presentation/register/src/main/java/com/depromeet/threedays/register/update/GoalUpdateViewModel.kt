@@ -45,14 +45,19 @@ class GoalUpdateViewModel @Inject constructor(
     fun onUpdateGoalClick() {
         viewModelScope.launch {
             kotlin.runCatching {
-                val newGoal = with(goal.value) {UpdateGoalRequest(
+                val newGoal = with(goal.value) {
+                    UpdateGoalRequest(
                         goalId = goalId,
                         title = title.value,
                         startDate = startDate,
                         endDate = endDate,
                         startTime = startTime,
                         notificationTime = notificationTime,
-                        notificationContent = notificationContent
+                        notificationContent = notificationContent,
+                        sequence = sequence,
+                        lastAchievementDate = lastAchievementDate,
+                        clapIndex = clapIndex,
+                        clapChecked = clapChecked
                     )
                 }
                 goalRepository.update(newGoal)
@@ -67,7 +72,14 @@ class GoalUpdateViewModel @Inject constructor(
     fun onStartCalendarClick() {
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
-            _action.emit(Action.StartCalendarClick(getRealDate(today, goal.value.startDate ?: today)))
+            _action.emit(
+                Action.StartCalendarClick(
+                    getRealDate(
+                        today,
+                        goal.value.startDate ?: today
+                    )
+                )
+            )
         }
     }
 
@@ -118,7 +130,8 @@ class GoalUpdateViewModel @Inject constructor(
                 startTime = (_goal.value.startTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin),
-                notificationTime = (_goal.value.notificationTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
+                notificationTime = (_goal.value.notificationTime
+                    ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin)
             )

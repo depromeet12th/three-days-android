@@ -53,10 +53,10 @@ fun UpdateGoalRequest.toGoalEntity(): GoalEntity {
         notificationContent = this.notificationContent,
         status = "",
         createDate = "",
-        sequence = 0,
-        clapIndex = 0,
-        clapChecked = false,
-        lastAchievementDate = "",
+        sequence = this.sequence,
+        clapIndex = this.clapIndex,
+        clapChecked = this.clapChecked,
+        lastAchievementDate = if(this.lastAchievementDate == null) null else this.lastAchievementDate.toString(),
     )
 }
 

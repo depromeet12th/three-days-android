@@ -11,7 +11,13 @@ data class SimpleGoal(
     var endDate: ZonedDateTime?,
     var startTime: ZonedDateTime?,
     var notificationTime: ZonedDateTime?,
-    var notificationContent: String?
+    var notificationContent: String?,
+    val sequence: Int,
+    val lastAchievementDate: ZonedDateTime? = null,
+    // 0,1,2 중에 오늘 몇번째 짝! 누를수 있는지
+    var clapIndex: Int = 0,
+    // 오늘꺼 눌렀는지 아닌지
+    var clapChecked: Boolean = false
 ) {
     companion object {
         val EMPTY = SimpleGoal(
@@ -21,7 +27,11 @@ data class SimpleGoal(
             endDate = null,
             startTime = null,
             notificationTime = null,
-            notificationContent = ""
+            notificationContent = "",
+            sequence = 0,
+            lastAchievementDate = null,
+            clapIndex = 0,
+            clapChecked = false,
         )
     }
 }
@@ -33,5 +43,9 @@ fun Goal.toSimpleGoal() = SimpleGoal(
     endDate = this.endDate,
     startTime = this.startTime,
     notificationTime = this.notificationTime,
-    notificationContent = this.notificationContent
+    notificationContent = this.notificationContent,
+    sequence = this.sequence,
+    clapIndex = this.clapIndex,
+    clapChecked = this.clapChecked,
+    lastAchievementDate = this.lastAchievementDate,
 )
