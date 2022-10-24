@@ -81,7 +81,10 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
-                is SaveClick -> finish()
+                is SaveClick -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
             }
         }.launchIn(lifecycleScope)
     }

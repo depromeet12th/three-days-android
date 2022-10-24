@@ -1,8 +1,10 @@
 package com.depromeet.threedays.home.home
 
+import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     @Inject
     lateinit var goalUpdateNavigator: GoalUpdateNavigator
+
+    private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.fetchGoals()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         // 수정 페이지로 이동
         val intent = goalUpdateNavigator.intent(requireContext())
         intent.putExtra(GOAL_ID, goal.goalId)
-        startActivity(intent)
+        addResultLauncher.launch(intent)
     }
 
     private fun onDeleteClick(goal: Goal) {
@@ -88,11 +96,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         binding.ivPlus.setOnClickListener {
-            startActivity(goalAddNavigator.intent(requireContext()))
+            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
         }
 
         binding.btnMakeGoal.setOnClickListener {
-            startActivity(goalAddNavigator.intent(requireContext()))
+            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
             // 임시 데이터 만들고 싶을 때 사용할 것 (나중에 삭제할 예정)
             // tempCreateData()
         }

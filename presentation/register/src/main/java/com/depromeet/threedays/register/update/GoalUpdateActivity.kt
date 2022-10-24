@@ -115,7 +115,10 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
                 is StartCalendarClick -> showDatePicker(action.currentDate, true)
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
-                is UpdateClick -> finish()
+                is UpdateClick -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
             }
         }.launchIn(lifecycleScope)
     }
