@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="25dp"
+        android:paddingHorizontal="60dp"
+        android:background="@drawable/bg_rect_white_r20">
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:gravity="center"
+            android:text="짝심삼일 완료!"
+            android:textColor="#111111"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/suit_regular"
+            android:gravity="center"
+            android:text="3일 동안 목표를 달성한 나를 위해\n박수를 쳐주세요. 짝짝짝!"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_great"
+            android:layout_width="165dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_rect_primary_r8"
+            android:fontFamily="@font/suit_bold"
+            android:gravity="center"
+            android:text="잘했어요"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_explain" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

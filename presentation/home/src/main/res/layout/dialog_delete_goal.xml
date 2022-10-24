@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="25dp"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_rect_white_r20">
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:gravity="center"
+            android:text="정말 삭제하시겠어요?"
+            android:textColor="#111111"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/suit_regular"
+            android:gravity="center"
+            android:text="목표를 삭제하게되면\n히스토리까지 모두 삭제되며 복구되지 않아요"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_rect_gray_r8"
+            android:fontFamily="@font/suit_bold"
+            android:gravity="center"
+            android:text="그냥 둘게요"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            android:layout_marginEnd="11dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_confirm"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_confirm" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_rect_primary_r8"
+            android:fontFamily="@font/suit_bold"
+            android:gravity="center"
+            android:text="삭제할게요"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/tv_explain" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -9,17 +9,17 @@ fun Goal.toGoalEntity(): GoalEntity {
     return GoalEntity(
         goalId = this.goalId,
         title = this.title,
-        startDate = this.startDate.toString(),
-        endDate = this.endDate.toString(),
-        startTime = this.startTime.toString(),
-        notificationTime = this.notificationTime.toString(),
+        startDate = this.startDate?.toString(),
+        endDate = this.endDate?.toString(),
+        startTime = this.startTime?.toString(),
+        notificationTime = this.notificationTime?.toString(),
         notificationContent = this.notificationContent,
-        status = this.status.toString(),
-        createDate = this.createDate.toString(),
+        status = this.status?.toString(),
+        createDate = this.createDate?.toString(),
         sequence = this.sequence,
         clapIndex = this.clapIndex,
         clapChecked = this.clapChecked,
-        lastAchievementDate = this.lastAchievementDate.toString(),
+        lastAchievementDate = this.lastAchievementDate?.toString(),
     )
 }
 
