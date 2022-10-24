@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.register.R
 import com.depromeet.threedays.register.add.GoalAddViewModel.Action.*
 import com.depromeet.threedays.register.databinding.ActivityGoalAddBinding
@@ -82,7 +83,9 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
                 is SaveClick -> {
-                    setResult(RESULT_OK)
+                    binding.etGoalName.text = null
+                    binding.etNotificationContent.text = null
+                    setResult(RESULT_CREATE)
                     finish()
                 }
             }

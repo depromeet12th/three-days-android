@@ -13,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.domain.key.GOAL_ID
+import com.depromeet.threedays.domain.key.RESULT_MODIFY
 import com.depromeet.threedays.register.R
 import com.depromeet.threedays.register.databinding.ActivityGoalUpdateBinding
 import com.depromeet.threedays.register.update.GoalUpdateViewModel.Action.*
@@ -116,7 +117,7 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
                 is EndCalendarClick -> showDatePicker(action.currentDate, false)
                 is RunTimeClick -> showTimePicker(action.currentTime)
                 is UpdateClick -> {
-                    setResult(RESULT_OK)
+                    setResult(RESULT_MODIFY)
                     finish()
                 }
             }

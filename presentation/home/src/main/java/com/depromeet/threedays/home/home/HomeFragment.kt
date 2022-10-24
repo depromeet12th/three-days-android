@@ -9,9 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.util.CustomToast
 import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
 import com.depromeet.threedays.domain.key.GOAL_ID
+import com.depromeet.threedays.domain.key.RESULT_CREATE
+import com.depromeet.threedays.domain.key.RESULT_MODIFY
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
@@ -33,8 +36,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     lateinit var goalUpdateNavigator: GoalUpdateNavigator
 
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.fetchGoals()
+
+        when(result.resultCode) {
+            RESULT_CREATE -> viewModel.fetchGoals()
+            RESULT_MODIFY -> {
+                viewModel.fetchGoals()
+                CustomToast().showTextToast(
+                    requireContext(),
+                    resources.getString(R.string.three_day_goal_modify_toast)
+                )
+            }
         }
     }
 
@@ -96,6 +107,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun onDeleteConfirmClick(goal: Goal) {
         viewModel.deleteGoals(goal.goalId)
         viewModel.fetchGoals()
+        CustomToast().showTextToast(
+            requireContext(),
+            resources.getString(R.string.three_day_goal_delete_toast)
+        )
     }
 
     private fun initAdapter() {
