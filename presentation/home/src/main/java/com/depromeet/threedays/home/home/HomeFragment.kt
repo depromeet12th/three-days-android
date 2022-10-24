@@ -1,5 +1,6 @@
 package com.depromeet.threedays.home.home
 
+import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -34,6 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     lateinit var goalUpdateNavigator: GoalUpdateNavigator
 
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
         when(result.resultCode) {
             RESULT_CREATE -> viewModel.fetchGoals()
             RESULT_MODIFY -> {
