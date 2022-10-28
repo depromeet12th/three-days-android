@@ -100,22 +100,18 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
                     tempEndDate.dayOfMonth
                 )
 
-                goal.notificationTime.let { time ->
-                    if (time != null) {
-                        binding.tvRunTime.text = getTimeFormat(
-                            time.hour,
-                            time.minute
-                        ).also { binding.tvNotification.text = it }
-                    }
-                }
+                goal.startTime.let { time -> if (time != null) binding.tvRunTime.text = getTimeFormat(time.hour, time.minute) }
+
+                goal.notificationTime.let { time -> if (time != null) binding.tvNotification.text = getTimeFormat(time.hour, time.minute) }
             }
         }.launchIn(lifecycleScope)
 
         viewModel.action.onEach { action ->
             when (action) {
-                is StartCalendarClick -> showDatePicker(action.currentDate, true)
-                is EndCalendarClick -> showDatePicker(action.currentDate, false)
-                is RunTimeClick -> showTimePicker(action.currentTime)
+                is StartCalendarClick -> showDatePicker(action.currentDate, isStart = true)
+                is EndCalendarClick -> showDatePicker(action.currentDate, isStart = false)
+                is RunTimeClick -> showTimePicker(action.currentTime, isRunTime = true)
+                is NotificationTimeClick -> showTimePicker(action.currentTime, isRunTime = false)
                 is UpdateClick -> {
                     setResult(RESULT_MODIFY)
                     finish()
@@ -144,10 +140,19 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
         ).show()
     }
 
-    private fun showTimePicker(zonedDateTime: ZonedDateTime) {
+    private fun showTimePicker(zonedDateTime: ZonedDateTime, isRunTime: Boolean) {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
-            viewModel.setStartTimeWithNotificationTime(hour, min)
-            binding.tvRunTime.text = getTimeFormat(hour, min).also { binding.tvNotification.text = it }
+            if (isRunTime) {
+                viewModel.setStartTime(hour, min)
+                binding.tvRunTime.text = getTimeFormat(hour, min)
+                if(viewModel.goal.value.notificationTime == null) {
+                    viewModel.setNotificationTime(hour, min)
+                    binding.tvNotification.text = getTimeFormat(hour, min)
+                }
+            } else {
+                viewModel.setNotificationTime(hour, min)
+                binding.tvNotification.text = getTimeFormat(hour, min)
+            }
         }
         val dialog = TimePickerDialog(
             this,

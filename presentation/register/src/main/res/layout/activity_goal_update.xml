@@ -279,6 +279,7 @@
             android:background="@drawable/bg_rect_gray1_r10"
             android:fontFamily="@font/suit_medium"
             android:hint="@string/three_days_run_time_select_request"
+            android:onClick="@{()->viewModel.onNotificationTimeClick()}"
             android:paddingHorizontal="20dp"
             android:paddingVertical="13dp"
             android:textColor="@color/gray3"

@@ -72,14 +72,7 @@ class GoalUpdateViewModel @Inject constructor(
     fun onStartCalendarClick() {
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
-            _action.emit(
-                Action.StartCalendarClick(
-                    getRealDate(
-                        today,
-                        goal.value.startDate ?: today
-                    )
-                )
-            )
+            _action.emit(Action.StartCalendarClick(getRealDate(today, goal.value.startDate ?: today)))
         }
     }
 
@@ -94,6 +87,13 @@ class GoalUpdateViewModel @Inject constructor(
         viewModelScope.launch {
             val today = ZonedDateTime.now(ZoneId.systemDefault())
             _action.emit(Action.RunTimeClick(getRealDate(today, goal.value.startTime ?: today)))
+        }
+    }
+
+    fun onNotificationTimeClick() {
+        viewModelScope.launch {
+            val today = ZonedDateTime.now(ZoneId.systemDefault())
+            _action.emit(Action.NotificationTimeClick(getRealDate(today, goal.value.notificationTime ?: today)))
         }
     }
 
@@ -124,14 +124,20 @@ class GoalUpdateViewModel @Inject constructor(
         }
     }
 
-    fun setStartTimeWithNotificationTime(newHour: Int, newMin: Int) {
+    fun setStartTime(newHour: Int, newMin: Int) {
         viewModelScope.launch {
             _goal.value = _goal.value.copy(
                 startTime = (_goal.value.startTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
-                    .withMinute(newMin),
-                notificationTime = (_goal.value.notificationTime
-                    ?: ZonedDateTime.now(ZoneId.systemDefault()))
+                    .withMinute(newMin)
+            )
+        }
+    }
+
+    fun setNotificationTime(newHour: Int, newMin: Int) {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
+                notificationTime = (_goal.value.notificationTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin)
             )
@@ -142,6 +148,7 @@ class GoalUpdateViewModel @Inject constructor(
         data class StartCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class EndCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class RunTimeClick(val currentTime: ZonedDateTime) : Action()
+        data class NotificationTimeClick(val currentTime: ZonedDateTime) : Action()
         object UpdateClick : Action()
     }
 }
