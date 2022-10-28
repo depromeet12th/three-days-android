@@ -144,6 +144,23 @@ class GoalUpdateViewModel @Inject constructor(
         }
     }
 
+    fun initDate() {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
+                startDate = null,
+                endDate = null
+            )
+        }
+    }
+
+    fun initTime() {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
+                startTime = null
+            )
+        }
+    }
+
     sealed class Action {
         data class StartCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class EndCalendarClick(val currentDate: ZonedDateTime) : Action()

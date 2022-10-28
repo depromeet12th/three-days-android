@@ -64,11 +64,11 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         }
 
         binding.swGoalPeriod.setOnCheckedChangeListener { _, isChecked ->
-            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initDate() }
         }
 
         binding.swRunTime.setOnCheckedChangeListener { _, isChecked ->
-            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initTime() }
         }
 
         val now = ZonedDateTime.now(ZoneId.systemDefault())

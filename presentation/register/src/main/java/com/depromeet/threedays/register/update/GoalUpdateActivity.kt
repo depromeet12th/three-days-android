@@ -71,14 +71,12 @@ class GoalUpdateActivity : BaseActivity<ActivityGoalUpdateBinding>(R.layout.acti
         }
 
         binding.swGoalPeriod.setOnCheckedChangeListener { _, isChecked ->
-            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initDate() }
         }
 
         binding.swRunTime.setOnCheckedChangeListener { _, isChecked ->
-            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initTime() }
         }
-
-
     }
 
     private fun observe() {
