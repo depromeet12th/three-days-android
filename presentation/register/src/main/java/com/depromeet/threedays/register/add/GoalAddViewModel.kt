@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GoalAddViewModel @Inject constructor(
     private val goalRepository: GoalRepository
-): BaseViewModel() {
+) : BaseViewModel() {
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
         get() = _action.asSharedFlow()
@@ -28,13 +28,13 @@ class GoalAddViewModel @Inject constructor(
         viewModelScope.launch {
             kotlin.runCatching {
                 val goal = with(_goal.value) {
-                     SaveGoalRequest(
-                         title = title.value,
-                         startDate = startDate,
-                         endDate = endDate,
-                         startTime = startTime,
-                         notificationTime = notificationTime,
-                         notificationContent = notificationContent
+                    SaveGoalRequest(
+                        title = title.value,
+                        startDate = startDate,
+                        endDate = endDate,
+                        startTime = startTime,
+                        notificationTime = notificationTime,
+                        notificationContent = notificationContent
                     )
                 }
                 goalRepository.create(goal)
@@ -67,6 +67,13 @@ class GoalAddViewModel @Inject constructor(
         }
     }
 
+    fun onNotificationTimeClick() {
+        viewModelScope.launch {
+            val today = ZonedDateTime.now(ZoneId.systemDefault())
+            _action.emit(Action.NotificationTimeClick(getRealDate(today, goal.value.notificationTime ?: today)))
+        }
+    }
+
     private fun getRealDate(today: ZonedDateTime, currentDate: ZonedDateTime): ZonedDateTime {
         return if (today == currentDate) today else currentDate
     }
@@ -94,15 +101,39 @@ class GoalAddViewModel @Inject constructor(
         }
     }
 
-    fun setStartTimeWithNotificationTime(newHour: Int, newMin: Int) {
+    fun setStartTime(newHour: Int, newMin: Int) {
         viewModelScope.launch {
             _goal.value = _goal.value.copy(
                 startTime = (_goal.value.startTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
-                    .withMinute(newMin),
+                    .withMinute(newMin)
+            )
+        }
+    }
+
+    fun setNotificationTime(newHour: Int, newMin: Int) {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
                 notificationTime = (_goal.value.notificationTime ?: ZonedDateTime.now(ZoneId.systemDefault()))
                     .withHour(newHour)
                     .withMinute(newMin)
+            )
+        }
+    }
+
+    fun initDate() {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
+                startDate = null,
+                endDate = null
+            )
+        }
+    }
+
+    fun initTime() {
+        viewModelScope.launch {
+            _goal.value = _goal.value.copy(
+                startTime = null
             )
         }
     }
@@ -111,6 +142,7 @@ class GoalAddViewModel @Inject constructor(
         data class StartCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class EndCalendarClick(val currentDate: ZonedDateTime) : Action()
         data class RunTimeClick(val currentTime: ZonedDateTime) : Action()
+        data class NotificationTimeClick(val currentTime: ZonedDateTime) : Action()
         object SaveClick : Action()
     }
 }

@@ -64,11 +64,11 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         }
 
         binding.swGoalPeriod.setOnCheckedChangeListener { _, isChecked ->
-            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.clPeriod.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initDate() }
         }
 
         binding.swRunTime.setOnCheckedChangeListener { _, isChecked ->
-            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE
+            binding.tvRunTime.visibility = if (isChecked) View.VISIBLE else View.GONE.also { viewModel.initTime() }
         }
 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
@@ -79,9 +79,10 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
     private fun observe() {
         viewModel.action.onEach { action ->
             when (action) {
-                is StartCalendarClick -> showDatePicker(action.currentDate, true)
-                is EndCalendarClick -> showDatePicker(action.currentDate, false)
-                is RunTimeClick -> showTimePicker(action.currentTime)
+                is StartCalendarClick -> showDatePicker(action.currentDate, isStart = true)
+                is EndCalendarClick -> showDatePicker(action.currentDate, isStart = false)
+                is RunTimeClick -> showTimePicker(action.currentTime, isRunTime = true)
+                is NotificationTimeClick -> showTimePicker(action.currentTime, isRunTime = false)
                 is SaveClick -> {
                     binding.etGoalName.text = null
                     binding.etNotificationContent.text = null
@@ -112,28 +113,19 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         ).show()
     }
 
-    private fun showTimePicker(zonedDateTime: ZonedDateTime) {
+    private fun showTimePicker(zonedDateTime: ZonedDateTime, isRunTime: Boolean) {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
-            viewModel.setStartTimeWithNotificationTime(hour, min)
-            binding.tvRunTime.text =
-                when (hour) {
-                    12 -> String.format(
-                        getString(R.string.three_days_time_afternoon_format),
-                        hour,
-                        min
-                    )
-                    in 13..23 -> String.format(
-                        getString(R.string.three_days_time_afternoon_format),
-                        hour - 12,
-                        min
-                    )
-                    24 -> String.format(getString(R.string.three_days_time_morning_format), 0, min)
-                    else -> String.format(
-                        getString(R.string.three_days_time_morning_format),
-                        hour,
-                        min
-                    )
-                }.also { binding.tvNotification.text = it }
+            if (isRunTime) {
+                viewModel.setStartTime(hour, min)
+                binding.tvRunTime.text = getTimeFormat(hour, min)
+                if(viewModel.goal.value.notificationTime == null) {
+                    viewModel.setNotificationTime(hour, min)
+                    binding.tvNotification.text = getTimeFormat(hour, min)
+                }
+            } else {
+                viewModel.setNotificationTime(hour, min)
+                binding.tvNotification.text = getTimeFormat(hour, min)
+            }
         }
         val dialog = TimePickerDialog(
             this,
@@ -145,5 +137,26 @@ class GoalAddActivity : BaseActivity<ActivityGoalAddBinding>(R.layout.activity_g
         )
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+    }
+
+    private fun getTimeFormat(hour: Int, min: Int): String {
+        return when (hour) {
+            12 -> String.format(
+                getString(R.string.three_days_time_afternoon_format),
+                hour,
+                min
+            )
+            in 13..23 -> String.format(
+                getString(R.string.three_days_time_afternoon_format),
+                hour - 12,
+                min
+            )
+            24 -> String.format(getString(R.string.three_days_time_morning_format), 0, min)
+            else -> String.format(
+                getString(R.string.three_days_time_morning_format),
+                hour,
+                min
+            )
+        }
     }
 }
