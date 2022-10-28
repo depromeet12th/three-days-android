@@ -10,4 +10,5 @@ java {
 
 dependencies {
     implementation deps.inject
+    implementation(coroutines)
 }
