@@ -7,14 +7,16 @@ import com.depromeet.threedays.domain.entity.Goal
 import com.depromeet.threedays.domain.entity.request.SaveGoalRequest
 import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
 import com.depromeet.threedays.domain.repository.GoalRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GoalRepositoryImpl @Inject constructor(
     private val goalDataSource: GoalDataSource
 ) : GoalRepository {
-    override suspend fun findAll(): List<Goal> {
-        return goalDataSource.getGoals().first().map { it.toGoal() }
+    override suspend fun findAll(): Flow<List<Goal>> {
+        return goalDataSource.getGoals().map { it.map { it.toGoal() } }
     }
 
     override suspend fun findById(goalId: Long): Goal {
