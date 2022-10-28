@@ -28,7 +28,7 @@ class GoalAdapter(
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<Goal>() {
             override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean {
-                return oldItem == newItem
+                return oldItem.goalId == newItem.goalId
             }
 
             override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean {
