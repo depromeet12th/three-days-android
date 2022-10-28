@@ -1,8 +1,8 @@
 package com.depromeet.threedays.home.home
 
-import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -128,7 +128,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     parent: RecyclerView,
                     state: RecyclerView.State
                 ) {
-                    outRect.bottom = 100
+                    outRect.bottom = dpToPx(14)
                 }
             })
         }
@@ -190,5 +190,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         return newList
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), requireContext().resources.displayMetrics).toInt()
     }
 }
