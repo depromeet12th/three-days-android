@@ -141,6 +141,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
         }
 
+        binding.tvHeader.setOnLongClickListener {
+            addThreeTypesOfGoal()
+            true
+        }
+
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
         binding.tvDate.text = String.format("%02d. %02d (%s)", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
@@ -194,5 +199,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun dpToPx(dp: Int): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), requireContext().resources.displayMetrics).toInt()
+    }
+
+    private fun addThreeTypesOfGoal() {
+        CustomToast().showTextToast(
+            requireContext(),
+            "리스트를 초기값으로 변경합니다"
+        )
+
+        viewModel.updateGoals(
+            UpdateGoalRequest(
+                goalId = 1,
+                "책 10페이지 읽기",
+                sequence = 10,
+                clapIndex = 2,
+                clapChecked = false
+            )
+        )
+
+        viewModel.fetchGoals()
     }
 }
