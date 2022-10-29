@@ -6,6 +6,9 @@ import android.util.TypedValue
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
@@ -20,6 +23,7 @@ import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
 import com.depromeet.threedays.navigator.GoalUpdateNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import javax.inject.Inject
@@ -78,7 +82,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             startTime = if(goal.startTime == null) null else goal.startTime,
             notificationTime = if(goal.notificationTime == null) null else goal.notificationTime,
             notificationContent = goal.notificationContent,
-            sequence = goal.sequence,
+            sequence = goal.sequence + if(goal.clapChecked) 1 else -1,
             clapIndex = goal.clapIndex,
             clapChecked = goal.clapChecked,
             lastAchievementDate = lastAchievementDate,
@@ -152,14 +156,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun HomeViewModel.setObserve() {
-        goals.observe(viewLifecycleOwner) {
-            //val sequenceCheckedList = checkGoalSequence(it)
-            goalAdapter.submitList(it)
-            goalAdapter.notifyDataSetChanged()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.apply {
+                    goals.collect {
+                        goalAdapter.submitList(it)
 
-            binding.clNoGoal.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
-            binding.rvGoal.visibility = if(it.isEmpty()) View.GONE else View.VISIBLE
-            binding.ivPlus.visibility = if(it.isEmpty()) View.GONE else View.VISIBLE
+                        binding.clNoGoal.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+                        binding.rvGoal.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+                        binding.ivPlus.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+                    }
+                }
+            }
         }
     }
 
