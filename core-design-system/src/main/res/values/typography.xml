@@ -2,246 +2,81 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Typography">
-        <item name="android:fontFamily">@font/suit_regular</item>
-        <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:letterSpacing">-0.05</item>
+        <item name="android:letterSpacing">0</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <!-- H1 -->
     <style name="Typography.H1">
-        <item name="android:textSize" tools:ignore="SpUsage">30dp</item>
-    </style>
-    <style name="Typography.H1.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.H1.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.H1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
+        <item name="android:textSize" tools:ignore="SpUsage">26dp</item>
+        <item name="fontFamily">@font/suit_extra_bold</item>
     </style>
 
     <!-- H2 -->
     <style name="Typography.H2">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-    </style>
-    <style name="Typography.H2.Bold">
+        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
-    <style name="Typography.H2.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
+
+    <!-- H3 -->
+    <style name="Typography.H3">
+        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
     </style>
-    <style name="Typography.H2.Medium">
+
+    <!-- Title1 -->
+    <style name="Typography.Title1">
+        <item name="android:textSize" tools:ignore="SpUsage">23dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
+    <!-- Title2 -->
+    <style name="Typography.Title2">
+
+    </style>
+    <style name="Typography.Title2.SemiBold">
+        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+    <style name="Typography.Title2.Bold">
+        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
+    <!-- Title3 -->
+    <style name="Typography.Title3">
+
+    </style>
+    <style name="Typography.Title3.Medium">
+        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
         <item name="fontFamily">@font/suit_medium</item>
+    </style>
+    <style name="Typography.Title3.SemiBold">
+        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
     <!-- Body1 -->
     <style name="Typography.Body1">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
-    </style>
-    <style name="Typography.Body1.Regular">
+        <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
         <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Body1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
     </style>
 
     <!-- Body2 -->
     <style name="Typography.Body2">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-    </style>
-    <style name="Typography.Body2.Regular">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Body2.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Body2.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
     </style>
 
     <!-- Body3 -->
     <style name="Typography.Body3">
-        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
+        <item name="fontFamily">@font/suit_light</item>
     </style>
-    <style name="Typography.Body3.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
+    <style name="Typography.Body3.13dp">
+        <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
     </style>
-    <style name="Typography.Body3.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Body3.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Body4 -->
-    <style name="Typography.Body4">
-        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-    </style>
-    <style name="Typography.Body4.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Body4.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Body4.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Body5 -->
-    <style name="Typography.Body5">
+    <style name="Typography.Body3.12dp">
         <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
     </style>
-    <style name="Typography.Body5.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Body5.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Body5.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Number1 -->
-    <style name="Typography.Number1">
-        <item name="android:textSize" tools:ignore="SpUsage">25dp</item>
-    </style>
-    <style name="Typography.Number1.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Number1.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Number1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Number2 -->
-    <style name="Typography.Number2">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-    </style>
-    <style name="Typography.Number2.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Number2.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Number2.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Pill -->
-    <style name="Typography.Pill">
-        <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
-    </style>
-    <style name="Typography.Pill.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Pill.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Pill.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Button1 -->
-    <style name="Typography.Button1">
-        <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
-    </style>
-    <style name="Typography.Button1.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Button1.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Button1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Button2 -->
-    <style name="Typography.Button2">
-        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
-    </style>
-    <style name="Typography.Button2.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Button2.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Button2.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Caption1 -->
-    <style name="Typography.Caption1">
-        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-    </style>
-    <style name="Typography.Caption1.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Caption1.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Caption1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Caption2 -->
-    <style name="Typography.Caption2">
-        <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
-    </style>
-    <style name="Typography.Caption2.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Caption2.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Caption2.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Calender1 -->
-    <style name="Typography.Calender1">
-        <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
-    </style>
-    <style name="Typography.Calender1.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Calender1.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Calender1.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Calender2 -->
-    <style name="Typography.Calender2">
-        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-    </style>
-    <style name="Typography.Calender2.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Calender2.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Calender2.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Calender3 -->
-    <style name="Typography.Calender3">
-        <item name="android:textSize" tools:ignore="SpUsage">9dp</item>
-    </style>
-    <style name="Typography.Calender3.Regular">
-        <item name="fontFamily">@font/suit_regular</item>
-    </style>
-    <style name="Typography.Calender3.Medium">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Calender3.Bold">
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
 </resources>
