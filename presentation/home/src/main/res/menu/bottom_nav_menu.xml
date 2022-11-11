@@ -6,11 +6,15 @@
         android:icon="@drawable/ic_tab_home"
         android:title="홈" />
     <item
-        android:id="@+id/statisticsFragment"
-        android:icon="@drawable/ic_tab_statistics"
-        android:title="통계" />
+        android:id="@+id/historyFragment"
+        android:icon="@drawable/ic_tab_history"
+        android:title="나의 기록" />
     <item
-        android:id="@+id/myFragment"
-        android:icon="@drawable/ic_tab_my"
+        android:id="@+id/mateFragment"
+        android:icon="@drawable/ic_tab_mate"
+        android:title="짝꿍" />
+    <item
+        android:id="@+id/mypageFragment"
+        android:icon="@drawable/ic_tab_mypage"
         android:title="마이페이지" />
 </menu>
