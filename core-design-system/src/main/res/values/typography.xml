@@ -19,6 +19,11 @@
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
+    <!-- H2.20dp -->
+    <style name="Typography.H2.20dp">
+        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+    </style>
+
     <!-- H3 -->
     <style name="Typography.H3">
         <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
