@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 디자이너 팀에서 UT 이후에 스타일 가이드를 넘겨주기로 한 관계로 -->
-    <!-- 임시로 이름을 부여해두겠습니다. -->
     <color name="primary">#3F80FF</color>
     <color name="press">#3266CC</color>
     <color name="disable">#ACACAC</color>
     <color name="toast">#3C3C3C</color>
 
+    <color name="green_sub_color">#34C185</color>
+    <color name="blue_sub_color">#3F80FF</color>
+    <color name="yellow_sub_color">#FFC271</color>
+    <color name="red_sub_color">#FF6565</color>
+    <color name="pink_sub_color">#FF70D7</color>
+    <color name="purple_sub_color">#AD6DFF</color>
+
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="gray_100">#F4F7FA</color>
+    <color name="gray_200">#E8EBF0</color>
+    <color name="gray_300">#D8DCE2</color>
+    <color name="gray_400">#C4CAD4</color>
+    <color name="gray_500">#949494</color>
+    <color name="gray_600">#777777</color>
+    <color name="gray_700">#555555</color>
+    <color name="gray_800">#303030</color>
+    <color name="black">#121213</color>
+
+    <color name="green_system_color">#09BC7B</color>
+    <color name="red_system_color">#FF4D4D</color>
 </resources>

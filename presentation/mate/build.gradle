@@ -6,12 +6,6 @@ plugins {
 }
 
 android {
-    hilt {
-        enableAggregatingTask = true
-    }
-}
-
-android {
     compileSdk 32
 
     defaultConfig {
@@ -45,9 +39,6 @@ dependencies {
     implementation(project(":core-design-system"))
     implementation(project(":navigator"))
     implementation(project(":domain"))
-    implementation(project(":presentation:history"))
-    implementation(project(":presentation:mate"))
-    implementation(project(":presentation:mypage"))
 
     implementation(jetpackDeps)
     implementation(coroutines)
