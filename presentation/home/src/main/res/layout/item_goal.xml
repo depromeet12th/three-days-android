@@ -10,119 +10,199 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rect_light_blue_r24"
-        android:paddingBottom="13dp">
-
-        <TextView
-            android:id="@+id/tv_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_rect_blue_r5"
-            android:fontFamily="@font/suit_bold"
-            android:paddingHorizontal="12.5dp"
-            android:paddingVertical="5dp"
-            android:text="@{`짝심 ` + String.valueOf(goal.sequence) + `일`}"
-            android:textColor="#3F80FF"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="짝심 5일" />
+        android:background="@drawable/bg_rect_white_r20"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/tv_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/suit_bold"
-            android:text="@{goal.title}"
+            android:text="영어 공부 1시간 하기"
             android:textColor="#1A1F27"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_day"
-            tools:text="안녕하세요안녕하세요안녕하세요" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="영어 공부 1시간 하기" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/suit_medium"
+            android:text=""
+            android:textAppearance="@style/Typography.Body3.12dp"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/suit_medium"
+            android:text="5개"
+            android:textAppearance="@style/Typography.Body3.12dp"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/suit_medium"
+            android:layout_marginHorizontal="10dp"
+            android:text="|"
+            android:textAppearance="@style/Typography.Body3.12dp"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/suit_medium"
+            android:text="월,수,금"
+            android:textAppearance="@style/Typography.Body3.12dp"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
         <ImageButton
             android:id="@+id/iv_first_day"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_gravity="center"
-            android:layout_marginTop="19dp"
-            android:background="@{goal.isChecked(0) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:src="@{goal.isChecked(0) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_oval_gray"
+            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
-            tools:background="@drawable/bg_oval_gray" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <ImageButton
             android:id="@+id/iv_second_day"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_gravity="center"
-            android:background="@{goal.isChecked(1) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:src="@{goal.isChecked(1) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_oval_gray"
+            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_first_day"
-            tools:background="@drawable/bg_oval_gray" />
+            app:layout_constraintStart_toEndOf="@+id/iv_first_day" />
 
         <ImageButton
             android:id="@+id/iv_third_day"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_gravity="center"
-            android:background="@{goal.isChecked(2) ? @drawable/bg_oval_white : @drawable/bg_oval_gray}"
-            android:src="@{goal.isChecked(2) ? @drawable/ic_hand_done : @drawable/ic_hand_normal}"
+            android:background="@drawable/bg_oval_gray"
+            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_second_day"
-            tools:background="@drawable/bg_oval_gray" />
+            app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
 
         <ImageView
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:background="@{goal.isFocused(0) ? @drawable/bg_oval_stroke_blue : null}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_first_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_first_day" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_second_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_second_day" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_third_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_third_day" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:textAppearance="@style/Typography.Body1"
+            android:textSize="16dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
             app:layout_constraintTop_toTopOf="@+id/iv_first_day"
-            tools:src="@drawable/ic_hand_done" />
+            tools:text="3"
+            tools:textColor="@color/green_sub_color" />
 
-        <ImageView
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:background="@{goal.isFocused(1) ? @drawable/bg_oval_stroke_blue : null}"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:textAppearance="@style/Typography.Body1"
+            android:textSize="16dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
             app:layout_constraintStart_toStartOf="@+id/iv_second_day"
             app:layout_constraintTop_toTopOf="@+id/iv_second_day"
-            tools:src="@drawable/ic_hand_done" />
+            tools:text="3"
+            tools:textColor="@color/green_sub_color" />
 
-        <ImageView
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:background="@{goal.isFocused(2) ? @drawable/bg_oval_stroke_blue : null}"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:textAppearance="@style/Typography.Body1"
+            android:textSize="16dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
             app:layout_constraintStart_toStartOf="@+id/iv_third_day"
             app:layout_constraintTop_toTopOf="@+id/iv_third_day"
-            tools:src="@drawable/ic_hand_done" />
+            tools:text="3"
+            tools:textColor="@color/green_sub_color" />
 
         <ImageView
             android:id="@+id/iv_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginTop="14dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_more" />
