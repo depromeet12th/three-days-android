@@ -137,22 +137,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             })
         }
 
-        binding.ivPlus.setOnClickListener {
-            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
-        }
-
-        binding.btnMakeGoal.setOnClickListener {
-            addResultLauncher.launch(goalAddNavigator.intent(requireContext()))
-        }
-
-        binding.tvHeader.setOnLongClickListener {
-            addThreeTypesOfGoal()
-            true
-        }
-
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
-        binding.tvDate.text = String.format("%02d. %02d (%s)", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
+        binding.tvDate.text = String.format("%02d월%02d일 %s요일", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
     }
 
     private fun HomeViewModel.setObserve() {
@@ -164,67 +151,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
                         binding.clNoGoal.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
-                        binding.ivPlus.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
                     }
                 }
             }
         }
     }
 
-    // TODO: 조금 더 연구 필요
-    private fun checkGoalSequence(goalList: List<Goal>): MutableList<Goal> {
-        val newList = mutableListOf<Goal>()
-        goalList.forEach {
-            if (it.lastAchievementDate != null && it.lastAchievementDate!!.isAfter(ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1))) {
-                newList.add(it.apply {
-                    it.clapIndex = 0
-                    it.clapChecked = false
-                    it.lastAchievementDate = null
-                })
-
-                val updatedGoal = UpdateGoalRequest (
-                    goalId = it.goalId,
-                    title = it.title,
-                    startDate = if(it.startDate == null) null else it.startDate,
-                    endDate = if(it.endDate == null) null else it.endDate,
-                    startTime = if(it.startTime == null) null else it.startTime,
-                    notificationTime = if(it.notificationTime == null) null else it.notificationTime,
-                    notificationContent = it.notificationContent,
-                    sequence = it.sequence,
-                    clapIndex = 0,
-                    clapChecked = false,
-                    lastAchievementDate = null,
-                )
-
-                viewModel.updateGoals(updatedGoal)
-            } else {
-                newList.add(it)
-            }
-        }
-
-        return newList
-    }
-
     private fun dpToPx(dp: Int): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), requireContext().resources.displayMetrics).toInt()
-    }
-
-    private fun addThreeTypesOfGoal() {
-        CustomToast().showTextToast(
-            requireContext(),
-            "리스트를 초기값으로 변경합니다"
-        )
-
-        viewModel.updateGoals(
-            UpdateGoalRequest(
-                goalId = 1,
-                "책 10페이지 읽기",
-                sequence = 10,
-                clapIndex = 2,
-                clapChecked = false
-            )
-        )
-
-        viewModel.fetchGoals()
     }
 }
