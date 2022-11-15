@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="16dp"
+    android:background="@drawable/bg_rect_white_r10">
+
+    <TextView
+        android:id="@+id/tv_object_emoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="👏🏻"
+        android:fontFamily="@font/suit_medium"
+        android:textAppearance="@style/Typography.Body1"
+        android:textColor="@color/gray_700"
+        app:layout_constraintTop_toTopOf="@+id/iv_arrow_in"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_arrow_in"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_object_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="아침 챙겨먹기"
+        android:fontFamily="@font/suit_medium"
+        android:textAppearance="@style/Typography.Body1"
+        android:textColor="@color/gray_700"
+        app:layout_constraintTop_toTopOf="@+id/iv_arrow_in"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_arrow_in"
+        app:layout_constraintStart_toEndOf="@+id/tv_object_emoji"/>
+
+    <ImageView
+        android:id="@+id/iv_arrow_in"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_in"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
