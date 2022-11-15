@@ -29,7 +29,7 @@
             tools:text="영어 공부 1시간 하기" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_object_emoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,14 +39,14 @@
             android:text=""
             android:textAppearance="@style/Typography.Body3.12dp"
             android:textColor="@color/gray_500"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/tv_object_count"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_object_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -54,13 +54,13 @@
             android:text="5개"
             android:textAppearance="@style/Typography.Body3.12dp"
             android:textColor="@color/gray_500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_object_emoji"
+            app:layout_constraintEnd_toStartOf="@+id/tv_pipe"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView2" />
+            app:layout_constraintStart_toEndOf="@+id/tv_object_emoji" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_pipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -69,13 +69,13 @@
             android:text="|"
             android:textAppearance="@style/Typography.Body3.12dp"
             android:textColor="@color/gray_500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_object_count"
+            app:layout_constraintEnd_toStartOf="@+id/tv_object_day"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView4" />
+            app:layout_constraintStart_toEndOf="@+id/tv_object_count" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_object_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -83,10 +83,10 @@
             android:text="월,수,금"
             android:textAppearance="@style/Typography.Body3.12dp"
             android:textColor="@color/gray_500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView5" />
+            app:layout_constraintStart_toEndOf="@+id/tv_pipe" />
 
         <ImageButton
             android:id="@+id/iv_first_day"
@@ -100,7 +100,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_object_emoji" />
 
         <ImageButton
             android:id="@+id/iv_second_day"
