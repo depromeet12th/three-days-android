@@ -12,7 +12,7 @@ import kotlin.reflect.KFunction1
 class GoalViewHolder(private val view: ItemGoalBinding) : RecyclerView.ViewHolder(view.root) {
 
     fun onBind(goal: Goal, onGoalClick: KFunction1<Goal, Unit>, onMoreClick: KFunction1<Goal, Unit>) {
-        view.goal = goal
+
         view.ivFirstDay.setOnClickListener {
             switchGoalState(0, goal, onGoalClick, it as ImageButton)
         }
