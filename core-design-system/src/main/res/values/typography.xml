@@ -2,86 +2,83 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Typography">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/gray_800</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <!-- H1 -->
     <style name="Typography.H1">
-        <item name="android:textSize" tools:ignore="SpUsage">26dp</item>
-        <item name="fontFamily">@font/suit_extra_bold</item>
-    </style>
-
-    <!-- H2 -->
-    <style name="Typography.H2">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- H2.20dp -->
-    <style name="Typography.H2.20dp">
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-    </style>
-
-    <!-- H3 -->
-    <style name="Typography.H3">
-        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
     <!-- Title1 -->
     <style name="Typography.Title1">
-        <item name="android:textSize" tools:ignore="SpUsage">23dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
-    <!-- Title2 -->
-    <style name="Typography.Title2">
-
-    </style>
-    <style name="Typography.Title2.SemiBold">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-        <item name="fontFamily">@font/suit_semi_bold</item>
-    </style>
-    <style name="Typography.Title2.Bold">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
-        <item name="fontFamily">@font/suit_bold</item>
-    </style>
-
-    <!-- Title3 -->
-    <style name="Typography.Title3">
-
-    </style>
-    <style name="Typography.Title3.Medium">
-        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Title3.SemiBold">
-        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
+    <!-- Sub Title1 -->
+    <style name="Typography.SubTitle1">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
     <!-- Body1 -->
     <style name="Typography.Body1">
         <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
-        <item name="fontFamily">@font/suit_regular</item>
+        <item name="fontFamily">@font/suit_medium</item>
     </style>
 
     <!-- Body2 -->
     <style name="Typography.Body2">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-        <item name="fontFamily">@font/suit_regular</item>
+    </style>
+    <style name="Typography.Body2.SemiBold">
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+    <style name="Typography.Body2.Bold">
+        <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
     <!-- Body3 -->
     <style name="Typography.Body3">
-        <item name="fontFamily">@font/suit_light</item>
-    </style>
-    <style name="Typography.Body3.13dp">
         <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
     </style>
-    <style name="Typography.Body3.12dp">
+
+    <!-- Body4 -->
+    <style name="Typography.Body4">
         <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
+    </style>
+    <style name="Typography.Body4.SemiBold">
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+    <style name="Typography.Body4.Medium">
+        <item name="fontFamily">@font/suit_medium</item>
+    </style>
+
+    <!-- Paragraph1 -->
+    <style name="Typography.Paragraph1">
+        <item name="fontFamily">@font/suit_medium</item>
+    </style>
+    <style name="Typography.Paragraph1.15dp">
+        <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
+    </style>
+    <style name="Typography.Paragraph1.24dp">
+        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+    </style>
+
+    <!-- Caption -->
+    <style name="Typography.Caption">
+        <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
+    </style>
+
+    <!-- Button -->
+    <style name="Typography.Button">
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
     </style>
 </resources>
