@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <Space
-            android:id="@+id/space0"
+            android:id="@+id/space_top_of_cl_add_goal"
             android:layout_width="match_parent"
             android:layout_height="12dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -23,20 +23,20 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space0">
+            app:layout_constraintTop_toBottomOf="@+id/space_top_of_cl_add_goal">
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/iv_add_object"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/textView6"
+                app:layout_constraintEnd_toStartOf="@+id/tv_add_object"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_add_default" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tv_add_object"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -44,15 +44,14 @@
                 android:text="습관 만들기"
                 android:textAppearance="@style/Typography.Body2"
                 android:textColor="@color/gray_600"
-                app:layout_constraintBottom_toBottomOf="@id/imageView1"
+                app:layout_constraintBottom_toBottomOf="@id/iv_add_object"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView1"
-                app:layout_constraintTop_toTopOf="@+id/imageView1" />
+                app:layout_constraintStart_toEndOf="@+id/iv_add_object"
+                app:layout_constraintTop_toTopOf="@+id/iv_add_object" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Space
-            android:id="@+id/space1"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             app:layout_constraintTop_toBottomOf="@+id/cl_add_goal"/>

@@ -57,19 +57,19 @@
             app:layout_constraintTop_toBottomOf="@id/tv_date">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/iv_add_object"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView3"
-                app:layout_constraintEnd_toStartOf="@+id/textView3"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_add_object"
+                app:layout_constraintEnd_toStartOf="@+id/tv_add_object"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/tv_add_object"
                 app:srcCompat="@drawable/ic_add_default" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tv_add_object"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/cl_no_goal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView3" />
+                app:layout_constraintStart_toEndOf="@+id/iv_add_object" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
