@@ -2,7 +2,6 @@ package com.depromeet.threedays.home.home
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -13,9 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.CustomToast
-import com.depromeet.threedays.domain.entity.Goal
-import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
-import com.depromeet.threedays.domain.key.GOAL_ID
+import com.depromeet.threedays.core.util.dpToPx
+import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_MODIFY
 import com.depromeet.threedays.home.R
@@ -31,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
     override val viewModel by viewModels<HomeViewModel>()
-    lateinit var goalAdapter: GoalAdapter
+    lateinit var habitAdapter: HabitAdapter
 
     @Inject
     lateinit var goalAddNavigator: GoalAddNavigator
@@ -62,69 +60,69 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initView()
     }
 
-    private fun onGoalClick(goal: Goal) {
-        if(goal.clapIndex == 2 && goal.clapChecked) {
-            val dialog = CompleteGoalDialog(requireContext(), goal)
-            dialog.show()
-        }
-
-        val lastAchievementDate = if (goal.clapChecked) {
-            ZonedDateTime.now(ZoneId.systemDefault())
-        } else {
-            ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1)
-        }
-
-        val updatedGoal = UpdateGoalRequest (
-            goalId = goal.goalId,
-            title = goal.title,
-            startDate = if(goal.startDate == null) null else goal.startDate,
-            endDate = if(goal.endDate == null) null else goal.endDate,
-            startTime = if(goal.startTime == null) null else goal.startTime,
-            notificationTime = if(goal.notificationTime == null) null else goal.notificationTime,
-            notificationContent = goal.notificationContent,
-            sequence = goal.sequence + if(goal.clapChecked) 1 else -1,
-            clapIndex = goal.clapIndex,
-            clapChecked = goal.clapChecked,
-            lastAchievementDate = lastAchievementDate,
-        )
-
-        viewModel.updateGoals(updatedGoal)
+    private fun onGoalClick(habit: Habit) {
+//        if(habit.clapIndex == 2 && habit.clapChecked) {
+//            val dialog = CompleteGoalDialog(requireContext(), habit)
+//            dialog.show()
+//        }
+//
+//        val lastAchievementDate = if (habit.clapChecked) {
+//            ZonedDateTime.now(ZoneId.systemDefault())
+//        } else {
+//            ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1)
+//        }
+//
+//        val updatedGoal = UpdateGoalRequest (
+//            goalId = habit.goalId,
+//            title = habit.title,
+//            startDate = if(habit.startDate == null) null else habit.startDate,
+//            endDate = if(habit.endDate == null) null else habit.endDate,
+//            startTime = if(habit.startTime == null) null else habit.startTime,
+//            notificationTime = if(habit.notificationTime == null) null else habit.notificationTime,
+//            notificationContent = habit.notificationContent,
+//            sequence = habit.sequence + if(habit.clapChecked) 1 else -1,
+//            clapIndex = habit.clapIndex,
+//            clapChecked = habit.clapChecked,
+//            lastAchievementDate = lastAchievementDate,
+//        )
+//
+//        viewModel.updateGoals(updatedGoal)
     }
 
-    private fun onMoreClick(goal: Goal) {
-        val modal = EditGoalModal(goal, ::onEditClick, ::onDeleteClick)
-        modal.show(parentFragmentManager, EditGoalModal.TAG)
+    private fun onMoreClick(habit: Habit) {
+        val modal = EditHabitModal(habit, ::onEditClick, ::onDeleteClick)
+        modal.show(parentFragmentManager, EditHabitModal.TAG)
     }
 
-    private fun onEditClick(goal: Goal) {
+    private fun onEditClick(habit: Habit) {
         // 수정 페이지로 이동
-        val intent = goalUpdateNavigator.intent(requireContext())
-        intent.putExtra(GOAL_ID, goal.goalId)
-        addResultLauncher.launch(intent)
+//        val intent = goalUpdateNavigator.intent(requireContext())
+//        intent.putExtra(GOAL_ID, habit.goalId)
+//        addResultLauncher.launch(intent)
     }
 
-    private fun onDeleteClick(goal: Goal) {
-        val dialog = DeleteGoalDialog(requireContext(), goal, ::onDeleteConfirmClick)
+    private fun onDeleteClick(habit: Habit) {
+        val dialog = DeleteHabitDialog(requireContext(), habit, ::onDeleteConfirmClick)
         dialog.show()
     }
 
-    private fun onDeleteConfirmClick(goal: Goal) {
-        viewModel.deleteGoals(goal.goalId)
-        viewModel.fetchGoals()
-        CustomToast().showTextToast(
-            requireContext(),
-            resources.getString(R.string.three_day_goal_delete_toast)
-        )
+    private fun onDeleteConfirmClick(habit: Habit) {
+//        viewModel.deleteGoals(habit.goalId)
+//        viewModel.fetchGoals()
+//        CustomToast().showTextToast(
+//            requireContext(),
+//            resources.getString(R.string.three_day_goal_delete_toast)
+//        )
     }
 
     private fun initAdapter() {
-        goalAdapter = GoalAdapter(::onGoalClick, ::onMoreClick)
+        habitAdapter = HabitAdapter(::onGoalClick, ::onMoreClick)
     }
 
     private fun initView() {
         binding.rvGoal.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = goalAdapter
+            adapter = habitAdapter
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,
@@ -132,7 +130,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     parent: RecyclerView,
                     state: RecyclerView.State
                 ) {
-                    outRect.bottom = dpToPx(14)
+                    outRect.bottom = 14.dpToPx(requireContext())
                 }
             })
         }
@@ -146,18 +144,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.apply {
-                    goals.collect {
-                        goalAdapter.submitList(it)
-
+                    habits.collect {
+                        habitAdapter.submitList(it)
                         binding.clNoGoal.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
                     }
                 }
             }
         }
-    }
-
-    private fun dpToPx(dp: Int): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), requireContext().resources.displayMetrics).toInt()
     }
 }

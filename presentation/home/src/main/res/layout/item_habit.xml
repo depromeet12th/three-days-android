@@ -153,12 +153,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="1"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
             app:layout_constraintTop_toTopOf="@+id/iv_first_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <TextView
@@ -166,12 +166,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="2"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
             app:layout_constraintStart_toStartOf="@+id/iv_second_day"
             app:layout_constraintTop_toTopOf="@+id/iv_second_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <TextView
@@ -179,12 +179,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="3"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
             app:layout_constraintStart_toStartOf="@+id/iv_third_day"
             app:layout_constraintTop_toTopOf="@+id/iv_third_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <ImageView

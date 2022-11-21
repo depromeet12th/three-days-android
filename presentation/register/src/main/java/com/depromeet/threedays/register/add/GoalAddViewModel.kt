@@ -2,8 +2,8 @@ package com.depromeet.threedays.register.add
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
-import com.depromeet.threedays.domain.entity.request.SaveGoalRequest
-import com.depromeet.threedays.domain.repository.GoalRepository
+import com.depromeet.threedays.domain.entity.habit.SaveGoalRequest
+import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.register.SimpleGoal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalAddViewModel @Inject constructor(
-    private val goalRepository: GoalRepository
+    private val habitRepository: HabitRepository
 ) : BaseViewModel() {
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
@@ -37,7 +37,7 @@ class GoalAddViewModel @Inject constructor(
                         notificationContent = notificationContent
                     )
                 }
-                goalRepository.create(goal)
+                //habitRepository.create(goal)
             }.onSuccess {
                 _action.emit(Action.SaveClick)
             }.onFailure { throwable ->

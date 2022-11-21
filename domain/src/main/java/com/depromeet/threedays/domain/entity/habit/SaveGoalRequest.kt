@@ -1,4 +1,4 @@
-package com.depromeet.threedays.domain.entity.request
+package com.depromeet.threedays.domain.entity.habit
 
 import java.time.ZonedDateTime
 
