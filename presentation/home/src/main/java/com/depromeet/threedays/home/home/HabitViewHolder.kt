@@ -17,17 +17,6 @@ import com.depromeet.threedays.domain.entity.Color
 class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHolder(view.root) {
 
     fun onBind(habit: Habit, onHabitClick: KFunction1<Habit, Unit>, onMoreClick: KFunction1<Habit, Unit>) {
-
-//        view.ivFirstDay.setOnClickListener {
-//            switchGoalState(0, habit, onHabitClick, it as ImageButton)
-//        }
-//        view.ivSecondDay.setOnClickListener {
-//            switchGoalState(1, habit, onHabitClick, it as ImageButton)
-//        }
-//        view.ivThirdDay.setOnClickListener {
-//            switchGoalState(2, habit, onHabitClick, it as ImageButton)
-//        }
-
         initView(
             reward = habit.reward,
             dayOfweeks = habit.dayOfWeeks,
@@ -36,9 +25,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
             isTodayChecked = (habit.todayHabitAchievementId != null)
         )
 
-        view.ivMore.setOnClickListener {
-            onMoreClick(habit)
-        }
+        initEvent(habit, onHabitClick, onMoreClick)
     }
 
     private fun initView(
@@ -79,14 +66,17 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
             0 -> {
                 view.ivCheckFirstDay.visibility = View.VISIBLE
                 view.ivFirstDay.backgroundTintList = color
+                view.tvFirstDay.visibility = View.GONE
             }
             1 -> {
                 view.ivCheckSecondDay.visibility = View.VISIBLE
                 view.ivSecondDay.backgroundTintList = color
+                view.tvSecondDay.visibility = View.GONE
             }
             2 -> {
                 view.ivCheckThirdDay.visibility = View.VISIBLE
                 view.ivThirdDay.backgroundTintList = color
+                view.tvThirdDay.visibility = View.GONE
             }
         }
     }
@@ -118,26 +108,6 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         iv.backgroundTintList = bgColor
         tv.setTextColor(tvColor)
         tv.visibility = View.VISIBLE
-    }
-
-    private fun switchGoalState(
-        clickedIndex: Int,
-        habit: Habit,
-        onHabitClick: KFunction1<Habit, Unit>,
-        view: ImageButton
-    ) {
-//        if (habit.clapIndex == clickedIndex) {
-//            habit.clapChecked = !habit.clapChecked
-//            onHabitClick(habit)
-//
-//            if (habit.clapChecked) {
-//                view.background = itemView.resources.getDrawable(R.drawable.bg_oval_white, null)
-//                view.setImageResource(com.depromeet.threedays.core_design_system.R.drawable.ic_hand_done)
-//            } else {
-//                view.background = itemView.resources.getDrawable(R.drawable.bg_oval_gray, null)
-//                view.setImageResource(com.depromeet.threedays.core_design_system.R.drawable.ic_hand_normal)
-//            }
-//        }
     }
 
     private fun getColorStateList(color: Color): ColorStateList {
@@ -189,6 +159,52 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                 str += "${convertEnglishDayToKoreanDay(it)},"
             }
             str.removeSuffix(",")
+        }
+    }
+
+    private fun initEvent(habit: Habit, onHabitClick: KFunction1<Habit, Unit>, onMoreClick: KFunction1<Habit, Unit>) {
+        view.ivMore.setOnClickListener {
+            onMoreClick(habit)
+        }
+
+        view.ivFirstDay.setOnClickListener {
+            switchHabitState(0, habit, onHabitClick)
+        }
+        view.ivSecondDay.setOnClickListener {
+            switchHabitState(1, habit, onHabitClick)
+        }
+        view.ivThirdDay.setOnClickListener {
+            switchHabitState(2, habit, onHabitClick)
+        }
+    }
+
+    private fun switchHabitState(
+        clickedIndex: Int,
+        habit: Habit,
+        onHabitClick: KFunction1<Habit, Unit>,
+    ) {
+        val isTodayClicked = (clickedIndex == (habit.sequence % 3))
+        val isTodayChecked = habit.todayHabitAchievementId != null
+        if (isTodayClicked) {
+            if (isTodayChecked) {
+                onHabitClick(
+                    habit.copy(
+                        todayHabitAchievementId = null
+                    )
+                )
+                bindButtonAndColor(
+                    clickedIndex,
+                    getLightColorStateList(habit.color),
+                    getColorStateList(habit.color)
+                )
+            } else {
+                onHabitClick(
+                    habit.copy(
+                        todayHabitAchievementId = Integer.MAX_VALUE
+                    )
+                )
+                setCheckedDay(clickedIndex, getColorStateList(habit.color))
+            }
         }
     }
 

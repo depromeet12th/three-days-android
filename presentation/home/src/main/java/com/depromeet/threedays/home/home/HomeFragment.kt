@@ -65,28 +65,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 //            val dialog = CompleteGoalDialog(requireContext(), habit)
 //            dialog.show()
 //        }
-//
-//        val lastAchievementDate = if (habit.clapChecked) {
-//            ZonedDateTime.now(ZoneId.systemDefault())
-//        } else {
-//            ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1)
-//        }
-//
-//        val updatedGoal = UpdateGoalRequest (
-//            goalId = habit.goalId,
-//            title = habit.title,
-//            startDate = if(habit.startDate == null) null else habit.startDate,
-//            endDate = if(habit.endDate == null) null else habit.endDate,
-//            startTime = if(habit.startTime == null) null else habit.startTime,
-//            notificationTime = if(habit.notificationTime == null) null else habit.notificationTime,
-//            notificationContent = habit.notificationContent,
-//            sequence = habit.sequence + if(habit.clapChecked) 1 else -1,
-//            clapIndex = habit.clapIndex,
-//            clapChecked = habit.clapChecked,
-//            lastAchievementDate = lastAchievementDate,
-//        )
-//
-//        viewModel.updateGoals(updatedGoal)
+
+        //viewModel.updateGoals(updatedGoal)
     }
 
     private fun onMoreClick(habit: Habit) {
