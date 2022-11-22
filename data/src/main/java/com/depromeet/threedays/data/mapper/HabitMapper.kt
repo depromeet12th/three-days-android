@@ -6,7 +6,7 @@ import com.depromeet.threedays.domain.entity.Color
 
 fun HabitEntity.toHabit(): Habit {
     return Habit(
-        habitId = habitId.toLong(),
+        habitId = habitId,
         memberId = memberId,
         title = title,
         imojiPath = imojiPath,

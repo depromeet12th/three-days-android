@@ -22,7 +22,7 @@ class HabitAdapter(
     override fun getItemCount(): Int = currentList.size
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).habitId
+        return getItem(position).habitId.toLong()
     }
 
     companion object {

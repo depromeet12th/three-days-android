@@ -4,7 +4,7 @@ import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.mate.Mate
 
 data class Habit(
-    val habitId: Long,
+    val habitId: Int,
     val memberId: Int,
     val title: String,
     val imojiPath: String,
