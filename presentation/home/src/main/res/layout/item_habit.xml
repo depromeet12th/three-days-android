@@ -14,7 +14,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/tv_goal"
+            android:id="@+id/tv_habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,7 +27,7 @@
             tools:text="영어 공부 1시간 하기" />
 
         <TextView
-            android:id="@+id/tv_object_emoji"
+            android:id="@+id/tv_habit_emoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,24 +36,24 @@
             android:text=""
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
-            app:layout_constraintEnd_toStartOf="@+id/tv_object_count"
+            app:layout_constraintEnd_toStartOf="@+id/tv_habit_reward"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_habit" />
 
         <TextView
-            android:id="@+id/tv_object_count"
+            android:id="@+id/tv_habit_reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="5개"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_object_emoji"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
             app:layout_constraintEnd_toStartOf="@+id/tv_pipe"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_object_emoji" />
+            app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji" />
 
         <TextView
             android:id="@+id/tv_pipe"
@@ -64,13 +64,13 @@
             android:text="|"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_object_count"
-            app:layout_constraintEnd_toStartOf="@+id/tv_object_day"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_habit_reward"
+            app:layout_constraintEnd_toStartOf="@+id/tv_habit_day_of_week"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_object_count" />
+            app:layout_constraintStart_toEndOf="@+id/tv_habit_reward" />
 
         <TextView
-            android:id="@+id/tv_object_day"
+            android:id="@+id/tv_habit_day_of_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -82,7 +82,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tv_pipe" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/iv_first_day"
             android:layout_width="34dp"
             android:layout_height="34dp"
@@ -94,9 +94,9 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_object_emoji" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_habit_emoji" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/iv_second_day"
             android:layout_width="34dp"
             android:layout_height="34dp"
@@ -109,7 +109,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/iv_first_day" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/iv_third_day"
             android:layout_width="34dp"
             android:layout_height="34dp"
@@ -122,69 +122,78 @@
             app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
 
         <ImageView
+            android:id="@+id/iv_check_first_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_check"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
             app:layout_constraintTop_toTopOf="@+id/iv_first_day" />
 
         <ImageView
+            android:id="@+id/iv_check_second_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_check"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
             app:layout_constraintStart_toStartOf="@+id/iv_second_day"
             app:layout_constraintTop_toTopOf="@+id/iv_second_day" />
 
         <ImageView
+            android:id="@+id/iv_check_third_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_check"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
             app:layout_constraintStart_toStartOf="@+id/iv_third_day"
             app:layout_constraintTop_toTopOf="@+id/iv_third_day" />
 
         <TextView
+            android:id="@+id/tv_first_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="1"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
             app:layout_constraintTop_toTopOf="@+id/iv_first_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <TextView
+            android:id="@+id/tv_second_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="2"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
             app:layout_constraintStart_toStartOf="@+id/iv_second_day"
             app:layout_constraintTop_toTopOf="@+id/iv_second_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <TextView
+            android:id="@+id/tv_third_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
             android:textSize="16dp"
+            android:text="3"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
             app:layout_constraintStart_toStartOf="@+id/iv_third_day"
             app:layout_constraintTop_toTopOf="@+id/iv_third_day"
-            tools:text="3"
             tools:textColor="@color/green_sub_color" />
 
         <ImageView

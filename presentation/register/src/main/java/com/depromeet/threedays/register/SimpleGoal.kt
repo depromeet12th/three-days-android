@@ -1,6 +1,5 @@
 package com.depromeet.threedays.register
 
-import com.depromeet.threedays.domain.entity.Goal
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.ZonedDateTime
 
@@ -36,16 +35,16 @@ data class SimpleGoal(
     }
 }
 
-fun Goal.toSimpleGoal() = SimpleGoal(
-    goalId = this.goalId,
-    title = MutableStateFlow(this.title),
-    startDate = this.startDate,
-    endDate = this.endDate,
-    startTime = this.startTime,
-    notificationTime = this.notificationTime,
-    notificationContent = this.notificationContent,
-    sequence = this.sequence,
-    clapIndex = this.clapIndex,
-    clapChecked = this.clapChecked,
-    lastAchievementDate = this.lastAchievementDate,
-)
+//fun Habit.toSimpleGoal() = SimpleGoal(
+//    goalId = this.goalId,
+//    title = MutableStateFlow(this.title),
+//    startDate = this.startDate,
+//    endDate = this.endDate,
+//    startTime = this.startTime,
+//    notificationTime = this.notificationTime,
+//    notificationContent = this.notificationContent,
+//    sequence = this.sequence,
+//    clapIndex = this.clapIndex,
+//    clapChecked = this.clapChecked,
+//    lastAchievementDate = this.lastAchievementDate,
+//)

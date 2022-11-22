@@ -2,10 +2,10 @@ package com.depromeet.threedays.register.update
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
-import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
-import com.depromeet.threedays.domain.repository.GoalRepository
+import com.depromeet.threedays.domain.entity.habit.UpdateGoalRequest
+import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.register.SimpleGoal
-import com.depromeet.threedays.register.toSimpleGoal
+//import com.depromeet.threedays.register.toSimpleGoal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalUpdateViewModel @Inject constructor(
-    private val goalRepository: GoalRepository
+    private val habitRepository: HabitRepository
 ) : BaseViewModel() {
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
@@ -32,9 +32,9 @@ class GoalUpdateViewModel @Inject constructor(
     fun getGoalById(id: Long) {
         viewModelScope.launch {
             kotlin.runCatching {
-                goalRepository.findById(id)
+               // habitRepository.findById(id)
             }.onSuccess {
-                _goal.value = it.toSimpleGoal()
+                //_goal.value = it.toSimpleGoal()
                 _isInitialized.value = true
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
@@ -60,7 +60,7 @@ class GoalUpdateViewModel @Inject constructor(
                         clapChecked = clapChecked
                     )
                 }
-                goalRepository.update(newGoal)
+                //habitRepository.update(newGoal)
             }.onSuccess {
                 _action.emit(Action.UpdateClick)
             }.onFailure { throwable ->

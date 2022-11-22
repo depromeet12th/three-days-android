@@ -2,11 +2,9 @@ package com.depromeet.threedays.home.home
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
-import com.depromeet.threedays.domain.entity.Goal
-import com.depromeet.threedays.domain.entity.request.UpdateGoalRequest
-import com.depromeet.threedays.domain.usecase.DeleteGoalUseCase
-import com.depromeet.threedays.domain.usecase.GetAllGoalsUseCase
-import com.depromeet.threedays.domain.usecase.UpdateGoalUseCase
+import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.entity.habit.Habit
+import com.depromeet.threedays.domain.usecase.GetHabitsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,40 +13,53 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllGoalsUseCase: GetAllGoalsUseCase,
-    private val updateGoalUseCase: UpdateGoalUseCase,
-    private val deleteGoalUseCase: DeleteGoalUseCase,
+    private val getHabitsUseCase: GetHabitsUseCase,
+//    private val updateHabitUseCase: UpdateHabitUseCase,
+//    private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
 
-    private val _goals: MutableStateFlow<List<Goal>> = MutableStateFlow(emptyList())
-    val goals: StateFlow<List<Goal>>
-        get() = _goals
+    private val _habits: MutableStateFlow<List<Habit>> = MutableStateFlow(emptyList())
+    val habits: StateFlow<List<Habit>>
+        get() = _habits
 
     fun fetchGoals() {
         viewModelScope.launch {
-            getAllGoalsUseCase().collect {
-                _goals.value = it
+            getHabitsUseCase().collect {
+                when(it.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        _habits.value = it.data!!
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
             }
         }
     }
 
-    fun updateGoals(updateGoalRequest: UpdateGoalRequest) {
-        viewModelScope.launch {
-            try {
-                updateGoalUseCase(updateGoalRequest)
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-        }
-    }
-
-    fun deleteGoals(goalId: Long) {
-        viewModelScope.launch {
-            try {
-                deleteGoalUseCase(goalId)
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-        }
-    }
+//    fun updateGoals(updateGoalRequest: UpdateGoalRequest) {
+//        viewModelScope.launch {
+//            try {
+//                updateHabitUseCase(updateGoalRequest)
+//            } catch (exception: Exception) {
+//                exception.printStackTrace()
+//            }
+//        }
+//    }
+//
+//    fun deleteGoals(goalId: Long) {
+//        viewModelScope.launch {
+//            try {
+//                deleteHabitUseCase(goalId)
+//            } catch (exception: Exception) {
+//                exception.printStackTrace()
+//            }
+//        }
+//    }
 }

@@ -6,33 +6,26 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import com.depromeet.threedays.domain.entity.Goal
-import com.depromeet.threedays.home.databinding.DialogDeleteGoalBinding
+import com.depromeet.threedays.domain.entity.habit.Habit
+import com.depromeet.threedays.home.databinding.DialogCompleteHabitBinding
 
-class DeleteGoalDialog(
+class CompleteHabitDialog(
     context: Context,
-    val goal: Goal,
-    val onDeleteConfirmClick: (Goal) -> Unit
+    val habit: Habit
 ) : Dialog(context) {
-    private lateinit var binding: DialogDeleteGoalBinding
+    private lateinit var binding: DialogCompleteHabitBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DialogDeleteGoalBinding.inflate(LayoutInflater.from(context))
+        binding = DialogCompleteHabitBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
 
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setCanceledOnTouchOutside(true)
         setCancelable(true)
 
-        binding.btnCancel.setOnClickListener {
-            dismiss()
-        }
-
-        binding.btnConfirm.setOnClickListener {
-            onDeleteConfirmClick(goal)
+        binding.btnGreat.setOnClickListener {
             dismiss()
         }
     }
 }
-

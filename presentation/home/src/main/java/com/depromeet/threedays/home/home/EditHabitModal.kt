@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.depromeet.threedays.domain.entity.Goal
-import com.depromeet.threedays.home.databinding.ModalEditGoalBinding
+import com.depromeet.threedays.domain.entity.habit.Habit
+import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class EditGoalModal(
-    val goal: Goal,
-    val onEditClick: (Goal) -> Unit,
-    val onDeleteClick: (Goal) -> Unit
+class EditHabitModal(
+    val habit: Habit,
+    val onEditClick: (Habit) -> Unit,
+    val onDeleteClick: (Habit) -> Unit
 ) : BottomSheetDialogFragment() {
-    lateinit var binding: ModalEditGoalBinding
+    lateinit var binding: ModalEditHabitBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +21,7 @@ class EditGoalModal(
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = ModalEditGoalBinding.inflate(inflater, container, false)
+        binding = ModalEditHabitBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,12 +29,12 @@ class EditGoalModal(
         super.onViewCreated(view, savedInstanceState)
 
         binding.llEdit.setOnClickListener {
-            onEditClick(goal)
+            onEditClick(habit)
             dismiss()
         }
 
         binding.llDelete.setOnClickListener {
-            onDeleteClick(goal)
+            onDeleteClick(habit)
             dismiss()
         }
     }
