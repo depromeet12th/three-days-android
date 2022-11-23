@@ -1,0 +1,14 @@
+<resources>
+    <!-- dialog -->
+    <string name="title_delete_habit">습관을 삭제하시겠어요?</string>
+    <string name="title_delete_habit_with_mate">짝꿍과 연결된 습관이예요.\n삭제하시겠어요?</string>
+    <string name="title_cancel_habit_create">작성중인 내용이 있어요\n나가시겠어요?</string>
+    <string name="title_cancel_habit_modify">수정중인 내용이 있어요\n나가시겠어요?</string>
+    <string name="description_delete_habit_with_history">실천 기록이 있는 습관은 삭제 후\n보관함으로 이동돼요.</string>
+    <string name="description_delete_habit_with_mate">삭제된 습관과 짝꿍은 보관함에서\n확인할 수 있어요.</string>
+    <string name="description_cancel_habit_create">지금까지 작성한 내용이 사라져요.</string>
+    <string name="description_cancel_habit_modify">지금까지 수정한 내용이 사라져요.</string>
+    <string name="reply_no">아니요</string>
+    <string name="reply_delete">삭제할래요</string>
+    <string name="reply_cancel">나갈래요</string>
+</resources>

@@ -26,7 +26,8 @@ ext {
             "leakcanary"            : "2.9.1",
             "chucker"               : "3.5.2",
             "google"                : "20.2.0",
-            "room"                  : "2.4.3"
+            "room"                  : "2.4.3",
+            "emoji"                 : "1.0.0-alpha03"
     ]
     deps = [
             "kotlin"          : [
@@ -97,12 +98,16 @@ ext {
                     "kakao"                : "com.kakao.sdk:v2-user:${versions.kakao}",
                     "google"               : "com.google.android.gms:play-services-auth:${versions.google}"
             ],
-            "room": [
-                    "roomCommon"          : "androidx.room:room-common:${versions.room}",
-                    "roomCompiler"        : "androidx.room:room-compiler:${versions.room}",
-                    "roomKtx"             : "androidx.room:room-ktx:${versions.room}",
-                    "roomRuntime"         : "androidx.room:room-runtime:${versions.room}",
-                    "roomRxjava2"         : "androidx.room:room-rxjava2:${versions.room}"
+            "room"                         : [
+                    "roomCommon"           : "androidx.room:room-common:${versions.room}",
+                    "roomCompiler"         : "androidx.room:room-compiler:${versions.room}",
+                    "roomKtx"              : "androidx.room:room-ktx:${versions.room}",
+                    "roomRuntime"          : "androidx.room:room-runtime:${versions.room}",
+                    "roomRxjava2"          : "androidx.room:room-rxjava2:${versions.room}"
+            ],
+            "emoji"                        : [
+                    "emoji2"               : "androidx.emoji2:emoji2:${versions.emoji}",
+                    "emoji2View"           : "androidx.emoji2:emoji2-views:${versions.emoji}"
             ]
     ]
 
@@ -156,5 +161,10 @@ ext {
             deps.room.roomKtx,
             deps.room.roomRuntime,
             deps.room.roomRxjava2
+    ]
+
+    emojiDeps = [
+            deps.emoji.emoji2,
+            deps.emoji.emoji2View
     ]
 }

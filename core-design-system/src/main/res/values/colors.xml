@@ -7,6 +7,8 @@
     <color name="disable">#ACACAC</color>
     <color name="toast">#3C3C3C</color>
 
+    <color name="main">#1A1E27</color>
+
     <color name="green_sub_color">#34C185</color>
     <color name="light_green_sub_color">#DFF5EC</color>
     <color name="blue_sub_color">#3F80FF</color>
