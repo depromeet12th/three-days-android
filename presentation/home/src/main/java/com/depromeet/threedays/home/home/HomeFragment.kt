@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.util.CustomToast
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.key.RESULT_CREATE
@@ -43,7 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             RESULT_CREATE -> viewModel.fetchGoals()
             RESULT_MODIFY -> {
                 viewModel.fetchGoals()
-                CustomToast().showTextToast(
+                ThreeDaysToast().show(
                     requireContext(),
                     resources.getString(R.string.three_day_goal_modify_toast)
                 )
