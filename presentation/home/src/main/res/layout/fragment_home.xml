@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:gravity="center"
-                android:textAppearance="@style/Typography.Body2.SemiBold"
+                android:textAppearance="@style/Typography.Body2"
                 android:text="습관 만들기"
                 android:textColor="@color/gray_600"
                 app:layout_constraintTop_toTopOf="@+id/cl_no_goal"

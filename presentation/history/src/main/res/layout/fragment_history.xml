@@ -242,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textAppearance="@style/Typography.Body2.Bold"
+                android:textAppearance="@style/Typography.Body2"
                 android:textColor="#FDFDFD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +256,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/ongoing_habit"
-            android:textAppearance="@style/Typography.Body2.SemiBold"
+            android:textAppearance="@style/Typography.Body2"
             android:textColor="@color/gray_500"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@+id/cl_this_month_achieve_days" />
