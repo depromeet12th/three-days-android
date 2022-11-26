@@ -96,7 +96,7 @@
         <androidx.constraintlayout.widget.Group
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="cl_this_month_clap, cl_this_month_achieve_days, cl_most_achieve, tv_ongoing_habit, rv_habit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -271,5 +271,51 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
             tools:listitem="@layout/item_habit"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_illustration, tv_no_habit_guide, btn_create_habit" />
+
+        <TextView
+            android:id="@+id/tv_illustration"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="185dp"
+            android:background="@color/gray_300"
+            android:gravity="center"
+            android:text="일러스트로 대체될 영역"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_habit_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/no_habit_guide"
+            android:textAppearance="@style/Typography.Paragraph3.13dp"
+            android:gravity="center"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_create_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_rect_main_r30"
+            android:gravity="center"
+            android:paddingHorizontal="44dp"
+            android:text="@string/create_habit"
+            android:textAppearance="@style/Typography.Button1"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

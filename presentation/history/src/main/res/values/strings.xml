@@ -11,6 +11,8 @@
     <string name="this_month_most_achieve_habit_title">점심먹은 직후\n종합 비타민 호다닥</string>
     <string name="ongoing_habit">진행중인 습관</string>
     <string name="history_tooltip_guide">히스토리에 저장되지 않고 삭제된 습관은\n나의 기록에서 확인할 수 없어요. 🥲</string>
+    <string name="no_habit_guide">아직 습관이 없어요.\n새로운 습관을 만들어볼까요?</string>
+    <string name="create_habit">습관 만들기</string>
 
     <!-- emoji -->
     <string name="clap">👏🏻</string>
