@@ -19,10 +19,17 @@
             app:layout_constraintBottom_toTopOf="@+id/bnv_main"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_100"
+            app:layout_constraintBottom_toTopOf="@+id/bnv_main"/>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:elevation="0dp"
             app:itemIconTint="@drawable/selector_menu_color"
             app:itemTextColor="@drawable/selector_menu_color"
             app:layout_constraintBottom_toBottomOf="parent"
