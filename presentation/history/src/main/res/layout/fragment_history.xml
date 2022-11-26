@@ -93,6 +93,12 @@
             android:layout_height="35dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_this_month"/>
 
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="cl_this_month_clap, cl_this_month_achieve_days, cl_most_achieve, tv_ongoing_habit, rv_habit" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_this_month_clap"
             android:layout_width="0dp"
@@ -200,6 +206,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_most_achieve"
             android:layout_width="0dp"
             android:layout_height="212dp"
             android:background="@drawable/bg_rect_green_sub_color_r10"
@@ -244,7 +251,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_in_progress_object"
+            android:id="@+id/tv_ongoing_habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
@@ -255,13 +262,14 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_this_month_achieve_days" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_in_progress_object"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
             tools:listitem="@layout/item_habit"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
