@@ -1,4 +1,19 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 습관 리스트 아이템 -->
+    <string name="habit_sample_title">아침 챙겨먹기</string>
+
+    <!-- 기록 화면 -->
+    <string name="this_month_history_title">%d월 기록</string>
+    <string name="this_month_clap_title">%d월 박수</string>
+    <string name="this_month_achieve_days_title">%d월 습관 실천일</string>
+    <string name="this_month_most_achieve_habit_guide">이번달,\n가장 많이 실천한 습관</string>
+    <string name="this_month_most_achieve_habit_title">점심먹은 직후\n종합 비타민 호다닥</string>
+    <string name="ongoing_habit">진행중인 습관</string>
+    <string name="history_tooltip_guide">히스토리에 저장되지 않고 삭제된 습관은\n나의 기록에서 확인할 수 없어요. 🥲</string>
+
+    <!-- emoji -->
+    <string name="clap">👏🏻</string>
+    <string name="watch">🕖</string>
+    <string name="medicine">💊</string>
 </resources>
