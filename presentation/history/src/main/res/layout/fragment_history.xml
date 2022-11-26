@@ -66,6 +66,27 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_next_month"
             app:layout_constraintEnd_toEndOf="@id/gl_end"/>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_tooltip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="12dp"
+            android:elevation="8dp"
+            android:visibility="gone"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_tooltip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
+                android:text="히스토리에 저장되지 않고 삭제된 습관은\n나의 기록에서 확인할 수 없어요. 🥲"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="16dp"/>
+        </androidx.cardview.widget.CardView>
+
         <Space
             android:id="@+id/space_bottom_of_toolbar"
             android:layout_width="match_parent"
@@ -189,8 +210,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:gravity="center"
-                android:text="이번달,\n가장 많이 달성한 습관"
-                android:textAppearance="@style/Typography.Body4.Medium"
+                android:text="이번달,\n가장 많이 실천한 습관"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -238,6 +259,7 @@
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_in_progress_object" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_in_progress_object"
+            tools:listitem="@layout/item_habit"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
