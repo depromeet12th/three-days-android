@@ -114,10 +114,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         return when(color) {
             Color.GREEN -> ColorStateList.valueOf(itemView.context.getColor(R.color.green_sub_color))
             Color.BLUE -> ColorStateList.valueOf(itemView.context.getColor(R.color.blue_sub_color))
-            Color.YELLOW -> ColorStateList.valueOf(itemView.context.getColor(R.color.yellow_sub_color))
-            Color.RED -> ColorStateList.valueOf(itemView.context.getColor(R.color.red_sub_color))
             Color.PINK -> ColorStateList.valueOf(itemView.context.getColor(R.color.pink_sub_color))
-            Color.PURPLE -> ColorStateList.valueOf(itemView.context.getColor(R.color.purple_sub_color))
         }
     }
 
@@ -125,10 +122,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         return when(color) {
             Color.GREEN -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_green_sub_color))
             Color.BLUE -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_blue_sub_color))
-            Color.YELLOW -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_yellow_sub_color))
-            Color.RED -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_red_sub_color))
             Color.PINK -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_pink_sub_color))
-            Color.PURPLE -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_purple_sub_color))
         }
     }
 
