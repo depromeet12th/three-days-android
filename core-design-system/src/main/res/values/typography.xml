@@ -19,8 +19,8 @@
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
-    <!-- Sub Title1 -->
-    <style name="Typography.SubTitle1">
+    <!-- Sub Title -->
+    <style name="Typography.SubTitle">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
