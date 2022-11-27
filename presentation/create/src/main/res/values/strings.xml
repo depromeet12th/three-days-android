@@ -1,25 +1,25 @@
 <resources>
     <!--짝심 목표 생성-->
-    <string name="three_days_suggestion_habit_create">습관을 만들어 볼까요?</string>
-    <string name="three_days_habit_name">습관명</string>
-    <string name="three_days_habit_name_hint">어떤 습관을 원하시나요?</string>
-    <string name="three_days_habit_name_count_default">0/15</string>
-    <string name="three_days_habit_execute_day_of_week">실천 요일</string>
-    <string name="three_days_habit_minimum_day_of_week">(최소 3일 이상)</string>
-    <string name="three_days_monday">월</string>
-    <string name="three_days_tuesday">화</string>
-    <string name="three_days_wednesday">수</string>
-    <string name="three_days_thursday">목</string>
-    <string name="three_days_friday">금</string>
-    <string name="three_days_saturday">토</string>
-    <string name="three_days_sunday">일</string>
-    <string name="three_days_push_notification">푸시 알림</string>
-    <string name="three_days_time_format">00:00</string>
-    <string name="three_days_notification_content_hint">습관을 잘 실천하기위해서 본인에게 자극의 한마디를 써볼까요?</string>
-    <string name="three_days_notification_content_count_default">0/25</string>
-    <string name="three_days_color">색상</string>
-    <string name="three_days_habit_create">습관 만들기</string>
+    <string name="suggestion_habit_create">습관을 만들어 볼까요?</string>
+    <string name="habit_name">습관명</string>
+    <string name="habit_name_hint">어떤 습관을 원하시나요?</string>
+    <string name="habit_name_count_default">0/15</string>
+    <string name="habit_execute_day_of_week">실천 요일</string>
+    <string name="habit_minimum_day_of_week">(최소 3일 이상)</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
+    <string name="sunday">일</string>
+    <string name="push_notification">푸시 알림</string>
+    <string name="time_format">00:00</string>
+    <string name="notification_content_hint">습관을 잘 실천하기위해서 본인에게 자극의 한마디를 써볼까요?</string>
+    <string name="notification_content_count_default">0/25</string>
+    <string name="color">색상</string>
+    <string name="habit_create">습관 만들기</string>
 
     <!--짝심 목표 수정-->
-    <string name="three_days_habit_update">습관 수정 완료</string>
+    <string name="habit_update">습관 수정 완료</string>
 </resources>
