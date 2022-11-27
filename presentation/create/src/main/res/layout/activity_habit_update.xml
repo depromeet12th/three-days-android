@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.depromeet.threedays.create.update.HabitUpdateViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".create.HabitCreateActivity"
+        tools:ignore="ContentDescription">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_habit_create_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="24dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/suggestion_habit_create"
+                android:textAppearance="@style/Typography.H1"
+                android:textColor="@color/gray_800"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_close" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_habit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/habit_name"
+            android:textAppearance="@style/Typography.SubTitle"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_header" />
+
+        <TextView
+            android:id="@+id/tv_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rect_gray100_r10"
+            android:padding="10dp"
+            android:textColor="#FF000000"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_habit_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_habit_name"
+            tools:text="🧩" />
+
+        <EditText
+            android:id="@+id/et_habit_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_rect_gray100_r10"
+            android:hint="@string/habit_name_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="15"
+            android:paddingVertical="13dp"
+            android:paddingStart="16dp"
+            android:text="@={viewModel.goal.title}"
+            android:textAppearance="@style/Typography.Body1"
+            android:textColor="@color/gray_800"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_emoji"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_emoji"
+            app:layout_constraintTop_toTopOf="@+id/tv_emoji"
+            tools:ignore="LabelFor" />
+
+        <TextView
+            android:id="@+id/tv_habit_title_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/habit_name_count_default"
+            android:textAppearance="@style/Typography.Body4"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/et_habit_title"
+            app:layout_constraintEnd_toEndOf="@+id/et_habit_title"
+            app:layout_constraintTop_toTopOf="@+id/et_habit_title" />
+
+        <TextView
+            android:id="@+id/tv_execute_day_of_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/habit_execute_day_of_week"
+            android:textAppearance="@style/Typography.SubTitle"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="@+id/tv_emoji"
+            app:layout_constraintTop_toBottomOf="@+id/tv_emoji" />
+
+        <TextView
+            android:id="@+id/tv_min_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/habit_minimum_day_of_week"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_execute_day_of_week"
+            app:layout_constraintStart_toEndOf="@+id/tv_execute_day_of_week" />
+
+
+        <LinearLayout
+            android:id="@+id/container_day_of_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="19dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_execute_day_of_week">
+
+            <CheckBox
+                android:id="@+id/cb_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/monday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/tuesday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/wednesday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/thursday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/friday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/saturday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+            <CheckBox
+                android:id="@+id/cb_sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_day_of_week_box"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="@string/sunday"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@drawable/selector_day_of_week_text" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/push_notification"
+            android:textAppearance="@style/Typography.SubTitle"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="@+id/tv_execute_day_of_week"
+            app:layout_constraintTop_toBottomOf="@+id/container_day_of_week" />
+
+        <Switch
+            android:id="@+id/sw_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:gravity="center"
+            android:thumb="@drawable/shape_switch_thumb"
+            android:track="@drawable/selector_switch_button_track"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_day_of_week"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_notification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_notification"
+            app:layout_constraintTop_toBottomOf="@+id/tv_notification">
+
+            <TextView
+                android:id="@+id/tv_notification_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect_gray100_r10"
+                android:hint="@string/time_format"
+                android:paddingVertical="14dp"
+                android:paddingStart="16dp"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_800"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_notification_content"
+                android:layout_width="0dp"
+                android:layout_height="78dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_rect_gray100_r10"
+                android:gravity="top"
+                android:hint="@string/notification_content_hint"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="25"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:text="@={viewModel.goal.notificationContent}"
+                android:textAppearance="@style/Typography.Paragraph1.15dp"
+                android:textColor="@color/gray_800"
+                app:layout_constraintEnd_toEndOf="@+id/tv_notification_time"
+                app:layout_constraintStart_toStartOf="@+id/tv_notification_time"
+                app:layout_constraintTop_toBottomOf="@+id/tv_notification_time" />
+
+            <TextView
+                android:id="@+id/tv_notification_content_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/notification_content_count_default"
+                android:textAppearance="@style/Typography.Body4"
+                android:textColor="@color/gray_500"
+                app:layout_constraintBottom_toBottomOf="@+id/et_notification_content"
+                app:layout_constraintEnd_toEndOf="@+id/et_notification_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/color"
+            android:textAppearance="@style/Typography.SubTitle"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="@+id/tv_notification"
+            app:layout_constraintTop_toBottomOf="@+id/container_notification" />
+
+        <RadioGroup
+            android:id="@+id/group_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_color">
+
+            <RadioButton
+                android:id="@+id/rb_green"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_check_green"
+                android:button="@null"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rb_blue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_check_blue"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_pink"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_check_pink"
+                android:button="@null" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_habit_create"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/selector_habit_button"
+            android:enabled="@{!viewModel.goal.title.empty, default = false}"
+            android:gravity="center"
+            android:paddingVertical="18dp"
+            android:text="@string/habit_update"
+            android:textAppearance="@style/Typography.Button1"
+            android:textColor="@color/gray_450"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
