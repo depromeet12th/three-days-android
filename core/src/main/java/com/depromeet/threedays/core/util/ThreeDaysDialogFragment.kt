@@ -13,9 +13,6 @@ import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
 
 class ThreeDaysDialogFragment : DialogFragment() {
-    private lateinit var onPositiveAction: () -> Unit
-    private var dialogMode: Int = NOT_INIT
-
     private var _binding: FragmentThreeDaysDialogBinding? = null
     private val binding get() = _binding!!
 
@@ -23,8 +20,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_three_days_dialog, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_three_days_dialog, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
@@ -33,7 +29,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setLayout(view)
+        setLayout()
         initEmoji()
         initView()
     }
@@ -43,7 +39,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
         _binding = null
     }
 
-    private fun setLayout(view: View) {
+    private fun setLayout() {
         requireNotNull(dialog).apply {
             requireNotNull(window).apply {
                 setLayout(
@@ -56,67 +52,43 @@ class ThreeDaysDialogFragment : DialogFragment() {
     }
 
     private fun initEmoji() {
-        when (dialogMode) {
-            DELETE_HABIT_NO_HISTORY, DELETE_HABIT_WITH_HISTORY, DELETE_HABIT_WITH_MATE -> {
-                binding.tvEmoji.run {
-                    text = TRASH_EMOJI.toEmoji
-                    visible()
-                }
-            }
-            CANCEL_HABIT_CREATE, CANCEL_HABIT_MODIFY -> {
-                binding.tvEmoji.gone()
-            }
+        if (emoji != null) {
+            binding.tvEmoji.text = emoji.toEmoji
+            binding.tvEmoji.visible()
         }
     }
 
     private fun initView() {
         binding.tvTitle.run {
-            text = when (dialogMode) {
-                DELETE_HABIT_NO_HISTORY -> getString(R.string.title_delete_habit)
-                DELETE_HABIT_WITH_HISTORY -> getString(R.string.title_delete_habit)
-                DELETE_HABIT_WITH_MATE -> getString(R.string.title_delete_habit_with_mate)
-                CANCEL_HABIT_CREATE -> getString(R.string.title_cancel_habit_create)
-                CANCEL_HABIT_MODIFY -> getString(R.string.title_cancel_habit_modify)
-                else -> throw IllegalStateException()
-            }
-            margin(top = when(dialogMode) {
-                DELETE_HABIT_NO_HISTORY, DELETE_HABIT_WITH_HISTORY, DELETE_HABIT_WITH_MATE -> 30F
-                CANCEL_HABIT_CREATE, CANCEL_HABIT_MODIFY -> 28F
-                else -> throw IllegalStateException()
-            })
+            text = title
+            margin(
+                top = if (titleTopMargin == 0f) {
+                    if (emoji != null) TITLE_MARGIN_WITH_EMOJI
+                    else TITLE_MARGIN_WITHOUT_EMOJI
+                } else titleTopMargin
+            )
         }
         binding.tvDescription.run {
-            text = when (dialogMode) {
-                DELETE_HABIT_WITH_HISTORY -> getString(R.string.description_delete_habit_with_history)
-                DELETE_HABIT_WITH_MATE -> getString(R.string.description_delete_habit_with_mate)
-                CANCEL_HABIT_CREATE -> getString(R.string.description_cancel_habit_create)
-                CANCEL_HABIT_MODIFY -> getString(R.string.description_cancel_habit_modify)
-                else -> throw IllegalStateException()
-            }
-            visibleOrGone(dialogMode != DELETE_HABIT_NO_HISTORY)
+            text = description
+            visibleOrGone(description.isNotEmpty())
         }
 
         binding.tvConfirm.run {
-            text = when (dialogMode) {
-                DELETE_HABIT_NO_HISTORY -> getString(R.string.reply_delete)
-                DELETE_HABIT_WITH_HISTORY -> getString(R.string.reply_delete)
-                DELETE_HABIT_WITH_MATE -> getString(R.string.reply_delete)
-                CANCEL_HABIT_CREATE -> getString(R.string.reply_cancel)
-                CANCEL_HABIT_MODIFY -> getString(R.string.reply_cancel)
-                else -> throw IllegalStateException()
-            }
-            setOnSingleClickListener{
+            text = confirmText.ifEmpty { this.text }
+            setOnSingleClickListener {
                 onPositiveAction()
                 dismiss()
             }
         }
 
         binding.tvCancel.run {
-            margin(top = when(dialogMode) {
-                DELETE_HABIT_NO_HISTORY, DELETE_HABIT_WITH_HISTORY, DELETE_HABIT_WITH_MATE -> 30F
-                CANCEL_HABIT_CREATE, CANCEL_HABIT_MODIFY -> 20F
-                else -> throw IllegalStateException()
-            })
+            text = cancelText.ifEmpty { this.text }
+            margin(
+                top = if (buttonTopMargin == 0f) {
+                    if (emoji != null) BUTTON_MARGIN_WITH_EMOJI
+                    else BUTTON_MARGIN_WITHOUT_EMOJI
+                } else buttonTopMargin
+            )
             setOnSingleClickListener {
                 dismiss()
             }
@@ -126,20 +98,39 @@ class ThreeDaysDialogFragment : DialogFragment() {
     companion object {
         const val TAG = "ThreeDaysDialogFragment"
 
-        const val NOT_INIT = -1
-        const val DELETE_HABIT_NO_HISTORY = 0
-        const val DELETE_HABIT_WITH_HISTORY = 1
-        const val DELETE_HABIT_WITH_MATE = 2
-        const val CANCEL_HABIT_CREATE = 3
-        const val CANCEL_HABIT_MODIFY = 4
+        const val TITLE_MARGIN_WITH_EMOJI = 30f
+        const val TITLE_MARGIN_WITHOUT_EMOJI = 28f
+        const val BUTTON_MARGIN_WITH_EMOJI = 30f
+        const val BUTTON_MARGIN_WITHOUT_EMOJI = 20f
 
-        const val TRASH_EMOJI = 0x1F5D1
+        private lateinit var onPositiveAction: () -> Unit
+        private var emoji: Int? = null
+        private var title: String = String.Empty
+        private var description: String = String.Empty
+        private var confirmText: String = String.Empty
+        private var cancelText: String = String.Empty
+        private var titleTopMargin: Float = 0F
+        private var buttonTopMargin: Float = 0F
 
-        fun newInstance(dialogMode: Int, onPositiveAction: () -> Unit): ThreeDaysDialogFragment {
-            val fragment = ThreeDaysDialogFragment()
-            fragment.dialogMode = dialogMode
-            fragment.onPositiveAction = onPositiveAction
-            return fragment
+        fun newInstance(
+            emoji: Int? = null,
+            title: String,
+            description: String = String.Empty,
+            confirmText: String = String.Empty,
+            cancelText: String = String.Empty,
+            titleTopMargin: Float = 0F,
+            buttonTopMargin: Float = 0F,
+            onPositiveAction: () -> Unit
+        ): ThreeDaysDialogFragment {
+            this.emoji = emoji
+            this.title = title
+            this.description = description
+            this.confirmText = confirmText
+            this.cancelText = cancelText
+            this.titleTopMargin = titleTopMargin
+            this.buttonTopMargin = buttonTopMargin
+            this.onPositiveAction = onPositiveAction
+            return ThreeDaysDialogFragment()
         }
     }
 }
