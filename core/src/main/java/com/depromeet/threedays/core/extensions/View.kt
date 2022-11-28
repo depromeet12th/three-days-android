@@ -29,10 +29,6 @@ fun View.invisible() {
     this.isInvisible = true
 }
 
-fun View.switchVisible() {
-    this.isVisible = this.isVisible.not()
-}
-
 fun View.margin(left: Float? = null, top: Float? = null, right: Float? = null, bottom: Float? = null) {
     layoutParams<ViewGroup.MarginLayoutParams> {
         left?.run { leftMargin = dpToPx(this) }

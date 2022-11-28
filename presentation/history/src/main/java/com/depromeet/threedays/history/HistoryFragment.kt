@@ -2,9 +2,9 @@ package com.depromeet.threedays.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.extensions.switchVisible
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +20,13 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
 
     private fun initEvent() {
         binding.ivTooltip.setOnClickListener {
-            binding.cvTooltip.switchVisible()
+            binding.tvTooltip.apply {
+                visibility = if (isVisible) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+            }
         }
     }
 }
