@@ -6,13 +6,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.home.databinding.DialogDeleteHabitBinding
 
 class DeleteHabitDialog(
     context: Context,
-    val habit: Habit,
-    val onDeleteConfirmClick: (Habit) -> Unit
+    val habitId: Int,
+    val onDeleteConfirmClick: (Int) -> Unit
 ) : Dialog(context) {
     private lateinit var binding: DialogDeleteHabitBinding
 
@@ -30,7 +29,7 @@ class DeleteHabitDialog(
         }
 
         binding.btnConfirm.setOnClickListener {
-            onDeleteConfirmClick(habit)
+            onDeleteConfirmClick(habitId)
             dismiss()
         }
     }
