@@ -16,7 +16,7 @@ class HabitAdapter(
     }
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        holder.onBind(getItem(position), onHabitClick, onMoreClick)
+        holder.onBind(getItem(position), holder.itemView.context, onHabitClick, onMoreClick)
     }
 
     override fun getItemCount(): Int = currentList.size
