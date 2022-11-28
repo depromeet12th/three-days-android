@@ -1,4 +1,3 @@
 <resources>
-    <string name="three_day_goal_modify_toast">짝심목표가 수정되었어요</string>
-    <string name="three_day_goal_delete_toast">짝심목표가 삭제되었어요</string>
+    <string name="create_habit">습관 만들기</string>
 </resources>

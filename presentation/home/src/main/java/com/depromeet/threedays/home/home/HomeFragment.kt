@@ -41,13 +41,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         when(result.resultCode) {
             RESULT_CREATE -> viewModel.fetchGoals()
-            RESULT_MODIFY -> {
-                viewModel.fetchGoals()
-                ThreeDaysToast().show(
-                    requireContext(),
-                    resources.getString(R.string.three_day_goal_modify_toast)
-                )
-            }
+//            RESULT_MODIFY -> {
+//                viewModel.fetchGoals()
+//                ThreeDaysToast().show(
+//                    requireContext(),
+//                    resources.getString(R.string.three_day_goal_modify_toast)
+//                )
+//            }
         }
     }
 
