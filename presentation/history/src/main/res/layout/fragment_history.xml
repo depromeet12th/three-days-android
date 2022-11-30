@@ -42,10 +42,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:textAppearance="@style/Typography.H1"
-            android:text="10월 기록"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/this_month_history_title"/>
 
         <ImageView
             android:id="@+id/iv_next_month"
@@ -66,11 +66,33 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_next_month"
             app:layout_constraintEnd_toEndOf="@id/gl_end"/>
 
+        <TextView
+            android:id="@+id/tv_tooltip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="12dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="16dp"
+            android:background="@drawable/bg_rect_white_r10"
+            android:textAppearance="@style/Typography.Paragraph3.13dp"
+            android:text="@string/history_tooltip_guide"
+            android:elevation="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_tooltip" />
+
         <Space
             android:id="@+id/space_bottom_of_toolbar"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_this_month"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="cl_this_month_clap, cl_this_month_achieve_days, cl_most_achieve, tv_ongoing_habit, rv_habit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_this_month_clap"
@@ -82,21 +104,22 @@
             app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar">
 
             <TextView
+                android:id="@+id/tv_this_month_clap_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="10월 박수"
                 android:textAppearance="@style/Typography.Body3"
                 android:textColor="@color/gray_300"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/this_month_clap_title"/>
 
             <TextView
                 android:id="@+id/tv_clap_emoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👏🏻"
+                android:text="@string/clap"
                 android:textAppearance="@style/Typography.H1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_clap"
@@ -111,13 +134,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_marginStart="8dp"
-                android:text="4"
                 android:textAppearance="@style/Typography.H1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_clap_emoji" />
+                app:layout_constraintStart_toEndOf="@+id/tv_clap_emoji"
+                tools:text="4"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,21 +154,22 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_this_month_clap">
 
             <TextView
+                android:id="@+id/tv_this_month_achieve_days_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="10월 습관 실천일"
                 android:textAppearance="@style/Typography.Body3"
                 android:textColor="@color/gray_300"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/this_month_achieve_days_title"/>
 
             <TextView
                 android:id="@+id/tv_watch_emoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🕖"
+                android:text="@string/watch"
                 android:textAppearance="@style/Typography.H1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_achieve_days"
@@ -160,13 +184,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_marginStart="8dp"
-                android:text="26"
                 android:textAppearance="@style/Typography.H1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_watch_emoji" />
+                app:layout_constraintStart_toEndOf="@+id/tv_watch_emoji"
+                tools:text="26" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Space
@@ -177,6 +201,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_most_achieve"
             android:layout_width="0dp"
             android:layout_height="212dp"
             android:background="@drawable/bg_rect_green_sub_color_r10"
@@ -189,8 +214,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:gravity="center"
-                android:text="이번달,\n가장 많이 달성한 습관"
-                android:textAppearance="@style/Typography.Body4.Medium"
+                android:text="@string/this_month_most_achieve_habit_guide"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -199,9 +224,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="💊"
+                android:text="@string/medicine"
                 android:textAppearance="@style/Typography.Body1"
-                android:textSize="48dp"
+                android:textSize="48sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -212,32 +237,80 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:text="점심먹은 직후\n종합 비타민 호다닥"
-                android:textAppearance="@style/Typography.Body2.Bold"
+                android:textAppearance="@style/Typography.Body2"
                 android:textColor="#FDFDFD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="@string/this_month_most_achieve_habit_title"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_in_progress_object"
+            android:id="@+id/tv_ongoing_habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="진행중인 습관"
-            android:textAppearance="@style/Typography.Body2.SemiBold"
+            android:text="@string/ongoing_habit"
+            android:textAppearance="@style/Typography.Body2"
             android:textColor="@color/gray_500"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@+id/cl_this_month_achieve_days" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_in_progress_object" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
+            tools:listitem="@layout/item_habit"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_illustration, tv_no_habit_guide, btn_create_habit" />
+
+        <TextView
+            android:id="@+id/tv_illustration"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="185dp"
+            android:background="@color/gray_300"
+            android:gravity="center"
+            android:text="일러스트로 대체될 영역"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_habit_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/no_habit_guide"
+            android:textAppearance="@style/Typography.Paragraph3.13dp"
+            android:gravity="center"
+            android:textColor="@color/gray_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_create_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_rect_gray800_r30"
+            android:gravity="center"
+            android:paddingHorizontal="44dp"
+            android:text="@string/create_habit"
+            android:textAppearance="@style/Typography.Button1"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
