@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,11 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.key.RESULT_CREATE
-import com.depromeet.threedays.domain.key.RESULT_MODIFY
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
@@ -70,8 +69,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onMoreClick(habit: Habit) {
-        val modal = EditHabitModal(habit, ::onEditClick, ::onDeleteClick)
-        modal.show(parentFragmentManager, EditHabitModal.TAG)
+        val modal = MoreActionModal(habit, ::onEditClick, ::onDeleteClick)
+        modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+        modal.show(parentFragmentManager, MoreActionModal.TAG)
     }
 
     private fun onEditClick(habit: Habit) {
