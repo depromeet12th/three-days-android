@@ -52,8 +52,8 @@ class ThreeDaysDialogFragment : DialogFragment() {
     }
 
     private fun initEmoji() {
-        if (data.emoji != null) {
-            binding.tvEmoji.text = data.emoji.toEmoji
+        if (data.emoji.isNotEmpty()) {
+            binding.tvEmoji.text = data.emoji
             binding.tvEmoji.visible()
         }
     }
@@ -63,7 +63,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
             text = data.title
             margin(
                 top = if (data.titleTopMargin == 0f) {
-                    if (data.emoji != null) TITLE_MARGIN_WITH_EMOJI
+                    if (data.emoji.isNotEmpty()) TITLE_MARGIN_WITH_EMOJI
                     else TITLE_MARGIN_WITHOUT_EMOJI
                 } else data.titleTopMargin
             )
@@ -85,7 +85,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
             text = data.cancelText.ifEmpty { this.text }
             margin(
                 top = if (data.buttonTopMargin == 0f) {
-                    if (data.emoji != null) BUTTON_MARGIN_WITH_EMOJI
+                    if (data.emoji.isNotEmpty()) BUTTON_MARGIN_WITH_EMOJI
                     else BUTTON_MARGIN_WITHOUT_EMOJI
                 } else data.buttonTopMargin
             )
@@ -116,7 +116,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
 
 data class DialogInfo (
     val onPositiveAction: () -> Unit,
-    val emoji: Int?,
+    val emoji: String,
     val title: String,
     val description: String,
     val confirmText: String,
@@ -127,7 +127,7 @@ data class DialogInfo (
     companion object {
         val EMPTY = DialogInfo(
             onPositiveAction = { },
-            emoji = null,
+            emoji = String.Empty,
             title = String.Empty,
             description = String.Empty,
             confirmText = String.Empty,

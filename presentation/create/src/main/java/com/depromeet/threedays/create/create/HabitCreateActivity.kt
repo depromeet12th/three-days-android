@@ -8,8 +8,8 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.depromeet.threedays.core.BaseActivity
-import com.depromeet.threedays.core.extensions.toEmoji
 import com.depromeet.threedays.core.extensions.visibleOrGone
+import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.ActivityHabitCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,8 +58,7 @@ class HabitCreateActivity : BaseActivity<ActivityHabitCreateBinding>(R.layout.ac
             binding.containerNotification.visibleOrGone(isChecked)
         }
 
-        val fireEmoji = 0x1F525
-        binding.tvEmoji.text = fireEmoji.toEmoji
+        binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
     }
 
     /*
