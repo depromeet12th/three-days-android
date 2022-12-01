@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.dpToPx
-import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
@@ -59,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initView()
     }
 
-    private fun onGoalClick(habit: Habit) {
+    private fun onGoalClick(habitId: Int) {
 //        if(habit.clapIndex == 2 && habit.clapChecked) {
 //            val dialog = CompleteGoalDialog(requireContext(), habit)
 //            dialog.show()
@@ -68,25 +66,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         //viewModel.updateGoals(updatedGoal)
     }
 
-    private fun onMoreClick(habit: Habit) {
-        val modal = MoreActionModal(habit, ::onEditClick, ::onDeleteClick)
-        modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
-        modal.show(parentFragmentManager, MoreActionModal.TAG)
+    private fun onMoreClick(habitId: Int) {
+        val modal = EditHabitModal(habitId, ::onEditClick, ::onDeleteClick)
+        modal.show(parentFragmentManager, EditHabitModal.TAG)
     }
 
-    private fun onEditClick(habit: Habit) {
+    private fun onEditClick(habitId: Int) {
         // 수정 페이지로 이동
 //        val intent = goalUpdateNavigator.intent(requireContext())
 //        intent.putExtra(GOAL_ID, habit.goalId)
 //        addResultLauncher.launch(intent)
     }
 
-    private fun onDeleteClick(habit: Habit) {
-        val dialog = DeleteHabitDialog(requireContext(), habit, ::onDeleteConfirmClick)
+    private fun onDeleteClick(habitId: Int) {
+        val dialog = DeleteHabitDialog(requireContext(), habitId, ::onDeleteConfirmClick)
         dialog.show()
     }
 
-    private fun onDeleteConfirmClick(habit: Habit) {
+    private fun onDeleteConfirmClick(habitId: Int) {
 //        viewModel.deleteGoals(habit.goalId)
 //        viewModel.fetchGoals()
 //        CustomToast().showTextToast(
@@ -124,10 +121,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.apply {
-                    habits.collect {
-                        habitAdapter.submitList(it)
-                        binding.clNoGoal.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-                        binding.rvGoal.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+                    habits.collect { list ->
+                        habitAdapter.submitList(list.sortedBy { it.createAt })
+                        binding.clNoGoal.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                        binding.rvGoal.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
                     }
                 }
             }

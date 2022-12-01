@@ -1,134 +1,91 @@
 package com.depromeet.threedays.home.home
 
-import android.content.res.ColorStateList
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.depromeet.threedays.domain.entity.habit.Habit
-import com.depromeet.threedays.home.databinding.ItemHabitBinding
-import kotlin.reflect.KFunction1
 import com.depromeet.threedays.core_design_system.R
-import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.home.databinding.ItemHabitBinding
+import com.depromeet.threedays.home.home.model.HabitUI
+import kotlin.reflect.KFunction1
 
 class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHolder(view.root) {
+    lateinit var context: Context
 
-    fun onBind(habit: Habit, onHabitClick: KFunction1<Habit, Unit>, onMoreClick: KFunction1<Habit, Unit>) {
-        initView(
-            reward = habit.reward,
-            dayOfweeks = habit.dayOfWeeks,
-            todayIndex = habit.sequence % 3,
-            color = habit.color,
-            isTodayChecked = (habit.todayHabitAchievementId != null)
-        )
-
-        initEvent(habit, onHabitClick, onMoreClick)
+    fun onBind(habitUI: HabitUI, context: Context, onHabitClick: KFunction1<Int, Unit>, onMoreClick: KFunction1<Int, Unit>) {
+        this.context = context
+        initView(habitUI)
+        initEvent(habitUI, onHabitClick, onMoreClick)
     }
 
-    private fun initView(
-        reward: Int,
-        dayOfweeks: ArrayList<String>,
-        todayIndex: Int,
-        color: Color,
-        isTodayChecked: Boolean
-    ) {
-        view.tvHabitReward.text = "${reward}개"
-        view.tvHabitDayOfWeek.text = convertDayListToString(dayOfweeks)
+    private fun initView(habitUI: HabitUI) {
+        view.habitUI = habitUI
+        habitUI.run {
+            view.tvHabitDayOfWeek.text = convertDayListToString(dayOfWeeks)
 
-        for (targetIndex in 0..2) {
-            if (targetIndex < todayIndex) {
-                setCheckedDay(targetIndex, getColorStateList(color))
-            } else if (targetIndex == todayIndex) {
-                if (isTodayChecked) {
-                    setCheckedDay(todayIndex, getColorStateList(color))
+            for (targetIndex in 0..2) {
+                if (targetIndex < todayIndex) {
+                    setCheckedButton(
+                        targetIndex = targetIndex,
+                        resId = checkedBackgroundResId
+                    )
+                } else if (targetIndex == todayIndex) {
+                    if (isTodayChecked) {
+                        setCheckedButton(
+                            targetIndex = targetIndex,
+                            resId = checkedBackgroundResId
+                        )
+                    } else {
+                        setUncheckedButton(
+                            targetIndex = targetIndex,
+                            resId = checkableBackgroundResId,
+                            textColor = checkableTextColor
+                        )
+                    }
                 } else {
-                    bindButtonAndColor(
-                        todayIndex,
-                        getLightColorStateList(color),
-                        getColorStateList(color)
+                    setUncheckedButton(
+                        targetIndex = targetIndex,
+                        resId = com.depromeet.threedays.home.R.drawable.bg_oval_gray,
+                        textColor = R.color.gray_400
                     )
                 }
-            } else {
-                val disabledBgColor =
-                    ColorStateList.valueOf(itemView.context.getColor(R.color.gray_200))
-                val disabledTvColor =
-                    ColorStateList.valueOf(itemView.context.getColor(R.color.gray_400))
-                bindButtonAndColor(targetIndex, disabledBgColor, disabledTvColor)
             }
         }
     }
 
-    private fun setCheckedDay(targetIndex: Int, color: ColorStateList) {
+    private fun setCheckedButton(targetIndex: Int, resId: Int) {
+        setButtonBackground(targetIndex, resId)
+        setTextVisibility(targetIndex, isCheckedButton = true)
+    }
+
+    private fun setUncheckedButton(targetIndex: Int, resId: Int, textColor: Int) {
+        setButtonBackground(targetIndex, resId)
+        setTextColor(targetIndex, textColor)
+        setTextVisibility(targetIndex, isCheckedButton = false)
+    }
+
+    private fun setButtonBackground(targetIndex: Int, resId: Int) {
         when(targetIndex) {
-            0 -> {
-                view.ivCheckFirstDay.visibility = View.VISIBLE
-                view.ivFirstDay.backgroundTintList = color
-                view.tvFirstDay.visibility = View.GONE
-            }
-            1 -> {
-                view.ivCheckSecondDay.visibility = View.VISIBLE
-                view.ivSecondDay.backgroundTintList = color
-                view.tvSecondDay.visibility = View.GONE
-            }
-            2 -> {
-                view.ivCheckThirdDay.visibility = View.VISIBLE
-                view.ivThirdDay.backgroundTintList = color
-                view.tvThirdDay.visibility = View.GONE
-            }
+            0 -> view.ivFirstDay.setImageResource(resId)
+            1 -> view.ivSecondDay.setImageResource(resId)
+            2 -> view.ivThirdDay.setImageResource(resId)
         }
     }
 
-    private fun bindButtonAndColor(index: Int, bgColor: ColorStateList, tvColor: ColorStateList) {
-        when(index) {
-            0 -> setBackgroundAndTextColor(
-                iv = view.ivFirstDay,
-                bgColor = bgColor,
-                tv = view.tvFirstDay,
-                tvColor = tvColor
-            )
-            1 -> setBackgroundAndTextColor(
-                iv = view.ivSecondDay,
-                bgColor = bgColor,
-                tv = view.tvSecondDay,
-                tvColor = tvColor
-            )
-            2 -> setBackgroundAndTextColor(
-                iv = view.ivThirdDay,
-                bgColor = bgColor,
-                tv = view.tvThirdDay,
-                tvColor = tvColor
-            )
+    private fun setTextColor(targetIndex: Int, resId: Int) {
+        when(targetIndex) {
+            0 -> view.tvFirstDay.setTextColor(context.getColor(resId))
+            1 -> view.tvSecondDay.setTextColor(context.getColor(resId))
+            2 -> view.tvThirdDay.setTextColor(context.getColor(resId))
         }
     }
 
-    private fun setBackgroundAndTextColor(iv: ImageView, bgColor: ColorStateList, tv: TextView, tvColor: ColorStateList) {
-        iv.backgroundTintList = bgColor
-        tv.setTextColor(tvColor)
-        tv.visibility = View.VISIBLE
-    }
-
-    private fun getColorStateList(color: Color): ColorStateList {
-        return when(color) {
-            Color.GREEN -> ColorStateList.valueOf(itemView.context.getColor(R.color.green_sub_color))
-            Color.BLUE -> ColorStateList.valueOf(itemView.context.getColor(R.color.blue_sub_color))
-            Color.YELLOW -> ColorStateList.valueOf(itemView.context.getColor(R.color.yellow_sub_color))
-            Color.RED -> ColorStateList.valueOf(itemView.context.getColor(R.color.red_sub_color))
-            Color.PINK -> ColorStateList.valueOf(itemView.context.getColor(R.color.pink_sub_color))
-            Color.PURPLE -> ColorStateList.valueOf(itemView.context.getColor(R.color.purple_sub_color))
-        }
-    }
-
-    private fun getLightColorStateList(color: Color): ColorStateList {
-        return when(color) {
-            Color.GREEN -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_green_sub_color))
-            Color.BLUE -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_blue_sub_color))
-            Color.YELLOW -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_yellow_sub_color))
-            Color.RED -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_red_sub_color))
-            Color.PINK -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_pink_sub_color))
-            Color.PURPLE -> ColorStateList.valueOf(itemView.context.getColor(R.color.light_purple_sub_color))
+    private fun setTextVisibility(targetIndex: Int, isCheckedButton: Boolean) {
+        when(targetIndex) {
+            0 -> view.tvFirstDay.isVisible = isCheckedButton.not()
+            1 -> view.tvSecondDay.isVisible = isCheckedButton.not()
+            2 -> view.tvThirdDay.isVisible = isCheckedButton.not()
         }
     }
 
@@ -162,54 +119,52 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         }
     }
 
-    private fun initEvent(habit: Habit, onHabitClick: KFunction1<Habit, Unit>, onMoreClick: KFunction1<Habit, Unit>) {
+    private fun initEvent(habitUI: HabitUI, onHabitClick: KFunction1<Int, Unit>, onMoreClick: KFunction1<Int, Unit>) {
         view.ivMore.setOnClickListener {
-            onMoreClick(habit)
+            onMoreClick(habitUI.habitId)
         }
 
         view.ivFirstDay.setOnClickListener {
-            switchHabitState(0, habit, onHabitClick)
+            switchHabitState(0, habitUI, onHabitClick)
         }
         view.ivSecondDay.setOnClickListener {
-            switchHabitState(1, habit, onHabitClick)
+            switchHabitState(1, habitUI, onHabitClick)
         }
         view.ivThirdDay.setOnClickListener {
-            switchHabitState(2, habit, onHabitClick)
+            switchHabitState(2, habitUI, onHabitClick)
         }
     }
 
     private fun switchHabitState(
         clickedIndex: Int,
-        habit: Habit,
-        onHabitClick: KFunction1<Habit, Unit>,
+        habitUI: HabitUI,
+        onHabitClick: KFunction1<Int, Unit>,
     ) {
-        val isTodayClicked = (clickedIndex == (habit.sequence % 3))
-        val isTodayChecked = habit.todayHabitAchievementId != null
+        val isTodayClicked = clickedIndex == habitUI.todayIndex
+
         if (isTodayClicked) {
-            if (isTodayChecked) {
-                onHabitClick(
-                    habit.copy(
-                        todayHabitAchievementId = null
-                    )
-                )
-                bindButtonAndColor(
-                    clickedIndex,
-                    getLightColorStateList(habit.color),
-                    getColorStateList(habit.color)
+            if (habitUI.isTodayChecked) {
+                // todo 성취달성 취소로 변경 필요
+                onHabitClick(habitUI.todayHabitAchievementId ?: -1)
+                setUncheckedButton(
+                    targetIndex = clickedIndex,
+                    resId = habitUI.checkableBackgroundResId,
+                    textColor = habitUI.checkableTextColor
                 )
             } else {
-                onHabitClick(
-                    habit.copy(
-                        todayHabitAchievementId = Integer.MAX_VALUE
-                    )
+                // todo 성취달성으로 변경 필요
+                onHabitClick(habitUI.habitId)
+                setCheckedButton(
+                    targetIndex = clickedIndex,
+                    resId = habitUI.checkedBackgroundResId
                 )
-                setCheckedDay(clickedIndex, getColorStateList(habit.color))
             }
         }
     }
 
     companion object {
         fun create(parent: ViewGroup, attachToParent: Boolean): HabitViewHolder {
+
             return HabitViewHolder(
                 ItemHabitBinding.inflate(
                     LayoutInflater.from(parent.context),

@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class MoreActionModal(
-    val habit: Habit,
-    val onEditClick: (Habit) -> Unit,
-    val onDeleteClick: (Habit) -> Unit
+class EditHabitModal(
+    val habitId: Int,
+    val onEditClick: (Int) -> Unit,
+    val onDeleteClick: (Int) -> Unit
 ) : BottomSheetDialogFragment() {
     lateinit var binding: ModalEditHabitBinding
 
@@ -29,12 +28,12 @@ class MoreActionModal(
         super.onViewCreated(view, savedInstanceState)
 
         binding.clEdit.setOnClickListener {
-            onEditClick(habit)
+            onEditClick(habitId)
             dismiss()
         }
 
         binding.clDelete.setOnClickListener {
-            onDeleteClick(habit)
+            onDeleteClick(habitId)
             dismiss()
         }
     }

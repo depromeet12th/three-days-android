@@ -3,20 +3,20 @@ package com.depromeet.threedays.home.home
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.depromeet.threedays.domain.entity.habit.Habit
+import com.depromeet.threedays.home.home.model.HabitUI
 import kotlin.reflect.KFunction1
 
 class HabitAdapter(
-    private val onHabitClick: KFunction1<Habit, Unit>,
-    private val onMoreClick: KFunction1<Habit, Unit>
-) : ListAdapter<Habit, HabitViewHolder>(DIFF_UTIL) {
+    private val onHabitClick: KFunction1<Int, Unit>,
+    private val onMoreClick: KFunction1<Int, Unit>
+) : ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         return HabitViewHolder.create(parent, false)
     }
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        holder.onBind(getItem(position), onHabitClick, onMoreClick)
+        holder.onBind(getItem(position), holder.itemView.context, onHabitClick, onMoreClick)
     }
 
     override fun getItemCount(): Int = currentList.size
@@ -26,12 +26,12 @@ class HabitAdapter(
     }
 
     companion object {
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<Habit>() {
-            override fun areItemsTheSame(oldItem: Habit, newItem: Habit): Boolean {
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<HabitUI>() {
+            override fun areItemsTheSame(oldItem: HabitUI, newItem: HabitUI): Boolean {
                 return oldItem.habitId == newItem.habitId
             }
 
-            override fun areContentsTheSame(oldItem: Habit, newItem: Habit): Boolean {
+            override fun areContentsTheSame(oldItem: HabitUI, newItem: HabitUI): Boolean {
                 return oldItem == newItem
             }
         }

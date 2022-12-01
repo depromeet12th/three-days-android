@@ -99,7 +99,7 @@
         <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
-    <!-- Button2 -->
+    <!-- Button3 -->
     <style name="Typography.Button2">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_bold</item>
