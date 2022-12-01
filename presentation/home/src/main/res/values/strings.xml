@@ -1,3 +1,9 @@
 <resources>
     <string name="create_habit">습관 만들기</string>
+    <string name="noti_guide_title">기기 알림을 켜주세요!</string>
+    <string name="noti_guide_sub_title">알림을 켜면 짝심삼일의\n모든 알림을 받아볼 수 있어요.</string>
+    <string name="close">닫기</string>
+    <string name="noti_on">알림켜기</string>
+    <string name="edit">수정하기</string>
+    <string name="delete">삭제하기</string>
 </resources>

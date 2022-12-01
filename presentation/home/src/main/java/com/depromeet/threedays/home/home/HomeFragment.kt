@@ -11,10 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.domain.key.RESULT_CREATE
-import com.depromeet.threedays.domain.key.RESULT_MODIFY
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
