@@ -52,42 +52,42 @@ class ThreeDaysDialogFragment : DialogFragment() {
     }
 
     private fun initEmoji() {
-        if (emoji != null) {
-            binding.tvEmoji.text = emoji.toEmoji
+        if (data.emoji != null) {
+            binding.tvEmoji.text = data.emoji.toEmoji
             binding.tvEmoji.visible()
         }
     }
 
     private fun initView() {
         binding.tvTitle.run {
-            text = title
+            text = data.title
             margin(
-                top = if (titleTopMargin == 0f) {
-                    if (emoji != null) TITLE_MARGIN_WITH_EMOJI
+                top = if (data.titleTopMargin == 0f) {
+                    if (data.emoji != null) TITLE_MARGIN_WITH_EMOJI
                     else TITLE_MARGIN_WITHOUT_EMOJI
-                } else titleTopMargin
+                } else data.titleTopMargin
             )
         }
         binding.tvDescription.run {
-            text = description
-            visibleOrGone(description.isNotEmpty())
+            text = data.description
+            visibleOrGone(data.description.isNotEmpty())
         }
 
         binding.tvConfirm.run {
-            text = confirmText.ifEmpty { this.text }
+            text = data.confirmText.ifEmpty { this.text }
             setOnSingleClickListener {
-                onPositiveAction()
+                data.onPositiveAction()
                 dismiss()
             }
         }
 
         binding.tvCancel.run {
-            text = cancelText.ifEmpty { this.text }
+            text = data.cancelText.ifEmpty { this.text }
             margin(
-                top = if (buttonTopMargin == 0f) {
-                    if (emoji != null) BUTTON_MARGIN_WITH_EMOJI
+                top = if (data.buttonTopMargin == 0f) {
+                    if (data.emoji != null) BUTTON_MARGIN_WITH_EMOJI
                     else BUTTON_MARGIN_WITHOUT_EMOJI
-                } else buttonTopMargin
+                } else data.buttonTopMargin
             )
             setOnSingleClickListener {
                 dismiss()
@@ -103,34 +103,37 @@ class ThreeDaysDialogFragment : DialogFragment() {
         const val BUTTON_MARGIN_WITH_EMOJI = 30f
         const val BUTTON_MARGIN_WITHOUT_EMOJI = 20f
 
-        private lateinit var onPositiveAction: () -> Unit
-        private var emoji: Int? = null
-        private var title: String = String.Empty
-        private var description: String = String.Empty
-        private var confirmText: String = String.Empty
-        private var cancelText: String = String.Empty
-        private var titleTopMargin: Float = 0F
-        private var buttonTopMargin: Float = 0F
+        var data = DialogInfo.EMPTY
 
         fun newInstance(
-            emoji: Int? = null,
-            title: String,
-            description: String = String.Empty,
-            confirmText: String = String.Empty,
-            cancelText: String = String.Empty,
-            titleTopMargin: Float = 0F,
-            buttonTopMargin: Float = 0F,
-            onPositiveAction: () -> Unit
+            data: DialogInfo
         ): ThreeDaysDialogFragment {
-            this.emoji = emoji
-            this.title = title
-            this.description = description
-            this.confirmText = confirmText
-            this.cancelText = cancelText
-            this.titleTopMargin = titleTopMargin
-            this.buttonTopMargin = buttonTopMargin
-            this.onPositiveAction = onPositiveAction
+            this.data = data
             return ThreeDaysDialogFragment()
         }
+    }
+}
+
+data class DialogInfo (
+    val onPositiveAction: () -> Unit,
+    val emoji: Int?,
+    val title: String,
+    val description: String,
+    val confirmText: String,
+    val cancelText: String,
+    val titleTopMargin: Float,
+    val buttonTopMargin: Float,
+) {
+    companion object {
+        val EMPTY = DialogInfo(
+            onPositiveAction = { },
+            emoji = null,
+            title = String.Empty,
+            description = String.Empty,
+            confirmText = String.Empty,
+            cancelText = String.Empty,
+            titleTopMargin = 0f,
+            buttonTopMargin = 0f
+        )
     }
 }
