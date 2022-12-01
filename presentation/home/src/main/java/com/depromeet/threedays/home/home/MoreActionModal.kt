@@ -8,7 +8,7 @@ import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class EditHabitModal(
+class MoreActionModal(
     val habit: Habit,
     val onEditClick: (Habit) -> Unit,
     val onDeleteClick: (Habit) -> Unit
@@ -28,12 +28,12 @@ class EditHabitModal(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.llEdit.setOnClickListener {
+        binding.clEdit.setOnClickListener {
             onEditClick(habit)
             dismiss()
         }
 
-        binding.llDelete.setOnClickListener {
+        binding.clDelete.setOnClickListener {
             onDeleteClick(habit)
             dismiss()
         }
