@@ -27,12 +27,12 @@ class EditHabitModal(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.llEdit.setOnClickListener {
+        binding.clEdit.setOnClickListener {
             onEditClick(habitId)
             dismiss()
         }
 
-        binding.llDelete.setOnClickListener {
+        binding.clDelete.setOnClickListener {
             onDeleteClick(habitId)
             dismiss()
         }
