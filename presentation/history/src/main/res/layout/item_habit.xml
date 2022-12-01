@@ -3,32 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="20dp"
     android:paddingVertical="16dp"
     android:background="@drawable/bg_rect_white_r18">
 
     <TextView
-        android:id="@+id/tv_object_emoji"
+        android:id="@+id/tv_habit_emoji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="👏🏻"
         android:textAppearance="@style/Typography.Body1"
         android:textColor="@color/gray_700"
+        android:text="@string/clap"
         app:layout_constraintTop_toTopOf="@+id/iv_arrow_in"
         app:layout_constraintBottom_toBottomOf="@+id/iv_arrow_in"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_object_title"
+        android:id="@+id/tv_habit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="아침 챙겨먹기"
         android:textAppearance="@style/Typography.Body1"
         android:textColor="@color/gray_700"
         app:layout_constraintTop_toTopOf="@+id/iv_arrow_in"
         app:layout_constraintBottom_toBottomOf="@+id/iv_arrow_in"
-        app:layout_constraintStart_toEndOf="@+id/tv_object_emoji"/>
+        app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji"
+        tools:text="@string/habit_sample_title"/>
 
     <ImageView
         android:id="@+id/iv_arrow_in"
