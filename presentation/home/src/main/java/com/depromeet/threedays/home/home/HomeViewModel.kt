@@ -3,8 +3,9 @@ package com.depromeet.threedays.home.home
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
-import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.usecase.GetHabitsUseCase
+import com.depromeet.threedays.home.home.model.HabitUI
+import com.depromeet.threedays.home.home.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,19 +19,19 @@ class HomeViewModel @Inject constructor(
 //    private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
 
-    private val _habits: MutableStateFlow<List<Habit>> = MutableStateFlow(emptyList())
-    val habits: StateFlow<List<Habit>>
+    private val _habits: MutableStateFlow<List<HabitUI>> = MutableStateFlow(emptyList())
+    val habits: StateFlow<List<HabitUI>>
         get() = _habits
 
     fun fetchGoals() {
         viewModelScope.launch {
-            getHabitsUseCase().collect {
-                when(it.status) {
+            getHabitsUseCase().collect { response ->
+                when(response.status) {
                     Status.LOADING -> {
 
                     }
                     Status.SUCCESS -> {
-                        _habits.value = it.data!!
+                        _habits.value = response.data!!.map { it.toHabitUI() }
                     }
                     Status.ERROR -> {
 

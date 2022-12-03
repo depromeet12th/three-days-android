@@ -13,14 +13,8 @@
     <color name="light_green_sub_color">#DFF5EC</color>
     <color name="blue_sub_color">#3F80FF</color>
     <color name="light_blue_sub_color">#E3ECFF</color>
-    <color name="yellow_sub_color">#FFC271</color>
-    <color name="light_yellow_sub_color">#FFEED7</color>
-    <color name="red_sub_color">#FF6565</color>
-    <color name="light_red_sub_color">#FFE4E4</color>
     <color name="pink_sub_color">#FF70D7</color>
     <color name="light_pink_sub_color">#FFE0F6</color>
-    <color name="purple_sub_color">#AD6DFF</color>
-    <color name="light_purple_sub_color">#EBDBFF</color>
 
     <color name="white">#FFFFFF</color>
     <color name="gray_background">#F6F7F9</color>

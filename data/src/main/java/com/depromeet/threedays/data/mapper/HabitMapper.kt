@@ -24,10 +24,7 @@ private fun getColorFromString(color: String): Color {
     return when(color) {
         "green" -> Color.GREEN
         "blue" -> Color.BLUE
-        "yellow" -> Color.YELLOW
-        "red" -> Color.RED
         "pink" -> Color.PINK
-        "purple" -> Color.PURPLE
         else -> Color.GREEN
     }
 }

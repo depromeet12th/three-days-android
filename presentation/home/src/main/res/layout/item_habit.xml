@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="habitUI"
+            type="com.depromeet.threedays.home.home.model.HabitUI" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:textAppearance="@style/Typography.Title1"
-            android:text="영어 공부 1시간 하기"
+            android:text="@{habitUI.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="5개"
+            android:text="@{Integer.toString(habitUI.reward) + `개`}"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
             app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
@@ -74,13 +76,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="월,수,금"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
             app:layout_constraintBottom_toBottomOf="@+id/tv_pipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_pipe" />
+            app:layout_constraintStart_toEndOf="@+id/tv_pipe"
+            tools:text="월,수,금" />
 
         <ImageView
             android:id="@+id/iv_first_day"
@@ -89,7 +91,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="18dp"
             android:background="@drawable/bg_oval_gray"
-            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -103,7 +104,6 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="16dp"
             android:background="@drawable/bg_oval_gray"
-            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
             app:layout_constraintHorizontal_bias="0.5"
@@ -115,53 +115,18 @@
             android:layout_height="34dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_oval_gray"
-            android:backgroundTint="@color/green_sub_color"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
-
-        <ImageView
-            android:id="@+id/iv_check_first_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_check"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
-            app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
-            app:layout_constraintStart_toStartOf="@+id/iv_first_day"
-            app:layout_constraintTop_toTopOf="@+id/iv_first_day" />
-
-        <ImageView
-            android:id="@+id/iv_check_second_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_check"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
-            app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
-            app:layout_constraintStart_toStartOf="@+id/iv_second_day"
-            app:layout_constraintTop_toTopOf="@+id/iv_second_day" />
-
-        <ImageView
-            android:id="@+id/iv_check_third_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_check"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
-            app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
-            app:layout_constraintStart_toStartOf="@+id/iv_third_day"
-            app:layout_constraintTop_toTopOf="@+id/iv_third_day" />
 
         <TextView
             android:id="@+id/tv_first_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:text="1"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
@@ -173,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:text="2"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
@@ -187,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Typography.Title1"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:text="3"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
