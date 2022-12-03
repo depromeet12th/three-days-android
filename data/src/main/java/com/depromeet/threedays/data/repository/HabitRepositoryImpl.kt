@@ -38,7 +38,17 @@ class HabitRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteHabit(habitId: Long) {
+    override suspend fun deleteHabit(habitId: Int): Flow<DataState<Any>> =
+        flow {
+            emit(DataState.loading())
+            val response = habitRemoteDataSource.deleteHabit(habitId)
 
-    }
+            if(response != null) {
+                emit(DataState.success(data = response))
+            } else {
+                emit(DataState.error(msg = "response has error"))
+            }.runCatching {
+                emit(DataState.fail("response is fail"))
+            }
+        }
 }

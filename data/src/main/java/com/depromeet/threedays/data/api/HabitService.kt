@@ -24,8 +24,8 @@ interface HabitService {
 //        @Body request: UpdateProductsRequest
 //    )
 //
-//    @DELETE("/api/v1/habits/{habitId}")
-//    suspend fun deleteHabit(
-//        @Path("productId") productId: String
-//    )
+    @DELETE("/api/v1/habits/{habitId}")
+    suspend fun deleteHabit(
+        @Path("habitId") habitId: Int
+    ): Any
 }
