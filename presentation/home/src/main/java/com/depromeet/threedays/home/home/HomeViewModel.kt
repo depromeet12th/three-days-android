@@ -19,7 +19,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHabitsUseCase: GetHabitsUseCase,
 //    private val updateHabitUseCase: UpdateHabitUseCase,
-//    private val deleteHabitUseCase: DeleteHabitUseCase,
+    private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
 
     private val _habits: MutableStateFlow<List<HabitUI>> = MutableStateFlow(emptyList())
@@ -61,13 +61,30 @@ class HomeViewModel @Inject constructor(
 //        }
 //    }
 //
-//    fun deleteGoals(goalId: Long) {
-//        viewModelScope.launch {
-//            try {
-//                deleteHabitUseCase(goalId)
-//            } catch (exception: Exception) {
-//                exception.printStackTrace()
-//            }
-//        }
-//    }
+    fun deleteGoals(habitId: Int) {
+        viewModelScope.launch {
+            deleteHabitUseCase(habitId).collect { response ->
+                when(response.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        _uiEffect.emit(
+                            UiEffect.DeleteDialog
+                        )
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    sealed interface UiEffect {
+        object DeleteDialog: UiEffect
+    }
 }
