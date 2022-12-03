@@ -6,4 +6,10 @@
     <string name="noti_on">알림켜기</string>
     <string name="edit">수정하기</string>
     <string name="delete">삭제하기</string>
+
+    <string name="wastebasket">🗑️</string>
+    <string name="delete_dialog_title">습관을 삭제하시겠어요?</string>
+    <string name="delete_dialog_cancel_text">아니요</string>
+    <string name="delete_dialog_confirm_text">삭제할래요</string>
+    <string name="habit_delete_success_message">습관이 삭제됐어요.</string>
 </resources>
