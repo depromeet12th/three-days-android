@@ -9,5 +9,5 @@ interface HabitRepository {
     suspend fun getHabits(): Flow<DataState<List<Habit>>>
     //suspend fun getHabit(habitId: Long): Habit
     suspend fun updateHabit(habitId: Long)
-    suspend fun deleteHabit(habitId: Long)
+    suspend fun deleteHabit(habitId: Int): Flow<DataState<Any>>
 }
