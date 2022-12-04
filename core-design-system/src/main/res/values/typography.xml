@@ -7,8 +7,8 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <!-- H1 -->
-    <style name="Typography.H1">
+    <!-- Heading -->
+    <style name="Typography.Heading">
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>

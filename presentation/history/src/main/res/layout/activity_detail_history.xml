@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".detail.DetailHistoryActivity"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_out" />
+
+        <LinearLayout
+            android:id="@+id/container_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+            <TextView
+                android:id="@+id/tv_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/transparency_color"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textAppearance="@style/Typography.Heading"
+                android:textColor="@color/gray_800"
+                tools:text="아침 챙겨먹기" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_title">
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect_green10_r5"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="5dp"
+                android:textAppearance="@style/Typography.Body4"
+                android:textColor="@color/green_50"
+                tools:text="42일째" />
+
+            <TextView
+                android:id="@+id/tv_day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_rect_gray200_r5"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="5dp"
+                android:textAppearance="@style/Typography.Body4"
+                android:textColor="@color/gray_500"
+                tools:text="월, 화, 수" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="@style/Typography.Body4"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_date"
+            tools:text="시작일 : 2022.08.15" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_clap"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_rect_white_r10"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintEnd_toStartOf="@id/container_execute_day"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_date">
+
+            <TextView
+                android:id="@+id/tv_clap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="박수"
+                android:textColor="@color/gray_500"
+                android:textAppearance="@style/Typography.Body3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_clap_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_clap">
+
+
+                <ImageView
+                    android:id="@+id/iv_clap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_clap" />
+
+                <TextView
+                    android:id="@+id/tv_clap_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/Typography.Heading"
+                    android:textColor="@color/gray_800"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_clap"
+                    app:layout_constraintStart_toEndOf="@id/iv_clap"
+                    app:layout_constraintTop_toTopOf="@id/iv_clap"
+                    tools:text="4" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_execute_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_rect_white_r10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/container_clap"
+            app:layout_constraintTop_toTopOf="@+id/container_clap">
+
+            <TextView
+                android:id="@+id/tv_execute_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="습관 실천일"
+                android:textColor="@color/gray_500"
+                android:textAppearance="@style/Typography.Body3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_execute_day_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_execute_day">
+
+
+                <ImageView
+                    android:id="@+id/iv_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_check_black_circle" />
+
+                <TextView
+                    android:id="@+id/tv_execute_day_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/Typography.Heading"
+                    android:textColor="@color/gray_800"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_check"
+                    app:layout_constraintStart_toEndOf="@id/iv_check"
+                    app:layout_constraintTop_toTopOf="@id/iv_check"
+                    tools:text="26" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
