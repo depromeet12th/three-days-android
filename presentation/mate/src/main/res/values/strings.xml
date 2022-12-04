@@ -3,4 +3,11 @@
     <string name="step_1_button_text" tools:ignore="TypographyFractions">다음 (1/3)</string>
     <string name="medicine">💊</string>
     <string name="habit_sample_title">점심 직후 종합 비타민</string>
+
+    <!-- step3 -->
+    <string name="set_mate_nickname_guide">짝꿍의 별명을 지어주세요.</string>
+    <string name="step_3_button_text">짝꿍 시작하기</string>
+    <string name="input_nickname_hint">별명을 입력해주세요.</string>
+    <string name="available_nickname_guide">별명은 바꿀 수 없어요. 신중하게 지어주세요.</string>
+    <string name="count_nickname_length">0/10</string>
 </resources>
