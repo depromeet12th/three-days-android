@@ -63,6 +63,7 @@
             android:id="@+id/et_nickname"
             android:layout_width="0dp"
             android:layout_height="45dp"
+            android:background="@drawable/selector_edittext"
             android:layout_marginTop="24dp"
             android:paddingStart="16dp"
             android:hint="@string/input_nickname_hint"
