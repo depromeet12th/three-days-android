@@ -66,8 +66,16 @@
             app:layout_constraintStart_toStartOf="@+id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintTop_toBottomOf="@+id/tv_connect_habit_guide"
-            app:layout_constraintBottom_toTopOf="@+id/btn_next"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_habit"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:background="@drawable/bg_white_gradient"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"
