@@ -1,4 +1,4 @@
-package com.depromeet.threedays.mate.create
+package com.depromeet.threedays.mate.create.step1
 
 import androidx.fragment.app.viewModels
 import com.depromeet.threedays.core.BaseFragment
