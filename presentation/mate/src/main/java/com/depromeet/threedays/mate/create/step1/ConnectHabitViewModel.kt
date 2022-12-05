@@ -1,4 +1,4 @@
-package com.depromeet.threedays.mate.create
+package com.depromeet.threedays.mate.create.step1
 
 import com.depromeet.threedays.core.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
