@@ -1,20 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MateFragment">
+        android:background="@color/gray_100"
+        tools:context=".HistoryFragment">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Mate Fragment" />
+            android:layout_height="match_parent">
 
-    </FrameLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_begin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="20dp" />
+
+            <TextView
+                android:id="@+id/tv_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textAppearance="@style/Typography.H1"
+                android:textColor="@color/gray_800"
+                android:text="@string/mate"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/gl_begin" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintTop_toTopOf="@id/tv_mate"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mate"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"/>
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_share"
+                app:layout_constraintTop_toTopOf="@id/tv_mate"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mate"
+                app:layout_constraintEnd_toStartOf="@+id/iv_delete"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_habit"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/bg_rect_white_r10"
+                app:layout_constraintTop_toBottomOf="@+id/iv_delete"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintEnd_toEndOf="@id/gl_end">
+
+                <TextView
+                    android:id="@+id/tv_habit_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textAppearance="@style/Typography.Body1"
+                    android:textColor="@color/gray_700"
+                    android:text="@string/medicine"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_habit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/Typography.Body1"
+                    android:textColor="@color/gray_800"
+                    android:text="@string/habit_sample_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_habit_emoji"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
+                    app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji" />
+
+                <ImageView
+                    android:id="@+id/iv_tooltip"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_tooltip"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="14dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- 나중에 폰트 display로 변경 필요 -->
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_800"
+                android:textSize="17sp"
+                android:text="Text"
+                android:gravity="center"
+                android:maxLines="2"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintEnd_toEndOf="@+id/gl_end"
+                app:layout_constraintTop_toBottomOf="@+id/cl_habit" />
+
+            <TextView
+                android:id="@+id/tv_illustration"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_marginTop="45dp"
+                android:background="@color/gray_200"
+                android:gravity="center"
+                android:text="일러스트로 대체될 영역"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_text" />
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/Typography.Body4.Medium"
+                android:text="@string/start_date_with_mate"
+                android:textColor="@color/gray_450"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Persistent Bottom Sheet -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:background="@drawable/bg_rect_white_top_r15"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="120dp"
+            app:behavior_halfExpandedRatio="0.5"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <ImageView
+                android:id="@+id/iv_arrow_up"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_arrow_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect_blue10_r10"
+                android:fontFamily="@font/suit_bold"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="Lv. 2"
+                android:textColor="@color/blue_sub_color"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_mate_nickname"
+                app:layout_constraintEnd_toStartOf="@+id/tv_mate_nickname"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_mate_nickname" />
+
+            <TextView
+                android:id="@+id/tv_mate_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/mate_nickname_sample"
+                android:textAppearance="@style/Typography.Title1"
+                android:textColor="@color/gray_800"
+                android:layout_marginStart="9dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_level"
+                app:layout_constraintTop_toBottomOf="@id/iv_arrow_up" />
+
+            <TextView
+                android:id="@+id/tv_next_level_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/Typography.Body4.Medium"
+                android:text="@string/next_level_guide"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mate_nickname" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
