@@ -109,6 +109,7 @@
 
         <!-- 당근 짝꿍 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_carrot_mate"
             android:layout_width="0dp"
             android:layout_height="144dp"
             android:layout_marginTop="10dp"
