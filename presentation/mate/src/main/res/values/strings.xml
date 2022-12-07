@@ -12,4 +12,11 @@
     <string name="i_need_whipping">엄격한 잔소리가 필요해요!</string>
     <string name="carrot_mate">당근 짝꿍</string>
     <string name="i_need_carrot">따뜻한 응원이 필요해요!</string>
+
+    <!-- step3 -->
+    <string name="set_mate_nickname_guide">짝꿍의 별명을 지어주세요.</string>
+    <string name="step_3_button_text">짝꿍 시작하기</string>
+    <string name="input_nickname_hint">별명을 입력해주세요.</string>
+    <string name="available_nickname_guide">별명은 바꿀 수 없어요. 신중하게 지어주세요.</string>
+    <string name="count_nickname_length">0/10</string>
 </resources>
