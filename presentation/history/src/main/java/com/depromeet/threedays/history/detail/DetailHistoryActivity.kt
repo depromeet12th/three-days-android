@@ -1,7 +1,6 @@
 package com.depromeet.threedays.history.detail
 
 import android.os.Bundle
-import android.widget.ImageView
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.history.R
 import com.depromeet.threedays.history.databinding.ActivityDetailHistoryBinding
@@ -10,7 +9,6 @@ import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
-import java.time.YearMonth
 
 @AndroidEntryPoint
 class DetailHistoryActivity :
@@ -46,6 +44,7 @@ class DetailHistoryActivity :
                     calendar.yearMonth.year,
                     calendar.yearMonth.monthValue
                 )
+                binding.ivNext.isEnabled = (currentMonth != calendar.yearMonth)
             }
         }
     }
@@ -126,13 +125,9 @@ class DetailHistoryActivity :
             currentMonth.year,
             currentMonth.monthValue
         )
-    }
 
-    private fun ImageView.setDisableImage(month: YearMonth) {
-        if (currentMonth == month) {
-            this.setImageResource(com.depromeet.threedays.core_design_system.R.drawable.ic_right_arrow_disable)
-        } else {
-            this.setImageResource(com.depromeet.threedays.core_design_system.R.drawable.ic_right_arrow_default)
+        binding.ivBack.setOnClickListener {
+            finish()
         }
     }
 }
