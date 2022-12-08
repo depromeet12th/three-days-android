@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.depromeet.threedays"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 2
         versionName "1.0"
 
@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":navigator"))
     implementation(project(":presentation:home"))
     implementation(project(":presentation:create"))
+    implementation(project(":presentation:history"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

@@ -19,6 +19,12 @@
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
+    <!-- Title2 -->
+    <style name="Typography.Title2">
+        <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
     <!-- Sub Title -->
     <style name="Typography.SubTitle">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
@@ -103,5 +109,21 @@
     <style name="Typography.Button2">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
+    <!-- Calendar -->
+    <style name="Typography.Calendar">
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+    <style name="Typography.Calendar.11dp">
+        <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
+    </style>
+    <style name="Typography.Calendar.10dp">
+        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+    </style>
+
+    <style name="Typography.CalendarDay">
+        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+        <item name="fontFamily">@font/suit_extra_bold</item>
     </style>
 </resources>
