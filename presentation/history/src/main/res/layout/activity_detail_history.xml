@@ -54,9 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="아침 챙겨먹기"
                     android:textAppearance="@style/Typography.Heading"
-                    android:textColor="@color/gray_800" />
+                    android:textColor="@color/gray_800"
+                    tools:text="아침 챙겨먹기" />
             </LinearLayout>
 
             <LinearLayout
@@ -75,9 +75,9 @@
                     android:background="@drawable/bg_rect_green10_r5"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="5dp"
-                    android:text="42일째"
                     android:textAppearance="@style/Typography.Body4"
-                    android:textColor="@color/green_50" />
+                    android:textColor="@color/green_50"
+                    tools:text="42일째" />
 
                 <TextView
                     android:id="@+id/tv_day_of_week"
@@ -87,9 +87,9 @@
                     android:background="@drawable/bg_rect_gray200_r5"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="5dp"
-                    android:text="월, 화, 수"
                     android:textAppearance="@style/Typography.Body4"
-                    android:textColor="@color/gray_500" />
+                    android:textColor="@color/gray_500"
+                    tools:text="월, 화, 수" />
             </LinearLayout>
 
             <TextView
@@ -97,12 +97,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="시작일 : 2022.08.15"
                 android:textAppearance="@style/Typography.Body4"
                 android:textColor="@color/gray_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_date" />
+                app:layout_constraintTop_toBottomOf="@+id/container_date"
+                tools:text="시작일 : 2022.08.15" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_clap"
@@ -154,12 +154,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="4"
                         android:textAppearance="@style/Typography.Heading"
                         android:textColor="@color/gray_700"
                         app:layout_constraintBottom_toBottomOf="@id/iv_clap"
                         app:layout_constraintStart_toEndOf="@id/iv_clap"
-                        app:layout_constraintTop_toTopOf="@id/iv_clap" />
+                        app:layout_constraintTop_toTopOf="@id/iv_clap"
+                        tools:text="4" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,12 +212,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="26"
                         android:textAppearance="@style/Typography.Heading"
                         android:textColor="@color/gray_700"
                         app:layout_constraintBottom_toBottomOf="@id/iv_check"
                         app:layout_constraintStart_toEndOf="@id/iv_check"
-                        app:layout_constraintTop_toTopOf="@id/iv_check" />
+                        app:layout_constraintTop_toTopOf="@id/iv_check"
+                        tools:text="26" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
