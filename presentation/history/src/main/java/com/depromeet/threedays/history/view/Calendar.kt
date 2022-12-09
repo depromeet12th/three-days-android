@@ -17,6 +17,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
+import com.depromeet.threedays.core_design_system.R as designR
 
 class DayBind(private val executeDateWithStatusList: Map<String, Status> = emptyMap()) :
     MonthDayBinder<DayContainer> {
@@ -44,7 +45,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
         continuousBgView.visibility = View.INVISIBLE
         leftSpaceView.visibility = View.INVISIBLE
         rightSpaceView.visibility = View.INVISIBLE
-        textView.setTextAppearance(com.depromeet.threedays.core_design_system.R.style.Typography_Calendar_10dp)
+        textView.setTextAppearance(designR.style.Typography_Calendar_10dp)
 
         val isExecuteDate = executeDateWithStatusList.any {
             val day = LocalDate.parse(it.key)
@@ -52,10 +53,10 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
         }
 
         if(data.position == DayPosition.MonthDate) {
-            textView.setTextColor(context.getColorCompat(com.depromeet.threedays.core_design_system.R.color.gray_600))
+            textView.setTextColor(context.getColorCompat(designR.color.gray_600))
 
             if (data.date == today) {
-                textView.setTextAppearance(com.depromeet.threedays.core_design_system.R.style.Typography_CalendarDay)
+                textView.setTextAppearance(designR.style.Typography_CalendarDay)
                 roundBgView.applyBackground(todayBackground)
             }
 
@@ -63,7 +64,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
                 val key: String = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                 val status = executeDateWithStatusList[key]!!
 
-                textView.setTextColor(context.getColorCompat(com.depromeet.threedays.core_design_system.R.color.white))
+                textView.setTextColor(context.getColorCompat(designR.color.white))
 
                 when (status) {
                     Status.START -> {
@@ -87,7 +88,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
                 }
             }
         } else {
-            textView.setTextColor(context.getColorCompat(com.depromeet.threedays.core_design_system.R.color.white))
+            textView.setTextColor(context.getColorCompat(designR.color.white))
         }
     }
 
