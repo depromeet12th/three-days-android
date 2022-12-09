@@ -131,7 +131,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
             app:layout_constraintStart_toStartOf="@+id/iv_first_day"
             app:layout_constraintTop_toTopOf="@+id/iv_first_day"
-            tools:textColor="@color/green_sub_color" />
+            tools:textColor="@color/green_50" />
 
         <TextView
             android:id="@+id/tv_second_day"
@@ -145,7 +145,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
             app:layout_constraintStart_toStartOf="@+id/iv_second_day"
             app:layout_constraintTop_toTopOf="@+id/iv_second_day"
-            tools:textColor="@color/green_sub_color" />
+            tools:textColor="@color/green_50" />
 
         <TextView
             android:id="@+id/tv_third_day"
@@ -159,7 +159,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
             app:layout_constraintStart_toStartOf="@+id/iv_third_day"
             app:layout_constraintTop_toTopOf="@+id/iv_third_day"
-            tools:textColor="@color/green_sub_color" />
+            tools:textColor="@color/green_50" />
 
         <ImageView
             android:id="@+id/iv_more"

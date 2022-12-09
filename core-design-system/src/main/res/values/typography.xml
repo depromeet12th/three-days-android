@@ -7,8 +7,8 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <!-- H1 -->
-    <style name="Typography.H1">
+    <!-- Heading -->
+    <style name="Typography.Heading">
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
@@ -109,5 +109,21 @@
     <style name="Typography.Button2">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
+    <!-- Calendar -->
+    <style name="Typography.Calendar">
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+    <style name="Typography.Calendar.11dp">
+        <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
+    </style>
+    <style name="Typography.Calendar.10dp">
+        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+    </style>
+
+    <style name="Typography.CalendarDay">
+        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+        <item name="fontFamily">@font/suit_extra_bold</item>
     </style>
 </resources>

@@ -34,6 +34,11 @@
         <activity
             android:name="com.depromeet.threedays.create.update.HabitUpdateActivity"
             android:exported="false"/>
+
+        <activity
+            android:name="com.depromeet.threedays.history.detail.DetailHistoryActivity"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

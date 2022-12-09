@@ -46,6 +46,8 @@ dependencies {
     implementation deps.hilt.core
     kapt deps.hilt.compiler
 
+    implementation deps.calendar
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

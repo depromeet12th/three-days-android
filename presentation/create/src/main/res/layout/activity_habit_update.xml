@@ -31,7 +31,7 @@
                 android:layout_marginVertical="24dp"
                 android:layout_marginStart="20dp"
                 android:text="@string/suggestion_habit_create"
-                android:textAppearance="@style/Typography.H1"
+                android:textAppearance="@style/Typography.Heading"
                 android:textColor="@color/gray_800"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
