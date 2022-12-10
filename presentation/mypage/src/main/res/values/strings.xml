@@ -1,4 +1,7 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_edit_nickname_title">닉네임 수정</string>
+    <string name="dialog_edit_nickname_cancel">취소</string>
+    <string name="dialog_edit_nickname_submit">저장</string>
 </resources>
