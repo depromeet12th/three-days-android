@@ -30,10 +30,7 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding>(R.layout.
             adapter = notificationAdapter
 
             val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            dividerItemDecoration.setDrawable(
-                ColorDrawable(com.depromeet.threedays.core_design_system.R.color.light_blue_sub_color)
-//                context.resources.getDrawable(R.drawable.item_delimiter)
-            )
+            dividerItemDecoration.setDrawable(context.resources.getDrawable(R.drawable.item_delimiter))
             addItemDecoration(dividerItemDecoration)
         }
         viewModel.fetchNotifications()
