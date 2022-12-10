@@ -6,12 +6,7 @@ plugins {
 }
 
 android {
-    hilt {
-        enableAggregatingTask = true
-    }
-}
-
-android {
+    namespace 'com.depromeet.threedays.notification'
     compileSdk 33
 
     defaultConfig {
@@ -45,10 +40,6 @@ dependencies {
     implementation(project(":core-design-system"))
     implementation(project(":navigator"))
     implementation(project(":domain"))
-    implementation(project(":presentation:history"))
-    implementation(project(":presentation:mate"))
-    implementation(project(":presentation:mypage"))
-    implementation(project(":presentation:notification"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

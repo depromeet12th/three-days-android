@@ -38,6 +38,7 @@
             tools:text="10월19일 목요일" />
 
         <ImageView
+            android:id="@+id/iv_notification"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_noti_default"
