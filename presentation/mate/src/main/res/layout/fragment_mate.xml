@@ -10,7 +10,6 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_100"
         tools:context=".HistoryFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -206,6 +205,34 @@
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_begin"
                 app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+            <TextView
+                android:id="@+id/tv_create_mate_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
+                android:text="@string/create_mate_guide"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                android:text="@string/create_mate"
+                android:gravity="center"
+                android:background="@drawable/bg_rect_gray800_r30"
+                app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintEnd_toEndOf="@id/gl_end" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Persistent Bottom Sheet -->
