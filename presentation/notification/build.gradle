@@ -1,23 +1,20 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-parcelize'
+    id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
 }
 
 android {
+    namespace 'com.depromeet.threedays.notification'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.depromeet.threedays"
         minSdk 26
         targetSdk 33
-        versionCode 2
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -39,30 +36,16 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":data"))
     implementation(project(":core"))
+    implementation(project(":core-design-system"))
     implementation(project(":navigator"))
-    implementation(project(":presentation:home"))
-    implementation(project(":presentation:create"))
-    implementation(project(":presentation:history"))
-    implementation(project(":presentation:notification"))
+    implementation(project(":domain"))
 
     implementation(jetpackDeps)
     implementation(coroutines)
 
-    //implementation platform(deps.firebaseBom)
-    //implementation(firebaseDeps)
-
     implementation deps.hilt.core
     kapt deps.hilt.compiler
-
-    implementation deps.glide.core
-    implementation deps.glide.okhttp
-    kapt deps.glide.compiler
-
-    implementation deps.gson
-    implementation deps.splashscreen
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
