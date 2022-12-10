@@ -95,18 +95,58 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
                     app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji" />
 
-                <ImageView
-                    android:id="@+id/iv_tooltip"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_tooltip"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="14dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/iv_tooltip"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tooltip"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintTop_toTopOf="@id/cl_habit"
+                app:layout_constraintBottom_toBottomOf="@id/cl_habit"
+                app:layout_constraintEnd_toEndOf="@id/cl_habit"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_tooltip"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                android:background="@drawable/bg_rect_white_r10"
+                android:elevation="4dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/cl_habit"
+                app:layout_constraintEnd_toEndOf="@id/gl_end">
+
+                <TextView
+                    android:id="@+id/tv_tooltip_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:textAppearance="@style/Typography.Paragraph3.13dp"
+                    android:text="@string/clap_guide_title"
+                    android:textColor="@color/gray_800"
+                    android:elevation="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_tooltip_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="@style/Typography.Paragraph3.13dp"
+                    android:text="@string/clap_guide_content"
+                    android:textColor="@color/gray_600"
+                    android:elevation="8dp"
+                    android:minLines="3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tooltip_title"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- 나중에 폰트 display로 변경 필요 -->
             <TextView
                 android:id="@+id/tv_text"
