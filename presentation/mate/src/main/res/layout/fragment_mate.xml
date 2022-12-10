@@ -31,6 +31,26 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="20dp" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_30_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_has_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="iv_delete, iv_share, cl_habit, iv_tooltip, cl_tooltip, tv_text, tv_start_date" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_no_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_create_mate_guide, btn_create_mate" />
+
             <TextView
                 android:id="@+id/tv_mate"
                 android:layout_width="wrap_content"
@@ -167,13 +187,13 @@
                 android:id="@+id/tv_illustration"
                 android:layout_width="240dp"
                 android:layout_height="240dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginBottom="250dp"
                 android:background="@color/gray_200"
                 android:gravity="center"
                 android:text="일러스트로 대체될 영역"
+                app:layout_constraintTop_toBottomOf="@+id/gl_top_30_percent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text" />
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_start_date"
@@ -190,9 +210,11 @@
 
         <!-- Persistent Bottom Sheet -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:background="@drawable/bg_rect_white_top_r15"
+            android:visibility="gone"
             app:behavior_hideable="false"
             app:behavior_peekHeight="120dp"
             app:behavior_halfExpandedRatio="0.5"
