@@ -42,9 +42,9 @@ fun Habit.toHabitUI(): HabitUI {
             Color.PINK -> R.drawable.selector_check_light_pink
         },
         checkableTextColor = when(this.color) {
-            Color.GREEN -> core_color.color.green_sub_color
-            Color.BLUE -> core_color.color.blue_sub_color
-            Color.PINK -> core_color.color.pink_sub_color
+            Color.GREEN -> core_color.color.green_50
+            Color.BLUE -> core_color.color.blue_50
+            Color.PINK -> core_color.color.pink_50
         },
     )
 }

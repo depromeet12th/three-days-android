@@ -9,13 +9,15 @@
 
     <color name="main">#1A1E27</color>
 
-    <color name="green_sub_color">#34C185</color>
-    <color name="light_green_sub_color">#DFF5EC</color>
-    <color name="blue_sub_color">#3F80FF</color>
-    <color name="light_blue_sub_color">#E3ECFF</color>
-    <color name="pink_sub_color">#FF70D7</color>
-    <color name="light_pink_sub_color">#FFE0F6</color>
+    <!-- sub color -->
+    <color name="green_50">#34C185</color>
+    <color name="green_10">#DFF5EC</color>
+    <color name="blue_50">#3F80FF</color>
+    <color name="blue_10">#E3ECFF</color>
+    <color name="pink_50">#FF70D7</color>
+    <color name="pink_10">#FFE0F6</color>
 
+    <!-- gray -->
     <color name="white">#FFFFFF</color>
     <color name="gray_background">#F6F7F9</color>
     <color name="gray_100">#F4F6F8</color>
@@ -29,6 +31,9 @@
     <color name="gray_800">#1A1E27</color>
     <color name="black">#121213</color>
 
+    <!-- system color -->
     <color name="green_system_color">#09BC7B</color>
     <color name="red_system_color">#FF4D4D</color>
+
+    <color name="transparency_color">#FF000000</color>
 </resources>

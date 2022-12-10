@@ -31,7 +31,7 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
-            android:textAppearance="@style/Typography.H1"
+            android:textAppearance="@style/Typography.Heading"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="@id/gl_begin_cardview"
             app:layout_constraintTop_toTopOf="parent"
