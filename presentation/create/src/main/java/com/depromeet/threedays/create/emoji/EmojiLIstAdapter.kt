@@ -9,7 +9,7 @@ import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.create.databinding.ItemEmojiBinding
 
-class EmojiListAdapter(private val onEmojiClick: () -> Unit):
+class EmojiListAdapter(private val onEmojiClick: (emojiString: String) -> Unit):
     ListAdapter<EmojiItem, EmojiListAdapter.EmojiViewHolder>(CALLBACK){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojiViewHolder {
@@ -27,11 +27,11 @@ class EmojiListAdapter(private val onEmojiClick: () -> Unit):
         holder.bind(getItem(position))
     }
 
-    class EmojiViewHolder(private val binding: ItemEmojiBinding, private val onEmojiClick: () -> Unit): RecyclerView.ViewHolder(binding.root) {
+    class EmojiViewHolder(private val binding: ItemEmojiBinding, private val onEmojiClick: (emojiString: String) -> Unit): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: EmojiItem) {
             binding.tvEmoji.text = data.emojiString
             binding.tvEmoji.setOnSingleClickListener {
-                onEmojiClick.invoke()
+                onEmojiClick.invoke(data.emojiString)
             }
         }
     }

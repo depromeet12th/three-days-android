@@ -62,7 +62,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
 
         binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
         binding.tvEmoji.setOnSingleClickListener {
-            EmojiBottomSheetDialogFragment().show(supportFragmentManager, "emojiBottomSheetDialogFragment")
+            EmojiBottomSheetDialogFragment.newInstance {
+                    emojiString -> run { binding.tvEmoji.text = emojiString }
+            }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
     }
 

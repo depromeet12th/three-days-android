@@ -13,10 +13,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
     private var _binding: FragmentEmojiBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
+
     private val adapter by lazy {
         EmojiListAdapter(
-            onEmojiClick = {
+            onEmojiClick = { emojiString ->
+                onEmojiClick(emojiString)
 
+                this.dismiss()
             }
         )
     }
@@ -62,6 +65,19 @@ class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
                 R.id.rb_activity -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.ACTIVITY).toEmojiItemList())
                 R.id.rb_object -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.OBJECT).toEmojiItemList())
             }
+        }
+    }
+
+    companion object {
+        const val TAG = "EmojiBottomSheetDialogFragment"
+
+        lateinit var onEmojiClick: (emojiString: String) -> Unit
+
+        fun newInstance(
+            onEmojiClick: (emojiString: String) -> Unit
+        ): EmojiBottomSheetDialogFragment {
+            this.onEmojiClick = onEmojiClick
+            return EmojiBottomSheetDialogFragment()
         }
     }
 }
