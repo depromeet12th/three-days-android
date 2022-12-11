@@ -69,6 +69,7 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_rect_gray100_r10"
             android:padding="10dp"
+            android:gravity="center"
             android:textColor="#FF000000"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/tv_habit_name"
@@ -390,7 +391,7 @@
             android:paddingVertical="18dp"
             android:text="@string/habit_create"
             android:textAppearance="@style/Typography.Button1"
-            android:textColor="@color/gray_450"
+            android:textColor="@drawable/selector_complete_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
