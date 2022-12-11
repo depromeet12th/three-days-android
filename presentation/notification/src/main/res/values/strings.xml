@@ -1,0 +1,7 @@
+<resources>
+    <string name="notification_title">알림</string>
+    <string name="description_notification_empty">아직 새로운 알림이 없어요.</string>
+    <string name="description_notification_delete">(알림은 30일 후 자동 삭제됩니다.)</string>
+    <string name="description_btn_back">뒤로 버튼</string>
+    <string name="description_notification_box">알림 아이콘</string>
+</resources>

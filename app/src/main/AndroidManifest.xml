@@ -34,11 +34,14 @@
         <activity
             android:name="com.depromeet.threedays.create.update.HabitUpdateActivity"
             android:exported="false"/>
-
+            
         <activity
             android:name="com.depromeet.threedays.history.detail.DetailHistoryActivity"
             android:exported="false"/>
 
+        <activity
+            android:name="com.depromeet.threedays.notification.NotificationActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
