@@ -42,6 +42,11 @@ class OnBoardingBottomSheet(
         initEvent()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initViewPager() {
         onBoardingAdapter = OnBoardingAdapter()
         binding.vpOnBoarding.run {
