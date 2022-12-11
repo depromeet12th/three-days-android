@@ -266,7 +266,7 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="3dp"
                 android:text="Lv. 2"
-                android:textColor="@color/blue_10"
+                android:textColor="@color/blue_50"
                 android:textSize="11dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_mate_nickname"
                 app:layout_constraintEnd_toStartOf="@+id/tv_mate_nickname"

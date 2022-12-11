@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ThreeDays.ModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
+
+    <style name="Theme.ThreeDays.RoundedBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/Theme.ThreeDays.ModalStyle</item>
+    </style>
+</resources>

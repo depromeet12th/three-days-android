@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/group_emoji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/rb_face"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginHorizontal="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_emoji_face_button"
+                android:button="@null"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rb_food"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginHorizontal="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_emoji_food_button"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_animal"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginHorizontal="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_emoji_animal_button"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_object"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginHorizontal="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_emoji_object_button"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_activity"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginHorizontal="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_emoji_activity_button"
+                android:button="@null" />
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_emoji_list"
+            android:layout_width="0dp"
+            android:layout_height="305dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/group_emoji" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
