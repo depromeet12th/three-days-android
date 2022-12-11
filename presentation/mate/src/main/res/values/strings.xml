@@ -41,4 +41,10 @@
     <string name="on_boarding_third_content">습관 실천을 통해 얻은 박수로 짝꿍이 레벨업해요!</string>
     <string name="next">다음</string>
     <string name="with_mate">짝꿍과 함께하기</string>
+
+    <!-- share mate -->
+    <string name="share">공유하기</string>
+    <string name="save_as_image">이미지로 저장</string>
+    <string name="share_story">스토리 공유</string>
+    <string name="share_page_guide">\@ZZAKSIM 을 태그해주시면 리포스팅 해드려요</string>
 </resources>
