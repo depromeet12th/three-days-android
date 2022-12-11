@@ -91,18 +91,18 @@ class OnBoardingBottomSheet(
         val (btnText, title, content) = when (position) {
             FIRST_PAGE -> Triple(
                 getString(R.string.next),
-                getString(R.string.on_boarding_title_1),
-                getString(R.string.on_boarding_content_1)
+                getString(R.string.on_boarding_first_title),
+                getString(R.string.on_boarding_first_content)
             )
             SECOND_PAGE -> Triple(
                 getString(R.string.next),
-                getString(R.string.on_boarding_title_2),
-                getString(R.string.on_boarding_content_2)
+                getString(R.string.on_boarding_second_title),
+                getString(R.string.on_boarding_second_content)
             )
             else -> Triple(
                 getString(R.string.with_mate),
-                getString(R.string.on_boarding_title_3),
-                getString(R.string.on_boarding_content_3)
+                getString(R.string.on_boarding_third_title),
+                getString(R.string.on_boarding_third_content)
             )
         }
 

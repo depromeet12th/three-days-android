@@ -33,12 +33,12 @@
     <string name="count_nickname_length">0/10</string>
 
     <!-- onBoarding -->
-    <string name="on_boarding_title_1">짝꿍과 함께하는 66일 챌린지</string>
-    <string name="on_boarding_title_2">하나의 습관에만 집중</string>
-    <string name="on_boarding_title_3">박수를 먹고 자라는 짝꿍</string>
-    <string name="on_boarding_content_1">습관이 형성되는 최소의 시간 66일</string>
-    <string name="on_boarding_content_2">가장 실천하고 싶은 습관에 짝꿍을 연결해보세요!</string>
-    <string name="on_boarding_content_3">습관 실천을 통해 얻은 박수로 짝꿍이 레벨업해요!</string>
+    <string name="on_boarding_first_title">짝꿍과 함께하는 66일 챌린지</string>
+    <string name="on_boarding_second_title">하나의 습관에만 집중</string>
+    <string name="on_boarding_third_title">박수를 먹고 자라는 짝꿍</string>
+    <string name="on_boarding_first_content">습관이 형성되는 최소의 시간 66일</string>
+    <string name="on_boarding_second_content">가장 실천하고 싶은 습관에 짝꿍을 연결해보세요!</string>
+    <string name="on_boarding_third_content">습관 실천을 통해 얻은 박수로 짝꿍이 레벨업해요!</string>
     <string name="next">다음</string>
     <string name="with_mate">짝꿍과 함께하기</string>
 </resources>
