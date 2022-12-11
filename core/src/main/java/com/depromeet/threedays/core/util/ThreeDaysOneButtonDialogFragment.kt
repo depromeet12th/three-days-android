@@ -17,6 +17,7 @@ import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
 class ThreeDaysOneButtonDialogFragment : DialogFragment() {
     private var _binding: FragmentThreeDaysOneButtonDialogBinding? = null
     private val binding get() = _binding!!
+    private var data = OneButtonDialogInfo.EMPTY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,13 +75,13 @@ class ThreeDaysOneButtonDialogFragment : DialogFragment() {
 
     companion object {
         const val TAG = "ThreeDaysDialogOneButtonFragment"
-        var data = OneButtonDialogInfo.EMPTY
 
         fun newInstance(
             data: OneButtonDialogInfo
         ): ThreeDaysOneButtonDialogFragment {
-            this.data = data
-            return ThreeDaysOneButtonDialogFragment()
+            val fragment = ThreeDaysOneButtonDialogFragment()
+            fragment.data = data
+            return fragment
         }
     }
 }
