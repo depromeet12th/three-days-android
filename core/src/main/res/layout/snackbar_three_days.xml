@@ -44,7 +44,7 @@
                 android:padding="12dp"
                 android:layout_marginEnd="12dp"
                 android:textAppearance="@style/Typography.Body4.SemiBold"
-                android:textColor="@color/blue_sub_color"
+                android:textColor="@color/blue_50"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

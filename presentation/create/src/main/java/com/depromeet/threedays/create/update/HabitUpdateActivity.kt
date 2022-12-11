@@ -9,9 +9,11 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.visibleOrGone
+import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
+import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,6 +61,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
         }
 
         binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
+        binding.tvEmoji.setOnSingleClickListener {
+            EmojiBottomSheetDialogFragment().show(supportFragmentManager, "emojiBottomSheetDialogFragment")
+        }
     }
 
     /*

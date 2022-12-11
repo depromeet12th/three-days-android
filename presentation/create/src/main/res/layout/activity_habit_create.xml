@@ -354,7 +354,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_green"
+                android:background="@drawable/selector_green_color_button"
                 android:button="@null"
                 android:checked="true" />
 
@@ -364,8 +364,9 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_blue"
-                android:button="@null" />
+                android:background="@drawable/selector_blue_color_button"
+                android:button="@null"
+                />
 
             <RadioButton
                 android:id="@+id/rb_pink"
@@ -373,7 +374,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_pink"
+                android:background="@drawable/selector_pink_color_button"
                 android:button="@null" />
         </RadioGroup>
 
