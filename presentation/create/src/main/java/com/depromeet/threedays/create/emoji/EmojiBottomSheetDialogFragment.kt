@@ -44,7 +44,7 @@ class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
     }
 
     override fun getTheme(): Int {
-        return com.depromeet.threedays.core_design_system.R.style.Theme_ThreeDays_RoundedBottomSheet
+        return com.depromeet.threedays.core_design_system.R.style.RoundCornerBottomSheetDialogTheme
     }
 
     override fun onDestroyView() {
