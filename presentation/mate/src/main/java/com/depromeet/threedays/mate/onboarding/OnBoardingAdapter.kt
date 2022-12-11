@@ -7,7 +7,7 @@ import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.mate.databinding.ItemOnBoardingMateBinding
 
 class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
-    // 임시 데이터 (일러스터 나오면 변경)
+    // TODO: 임시 데이터 (일러스터 나오면 변경)
     private var list = mutableListOf(
         R.drawable.ic_clap,
         R.drawable.ic_close,
