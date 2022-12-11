@@ -44,6 +44,7 @@ dependencies {
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
+    implementation deps.glide.core
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
