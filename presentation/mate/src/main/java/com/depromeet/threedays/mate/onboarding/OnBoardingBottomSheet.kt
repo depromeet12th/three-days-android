@@ -12,7 +12,7 @@ import com.depromeet.threedays.mate.databinding.BottomSheetMateOnBoardingBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OnBoardingBottomSheet(
-    val onWithMateClick: () -> Unit
+    val onWithMateClick: () -> Unit,
 ) : BottomSheetDialogFragment() {
     private var _binding: BottomSheetMateOnBoardingBinding? = null
     private val binding get() = _binding!!
