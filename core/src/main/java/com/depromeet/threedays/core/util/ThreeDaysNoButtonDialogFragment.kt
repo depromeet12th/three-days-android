@@ -1,4 +1,4 @@
-package com.depromeet.threedays.mate.popup
+package com.depromeet.threedays.core.util
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import com.depromeet.threedays.core.R
+import com.depromeet.threedays.core.databinding.FragmentThreeDaysNoButtonDialogBinding
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.mate.R
-import com.depromeet.threedays.mate.databinding.FragmentMaxLevelPopupDialogBinding
 
-class MaxLevelPopupDialogFragment : DialogFragment() {
-    private var _binding: FragmentMaxLevelPopupDialogBinding? = null
+class ThreeDaysNoButtonDialogFragment(val resId: Int, val content: String) : DialogFragment() {
+    private var _binding: FragmentThreeDaysNoButtonDialogBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class MaxLevelPopupDialogFragment : DialogFragment() {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_max_level_popup_dialog,
+            R.layout.fragment_three_days_no_button_dialog,
             container,
             false
         )
@@ -42,6 +42,8 @@ class MaxLevelPopupDialogFragment : DialogFragment() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
+        binding.ivIllustrator.setImageResource(resId)
+        binding.tvContent.text = content
         binding.ivClose.setOnSingleClickListener {
             dismiss()
         }
