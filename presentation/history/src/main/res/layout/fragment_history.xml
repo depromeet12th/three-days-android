@@ -26,6 +26,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="20dp" />
 
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_illustration, tv_no_habit_guide, btn_create_habit" />
+
         <ImageView
             android:id="@+id/iv_prev_month"
             android:layout_width="24dp"
@@ -88,191 +94,200 @@
             android:layout_height="35dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_this_month"/>
 
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="cl_this_month_clap, cl_this_month_achieve_days, cl_most_achieve, tv_ongoing_habit, rv_habit" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_this_month_clap"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:background="@drawable/bg_rect_gray700_r10"
-            app:layout_constraintEnd_toStartOf="@id/gl_middle"
-            app:layout_constraintStart_toStartOf="@id/gl_begin"
-            app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar">
-
-            <TextView
-                android:id="@+id/tv_this_month_clap_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textAppearance="@style/Typography.Body3"
-                android:textColor="@color/gray_300"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/this_month_clap_title"/>
-
-            <TextView
-                android:id="@+id/tv_clap_emoji"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/clap"
-                android:textAppearance="@style/Typography.Heading"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_clap"
-                app:layout_constraintEnd_toStartOf="@+id/tv_this_month_clap"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_this_month_clap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@style/Typography.Heading"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_clap_emoji"
-                tools:text="4"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_this_month_achieve_days"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_rect_gray700_r10"
-            app:layout_constraintStart_toStartOf="@id/gl_begin"
-            app:layout_constraintEnd_toStartOf="@id/gl_middle"
-            app:layout_constraintTop_toBottomOf="@+id/cl_this_month_clap">
-
-            <TextView
-                android:id="@+id/tv_this_month_achieve_days_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textAppearance="@style/Typography.Body3"
-                android:textColor="@color/gray_300"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/this_month_achieve_days_title"/>
-
-            <TextView
-                android:id="@+id/tv_watch_emoji"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/watch"
-                android:textAppearance="@style/Typography.Heading"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_achieve_days"
-                app:layout_constraintEnd_toStartOf="@+id/tv_this_month_achieve_days"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_this_month_achieve_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@style/Typography.Heading"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_watch_emoji"
-                tools:text="26" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Space
-            android:id="@+id/gl_middle"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_most_achieve"
-            android:layout_width="0dp"
-            android:layout_height="212dp"
-            android:background="@drawable/bg_rect_green50_r10"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintStart_toEndOf="@+id/gl_middle"
-            app:layout_constraintTop_toTopOf="@+id/cl_this_month_clap">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:gravity="center"
-                android:text="@string/this_month_most_achieve_habit_guide"
-                android:textAppearance="@style/Typography.Paragraph3.13dp"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/medicine"
-                android:textAppearance="@style/Typography.Body1"
-                android:textSize="48sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:gravity="center"
-                android:textAppearance="@style/Typography.Body2"
-                android:textColor="#FDFDFD"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="@string/this_month_most_achieve_habit_title"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_ongoing_habit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="@string/ongoing_habit"
-            android:textAppearance="@style/Typography.Body2"
-            android:textColor="@color/gray_500"
-            app:layout_constraintStart_toStartOf="@id/gl_begin"
-            app:layout_constraintTop_toBottomOf="@+id/cl_this_month_achieve_days" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_habit"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/ncv_has_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
-            tools:listitem="@layout/item_habit"/>
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="tv_illustration, tv_no_habit_guide, btn_create_habit" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_this_month_clap"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/bg_rect_gray700_r10"
+                    app:layout_constraintEnd_toStartOf="@id/gl_middle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_this_month_clap_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:textAppearance="@style/Typography.Body3"
+                        android:textColor="@color/gray_300"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/this_month_clap_title"/>
+
+                    <TextView
+                        android:id="@+id/tv_clap_emoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clap"
+                        android:textAppearance="@style/Typography.Heading"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_clap"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_this_month_clap"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_this_month_clap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginStart="8dp"
+                        android:textAppearance="@style/Typography.Heading"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/tv_clap_emoji"
+                        tools:text="4"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_this_month_achieve_days"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_rect_gray700_r10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl_middle"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_this_month_clap">
+
+                    <TextView
+                        android:id="@+id/tv_this_month_achieve_days_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:textAppearance="@style/Typography.Body3"
+                        android:textColor="@color/gray_300"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/this_month_achieve_days_title"/>
+
+                    <TextView
+                        android:id="@+id/tv_watch_emoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/watch"
+                        android:textAppearance="@style/Typography.Heading"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_achieve_days"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_this_month_achieve_days"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_this_month_achieve_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginStart="8dp"
+                        android:textAppearance="@style/Typography.Heading"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/tv_watch_emoji"
+                        tools:text="26" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:id="@+id/gl_middle"
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_most_achieve"
+                    android:layout_width="0dp"
+                    android:layout_height="212dp"
+                    android:background="@drawable/bg_rect_green50_r10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/gl_middle"
+                    app:layout_constraintTop_toTopOf="@+id/cl_this_month_clap">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:gravity="center"
+                        android:text="@string/this_month_most_achieve_habit_guide"
+                        android:textAppearance="@style/Typography.Paragraph3.13dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medicine"
+                        android:textAppearance="@style/Typography.Body1"
+                        android:textSize="48sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:textAppearance="@style/Typography.Body2"
+                        android:textColor="#FDFDFD"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:text="@string/this_month_most_achieve_habit_title"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_ongoing_habit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/ongoing_habit"
+                    android:textAppearance="@style/Typography.Body2"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_this_month_achieve_days" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_habit"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:clipToPadding="false"
+                    android:paddingBottom="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
+                    tools:listitem="@layout/item_habit"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- 습관이 없을 때 보여줄 Views -->
         <TextView
             android:id="@+id/tv_illustration"
             android:layout_width="200dp"
