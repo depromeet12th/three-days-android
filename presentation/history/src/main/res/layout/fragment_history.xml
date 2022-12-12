@@ -83,7 +83,7 @@
             android:background="@drawable/bg_rect_white_r10"
             android:textAppearance="@style/Typography.Paragraph3.13dp"
             android:text="@string/history_tooltip_guide"
-            android:elevation="8dp"
+            android:elevation="4dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_tooltip" />
@@ -130,18 +130,18 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/this_month_clap_title"/>
 
-                    <TextView
-                        android:id="@+id/tv_clap_emoji"
+                    <ImageView
+                        android:id="@+id/iv_clap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/clap"
-                        android:textAppearance="@style/Typography.Heading"
-                        android:textColor="@color/white"
+                        android:src="@drawable/ic_clap"
+                        app:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_clap"
                         app:layout_constraintEnd_toStartOf="@+id/tv_this_month_clap"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:tint="@color/white"/>
 
                     <TextView
                         android:id="@+id/tv_this_month_clap"
@@ -154,7 +154,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tv_clap_emoji"
+                        app:layout_constraintStart_toEndOf="@+id/iv_clap"
                         tools:text="4"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -180,13 +180,11 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/this_month_achieve_days_title"/>
 
-                    <TextView
-                        android:id="@+id/tv_watch_emoji"
+                    <ImageView
+                        android:id="@+id/iv_watch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/watch"
-                        android:textAppearance="@style/Typography.Heading"
-                        android:textColor="@color/white"
+                        android:src="@drawable/ic_check_small"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_achieve_days"
                         app:layout_constraintEnd_toStartOf="@+id/tv_this_month_achieve_days"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -204,7 +202,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tv_watch_emoji"
+                        app:layout_constraintStart_toEndOf="@+id/iv_watch"
                         tools:text="26" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,7 +315,7 @@
             android:id="@+id/btn_create_habit"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_rect_gray800_r30"
             android:gravity="center"
             android:paddingHorizontal="44dp"
