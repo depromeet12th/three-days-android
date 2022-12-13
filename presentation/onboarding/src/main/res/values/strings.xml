@@ -1,1 +1,12 @@
-<resources></resources>
+<resources>
+    <string name="first_on_boarding_page_title">3일부터 차근차근 시작해봐요</string>
+    <string name="second_on_boarding_page_title">짝짝짝! 3일 연속 실천했나요?</string>
+    <string name="third_on_boarding_page_title">짝꿍과 함께 해볼까요?</string>
+
+    <string name="first_on_boarding_page_content">작심삼일을 하며 좌절했던 과거는 안녕,\n작심삼일을 모아모아 작심삼백일까지!</string>
+    <string name="second_on_boarding_page_content">3일 연속 실천시 박수를 드려요.\n박수를 하나하나 모아볼까요?</string>
+    <string name="third_on_boarding_page_content">습관에 짝꿍을 연결하고 박수를 모아\n짝꿍을 레벨업 시켜보세요!</string>
+
+    <string name="next">다음</string>
+    <string name="start">시작하기</string>
+</resources>
