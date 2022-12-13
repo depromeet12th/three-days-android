@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":presentation:create"))
     implementation(project(":presentation:history"))
     implementation(project(":presentation:notification"))
+    implementation(project(":presentation:mypage"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

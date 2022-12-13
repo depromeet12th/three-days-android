@@ -4,4 +4,6 @@
     <string name="dialog_edit_nickname_title">닉네임 수정</string>
     <string name="dialog_edit_nickname_cancel">취소</string>
     <string name="dialog_edit_nickname_submit">저장</string>
+    <string name="emoji_example">🎯</string>
+    <string name="archived_habit_onboarding_text">실행 기록이 있거나 짝꿍과 연결된 습관은 홈에서 삭제시 보관함으로 이동돼요.</string>
 </resources>
