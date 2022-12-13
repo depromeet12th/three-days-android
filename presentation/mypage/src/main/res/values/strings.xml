@@ -6,4 +6,9 @@
     <string name="dialog_edit_nickname_submit">저장</string>
     <string name="emoji_example">🎯</string>
     <string name="archived_habit_onboarding_text">실행 기록이 있거나 짝꿍과 연결된 습관은 홈에서 삭제시 보관함으로 이동돼요.</string>
+    <string name="mypage_version_info">버전 정보</string>
+    <string name="mypage_terms_of_service">이용 약관</string>
+    <string name="mypage_privacy_policy">개인정보처리방침</string>
+    <string name="mypage_logout">로그아웃</string>
+    <string name="mypage_withdraw">회원탈퇴</string>
 </resources>
