@@ -1,5 +1,7 @@
 package com.depromeet.threedays.mypage
 
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.GET_CONFIGURATIONS
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -12,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>(R.layout.fragment_my_page) {
+class MyPageFragment :
+    BaseFragment<FragmentMyPageBinding, MyPageViewModel>(R.layout.fragment_my_page) {
     override val viewModel by viewModels<MyPageViewModel>()
 
     @Inject
@@ -21,6 +24,16 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initEvent()
+        initView(view)
+    }
+
+    /**
+     * 화면 초기화
+     */
+    private fun initView(view: View) {
+        // FIXME: getPackageInfo(String, PackageInfoFlags) 써보려했으나 에러나서 일단 동작하는 코드 사용함
+        val versionName = view.context.packageManager.getPackageInfo("com.depromeet.threedays", 0,).versionName
+        binding.tvAppVersionName.text = versionName
     }
 
     /**
@@ -44,15 +57,11 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>(R.lay
         val nickname = binding.tvNickname.text.toString()
         EditNicknameDialogFragment(
             nickname = nickname,
-            onComplete = { ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.") } ,
+            onSubmit = { ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.") },
         ).show(
             requireActivity().supportFragmentManager,
             EditNicknameDialogFragment.TAG,
         )
-    }
-
-    private fun onVersionButtonClicked() {
-        TODO("버전 정보")
     }
 
     private fun onServicePolicyButtonClicked() {

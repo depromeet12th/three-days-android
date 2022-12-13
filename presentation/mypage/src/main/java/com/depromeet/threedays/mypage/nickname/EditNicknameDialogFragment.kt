@@ -14,7 +14,7 @@ import com.depromeet.threedays.mypage.databinding.FragmentEditNicknameDialogBind
 
 class EditNicknameDialogFragment(
     val nickname: String,
-    val onComplete: () -> Unit,
+    val onSubmit: () -> Unit,
 ) : DialogFragment() {
     private var _binding: FragmentEditNicknameDialogBinding? = null
     private val binding get() = _binding!!
@@ -63,7 +63,7 @@ class EditNicknameDialogFragment(
             dismiss()
         }
         binding.tvSubmit.setOnClickListener {
-            onComplete()
+            onSubmit()
             dismiss()
         }
 
