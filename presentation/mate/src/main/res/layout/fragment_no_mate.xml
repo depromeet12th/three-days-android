@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".nomate.NoMateFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top_of_30_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3"/>
+
+    <TextView
+        android:id="@+id/tv_illustration"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@color/gray_200"
+        android:gravity="center"
+        android:text="일러스트로 대체될 영역"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gl_top_of_30_percent" />
+
+    <TextView
+        android:id="@+id/tv_create_mate_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/create_mate_guide"
+        android:textAppearance="@style/Typography.Paragraph3.13dp"
+        android:textColor="@color/gray_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_create_mate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_rect_gray800_r30"
+        android:gravity="center"
+        android:paddingHorizontal="44dp"
+        android:paddingVertical="14dp"
+        android:text="@string/create_mate"
+        android:textAppearance="@style/Typography.Button1"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide" />
+</androidx.constraintlayout.widget.ConstraintLayout>
