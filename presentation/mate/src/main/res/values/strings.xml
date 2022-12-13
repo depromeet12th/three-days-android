@@ -10,6 +10,8 @@
     <string name="clap_guide_content">레벨업을 위한 박수는 짝꿍 생성 시점부터 카운트돼요. 때문에 습관을 생성한 시점부터 모은 박수와 차이날 수 있어요!</string>
     <string name="create_mate_guide">혼자서는 힘드셨죠?\n짝꿍이 도와드릴게요.</string>
     <string name="create_mate">짝꿍과 함께하기</string>
+    <string name="achieve_max_level">최종레벨 달성!</string>
+    <string name="save_mate">함께한 짝꿍에 저장하기</string>
 
     <!-- step1 -->
     <string name="connect_habit_guide">어떤 습관을 연결하시겠어요?</string>
@@ -47,4 +49,6 @@
     <string name="save_as_image">이미지로 저장</string>
     <string name="share_story">스토리 공유</string>
     <string name="share_page_guide">\@ZZAKSIM 을 태그해주시면 리포스팅 해드려요</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

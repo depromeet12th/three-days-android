@@ -49,14 +49,20 @@
                 android:id="@+id/group_has_habit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_no_habit"
+                android:id="@+id/group_speech_bubble"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_create_mate_guide, btn_create_mate" />
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_achieve_max_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tv_achieve_max_level, btn_save_mate" />
 
             <TextView
                 android:id="@+id/tv_mate"
@@ -136,6 +142,34 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_mate"
                 app:layout_constraintEnd_toStartOf="@+id/iv_delete"
                 app:layout_constraintTop_toTopOf="@id/tv_mate" />
+
+            <TextView
+                android:id="@+id/tv_achieve_max_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/achieve_max_level"
+                android:textAppearance="@style/Typography.Display2"
+                android:textColor="@color/gray_600"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_save_mate" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_save_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:background="@drawable/bg_rect_gray800_r30"
+                android:gravity="center"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:text="@string/save_mate"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_illustration"/>
 
             <TextView
                 android:id="@+id/tv_speech_bubble"
@@ -221,34 +255,6 @@
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_begin"
                 app:layout_constraintTop_toBottomOf="@+id/tv_mate_nickname" />
-
-            <TextView
-                android:id="@+id/tv_create_mate_guide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/create_mate_guide"
-                android:textAppearance="@style/Typography.Paragraph3.13dp"
-                android:textColor="@color/gray_500"
-                app:layout_constraintEnd_toEndOf="@id/gl_end"
-                app:layout_constraintStart_toStartOf="@id/gl_begin"
-                app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_create_mate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_rect_gray800_r30"
-                android:gravity="center"
-                android:paddingHorizontal="44dp"
-                android:paddingVertical="14dp"
-                android:text="@string/create_mate"
-                android:textAppearance="@style/Typography.Button1"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@id/gl_end"
-                app:layout_constraintStart_toStartOf="@id/gl_begin"
-                app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Persistent Bottom Sheet -->
