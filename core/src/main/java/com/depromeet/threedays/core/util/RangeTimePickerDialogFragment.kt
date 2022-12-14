@@ -59,14 +59,14 @@ class RangeTimePickerDialogFragment : DialogFragment() {
 
     private fun initView() {
         binding.timePicker.hour = hour
-        binding.timePicker.minute = minute / TIME_PICKER_INTERVAL
+        binding.timePicker.minute = minute / TIME_PICKER_INTERVAL_MINUTE
 
         binding.tvCancel.setOnSingleClickListener { dismiss() }
 
         binding.tvConfirm.setOnSingleClickListener {
             onConfirmClickListener.invoke(
                 binding.timePicker.hour,
-                binding.timePicker.minute * TIME_PICKER_INTERVAL
+                binding.timePicker.minute * TIME_PICKER_INTERVAL_MINUTE
             )
             dismiss()
         }
@@ -77,7 +77,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
             Resources.getSystem().getIdentifier("minute", "id", "android")
         ) as NumberPicker).apply {
             minValue = 0
-            maxValue = 60 / TIME_PICKER_INTERVAL - 1
+            maxValue = 60 / TIME_PICKER_INTERVAL_MINUTE - 1
             displayedValues = getDisplayedValue().toTypedArray()
             setOnValueChangedListener(null)
         }
@@ -86,7 +86,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
     private fun getDisplayedValue(
     ): MutableList<String> {
         val displayedValues: MutableList<String> = java.util.ArrayList()
-        for (i in 0..59 step TIME_PICKER_INTERVAL)
+        for (i in 0..59 step TIME_PICKER_INTERVAL_MINUTE)
             displayedValues.add(String.format("%02d", i))
         return displayedValues
     }
@@ -94,7 +94,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
     companion object {
         const val TAG = "RangeTimePickerDialogFragment"
 
-        const val TIME_PICKER_INTERVAL = 30
+        const val TIME_PICKER_INTERVAL_MINUTE = 30
 
         fun newInstance(
             hour: Int, minute: Int, onConfirmClickListener: (hour: Int, minute: Int) -> Unit
