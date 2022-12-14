@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class ArchivedHabitActivity :
     BaseActivity<ActivityArchivedHabitBinding>(R.layout.activity_archived_habit) {
     private val viewModel by viewModels<ArchivedHabitViewModel>()
-    lateinit var archivedHabitAdapter: ArchivedHabitAdapter
+    private lateinit var archivedHabitAdapter: ArchivedHabitAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
