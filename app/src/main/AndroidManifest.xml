@@ -44,6 +44,10 @@
             android:exported="false"/>
 
         <activity
+            android:name="com.depromeet.threedays.mate.share.ShareMateActivity"
+            android:exported="false"/>
+
+        <activity
             android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
             android:exported="false"/>
     </application>

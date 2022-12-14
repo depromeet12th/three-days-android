@@ -10,7 +10,6 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_100"
         tools:context=".HistoryFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +29,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_30_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_has_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="iv_delete, iv_share, cl_habit, iv_tooltip, cl_tooltip, tv_text, tv_start_date" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_no_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_create_mate_guide, btn_create_mate" />
 
             <TextView
                 android:id="@+id/tv_mate"
@@ -95,18 +114,58 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
                     app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji" />
 
-                <ImageView
-                    android:id="@+id/iv_tooltip"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_tooltip"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="14dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/iv_tooltip"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tooltip"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintTop_toTopOf="@id/cl_habit"
+                app:layout_constraintBottom_toBottomOf="@id/cl_habit"
+                app:layout_constraintEnd_toEndOf="@id/cl_habit"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_tooltip"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                android:background="@drawable/bg_rect_white_r10"
+                android:elevation="4dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/cl_habit"
+                app:layout_constraintEnd_toEndOf="@id/gl_end">
+
+                <TextView
+                    android:id="@+id/tv_tooltip_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:textAppearance="@style/Typography.Paragraph3.13dp"
+                    android:text="@string/clap_guide_title"
+                    android:textColor="@color/gray_800"
+                    android:elevation="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_tooltip_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="@style/Typography.Paragraph3.13dp"
+                    android:text="@string/clap_guide_content"
+                    android:textColor="@color/gray_600"
+                    android:elevation="8dp"
+                    android:minLines="3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tooltip_title"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- 나중에 폰트 display로 변경 필요 -->
             <TextView
                 android:id="@+id/tv_text"
@@ -127,13 +186,13 @@
                 android:id="@+id/tv_illustration"
                 android:layout_width="240dp"
                 android:layout_height="240dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginBottom="250dp"
                 android:background="@color/gray_200"
                 android:gravity="center"
                 android:text="일러스트로 대체될 영역"
+                app:layout_constraintTop_toBottomOf="@+id/gl_top_30_percent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text" />
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_start_date"
@@ -146,13 +205,43 @@
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_begin"
                 app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+            <TextView
+                android:id="@+id/tv_create_mate_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
+                android:text="@string/create_mate_guide"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                android:text="@string/create_mate"
+                android:gravity="center"
+                android:background="@drawable/bg_rect_gray800_r30"
+                app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintEnd_toEndOf="@id/gl_end" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Persistent Bottom Sheet -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:background="@drawable/bg_rect_white_top_r15"
+            android:visibility="gone"
             app:behavior_hideable="false"
             app:behavior_peekHeight="120dp"
             app:behavior_halfExpandedRatio="0.5"
@@ -177,7 +266,7 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="3dp"
                 android:text="Lv. 2"
-                android:textColor="@color/blue_10"
+                android:textColor="@color/blue_50"
                 android:textSize="11dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_mate_nickname"
                 app:layout_constraintEnd_toStartOf="@+id/tv_mate_nickname"

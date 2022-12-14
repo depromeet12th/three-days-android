@@ -6,6 +6,10 @@
     <string name="level_sample">Lv. 2</string>
     <string name="mate_nickname_sample">수줍은 인구기(별명)</string>
     <string name="next_level_guide">다음 레벨까지 박수[n]개를 더 모아보세요!</string>
+    <string name="clap_guide_title">습관 박수와 짝꿍의 박수가 달라요!</string>
+    <string name="clap_guide_content">레벨업을 위한 박수는 짝꿍 생성 시점부터 카운트돼요. 때문에 습관을 생성한 시점부터 모은 박수와 차이날 수 있어요!</string>
+    <string name="create_mate_guide">혼자서는 힘드셨죠?\n짝꿍이 도와드릴게요.</string>
+    <string name="create_mate">짝꿍과 함께하기</string>
 
     <!-- step1 -->
     <string name="connect_habit_guide">어떤 습관을 연결하시겠어요?</string>
@@ -27,4 +31,20 @@
     <string name="input_nickname_hint">별명을 입력해주세요.</string>
     <string name="available_nickname_guide">별명은 바꿀 수 없어요. 신중하게 지어주세요.</string>
     <string name="count_nickname_length">0/10</string>
+
+    <!-- onBoarding -->
+    <string name="on_boarding_first_title">짝꿍과 함께하는 66일 챌린지</string>
+    <string name="on_boarding_second_title">하나의 습관에만 집중</string>
+    <string name="on_boarding_third_title">박수를 먹고 자라는 짝꿍</string>
+    <string name="on_boarding_first_content">습관이 형성되는 최소의 시간 66일</string>
+    <string name="on_boarding_second_content">가장 실천하고 싶은 습관에 짝꿍을 연결해보세요!</string>
+    <string name="on_boarding_third_content">습관 실천을 통해 얻은 박수로 짝꿍이 레벨업해요!</string>
+    <string name="next">다음</string>
+    <string name="with_mate">짝꿍과 함께하기</string>
+
+    <!-- share mate -->
+    <string name="share">공유하기</string>
+    <string name="save_as_image">이미지로 저장</string>
+    <string name="share_story">스토리 공유</string>
+    <string name="share_page_guide">\@ZZAKSIM 을 태그해주시면 리포스팅 해드려요</string>
 </resources>
