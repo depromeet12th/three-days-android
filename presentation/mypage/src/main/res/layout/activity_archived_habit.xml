@@ -55,7 +55,7 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center_vertical"
             android:text="습관 보관함"
@@ -69,7 +69,7 @@
         <TextView
             android:id="@+id/tv_action_button"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="편집"
             app:layout_constraintBottom_toTopOf="@id/gl_header_end"
