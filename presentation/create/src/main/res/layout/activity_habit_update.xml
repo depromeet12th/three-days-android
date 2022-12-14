@@ -67,10 +67,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_rect_gray100_r10"
+            android:gravity="center"
             android:padding="10dp"
             android:textColor="#FF000000"
             android:textSize="25sp"
-            android:gravity="center"
             app:layout_constraintStart_toStartOf="@+id/tv_habit_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_habit_name"
             tools:text="🧩" />
@@ -276,7 +276,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_notification"
-            app:layout_constraintTop_toBottomOf="@+id/tv_notification">
+            app:layout_constraintTop_toBottomOf="@+id/sw_notification">
 
             <TextView
                 android:id="@+id/tv_notification_time"
