@@ -78,8 +78,7 @@ class HabitCreateActivity :
 
     private fun showTimePicker() {
         RangeTimePickerDialogFragment.newInstance(
-            hour = LocalTime.now().hour,
-            minute = LocalTime.now().minute,
+            time = LocalTime.now(),
             onConfirmClickListener = { time ->
                 binding.tvNotificationTime.text = time.formatHourMinute()
             }

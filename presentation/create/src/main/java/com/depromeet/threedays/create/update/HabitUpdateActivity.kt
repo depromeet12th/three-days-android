@@ -77,8 +77,7 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
 
     private fun showTimePicker() {
         RangeTimePickerDialogFragment.newInstance(
-            hour = LocalTime.now().hour,
-            minute = LocalTime.now().minute,
+            time = LocalTime.now(),
             onConfirmClickListener = { time ->
                 binding.tvNotificationTime.text = time.formatHourMinute()
             }
