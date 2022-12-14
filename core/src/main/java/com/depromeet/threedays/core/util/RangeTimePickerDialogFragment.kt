@@ -19,7 +19,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
 
     private var hour = LocalTime.now().hour
     private var minute = LocalTime.now().minute
-    private lateinit var onConfirmClickListener: (hour: Int, minute: Int) -> Unit
+    private lateinit var onConfirmClickListener: (time: LocalTime) -> Unit
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,8 +65,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
 
         binding.tvConfirm.setOnSingleClickListener {
             onConfirmClickListener.invoke(
-                binding.timePicker.hour,
-                binding.timePicker.minute * TIME_PICKER_INTERVAL_MINUTE
+                LocalTime.of(binding.timePicker.hour, binding.timePicker.minute * TIME_PICKER_INTERVAL_MINUTE)
             )
             dismiss()
         }
@@ -97,7 +96,7 @@ class RangeTimePickerDialogFragment : DialogFragment() {
         const val TIME_PICKER_INTERVAL_MINUTE = 30
 
         fun newInstance(
-            hour: Int, minute: Int, onConfirmClickListener: (hour: Int, minute: Int) -> Unit
+            hour: Int, minute: Int, onConfirmClickListener: (time: LocalTime) -> Unit
         ): RangeTimePickerDialogFragment {
             val fragment = RangeTimePickerDialogFragment()
             fragment.hour = hour

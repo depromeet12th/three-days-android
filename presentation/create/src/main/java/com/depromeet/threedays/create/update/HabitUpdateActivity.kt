@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.Emoji
@@ -78,8 +79,8 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
         RangeTimePickerDialogFragment.newInstance(
             hour = LocalTime.now().hour,
             minute = LocalTime.now().minute,
-            onConfirmClickListener = { hour, min ->
-                binding.tvNotificationTime.text = String.format("%02d:%02d", hour, min)
+            onConfirmClickListener = { time ->
+                binding.tvNotificationTime.text = time.formatHourMinute()
             }
         ).show(supportFragmentManager, RangeTimePickerDialogFragment.TAG)
     }
