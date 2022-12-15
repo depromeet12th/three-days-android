@@ -29,7 +29,6 @@ class ThreeDaysImageSnackBar {
 
             val params = layoutParams as FrameLayout.LayoutParams
             params.gravity = Gravity.TOP
-            layoutParams = params
         }
 
         binding.tvTitle.text = title
