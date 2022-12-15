@@ -12,7 +12,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getHabits(): List<HabitEntity> {
-        return habitService.getHabits()
+        return habitService.getHabits().data ?: emptyList()
     }
 
 //    override fun getHabit(habitId: Long): HabitEntity {
