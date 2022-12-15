@@ -45,6 +45,7 @@ dependencies {
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
+    implementation deps.glide.core
 
     implementation deps.timber
 
