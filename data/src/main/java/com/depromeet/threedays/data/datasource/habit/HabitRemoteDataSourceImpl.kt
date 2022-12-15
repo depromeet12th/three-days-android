@@ -2,10 +2,10 @@ package com.depromeet.threedays.data.datasource.habit
 
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.entity.HabitEntity
+import java.security.SecureRandom
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 
 class HabitRemoteDataSourceImpl @Inject constructor(
@@ -29,7 +29,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
                 dayOfWeeks = listOf(
                     "MONDAY","TUESDAY","WEDNESDAY"
                 ),
-                reward = ThreadLocalRandom.current().nextInt(10),
+                reward = SecureRandom().nextInt(10),
                 color = "pink",
                 mate = null,
                 todayHabitAchievementId = null,
@@ -42,7 +42,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
                 title = "영어 공부 1시간 하기",
                 imojiPath = "",
                 dayOfWeeks = DayOfWeek.values().map { it.name }.toList(),
-                reward = ThreadLocalRandom.current().nextInt(10),
+                reward = SecureRandom().nextInt(10),
                 color = "blue",
                 mate = null,
                 todayHabitAchievementId = null,
