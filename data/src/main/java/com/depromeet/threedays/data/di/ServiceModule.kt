@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.api.HabitService
+import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +31,7 @@ class NetworkModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(getLoggingInterceptor())
+            .addInterceptor(AuthInterceptor())
 
         return client.build()
     }
