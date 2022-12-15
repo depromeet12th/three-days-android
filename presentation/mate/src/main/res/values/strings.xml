@@ -49,7 +49,4 @@
     <string name="save_as_image">이미지로 저장</string>
     <string name="share_story">스토리 공유</string>
     <string name="share_page_guide">\@ZZAKSIM 을 태그해주시면 리포스팅 해드려요</string>
-
-    <!-- 최종 레벨 달성 팝업 -->
-    <string name="achieve_max_level">최종 레벨 달성</string>
 </resources>
