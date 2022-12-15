@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_archived_habit_activity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray_100">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"
@@ -38,6 +39,7 @@
             android:id="@+id/fl_archived_habit_onboarding"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_header_end"
@@ -80,11 +82,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_archived_habit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_height="0dp"
+            android:paddingTop="14dp"
             app:layout_constraintEnd_toStartOf="@id/gl_end"
             app:layout_constraintStart_toEndOf="@id/gl_start"
-            app:layout_constraintTop_toBottomOf="@id/gl_header_end" />
+            app:layout_constraintTop_toTopOf="@id/gl_header_end"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

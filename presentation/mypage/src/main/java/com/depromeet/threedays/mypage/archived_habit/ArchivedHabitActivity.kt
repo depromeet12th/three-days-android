@@ -1,12 +1,15 @@
 package com.depromeet.threedays.mypage.archived_habit
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.ActivityArchivedHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,9 +48,16 @@ class ArchivedHabitActivity :
         binding.rvArchivedHabit.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = archivedHabitAdapter
-
-            val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            addItemDecoration(dividerItemDecoration)
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    outRect.bottom = 18.dpToPx(context)
+                }
+            })
         }
 
         // 최초진입시
