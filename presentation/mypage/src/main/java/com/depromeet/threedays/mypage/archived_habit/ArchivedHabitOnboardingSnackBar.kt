@@ -32,7 +32,6 @@ class ArchivedHabitOnboardingSnackBar {
 
                 val params = layoutParams as FrameLayout.LayoutParams
                 params.gravity = Gravity.TOP
-                layoutParams = params
             }
 
             binding.ivClose.setOnSingleClickListener {
