@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.mate'
     compileSdk 33
 
     defaultConfig {

@@ -8,6 +8,12 @@ buildscript {
         //classpath 'com.google.gms:google-services:4.3.13'
         //classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
     }
+
+    ext {
+        threeDaysApplicationId = "com.depromeet.threedays"
+        threeDaysAppVersionCode = 2
+        threeDaysAppVersionName = "0.0.1"
+    }
 }
 
 plugins {

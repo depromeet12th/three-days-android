@@ -14,6 +14,9 @@ interface HabitService {
 
     ): List<HabitEntity>
 
+    @GET("/api/v1/habits?status=ARCHIVED")
+    suspend fun getArchivedHabits(): List<HabitEntity>
+
 //    @GET("/api/v1/habits/{habitId}")
 //    suspend fun getHabit(
 //        @Body request: PostProductsRequest

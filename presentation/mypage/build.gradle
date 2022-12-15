@@ -6,11 +6,14 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.mypage'
     compileSdk 33
 
     defaultConfig {
         minSdk 26
         targetSdk 33
+        versionCode rootProject.ext.threeDaysAppVersionCode
+        versionName rootProject.ext.threeDaysAppVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

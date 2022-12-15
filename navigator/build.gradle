@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.navigator'
     compileSdk 33
 
     defaultConfig {

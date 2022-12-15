@@ -12,6 +12,7 @@ android {
 }
 
 android {
+    namespace 'com.depromeet.threedays.home'
     compileSdk 33
 
     defaultConfig {
