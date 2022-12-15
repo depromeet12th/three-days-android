@@ -1,13 +1,12 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-parcelize'
+    id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
 }
 
 android {
+    namespace 'com.depromeet.threedays.onboarding'
     compileSdk 33
 
     defaultConfig {
@@ -37,15 +36,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":core-design-system"))
+    implementation(project(":navigator"))
 
     implementation(jetpackDeps)
-    implementation(coroutines)
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
-
-    implementation deps.timber
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)

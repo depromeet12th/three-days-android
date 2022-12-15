@@ -46,6 +46,10 @@
         <activity
             android:name="com.depromeet.threedays.mate.share.ShareMateActivity"
             android:exported="false"/>
+
+        <activity
+            android:name="com.depromeet.threedays.onboarding.OnboardingActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
