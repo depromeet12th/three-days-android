@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.depromeet.threedays"
+        applicationId rootProject.ext.threeDaysApplicationId
         minSdk 26
-        targetSdk 32
-        versionCode 2
-        versionName "1.0"
+        targetSdk 33
+        versionCode rootProject.ext.threeDaysAppVersionCode
+        versionName rootProject.ext.threeDaysAppVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,6 +45,11 @@ dependencies {
     implementation(project(":navigator"))
     implementation(project(":presentation:home"))
     implementation(project(":presentation:create"))
+    implementation(project(":presentation:history"))
+    implementation(project(":presentation:notification"))
+    implementation(project(":presentation:mate"))
+    implementation(project(":presentation:onboarding"))
+    implementation(project(":presentation:mypage"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

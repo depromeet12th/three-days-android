@@ -8,11 +8,16 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
+import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.Emoji
+import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
+import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.activity_habit_update) {
@@ -59,44 +64,23 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
         }
 
         binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
-    }
-
-    /*
-    private fun observe() {
-        viewModel.action.onEach { action ->
-            when (action) {
-                is UpdateClick -> {
-                    setResult(RESULT_MODIFY)
-                    finish()
-                }
-            }
-        }.launchIn(lifecycleScope)
-    }
-
-    private fun showTimePicker(zonedDateTime: ZonedDateTime, isRunTime: Boolean) {
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
-            if (isRunTime) {
-                viewModel.setStartTime(hour, min)
-                binding.tvRunTime.text = getTimeFormat(hour, min)
-                if(viewModel.goal.value.notificationTime == null) {
-                    viewModel.setNotificationTime(hour, min)
-                    binding.tvNotification.text = getTimeFormat(hour, min)
-                }
-            } else {
-                viewModel.setNotificationTime(hour, min)
-                binding.tvNotification.text = getTimeFormat(hour, min)
-            }
+        binding.tvEmoji.setOnSingleClickListener {
+            EmojiBottomSheetDialogFragment.newInstance {
+                emojiString -> run { binding.tvEmoji.text = emojiString }
+            }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
-        val dialog = TimePickerDialog(
-            this,
-            android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-            timeSetListener,
-            zonedDateTime.hour,
-            zonedDateTime.minute,
-            false
-        )
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
+
+        binding.tvNotificationTime.setOnSingleClickListener {
+            showTimePicker()
+        }
     }
-     */
+
+    private fun showTimePicker() {
+        RangeTimePickerDialogFragment.newInstance(
+            time = LocalTime.now(),
+            onConfirmClickListener = { time ->
+                binding.tvNotificationTime.text = time.formatHourMinute()
+            }
+        ).show(supportFragmentManager, RangeTimePickerDialogFragment.TAG)
+    }
 }

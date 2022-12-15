@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".create.SetMateNicknameFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <ImageView
+            android:id="@+id/iv_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_arrow_out"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/iv_illustrator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rect_gray200_r10"
+            android:layout_marginTop="32dp"
+            android:paddingHorizontal="49dp"
+            android:paddingVertical="62dp"
+            android:text="임시영역"
+            app:layout_constraintEnd_toEndOf="@+id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@+id/iv_out" />
+
+        <TextView
+            android:id="@+id/tv_set_mate_nickname_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/set_mate_nickname_guide"
+            android:textAppearance="@style/Typography.Title1"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@+id/iv_illustrator" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@drawable/selector_edittext"
+            android:layout_marginTop="24dp"
+            android:paddingStart="16dp"
+            android:hint="@string/input_nickname_hint"
+            android:textColorHint="@color/gray_400"
+            android:textColor="@color/gray_800"
+            android:textAppearance="@style/Typography.Body1"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            android:imeOptions="actionDone"
+            app:layout_constraintTop_toBottomOf="@+id/tv_set_mate_nickname_guide"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintEnd_toEndOf="@id/gl_end" />
+
+        <TextView
+            android:id="@+id/tv_count_nickname_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/gray_500"
+            android:text="@string/count_nickname_length"
+            app:layout_constraintTop_toTopOf="@id/et_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+            app:layout_constraintEnd_toEndOf="@+id/et_nickname" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/green_system_color"
+            android:text="@string/available_nickname_guide"
+            app:layout_constraintTop_toBottomOf="@+id/et_nickname"
+            app:layout_constraintStart_toStartOf="@id/gl_begin" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_rect_gray200_r15"
+            android:textAppearance="@style/Typography.Button1"
+            android:text="@string/step_3_button_text"
+            android:textColor="@color/gray_450"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_begin"
+            app:layout_constraintEnd_toEndOf="@id/gl_end" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

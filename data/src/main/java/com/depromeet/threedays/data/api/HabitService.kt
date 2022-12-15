@@ -1,7 +1,8 @@
 package com.depromeet.threedays.data.api
 
 import com.depromeet.threedays.data.entity.HabitEntity
-import retrofit2.http.*
+import com.depromeet.threedays.data.entity.base.ApiResponse
+import retrofit2.http.GET
 
 interface HabitService {
 //    @POST("/api/v1/habits")
@@ -12,7 +13,10 @@ interface HabitService {
     @GET("/api/v1/habits")
     suspend fun getHabits(
 
-    ): List<HabitEntity>
+    ): ApiResponse<List<HabitEntity>>
+
+    @GET("/api/v1/habits?status=ARCHIVED")
+    suspend fun getArchivedHabits(): List<HabitEntity>
 
 //    @GET("/api/v1/habits/{habitId}")
 //    suspend fun getHabit(

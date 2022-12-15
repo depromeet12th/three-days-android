@@ -8,13 +8,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.depromeet.threedays.core.R
 import com.depromeet.threedays.core.databinding.FragmentThreeDaysDialogBinding
-import com.depromeet.threedays.core.extensions.*
+import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.core.extensions.margin
+import com.depromeet.threedays.core.extensions.visible
+import com.depromeet.threedays.core.extensions.visibleOrGone
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
 
 class ThreeDaysDialogFragment : DialogFragment() {
     private var _binding: FragmentThreeDaysDialogBinding? = null
     private val binding get() = _binding!!
+    private var data = DialogInfo.EMPTY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,13 +107,12 @@ class ThreeDaysDialogFragment : DialogFragment() {
         const val BUTTON_MARGIN_WITH_EMOJI = 30f
         const val BUTTON_MARGIN_WITHOUT_EMOJI = 20f
 
-        var data = DialogInfo.EMPTY
-
         fun newInstance(
             data: DialogInfo
         ): ThreeDaysDialogFragment {
-            this.data = data
-            return ThreeDaysDialogFragment()
+            val fragment = ThreeDaysDialogFragment()
+            fragment.data = data
+            return fragment
         }
     }
 }

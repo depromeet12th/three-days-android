@@ -7,10 +7,10 @@ class HabitEntity (
     val memberId: Int,
     val title: String,
     val imojiPath: String,
-    val dayOfWeeks: ArrayList<String>,
+    val dayOfWeeks: List<String>,
     val reward: Int,
     val color: String,
-    val mate: Mate,
+    val mate: Mate?,
     val todayHabitAchievementId: Int?, // null이면 오늘 체크를 하지 않은 것
     val sequence: Int,
     val createAt: String,

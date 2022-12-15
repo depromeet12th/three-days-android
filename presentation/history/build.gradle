@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.history'
     compileSdk 33
 
     defaultConfig {
@@ -45,6 +46,8 @@ dependencies {
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
+
+    implementation deps.calendar
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)

@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.core'
     compileSdk 33
 
     defaultConfig {
@@ -44,6 +45,9 @@ dependencies {
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
+    implementation deps.glide.core
+
+    implementation deps.timber
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
