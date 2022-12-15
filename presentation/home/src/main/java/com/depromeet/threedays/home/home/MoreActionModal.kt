@@ -8,9 +8,9 @@ import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EditHabitModal(
-    val habitId: Int,
-    val onEditClick: (Int) -> Unit,
-    val onDeleteClick: (Int) -> Unit
+    val habitId: Long,
+    val onEditClick: (Long) -> Unit,
+    val onDeleteClick: (Long) -> Unit
 ) : BottomSheetDialogFragment() {
     lateinit var binding: ModalEditHabitBinding
 

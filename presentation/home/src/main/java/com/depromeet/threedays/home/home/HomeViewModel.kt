@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(
 //        }
 //    }
 //
-    fun deleteGoals(habitId: Int) {
+    fun deleteGoals(habitId: Long) {
         viewModelScope.launch {
             deleteHabitUseCase(habitId).collect { response ->
                 when(response.status) {

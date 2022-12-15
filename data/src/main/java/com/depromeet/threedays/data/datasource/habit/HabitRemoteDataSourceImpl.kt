@@ -2,6 +2,7 @@ package com.depromeet.threedays.data.datasource.habit
 
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.entity.HabitEntity
+import com.depromeet.threedays.domain.entity.mate.Mate
 import java.security.SecureRandom
 import java.time.DayOfWeek
 import java.time.LocalDateTime
@@ -31,7 +32,12 @@ class HabitRemoteDataSourceImpl @Inject constructor(
                 ),
                 reward = SecureRandom().nextInt(10),
                 color = "pink",
-                mate = null,
+                mate = Mate(
+                    mateId = 1,
+                    level = 2,
+                    characterType = "",
+                    createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+                ),
                 todayHabitAchievementId = null,
                 sequence = 1,
                 createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
@@ -113,7 +119,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteHabit(habitId: Int): Any {
-        return habitService.deleteHabit(habitId)
+    override suspend fun deleteHabit(habitId: Long) {
+        return habitService.deleteHabit(habitId.toInt())
     }
 }

@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_rect_white_r20"
-        android:paddingTop="26dp"
         android:paddingBottom="22dp">
 
+        <!-- 삭제시 체크 버튼 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_habit_archived_button_check"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_margin="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_habit_archived_icon_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_gray700_circle"
+                app:layout_constraintBottom_toBottomOf="@id/cl_habit_archived_button_check"
+                app:layout_constraintEnd_toEndOf="@id/cl_habit_archived_button_check"
+                app:layout_constraintStart_toStartOf="@id/cl_habit_archived_button_check"
+                app:layout_constraintTop_toTopOf="@id/cl_habit_archived_button_check" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 습관 제목 -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_habit_archived_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foregroundGravity="center_horizontal"
+            android:layout_marginTop="26dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_emoji"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/emoji_example"
                 app:layout_constraintStart_toStartOf="parent"
@@ -29,17 +55,18 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="영어 공부 1시간 하기"
                 android:textAppearance="@style/Typography.Title1"
                 android:textColor="@color/gray_800"
                 app:layout_constraintStart_toEndOf="@id/tv_emoji"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="영어 공부 1시간 하기" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- 시작, 종료일자 -->
         <TextView
             android:id="@+id/tv_habit_archived_period"
             android:layout_width="0dp"
@@ -51,8 +78,10 @@
             android:textColor="@color/gray_500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_habit_archived_title" />
+            app:layout_constraintTop_toBottomOf="@id/cl_habit_archived_title"
+            tools:text="2022.10.10 ~ 2022.10.10" />
 
+        <!-- n개, m일 실천 -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_statistics"
             android:layout_width="wrap_content"
@@ -91,7 +120,8 @@
                     android:textColor="@color/gray_500"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_clap"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="5개" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +137,170 @@
                 android:textAppearance="@style/Typography.Body4"
                 android:textColor="@color/gray_500"
                 app:layout_constraintStart_toEndOf="@id/cl_habit_archived_clap"
-                app:layout_constraintTop_toTopOf="@id/cl_habit_archived_clap" />
+                app:layout_constraintTop_toTopOf="@id/cl_habit_archived_clap"
+                tools:text="42일 실천" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- mate opened -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_mate_opened"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center_horizontal"
+            android:paddingHorizontal="30dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_statistics">
+
+            <!-- divider -->
+            <View
+                android:id="@+id/divider_mate"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/gray_200"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 짝궁 정보 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_mate_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:foregroundGravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_mate">
+
+                <ImageView
+                    android:id="@+id/iv_mate_profile_image"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_marginStart="37dp"
+                    android:contentDescription="@string/mate_profile_image_description"
+                    android:src="@drawable/bg_mate_sample"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_mate_profile_image_button_expand"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_margin="7dp"
+                    android:src="@drawable/bg_rect_gray600_r5"
+                    app:layout_constraintEnd_toEndOf="@id/iv_mate_profile_image"
+                    app:layout_constraintTop_toTopOf="@id/iv_mate_profile_image" />
+
+                <ImageView
+                    android:id="@+id/iv_mate_profile_image_icon_expand"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/ic_expand"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_mate_profile_image_button_expand"
+                    app:layout_constraintEnd_toEndOf="@id/iv_mate_profile_image_button_expand"
+                    app:layout_constraintStart_toStartOf="@id/iv_mate_profile_image_button_expand"
+                    app:layout_constraintTop_toTopOf="@id/iv_mate_profile_image_button_expand" />
+
+                <TextView
+                    android:id="@+id/tv_mate_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="19dp"
+                    android:textAppearance="@style/Typography.SubTitle"
+                    android:textColor="@color/gray_800"
+                    app:layout_constraintStart_toEndOf="@id/iv_mate_profile_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="닉네임닉네임" />
+
+                <TextView
+                    android:id="@+id/tv_mate_level_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/Typography.Body4"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintStart_toStartOf="@id/tv_mate_nickname"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mate_nickname"
+                    tools:text="Lv.3까지 진화" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 닫기 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_mate_opened_button_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_mate_detail">
+
+                <TextView
+                    android:id="@+id/tv_button_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mate_opened_button_close"
+                    android:textAppearance="@style/Typography.Body4"
+                    android:textColor="@color/gray_600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="닫기" />
+
+                <ImageView
+                    android:id="@+id/iv_icon_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4.5dp"
+                    android:contentDescription="@string/mate_opened_icon_close_description"
+                    android:src="@drawable/ic_up_small"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_button_close"
+                    app:layout_constraintStart_toEndOf="@id/tv_button_close"
+                    app:layout_constraintTop_toTopOf="@id/tv_button_close" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- mate closed -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_mate_closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="2dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_statistics">
+
+            <TextView
+                android:id="@+id/tv_mate_closed_button_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="함께했던 짝꿍"
+                android:textAppearance="@style/Typography.Body4.SemiBold"
+                android:textColor="@color/gray_600"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_icon_down_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4.5dp"
+                android:src="@drawable/ic_down_small"
+                app:layout_constraintBottom_toBottomOf="@id/tv_mate_closed_button_open"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_mate_closed_button_open"
+                app:layout_constraintTop_toTopOf="@id/tv_mate_closed_button_open" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
