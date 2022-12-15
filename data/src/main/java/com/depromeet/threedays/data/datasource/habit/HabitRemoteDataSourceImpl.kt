@@ -16,7 +16,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getHabits(): List<HabitEntity> {
-        return habitService.getHabits()
+        return habitService.getHabits().data ?: emptyList()
     }
 
     override suspend fun getArchivedHabits(): List<HabitEntity> {
