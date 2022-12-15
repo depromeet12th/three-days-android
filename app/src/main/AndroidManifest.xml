@@ -48,8 +48,13 @@
             android:exported="false"/>
 
         <activity
+            android:name="com.depromeet.threedays.onboarding.OnboardingActivity"
+            android:exported="false"/>
+            
+        <activity
             android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
             android:exported="false"/>
+
     </application>
 
 </manifest>
