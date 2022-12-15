@@ -111,6 +111,30 @@
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 
+    <!-- Display1 -->
+    <style name="Typography.Display1">
+        <item name="android:textSize" tools:ignore="SpUsage">26dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+
+    <!-- Display2 -->
+    <style name="Typography.Display2">
+        <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
+    <!-- Display3 -->
+    <style name="Typography.Display3">
+        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
+    </style>
+
+    <!-- Display4 -->
+    <style name="Typography.Display4">
+        <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
+        <item name="fontFamily">@font/suit_bold</item>
+    </style>
+
     <!-- Calendar -->
     <style name="Typography.Calendar">
         <item name="fontFamily">@font/suit_semi_bold</item>
