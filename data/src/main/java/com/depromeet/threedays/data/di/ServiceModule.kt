@@ -60,4 +60,4 @@ class NetworkModule {
         }
 }
 
-const val BASE_URL = "https://f6a57ac7-6bb0-4250-80bb-9fdd804e92d4.mock.pstmn.io/"
+const val BASE_URL = "https://jjaksim.com"
