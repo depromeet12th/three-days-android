@@ -30,6 +30,21 @@ class HabitRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun getArchivedHabits(): Flow<DataState<List<Habit>>> {
+        return flow {
+            emit(DataState.loading())
+            val response = habitRemoteDataSource.getArchivedHabits()
+
+            if(response.isNotEmpty()) {
+                emit(DataState.success(data = response.map { it.toHabit() }))
+            } else {
+                emit(DataState.error(msg = "response has error"))
+            }.runCatching {
+                emit(DataState.fail("response is fail"))
+            }
+        }
+    }
+
 //    override suspend fun getHabit(habitId: Long): Habit {
 //
 //    }

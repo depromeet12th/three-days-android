@@ -25,7 +25,7 @@
         android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="@string/noti_guide_title"
-        android:textAppearance="@style/Typography.H1"
+        android:textAppearance="@style/Typography.Heading"
         android:textColor="@color/gray_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

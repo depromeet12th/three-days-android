@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.depromeet.threedays.core_design_system'
     compileSdk 33
 
     defaultConfig {

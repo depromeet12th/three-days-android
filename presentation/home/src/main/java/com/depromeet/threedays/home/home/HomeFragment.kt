@@ -20,6 +20,7 @@ import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
 import com.depromeet.threedays.navigator.GoalUpdateNavigator
+import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.ZoneId
@@ -36,6 +37,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     @Inject
     lateinit var goalUpdateNavigator: GoalUpdateNavigator
+
+    @Inject
+    lateinit var notificationNavigator: NotificationNavigator
 
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
@@ -59,6 +63,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         viewModel.setObserve()
         setUiEffectObserve()
         initView()
+        initEvent()
     }
 
     private fun onGoalClick(habitId: Int) {
@@ -96,6 +101,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
         dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
     }
+    
+    private fun onNotificationClick() {
+        val intent = notificationNavigator.intent(requireContext())
+        addResultLauncher.launch(intent)
+    }
 
     private fun initAdapter() {
         habitAdapter = HabitAdapter(::onGoalClick, ::onMoreClick)
@@ -120,6 +130,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
         binding.tvDate.text = String.format("%02d월%02d일 %s요일", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
+    }
+
+    private fun initEvent() {
+        binding.ivNotification.setOnClickListener {
+            onNotificationClick()
+        }
     }
 
     private fun HomeViewModel.setObserve() {

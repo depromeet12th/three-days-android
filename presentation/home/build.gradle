@@ -12,6 +12,7 @@ android {
 }
 
 android {
+    namespace 'com.depromeet.threedays.home'
     compileSdk 33
 
     defaultConfig {
@@ -48,6 +49,7 @@ dependencies {
     implementation(project(":presentation:history"))
     implementation(project(":presentation:mate"))
     implementation(project(":presentation:mypage"))
+    implementation(project(":presentation:notification"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

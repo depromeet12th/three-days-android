@@ -31,7 +31,7 @@
                 android:layout_marginVertical="24dp"
                 android:layout_marginStart="20dp"
                 android:text="@string/suggestion_habit_create"
-                android:textAppearance="@style/Typography.H1"
+                android:textAppearance="@style/Typography.Heading"
                 android:textColor="@color/gray_800"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_rect_gray100_r10"
+            android:gravity="center"
             android:padding="10dp"
             android:textColor="#FF000000"
             android:textSize="25sp"
@@ -275,7 +276,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_notification"
-            app:layout_constraintTop_toBottomOf="@+id/tv_notification">
+            app:layout_constraintTop_toBottomOf="@+id/sw_notification">
 
             <TextView
                 android:id="@+id/tv_notification_time"
@@ -353,7 +354,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_green"
+                android:background="@drawable/selector_green_color_button"
                 android:button="@null"
                 android:checked="true" />
 
@@ -363,7 +364,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_blue"
+                android:background="@drawable/selector_blue_color_button"
                 android:button="@null" />
 
             <RadioButton
@@ -372,7 +373,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_check_pink"
+                android:background="@drawable/selector_pink_color_button"
                 android:button="@null" />
         </RadioGroup>
 
@@ -388,7 +389,7 @@
             android:paddingVertical="18dp"
             android:text="@string/habit_update"
             android:textAppearance="@style/Typography.Button1"
-            android:textColor="@color/gray_450"
+            android:textColor="@drawable/selector_complete_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

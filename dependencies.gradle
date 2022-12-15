@@ -9,7 +9,7 @@ ext {
             "recyclerView"          : "1.2.1",
             "timber"                : "5.0.1",
             "coroutines"            : "1.6.1",
-            "calendar"              : "1.0.4",
+            "calendar"              : "2.0.1",
             "hilt"                  : "2.42",
             "deepLink"              : "6.1.0",
             "splashscreen"          : "1.0.0-rc01",
@@ -27,7 +27,7 @@ ext {
             "chucker"               : "3.5.2",
             "google"                : "20.2.0",
             "room"                  : "2.4.3",
-            "emoji"                 : "1.0.0-alpha03"
+            "emoji"                 : "1.0.0-alpha03",
     ]
     deps = [
             "kotlin"          : [
@@ -93,7 +93,7 @@ ext {
             ],
             "inject"                       : "javax.inject:javax.inject:1",
             "jodaTime"                     : "joda-time:joda-time:${versions.jodaTime}",
-            "calendar"                     : "com.github.kizitonwose:CalendarView:${versions.calendar}",
+            "calendar"                     : "com.kizitonwose.calendar:view:${versions.calendar}",
             "login"                        : [
                     "kakao"                : "com.kakao.sdk:v2-user:${versions.kakao}",
                     "google"               : "com.google.android.gms:play-services-auth:${versions.google}"

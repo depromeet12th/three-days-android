@@ -102,7 +102,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         }
     }
 
-    private fun convertDayListToString(dayOfWeeks: ArrayList<String>): String {
+    private fun convertDayListToString(dayOfWeeks: List<String>): String {
         return if (dayOfWeeks.size == 7) {
             "매일"
         } else if (dayOfWeeks.size == 5
