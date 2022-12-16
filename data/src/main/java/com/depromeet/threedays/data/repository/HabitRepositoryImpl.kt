@@ -2,7 +2,9 @@ package com.depromeet.threedays.data.repository
 
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.mapper.toHabit
+import com.depromeet.threedays.data.mapper.toPostHabitRequest
 import com.depromeet.threedays.domain.entity.DataState
+import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +14,8 @@ import javax.inject.Inject
 class HabitRepositoryImpl @Inject constructor(
     private val habitRemoteDataSource: HabitRemoteDataSource
 ) : HabitRepository {
-    override suspend fun createHabit(habit: Habit) {
-
+    override suspend fun createHabit(habit: CreateHabit) {
+        return habitRemoteDataSource.postHabit(request = habit.toPostHabitRequest())
     }
 
     override suspend fun getHabits(): Flow<DataState<List<Habit>>> =
