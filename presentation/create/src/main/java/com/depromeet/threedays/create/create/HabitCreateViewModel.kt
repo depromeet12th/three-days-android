@@ -3,6 +3,7 @@ package com.depromeet.threedays.create.create
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
@@ -24,7 +25,7 @@ class HabitCreateViewModel @Inject constructor(
     private val initTime = LocalTime.now()
 
     val title = MutableStateFlow(String.Empty)
-    val emoji = MutableStateFlow(String.Empty)
+    val emoji = MutableStateFlow(Emoji().getEmojiString(Emoji.Word.SMILE))
     private val dayOfWeekList = MutableStateFlow(emptyList<DayOfWeek>())
     val notificationContent = MutableStateFlow(String.Empty)
     private val notificationTime = MutableStateFlow(initTime)

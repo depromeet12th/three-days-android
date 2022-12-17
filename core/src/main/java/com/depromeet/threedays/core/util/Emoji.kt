@@ -5,6 +5,7 @@ class Emoji{
         Word.FIRE to 0x1F525,
         Word.TRASH to 0x1F5D1,
         Word.CLOCK to 0x23F0,
+        Word.SMILE to 0x1F600,
     )
 
     val objects = mapOf(
@@ -27,7 +28,8 @@ class Emoji{
     enum class Word {
         FIRE,
         TRASH,
-        CLOCK
+        CLOCK,
+        SMILE
     }
 
     enum class Category {

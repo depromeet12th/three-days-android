@@ -13,7 +13,6 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.create.HabitCreateViewModel.Action
@@ -97,10 +96,9 @@ class HabitCreateActivity :
             binding.containerNotification.visibleOrGone(isChecked)
         }
 
-        binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
         binding.tvEmoji.setOnSingleClickListener {
             EmojiBottomSheetDialogFragment.newInstance { emojiString ->
-                run { viewModel.setEmoji(emojiString) }
+                viewModel.setEmoji(emojiString)
             }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
 
@@ -128,7 +126,6 @@ class HabitCreateActivity :
     private fun observe() {
        viewModel.isSaveHabitEnable
            .onEach {
-
                binding.tvHabitCreate.isEnabled = it
            }.launchIn(lifecycleScope)
 
