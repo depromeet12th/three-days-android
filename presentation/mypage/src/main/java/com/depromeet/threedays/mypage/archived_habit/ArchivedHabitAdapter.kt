@@ -5,12 +5,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 class ArchivedHabitAdapter(
-    private val viewModel: ArchivedHabitViewModel,
+    private val closeMateUIFunction: (ArchivedHabitUI) -> Unit,
+    private val openMateUIFunction: (ArchivedHabitUI) -> Unit,
+    private val toggleSelectedFunction: (ArchivedHabitUI) -> Unit,
 ) : ListAdapter<ArchivedHabitUI, ArchivedHabitViewHolder>(DIFF_UTIL) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedHabitViewHolder {
-        return ArchivedHabitViewHolder.create(parent, false, viewModel)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ArchivedHabitViewHolder.create(
+            parent = parent,
+            attachToParent = false,
+            closeMateUIFunction = closeMateUIFunction,
+            openMateUIFunction = openMateUIFunction,
+            toggleSelectedFunction = toggleSelectedFunction,
+        )
 
     override fun onBindViewHolder(holder: ArchivedHabitViewHolder, position: Int) {
         holder.onBind(getItem(position))

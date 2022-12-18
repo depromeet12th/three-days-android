@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,15 +12,13 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.dp
 import com.depromeet.threedays.core.extensions.invisible
 import com.depromeet.threedays.core.extensions.visible
-import com.depromeet.threedays.core.util.ThreeDaysSnackBar
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
-import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.ActivityArchivedHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
 @AndroidEntryPoint
 class ArchivedHabitActivity :
@@ -32,7 +29,11 @@ class ArchivedHabitActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        archivedHabitAdapter = ArchivedHabitAdapter(viewModel)
+        archivedHabitAdapter = ArchivedHabitAdapter(
+            closeMateUIFunction = { viewModel.closeMateUI(it) },
+            openMateUIFunction = { viewModel.openMateUI(it) },
+            toggleSelectedFunction = { viewModel.toggleSelected(it.habitId) },
+        )
         initView()
 
         viewModel.fetchArchivedHabits()

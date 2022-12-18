@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.extensions.gone
 import com.depromeet.threedays.core.extensions.invisible
 import com.depromeet.threedays.core.extensions.visible
-import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 import com.depromeet.threedays.mypage.databinding.ItemHabitArchivedBinding
+import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
 class ArchivedHabitViewHolder(
     private val binding: ItemHabitArchivedBinding,
-    private val viewModel: ArchivedHabitViewModel,
+    private val closeMateUIFunction: (ArchivedHabitUI) -> Unit,
+    private val openMateUIFunction: (ArchivedHabitUI) -> Unit,
+    private val toggleSelectedFunction: (ArchivedHabitUI) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     /**
      * 데이터 연결해주는 작업
@@ -58,13 +60,13 @@ class ArchivedHabitViewHolder(
 
     private fun initEvent(archivedHabitUI: ArchivedHabitUI) {
         binding.clMateOpenedButtonClose.setOnClickListener {
-            viewModel.closeMateUI(archivedHabitUI)
+            closeMateUIFunction.invoke(archivedHabitUI)
         }
         binding.clMateClosed.setOnClickListener {
-            viewModel.openMateUI(archivedHabitUI)
+            openMateUIFunction.invoke(archivedHabitUI)
         }
         binding.ivHabitArchivedIconCheck.setOnClickListener {
-            viewModel.toggleSelected(archivedHabitUI.habitId)
+            toggleSelectedFunction.invoke(archivedHabitUI)
         }
     }
 
@@ -72,16 +74,16 @@ class ArchivedHabitViewHolder(
         fun create(
             parent: ViewGroup,
             attachToParent: Boolean,
-            viewModel: ArchivedHabitViewModel,
-        ): ArchivedHabitViewHolder {
-            return ArchivedHabitViewHolder(
-                binding = ItemHabitArchivedBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    attachToParent
-                ),
-                viewModel = viewModel,
-            )
-        }
+            closeMateUIFunction: (ArchivedHabitUI) -> Unit,
+            openMateUIFunction: (ArchivedHabitUI) -> Unit,
+            toggleSelectedFunction: (ArchivedHabitUI) -> Unit,
+        ) = ArchivedHabitViewHolder(
+            binding = ItemHabitArchivedBinding.inflate(
+                LayoutInflater.from(parent.context), parent, attachToParent
+            ),
+            closeMateUIFunction = closeMateUIFunction,
+            openMateUIFunction = openMateUIFunction,
+            toggleSelectedFunction = toggleSelectedFunction,
+        )
     }
 }
