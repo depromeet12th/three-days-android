@@ -1,5 +1,6 @@
-name: Build
+name: Deploy
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
@@ -22,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Build
-        run: chmod +x ./gradlew && ./gradlew build
+        run: chmod +x ./gradlew && ./gradlew --quiet build
       - name: Fetch credential file from secrets
         id: fetch_credential_file
         uses: timheuer/base64-to-file@v1
