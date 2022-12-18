@@ -39,12 +39,10 @@ class ArchivedHabitViewHolder(
         binding.ivMateProfileImageButtonExpand.imageAlpha = 204 // 256 * 0.8 = 204.8
         binding.ivHabitArchivedIconCheck.apply {
             // editable 일때만 체크 아이콘 보이기
-            run {
-                if (archivedHabitUI.editable) {
-                    visible()
-                } else {
-                    invisible()
-                }
+            if (archivedHabitUI.editable) {
+                visible()
+            } else {
+                invisible()
             }
             // 선택 여부 따라 색 바꾸기
             setImageResource(
