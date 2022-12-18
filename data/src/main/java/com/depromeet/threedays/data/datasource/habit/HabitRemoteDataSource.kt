@@ -9,5 +9,5 @@ interface HabitRemoteDataSource {
     suspend fun getArchivedHabits(): List<HabitEntity>
     //fun getHabit(habitId: Long): HabitEntity
     suspend fun updateHabit(habitId: Long)
-    suspend fun deleteHabit(habitId: Int): Any
+    suspend fun deleteHabit(habitId: Long): Any
 }

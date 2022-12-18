@@ -3,6 +3,7 @@ package com.depromeet.threedays.data.datasource.habit
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.entity.HabitEntity
 import com.depromeet.threedays.data.entity.request.PostHabitRequest
+import com.depromeet.threedays.domain.entity.mate.Mate
 import java.security.SecureRandom
 import java.time.DayOfWeek
 import java.time.LocalDateTime
@@ -32,7 +33,12 @@ class HabitRemoteDataSourceImpl @Inject constructor(
                 ),
                 reward = SecureRandom().nextInt(10),
                 color = "pink",
-                mate = null,
+                mate = Mate(
+                    mateId = 1,
+                    level = 2,
+                    characterType = "",
+                    createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+                ),
                 todayHabitAchievementId = null,
                 sequence = 1,
                 createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
@@ -50,6 +56,58 @@ class HabitRemoteDataSourceImpl @Inject constructor(
                 sequence = 1,
                 createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
             ),
+            HabitEntity(
+                3,
+                memberId = 1,
+                title = "숨 쉬기",
+                imojiPath = "",
+                dayOfWeeks = DayOfWeek.values().map { it.name }.toList(),
+                reward = SecureRandom().nextInt(10),
+                color = "green",
+                mate = null,
+                todayHabitAchievementId = null,
+                sequence = 1,
+                createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+            ),
+            HabitEntity(
+                4,
+                memberId = 1,
+                title = "일기쓰기",
+                imojiPath = "",
+                dayOfWeeks = DayOfWeek.values().map { it.name }.toList(),
+                reward = SecureRandom().nextInt(10),
+                color = "pink",
+                mate = null,
+                todayHabitAchievementId = null,
+                sequence = 1,
+                createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+            ),
+            HabitEntity(
+                5,
+                memberId = 1,
+                title = "공부하기",
+                imojiPath = "",
+                dayOfWeeks = DayOfWeek.values().map { it.name }.toList(),
+                reward = SecureRandom().nextInt(10),
+                color = "blue",
+                mate = null,
+                todayHabitAchievementId = null,
+                sequence = 1,
+                createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+            ),
+            HabitEntity(
+                6,
+                memberId = 1,
+                title = "청소하기",
+                imojiPath = "",
+                dayOfWeeks = DayOfWeek.values().map { it.name }.toList(),
+                reward = SecureRandom().nextInt(10),
+                color = "green",
+                mate = null,
+                todayHabitAchievementId = null,
+                sequence = 1,
+                createAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+            ),
         )
 //        return habitService.getArchivedHabits()
     }
@@ -62,7 +120,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteHabit(habitId: Int): Any {
-        return habitService.deleteHabit(habitId)
+    override suspend fun deleteHabit(habitId: Long) {
+        return habitService.deleteHabit(habitId.toInt())
     }
 }

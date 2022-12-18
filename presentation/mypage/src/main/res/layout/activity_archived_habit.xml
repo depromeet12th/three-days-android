@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -11,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_archived_habit_activity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray_100">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"
@@ -38,10 +40,11 @@
             android:id="@+id/fl_archived_habit_onboarding"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/gl_header_end"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/gl_header_end" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -71,20 +74,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="@string/mypage_action_button"
             app:layout_constraintBottom_toTopOf="@id/gl_header_end"
             app:layout_constraintEnd_toStartOf="@id/gl_end"
             app:layout_constraintStart_toEndOf="@id/tv_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/archived_habit_action_edit" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_archived_habit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_height="0dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="22dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/gl_end"
             app:layout_constraintStart_toEndOf="@id/gl_start"
-            app:layout_constraintTop_toBottomOf="@id/gl_header_end" />
+            app:layout_constraintTop_toTopOf="@id/gl_header_end" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_rect_gray800_r15"
+            android:textAppearance="@style/Typography.Button1"
+            android:text="@string/btn_delete"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            tools:text="삭제하기"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

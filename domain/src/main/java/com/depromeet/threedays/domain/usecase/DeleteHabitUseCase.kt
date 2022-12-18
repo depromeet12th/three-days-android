@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DeleteHabitUseCase @Inject constructor(
     private val habitRepository: HabitRepository
 ) {
-    suspend operator fun invoke(habitId: Int): Flow<DataState<Any>> {
+    suspend operator fun invoke(habitId: Long): Flow<DataState<Any>> {
         return habitRepository.deleteHabit(habitId)
     }
 }

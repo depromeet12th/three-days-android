@@ -10,5 +10,11 @@
     <string name="mypage_logout">로그아웃</string>
     <string name="mypage_withdraw">회원탈퇴</string>
     <string name="mypage_archived_habit">습관 보관함</string>
-    <string name="mypage_action_button">편집</string>
+    <string name="archived_habit_title">습관 보관함</string>
+    <string name="archived_habit_action_edit">편집</string>
+    <string name="archived_habit_action_quit">나가기</string>
+    <string name="mate_opened_button_close">닫기</string>
+    <string name="mate_opened_icon_close_description">닫기 화살표 아이콘</string>
+    <string name="mate_profile_image_description">짝궁 이미지</string>
+    <string name="btn_delete">삭제하기</string>
 </resources>

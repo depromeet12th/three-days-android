@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initEvent()
     }
 
-    private fun onGoalClick(habitId: Int) {
+    private fun onGoalClick(habitId: Long) {
 //        if(habit.clapIndex == 2 && habit.clapChecked) {
 //            val dialog = CompleteGoalDialog(requireContext(), habit)
 //            dialog.show()
@@ -77,19 +77,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         //viewModel.updateGoals(updatedGoal)
     }
 
-    private fun onMoreClick(habitId: Int) {
+    private fun onMoreClick(habitId: Long) {
         val modal = EditHabitModal(habitId, ::onEditClick, ::onDeleteClick)
         modal.show(parentFragmentManager, EditHabitModal.TAG)
     }
 
-    private fun onEditClick(habitId: Int) {
+    private fun onEditClick(habitId: Long) {
         // 수정 페이지로 이동
 //        val intent = goalUpdateNavigator.intent(requireContext())
 //        intent.putExtra(GOAL_ID, habit.goalId)
 //        addResultLauncher.launch(intent)
     }
 
-    private fun onDeleteClick(habitId: Int) {
+    private fun onDeleteClick(habitId: Long) {
         val dialog = ThreeDaysDialogFragment.newInstance(
             DialogInfo.EMPTY.copy(
                 onPositiveAction = {
