@@ -2,15 +2,18 @@ package com.depromeet.threedays.data.api
 
 import com.depromeet.threedays.data.entity.HabitEntity
 import com.depromeet.threedays.data.entity.base.ApiResponse
-import retrofit2.http.DELETE
+import com.depromeet.threedays.data.entity.request.PostHabitRequest
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.DELETE
 import retrofit2.http.Path
 
 interface HabitService {
-//    @POST("/api/v1/habits")
-//    suspend fun postHabit(
-//        @Query("recordYmd") recordYmd: String
-//    ): ApiResponse<List<Product>>
+    @POST("/api/v1/habits")
+    suspend fun postHabit(
+        @Body request: PostHabitRequest
+    )
 
     @GET("/api/v1/habits")
     suspend fun getHabits(

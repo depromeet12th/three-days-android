@@ -1,20 +1,16 @@
-package com.depromeet.threedays.core.util
+package com.depromeet.threedays.domain.util
 
-class Emoji{
-    val entire = mapOf(
+object EmojiUtil{
+    private val entire = mapOf(
         Word.FIRE to 0x1F525,
         Word.TRASH to 0x1F5D1,
         Word.CLOCK to 0x23F0,
+        Word.SMILE to 0x1F600,
     )
 
-    val objects = mapOf(
-        Word.TRASH to 0x1F5D1,
-        Word.CLOCK to 0x23F0,
-    )
-
-    fun getEmojiString(code: Int?): String {
-        if (code != null) {
-            return String(Character.toChars(code))
+    fun getEmojiString(numberCode: Int?): String {
+        if (numberCode != null) {
+            return String(Character.toChars(numberCode))
         } else {
             throw Exception()
         }
@@ -27,7 +23,8 @@ class Emoji{
     enum class Word {
         FIRE,
         TRASH,
-        CLOCK
+        CLOCK,
+        SMILE
     }
 
     enum class Category {

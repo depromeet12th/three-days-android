@@ -11,8 +11,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.util.*
+import com.depromeet.threedays.core.util.DialogInfo
+import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
+import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.core.util.dpToPx
+import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.key.RESULT_CREATE
+import com.depromeet.threedays.domain.util.EmojiUtil
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.GoalAddNavigator
@@ -90,7 +95,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 onPositiveAction = {
                     viewModel.deleteGoals(habitId)
                 },
-                emoji = Emoji().getEmojiString(Emoji.Word.TRASH),
+                emoji = Emoji.from(EmojiUtil.Word.TRASH).value,
                 title = getString(R.string.delete_dialog_title),
                 cancelText = getString(R.string.delete_dialog_cancel_text),
                 confirmText = getString(R.string.delete_dialog_confirm_text),

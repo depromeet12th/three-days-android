@@ -1,7 +1,9 @@
 package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.api.HabitService
+import com.depromeet.threedays.data.api.Serializer.LocalTimeSerializer
 import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -47,11 +50,12 @@ class NetworkModule {
     fun providesRetrofit(
         okHttpClient: OkHttpClient
     ): Retrofit {
+        val gson = GsonBuilder().registerTypeAdapter(LocalTime::class.java, LocalTimeSerializer()).create()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .client(providesHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

@@ -2,6 +2,7 @@ package com.depromeet.threedays.data.datasource.habit
 
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.entity.HabitEntity
+import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import com.depromeet.threedays.domain.entity.mate.Mate
 import java.security.SecureRandom
 import java.time.DayOfWeek
@@ -12,8 +13,8 @@ import javax.inject.Inject
 class HabitRemoteDataSourceImpl @Inject constructor(
     private val habitService: HabitService
 ) : HabitRemoteDataSource {
-    override suspend fun postHabit(habitEntity: HabitEntity) {
-
+    override suspend fun postHabit(request: PostHabitRequest) {
+        return habitService.postHabit(request)
     }
 
     override suspend fun getHabits(): List<HabitEntity> {
