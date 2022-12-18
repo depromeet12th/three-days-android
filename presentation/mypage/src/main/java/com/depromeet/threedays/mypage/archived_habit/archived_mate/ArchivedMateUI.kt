@@ -18,4 +18,7 @@ data class ArchivedMateUI(
     }
 
     fun getLevelDescription() = "Lv.${level}까지 진화"
+
+    // FIXME: 짝궁 이미지 정하는 규칙 확인하기
+    fun resolveImageUrl() = "@drawable/bg_mate_sample"
 }
