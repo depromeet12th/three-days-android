@@ -62,7 +62,7 @@ class HabitRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteHabit(habitId: Long) {
-
+    override suspend fun deleteHabit(habitId: Int): Any {
+        return habitService.deleteHabit(habitId)
     }
 }

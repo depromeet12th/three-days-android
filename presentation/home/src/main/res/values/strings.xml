@@ -7,6 +7,11 @@
     <string name="edit">수정하기</string>
     <string name="delete">삭제하기</string>
 
+    <string name="delete_dialog_title">습관을 삭제하시겠어요?</string>
+    <string name="delete_dialog_cancel_text">아니요</string>
+    <string name="delete_dialog_confirm_text">삭제할래요</string>
+    <string name="habit_delete_success_message">습관이 삭제됐어요.</string>
+
     <!-- 알림 권유 -->
     <string name="noti_recommend_title">셀프 잔소리로 동기부여까지</string>
     <string name="noti_recommend_content">푸시 알림을 활성화하시면 동기부여를\n받을 수 있어요! 짝심삼일이 함께 도와드릴게요.</string>

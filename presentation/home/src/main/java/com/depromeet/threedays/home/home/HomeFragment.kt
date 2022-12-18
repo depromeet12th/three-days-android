@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.util.dpToPx
+import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
@@ -58,6 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initAdapter()
         viewModel.fetchGoals()
         viewModel.setObserve()
+        setUiEffectObserve()
         initView()
         initEvent()
     }
@@ -84,22 +85,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onDeleteClick(habitId: Int) {
-        val dialog = DeleteHabitDialog(requireContext(), habitId, ::onDeleteConfirmClick)
-        dialog.show()
+        val dialog = ThreeDaysDialogFragment.newInstance(
+            DialogInfo.EMPTY.copy(
+                onPositiveAction = {
+                    viewModel.deleteGoals(habitId)
+                },
+                emoji = Emoji().getEmojiString(Emoji.Word.TRASH),
+                title = getString(R.string.delete_dialog_title),
+                cancelText = getString(R.string.delete_dialog_cancel_text),
+                confirmText = getString(R.string.delete_dialog_confirm_text),
+            )
+        )
+        dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
     }
-
+    
     private fun onNotificationClick() {
         val intent = notificationNavigator.intent(requireContext())
         addResultLauncher.launch(intent)
-    }
-
-    private fun onDeleteConfirmClick(habitId: Int) {
-//        viewModel.deleteGoals(habit.goalId)
-//        viewModel.fetchGoals()
-//        CustomToast().showTextToast(
-//            requireContext(),
-//            resources.getString(R.string.three_day_goal_delete_toast)
-//        )
     }
 
     private fun initAdapter() {
@@ -141,6 +143,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                         habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUiEffectObserve() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEffect.collect { uiEffect ->
+                    when(uiEffect) {
+                        HomeViewModel.UiEffect.DeleteDialog ->  {
+                            ThreeDaysToast().show(
+                                requireContext(),
+                                resources.getString(R.string.habit_delete_success_message)
+                            )
+                        }
                     }
                 }
             }

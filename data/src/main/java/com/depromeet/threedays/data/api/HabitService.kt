@@ -6,6 +6,8 @@ import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.DELETE
+import retrofit2.http.Path
 
 interface HabitService {
     @POST("/api/v1/habits")
@@ -18,9 +20,6 @@ interface HabitService {
 
     ): ApiResponse<List<HabitEntity>>
 
-    @GET("/api/v1/habits?status=ARCHIVED")
-    suspend fun getArchivedHabits(): List<HabitEntity>
-
 //    @GET("/api/v1/habits/{habitId}")
 //    suspend fun getHabit(
 //        @Body request: PostProductsRequest
@@ -31,8 +30,8 @@ interface HabitService {
 //        @Body request: UpdateProductsRequest
 //    )
 //
-//    @DELETE("/api/v1/habits/{habitId}")
-//    suspend fun deleteHabit(
-//        @Path("productId") productId: String
-//    )
+    @DELETE("/api/v1/habits/{habitId}")
+    suspend fun deleteHabit(
+        @Path("productId") productId: Int
+    )
 }
