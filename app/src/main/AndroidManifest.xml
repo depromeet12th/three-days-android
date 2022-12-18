@@ -18,42 +18,46 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.depromeet.threedays.home.MainActivity"
-            android:exported="true">
+            android:name="com.depromeet.threedays.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
+            android:name="com.depromeet.threedays.home.MainActivity"
+            android:exported="false" />
+
+        <activity
             android:name="com.depromeet.threedays.create.create.HabitCreateActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name="com.depromeet.threedays.create.update.HabitUpdateActivity"
-            android:exported="false"/>
-            
+            android:exported="false" />
+
         <activity
             android:name="com.depromeet.threedays.history.detail.DetailHistoryActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name="com.depromeet.threedays.notification.NotificationActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name="com.depromeet.threedays.mate.share.ShareMateActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name="com.depromeet.threedays.onboarding.OnboardingActivity"
-            android:exported="false"/>
-            
+            android:exported="false" />
+
         <activity
             android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
     </application>
 
