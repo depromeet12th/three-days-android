@@ -42,7 +42,7 @@ class ArchivedHabitActivity :
                         level = it.level,
                         title = it.nickname,
                         description = it.getLevelDescription(),
-                    )
+                    ),
                 ).show(
                     supportFragmentManager,
                     ThreeDaysOneButtonDialogFragment.TAG,
