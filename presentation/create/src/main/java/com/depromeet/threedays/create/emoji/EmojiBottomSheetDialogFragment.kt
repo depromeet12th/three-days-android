@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.FragmentEmojiBottomSheetDialogBinding
+import com.depromeet.threedays.domain.entity.emoji.Emoji
+import com.depromeet.threedays.domain.util.EmojiUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
@@ -16,8 +17,8 @@ class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
     private val adapter by lazy {
         EmojiListAdapter(
-            onEmojiClick = { emojiString ->
-                onEmojiClick(emojiString)
+            onEmojiClick = { emoji ->
+                onEmojiClick(emoji)
 
                 this.dismiss()
             }
@@ -54,16 +55,16 @@ class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
     private fun initView() {
         binding.rvEmojiList.adapter = adapter
-        adapter.submitList(Emoji().getEmojiList(Emoji.Category.FACE).toEmojiItemList())
+        adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.FACE).toEmojiItemList())
         binding.rvEmojiList.layoutManager = GridLayoutManager(requireContext(), 6)
         
         binding.groupEmoji.setOnCheckedChangeListener{_, index ->
             when(index) {
-                R.id.rb_face -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.FACE).toEmojiItemList())
-                R.id.rb_food -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.FOOD).toEmojiItemList())
-                R.id.rb_animal -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.ANIMAL).toEmojiItemList())
-                R.id.rb_activity -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.ACTIVITY).toEmojiItemList())
-                R.id.rb_object -> adapter.submitList(Emoji().getEmojiList(Emoji.Category.OBJECT).toEmojiItemList())
+                R.id.rb_face -> adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.FACE).toEmojiItemList())
+                R.id.rb_food -> adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.FOOD).toEmojiItemList())
+                R.id.rb_animal -> adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.ANIMAL).toEmojiItemList())
+                R.id.rb_activity -> adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.ACTIVITY).toEmojiItemList())
+                R.id.rb_object -> adapter.submitList(EmojiUtil.getEmojiList(EmojiUtil.Category.OBJECT).toEmojiItemList())
             }
         }
     }
@@ -71,10 +72,10 @@ class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {
     companion object {
         const val TAG = "EmojiBottomSheetDialogFragment"
 
-        lateinit var onEmojiClick: (emojiString: String) -> Unit
+        lateinit var onEmojiClick: (emoji: Emoji) -> Unit
 
         fun newInstance(
-            onEmojiClick: (emojiString: String) -> Unit
+            onEmojiClick: (emoji: Emoji) -> Unit
         ): EmojiBottomSheetDialogFragment {
             this.onEmojiClick = onEmojiClick
             return EmojiBottomSheetDialogFragment()

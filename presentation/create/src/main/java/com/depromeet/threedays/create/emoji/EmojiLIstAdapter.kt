@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.create.databinding.ItemEmojiBinding
+import com.depromeet.threedays.domain.entity.emoji.Emoji
+import com.depromeet.threedays.domain.util.EmojiUtil
 
-class EmojiListAdapter(private val onEmojiClick: (emojiString: String) -> Unit):
-    ListAdapter<EmojiItem, EmojiListAdapter.EmojiViewHolder>(CALLBACK){
+class EmojiListAdapter(private val onEmojiClick: (emoji: Emoji) -> Unit):
+    ListAdapter<Emoji, EmojiListAdapter.EmojiViewHolder>(CALLBACK){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojiViewHolder {
         return EmojiViewHolder(
@@ -27,30 +28,26 @@ class EmojiListAdapter(private val onEmojiClick: (emojiString: String) -> Unit):
         holder.bind(getItem(position))
     }
 
-    class EmojiViewHolder(private val binding: ItemEmojiBinding, private val onEmojiClick: (emojiString: String) -> Unit): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: EmojiItem) {
-            binding.tvEmoji.text = data.emojiString
+    class EmojiViewHolder(private val binding: ItemEmojiBinding, private val onEmojiClick: (emoji: Emoji) -> Unit): RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: Emoji) {
+            binding.tvEmoji.text = data.value
             binding.tvEmoji.setOnSingleClickListener {
-                onEmojiClick.invoke(data.emojiString)
+                onEmojiClick.invoke(data)
             }
         }
     }
 
-    companion object CALLBACK : DiffUtil.ItemCallback<EmojiItem>() {
-        override fun areItemsTheSame(oldItem: EmojiItem, newItem: EmojiItem): Boolean {
-            return oldItem.emojiString == newItem.emojiString
+    companion object CALLBACK : DiffUtil.ItemCallback<Emoji>() {
+        override fun areItemsTheSame(oldItem: Emoji, newItem: Emoji): Boolean {
+            return oldItem.value == newItem.value
         }
 
-        override fun areContentsTheSame(oldItem: EmojiItem, newItem: EmojiItem): Boolean {
+        override fun areContentsTheSame(oldItem: Emoji, newItem: Emoji): Boolean {
             return oldItem == newItem
         }
     }
 }
 
-data class EmojiItem (
-    val emojiString: String
-)
-
-fun List<Int>.toEmojiItemList() : List<EmojiItem> {
-    return this.map { EmojiItem(emojiString = Emoji().getEmojiString(it)) }
+fun List<Int>.toEmojiItemList() : List<Emoji> {
+    return this.map { Emoji(value = EmojiUtil.getEmojiString(it)) }
 }
