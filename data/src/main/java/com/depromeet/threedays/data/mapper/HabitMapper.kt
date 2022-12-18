@@ -49,7 +49,7 @@ fun CreateHabit.toPostHabitRequest(): PostHabitRequest {
     return PostHabitRequest(
         color = getStringFromColor(color),
         dayOfWeeks = dayOfWeeks,
-        imojiPath = emoji,
+        imojiPath = emoji.value,
         notification = notificationNullChecked,
         title = title
     )

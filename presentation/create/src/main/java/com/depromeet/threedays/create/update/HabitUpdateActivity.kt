@@ -11,7 +11,6 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
@@ -63,10 +62,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
             binding.containerNotification.visibleOrGone(isChecked)
         }
 
-        binding.tvEmoji.text = Emoji().getEmojiString(Emoji.Word.FIRE)
         binding.tvEmoji.setOnSingleClickListener {
             EmojiBottomSheetDialogFragment.newInstance {
-                emojiString -> run { binding.tvEmoji.text = emojiString }
+                emoji -> run { binding.tvEmoji.text = emoji.value }
             }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
 

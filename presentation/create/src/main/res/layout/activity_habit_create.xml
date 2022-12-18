@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{viewModel.emoji}"
+            android:text="@{viewModel.emoji.value}"
             android:background="@drawable/bg_rect_gray100_r10"
             android:padding="10dp"
             android:gravity="center"

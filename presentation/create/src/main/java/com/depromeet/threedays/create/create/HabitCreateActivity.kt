@@ -111,8 +111,8 @@ class HabitCreateActivity :
         }
 
         binding.tvEmoji.setOnSingleClickListener {
-            EmojiBottomSheetDialogFragment.newInstance { emojiString ->
-                viewModel.setEmoji(emojiString)
+            EmojiBottomSheetDialogFragment.newInstance { emoji ->
+                viewModel.setEmoji(emoji)
             }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
 

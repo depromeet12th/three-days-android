@@ -3,8 +3,9 @@ package com.depromeet.threedays.create.create
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.core.util.Emoji
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.emoji.Emoji
+import com.depromeet.threedays.domain.entity.emoji.EmojiUtil
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ class HabitCreateViewModel @Inject constructor(
     private val habitRepository: HabitRepository
 ) : BaseViewModel() {
     private val initTime = LocalTime.now()
-    private val initEmoji = Emoji().getEmojiString(Emoji.Word.SMILE)
+    private val initEmoji = Emoji.from(EmojiUtil.Word.SMILE)
     private val initColor = Color.GREEN
 
     private val _action = MutableSharedFlow<Action>()
@@ -29,7 +30,7 @@ class HabitCreateViewModel @Inject constructor(
     val title = MutableStateFlow(String.Empty)
 
     private val _emoji = MutableStateFlow(initEmoji)
-    val emoji: StateFlow<String>
+    val emoji: StateFlow<Emoji>
         get() = _emoji.asStateFlow()
 
     private val dayOfWeekList = MutableStateFlow(emptyList<DayOfWeek>())
@@ -55,12 +56,12 @@ class HabitCreateViewModel @Inject constructor(
         get() = _isSaveHabitEnable
 
 
-    fun setEmoji(emoji: String) {
-        this._emoji.value = emoji
+    fun setEmoji(emoji: Emoji) {
+        _emoji.value = emoji
     }
 
     fun setColor(color: Color) {
-        this._color.value = color
+        _color.value = color
     }
 
     fun setNotificationTime(time: LocalTime) {
