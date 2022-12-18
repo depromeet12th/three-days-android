@@ -18,41 +18,87 @@ import javax.inject.Inject
 class HabitCreateViewModel @Inject constructor(
     private val habitRepository: HabitRepository
 ) : BaseViewModel() {
+    private val initTime = LocalTime.now()
+    private val initEmoji = Emoji().getEmojiString(Emoji.Word.SMILE)
+    private val initColor = Color.GREEN
+
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
         get() = _action.asSharedFlow()
 
-    private val initTime = LocalTime.now()
-
     val title = MutableStateFlow(String.Empty)
-    val emoji = MutableStateFlow(Emoji().getEmojiString(Emoji.Word.SMILE))
+
+    private val _emoji = MutableStateFlow(initEmoji)
+    val emoji: StateFlow<String>
+        get() = _emoji.asStateFlow()
+
     private val dayOfWeekList = MutableStateFlow(emptyList<DayOfWeek>())
-    val notificationContent = MutableStateFlow(String.Empty)
-    private val notificationTime = MutableStateFlow(initTime)
-    val color = MutableStateFlow(Color.GREEN)
+
+    private val _color = MutableStateFlow(initColor)
+    val color: StateFlow<Color>
+        get() = _color.asStateFlow()
+
+    private val notification = MutableStateFlow(Notification(
+        initNotificationTime = false,
+        notificationTime = initTime,
+        notificationContent = String.Empty
+    ))
+
+    private val isNotificationInfoActive = MutableStateFlow(true)
+
+    private val _isInformationEntered = MutableStateFlow(false)
+    val isInformationEntered: StateFlow<Boolean>
+        get() = _isInformationEntered.asStateFlow()
 
     private var _isSaveHabitEnable = MutableStateFlow(false)
     val isSaveHabitEnable: StateFlow<Boolean>
         get() = _isSaveHabitEnable
 
+
     fun setEmoji(emoji: String) {
-        this.emoji.value = emoji
+        this._emoji.value = emoji
     }
 
     fun setColor(color: Color) {
-        this.color.value = color
+        this._color.value = color
     }
 
     fun setNotificationTime(time: LocalTime) {
-        notificationTime.value = time
+        notification.value = notification.value.copy(
+            initNotificationTime = true,
+            notificationTime = time
+        )
+    }
+
+    fun setNotificationInfoActive(isActive: Boolean) {
+        isNotificationInfoActive.value = isActive
+    }
+
+    fun setNotificationContent(text: String) {
+        notification.value = notification.value.copy(
+            notificationContent = text
+        )
     }
 
     fun setSaveHabitEnable() {
         viewModelScope.launch {
-            combine(title, dayOfWeekList) { title, dayOfWeekList ->
-                title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM
+            combine(title, dayOfWeekList, notification, isNotificationInfoActive) { title, dayOfWeekList, notification, isNotificationInfoActive ->
+                val notificationEnable =
+                    if(isNotificationInfoActive) { notification.notificationContent.isNotEmpty() && notification.initNotificationTime }
+                    else true
+                title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
             }.collect {
                 _isSaveHabitEnable.value = it
+            }
+        }
+    }
+
+    fun setInformationEntered() {
+        viewModelScope.launch {
+            combine(title, emoji, dayOfWeekList, notification, color) { title, emoji, dayOfWeekList, notification, color ->
+                title.isNotEmpty()|| dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor
+            }.collect {
+                _isInformationEntered.value = it
             }
         }
     }
@@ -60,14 +106,17 @@ class HabitCreateViewModel @Inject constructor(
     fun onSaveGoalClick() {
         viewModelScope.launch {
             kotlin.runCatching {
+                val notification = if (isNotificationInfoActive.value) {
+                    CreateHabit.Notification(
+                        contents = notification.value.notificationContent,
+                        notificationTime = notification.value.notificationTime,
+                    )
+                } else null
                 val habit = CreateHabit(
                     title = title.value,
                     emoji = emoji.value,
                     dayOfWeeks = dayOfWeekList.value,
-                    notification = CreateHabit.Notification(
-                        contents = notificationContent.value,
-                        notificationTime = notificationTime.value,
-                    ),
+                    notification = notification,
                     color = color.value
                 )
                 habitRepository.createHabit(habit)
@@ -81,7 +130,7 @@ class HabitCreateViewModel @Inject constructor(
 
     fun onNotificationTimeClick() {
         viewModelScope.launch {
-            val time = notificationTime.value
+            val time = notification.value.notificationTime
             _action.emit(Action.NotificationTimeClick(time))
         }
     }
@@ -102,6 +151,12 @@ class HabitCreateViewModel @Inject constructor(
         data class NotificationTimeClick(val currentTime: LocalTime) : Action()
         object SaveClick : Action()
     }
+
+    data class Notification (
+        val initNotificationTime: Boolean,
+        val notificationContent: String,
+        val notificationTime: LocalTime
+    )
 
     companion object {
         const val MIN_DAY_OF_WEEK_NUM = 3

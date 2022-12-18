@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +14,9 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
 import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.DialogInfo
 import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
+import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.create.HabitCreateViewModel.Action
 import com.depromeet.threedays.create.databinding.ActivityHabitCreateBinding
@@ -53,12 +56,21 @@ class HabitCreateActivity :
         }
     }
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            setBackBtnClickEvent()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.onBackPressedDispatcher.addCallback(this, callback)
+
         binding.viewModel = viewModel
 
         initView()
         viewModel.setSaveHabitEnable()
+        viewModel.setInformationEntered()
         observe()
     }
 
@@ -81,7 +93,7 @@ class HabitCreateActivity :
 
     private fun initView() {
         binding.ivClose.setOnClickListener {
-            finish()
+            setBackBtnClickEvent()
         }
 
         binding.etHabitTitle.addTextChangedListener {
@@ -89,10 +101,12 @@ class HabitCreateActivity :
         }
 
         binding.etNotificationContent.addTextChangedListener {
+            viewModel.setNotificationContent(it.toString())
             binding.tvNotificationContentCounter.text = String.format("%d/25", it?.length ?: 0)
         }
 
         binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setNotificationInfoActive(isChecked)
             binding.containerNotification.visibleOrGone(isChecked)
         }
 
@@ -150,5 +164,22 @@ class HabitCreateActivity :
                 binding.tvNotificationTime.text = time.formatHourMinute()
             }
         ).show(supportFragmentManager, RangeTimePickerDialogFragment.TAG)
+    }
+
+    fun setBackBtnClickEvent() {
+        if(viewModel.isInformationEntered.value) {
+            ThreeDaysDialogFragment.newInstance(
+                data = DialogInfo.EMPTY.copy(
+                    onPositiveAction = { finish() },
+                    title = getString(com.depromeet.threedays.core.R.string.title_cancel_habit_create),
+                    description = getString(com.depromeet.threedays.core.R.string.description_cancel_habit_create),
+                    cancelText = getString(com.depromeet.threedays.core.R.string.reply_no),
+                    confirmText = getString(com.depromeet.threedays.core.R.string.reply_go_out)
+                )
+            ).show(supportFragmentManager, ThreeDaysDialogFragment.TAG)
+        }
+        else {
+            finish()
+        }
     }
 }

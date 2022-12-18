@@ -7,7 +7,7 @@ data class PostHabitRequest(
     val color: String,
     val dayOfWeeks: List<DayOfWeek>,
     val imojiPath: String,
-    val notification: Notification,
+    val notification: Notification?,
     val title: String
 ) {
     data class Notification(
