@@ -1,5 +1,7 @@
 package com.depromeet.threedays.domain.entity.emoji
 
+import com.depromeet.threedays.domain.util.EmojiUtil
+
 /**
  * 이모지 1개를 나타내는 클래스 (값객체)
  */

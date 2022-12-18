@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.FragmentEmojiBottomSheetDialogBinding
 import com.depromeet.threedays.domain.entity.emoji.Emoji
-import com.depromeet.threedays.domain.entity.emoji.EmojiUtil
+import com.depromeet.threedays.domain.util.EmojiUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EmojiBottomSheetDialogFragment: BottomSheetDialogFragment() {

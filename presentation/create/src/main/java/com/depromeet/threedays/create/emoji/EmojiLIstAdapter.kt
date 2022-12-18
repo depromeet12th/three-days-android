@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.create.databinding.ItemEmojiBinding
 import com.depromeet.threedays.domain.entity.emoji.Emoji
-import com.depromeet.threedays.domain.entity.emoji.EmojiUtil
+import com.depromeet.threedays.domain.util.EmojiUtil
 
 class EmojiListAdapter(private val onEmojiClick: (emoji: Emoji) -> Unit):
     ListAdapter<Emoji, EmojiListAdapter.EmojiViewHolder>(CALLBACK){

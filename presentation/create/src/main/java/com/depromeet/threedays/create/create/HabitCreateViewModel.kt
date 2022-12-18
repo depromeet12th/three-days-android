@@ -5,9 +5,9 @@ import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
-import com.depromeet.threedays.domain.entity.emoji.EmojiUtil
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
+import com.depromeet.threedays.domain.util.EmojiUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

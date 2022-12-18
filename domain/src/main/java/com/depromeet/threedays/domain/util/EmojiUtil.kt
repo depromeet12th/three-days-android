@@ -1,4 +1,4 @@
-package com.depromeet.threedays.domain.entity.emoji
+package com.depromeet.threedays.domain.util
 
 object EmojiUtil{
     private val entire = mapOf(
