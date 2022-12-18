@@ -110,12 +110,8 @@ ext {
                     "emoji2"               : "androidx.emoji2:emoji2:${versions.emoji}",
                     "emoji2View"           : "androidx.emoji2:emoji2-views:${versions.emoji}"
             ],
-            "lottie"                       : [
-                    "lottie"               : "com.airbnb.android:lottie:${versions.lottie}",
-            ],
-            "splash"                       : [
-                    "splash"               : "androidx.core:core-splashscreen:1.0.0",
-            ],
+            "lottie"                       : "com.airbnb.android:lottie:${versions.lottie}",
+            "splash"                       : "androidx.core:core-splashscreen:1.0.0",
     ]
 
     coroutines = [
@@ -176,10 +172,10 @@ ext {
     ]
 
     lottieDeps = [
-            deps.lottie.lottie,
+            deps.lottie,
     ]
 
     splashDeps = [
-            deps.splash.splash,
+            deps.splash,
     ]
 }
