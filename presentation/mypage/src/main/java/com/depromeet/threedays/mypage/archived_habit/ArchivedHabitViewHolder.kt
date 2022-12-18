@@ -36,7 +36,6 @@ class ArchivedHabitViewHolder(
             binding.clMateOpened.gone()
             binding.clMateClosed.gone()
         }
-        binding.ivMateProfileImageButtonExpand.imageAlpha = 204 // 256 * 0.8 = 204.8
         binding.ivHabitArchivedIconCheck.apply {
             // editable 일때만 체크 아이콘 보이기
             if (archivedHabitUI.editable) {

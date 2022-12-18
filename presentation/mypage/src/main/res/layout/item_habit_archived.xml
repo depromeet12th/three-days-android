@@ -192,6 +192,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_margin="7dp"
+                    android:alpha="0.8"
                     android:src="@drawable/bg_rect_gray600_r5"
                     app:layout_constraintEnd_toEndOf="@id/iv_mate_profile_image"
                     app:layout_constraintTop_toTopOf="@id/iv_mate_profile_image" />
@@ -200,6 +201,7 @@
                     android:id="@+id/iv_mate_profile_image_icon_expand"
                     android:layout_width="9dp"
                     android:layout_height="9dp"
+                    android:alpha="0.8"
                     android:src="@drawable/ic_expand"
                     app:layout_constraintBottom_toBottomOf="@id/iv_mate_profile_image_button_expand"
                     app:layout_constraintEnd_toEndOf="@id/iv_mate_profile_image_button_expand"
