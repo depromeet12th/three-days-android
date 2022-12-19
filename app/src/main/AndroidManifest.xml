@@ -59,6 +59,8 @@
             android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
             android:exported="false" />
 
+        <activity android:name=".mate.create.step1.ConnectHabitActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
