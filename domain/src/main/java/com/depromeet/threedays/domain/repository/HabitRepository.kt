@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface HabitRepository {
     suspend fun createHabit(habit: CreateHabit)
-    suspend fun getHabits(): Flow<DataState<List<Habit>>>
+    suspend fun getHabits(status: String): Flow<DataState<List<Habit>>>
     suspend fun getArchivedHabits(): Flow<DataState<List<Habit>>>
     //suspend fun getHabit(habitId: Long): Habit
     suspend fun updateHabit(habitId: Long)

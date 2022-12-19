@@ -15,5 +15,15 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
         super.onCreate(savedInstanceState)
 
     }
+
+    private fun setObserve() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.habits.collect {
+                    connectHabitAdatper.submitList(it)
+                }
+            }
+        }
+    }
 }
 

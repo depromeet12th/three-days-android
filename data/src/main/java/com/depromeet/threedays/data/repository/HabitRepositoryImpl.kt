@@ -18,10 +18,10 @@ class HabitRepositoryImpl @Inject constructor(
         return habitRemoteDataSource.postHabit(request = habit.toPostHabitRequest())
     }
 
-    override suspend fun getHabits(): Flow<DataState<List<Habit>>> =
+    override suspend fun getHabits(status: String): Flow<DataState<List<Habit>>> =
         flow {
             emit(DataState.loading())
-            val response = habitRemoteDataSource.getHabits()
+            val response = habitRemoteDataSource.getHabits(status)
 
             if(response.isNotEmpty()) {
                 emit(DataState.success(data = response.map { it.toHabit() }))

@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
-import com.depromeet.threedays.domain.usecase.GetHabitsUseCase
+import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getHabitsUseCase: GetHabitsUseCase,
+    private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
 //    private val updateHabitUseCase: UpdateHabitUseCase,
     private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchGoals() {
         viewModelScope.launch {
-            getHabitsUseCase().collect { response ->
+            getActiveHabitsUseCase().collect { response ->
                 when(response.status) {
                     Status.LOADING -> {
 

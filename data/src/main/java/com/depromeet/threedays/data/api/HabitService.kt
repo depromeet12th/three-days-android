@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.DELETE
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HabitService {
     @POST("/api/v1/habits")
@@ -17,7 +18,7 @@ interface HabitService {
 
     @GET("/api/v1/habits")
     suspend fun getHabits(
-
+        @Query("status") status: String
     ): ApiResponse<List<HabitEntity>>
 
 //    @GET("/api/v1/habits/{habitId}")
