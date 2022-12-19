@@ -3,11 +3,13 @@ package com.depromeet.threedays.mypage.archived_habit
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.depromeet.threedays.mypage.archived_habit.archived_mate.ArchivedMateUI
 
 class ArchivedHabitAdapter(
     private val closeMateUIFunction: (ArchivedHabitUI) -> Unit,
     private val openMateUIFunction: (ArchivedHabitUI) -> Unit,
     private val toggleSelectedFunction: (ArchivedHabitUI) -> Unit,
+    private val openMateDialogFunction: (ArchivedMateUI) -> Unit,
 ) : ListAdapter<ArchivedHabitUI, ArchivedHabitViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -17,6 +19,7 @@ class ArchivedHabitAdapter(
             closeMateUIFunction = closeMateUIFunction,
             openMateUIFunction = openMateUIFunction,
             toggleSelectedFunction = toggleSelectedFunction,
+            openMateDialogFunction = openMateDialogFunction,
         )
 
     override fun onBindViewHolder(holder: ArchivedHabitViewHolder, position: Int) {

@@ -12,6 +12,8 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.dp
 import com.depromeet.threedays.core.extensions.invisible
 import com.depromeet.threedays.core.extensions.visible
+import com.depromeet.threedays.core.util.OneButtonDialogInfo
+import com.depromeet.threedays.core.util.ThreeDaysOneButtonDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.mypage.R
@@ -33,6 +35,19 @@ class ArchivedHabitActivity :
             closeMateUIFunction = { viewModel.closeMateUI(it) },
             openMateUIFunction = { viewModel.openMateUI(it) },
             toggleSelectedFunction = { viewModel.toggleSelected(it.habitId) },
+            openMateDialogFunction = {
+                ThreeDaysOneButtonDialogFragment.newInstance(
+                    data = OneButtonDialogInfo(
+                        imageUrl = it.resolveImageUrl(),
+                        level = it.level,
+                        title = it.nickname,
+                        description = it.getLevelDescription(),
+                    ),
+                ).show(
+                    supportFragmentManager,
+                    ThreeDaysOneButtonDialogFragment.TAG,
+                )
+            }
         )
         initView()
 
