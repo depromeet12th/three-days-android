@@ -17,4 +17,5 @@
     <string name="mate_opened_icon_close_description">닫기 화살표 아이콘</string>
     <string name="mate_profile_image_description">짝궁 이미지</string>
     <string name="btn_delete">삭제하기</string>
+    <string name="archived_habit_empty">아직 보관된 습관이 없어요.</string>
 </resources>

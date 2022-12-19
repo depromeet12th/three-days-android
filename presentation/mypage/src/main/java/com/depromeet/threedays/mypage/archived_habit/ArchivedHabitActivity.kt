@@ -65,6 +65,14 @@ class ArchivedHabitActivity :
                         // recycler view
                         archivedHabitAdapter.submitList(archivedHabits)
 
+                        if (archivedHabits.isEmpty()) {
+                            binding.rvArchivedHabit.invisible()
+                            binding.groupArchivedHabitEmpty.visible()
+                        } else {
+                            binding.rvArchivedHabit.visible()
+                            binding.groupArchivedHabitEmpty.invisible()
+                        }
+
                         // 삭제하기 버튼
                         val selectedCount = archivedHabits.filter { it.selected }.size
                         if (selectedCount == 0) {
