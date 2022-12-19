@@ -61,6 +61,9 @@
 
         <activity android:name=".mate.create.step1.ConnectHabitActivity"
             android:exported="false" />
+
+        <activity android:name=".mate.create.step2.ChooseMateTypeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

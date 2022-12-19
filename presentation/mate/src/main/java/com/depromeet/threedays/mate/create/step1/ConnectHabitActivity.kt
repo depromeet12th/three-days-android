@@ -1,5 +1,6 @@
 package com.depromeet.threedays.mate.create.step1
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.mate.R
+import com.depromeet.threedays.mate.create.step2.ChooseMateTypeActivity
 import com.depromeet.threedays.mate.databinding.ActivityConnectHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,6 +55,10 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
     private fun initEvent() {
         binding.ivOut.setOnSingleClickListener {
             finish()
+        }
+        binding.btnNext.setOnSingleClickListener {
+            val intent = Intent(this, ChooseMateTypeActivity::class.java)
+            startActivity(intent)
         }
     }
 
