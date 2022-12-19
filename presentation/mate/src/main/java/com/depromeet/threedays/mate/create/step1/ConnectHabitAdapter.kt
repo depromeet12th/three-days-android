@@ -5,11 +5,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 
-class ConnectHabitAdapter : ListAdapter<HabitUI, ConnectHabitViewHolder>(DIFF_UTIL) {
+class ConnectHabitAdapter(
+    private val setHabitClickStatus: (Long) -> Unit,
+) : ListAdapter<HabitUI, ConnectHabitViewHolder>(DIFF_UTIL) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConnectHabitViewHolder {
-        return ConnectHabitViewHolder.create(parent, false)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ConnectHabitViewHolder.create(
+            parent = parent,
+            attachToParent = false,
+            setHabitClickStatus = setHabitClickStatus,
+        )
 
     override fun onBindViewHolder(holder: ConnectHabitViewHolder, position: Int) {
         holder.onBind(getItem(position))

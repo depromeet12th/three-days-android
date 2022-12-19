@@ -9,6 +9,7 @@ import com.depromeet.threedays.mate.create.step1.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,6 +43,18 @@ class ConnectHabitViewModel @Inject constructor(
 
                     }
                 }
+            }
+        }
+    }
+
+    fun setHabitClickStatus(habitId: Long) {
+        // TODO: mock server에서 모든 id가 0으로 넘어오고 있음. api 변경 후 동작확인 필요 
+        
+        _habits.update { list ->
+            list.map {
+                it.copy(
+                    clicked = it.habitId == habitId
+                )
             }
         }
     }

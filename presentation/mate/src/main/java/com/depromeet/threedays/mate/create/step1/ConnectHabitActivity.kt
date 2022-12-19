@@ -31,7 +31,9 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
     }
 
     private fun initView() {
-        connectHabitAdatper = ConnectHabitAdapter()
+        connectHabitAdatper = ConnectHabitAdapter(
+            setHabitClickStatus = { viewModel.setHabitClickStatus(habitId = it) },
+        )
         binding.rvConnectHabit.apply {
             layoutManager = LinearLayoutManager(this@ConnectHabitActivity)
             adapter = connectHabitAdatper
