@@ -108,7 +108,7 @@ class HabitCreateViewModel @Inject constructor(
         viewModelScope.launch {
             kotlin.runCatching {
                 val notification = if (isNotificationInfoActive.value) {
-                    CreateHabit.Notification(
+                    CreateHabit.Notification (
                         contents = notification.value.notificationContent,
                         notificationTime = notification.value.notificationTime,
                     )

@@ -69,6 +69,7 @@
             android:background="@drawable/bg_rect_gray100_r10"
             android:gravity="center"
             android:padding="10dp"
+            android:text="@{viewModel.emoji.value}"
             android:textColor="#FF000000"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/tv_habit_name"
@@ -88,7 +89,7 @@
             android:maxLength="15"
             android:paddingVertical="13dp"
             android:paddingStart="16dp"
-            android:text="@={viewModel.goal.title}"
+            android:text="@={viewModel.title}"
             android:textAppearance="@style/Typography.Body1"
             android:textColor="@color/gray_800"
             app:layout_constraintBottom_toBottomOf="@+id/tv_emoji"
@@ -284,6 +285,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rect_gray100_r10"
                 android:hint="@string/time_format"
+                android:onClick="@{()->viewModel.onNotificationTimeClick()}"
                 android:paddingVertical="14dp"
                 android:paddingStart="16dp"
                 android:textAppearance="@style/Typography.Body1"
@@ -305,7 +307,7 @@
                 android:maxLength="25"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="15dp"
-                android:text="@={viewModel.goal.notificationContent}"
+                android:text="@{viewModel.notification.notificationContent}"
                 android:textAppearance="@style/Typography.Paragraph1.15dp"
                 android:textColor="@color/gray_800"
                 app:layout_constraintEnd_toEndOf="@+id/tv_notification_time"
@@ -384,14 +386,16 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/selector_habit_button"
-            android:enabled="@{!viewModel.goal.title.empty, default = false}"
             android:gravity="center"
+            android:onClick="@{() -> viewModel.onSaveGoalClick()}"
             android:paddingVertical="18dp"
-            android:text="@string/habit_update"
+            android:text="@string/habit_create"
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@drawable/selector_complete_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+

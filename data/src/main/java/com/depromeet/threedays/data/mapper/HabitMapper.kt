@@ -23,7 +23,7 @@ fun HabitEntity.toHabit(): Habit {
 }
 
 private fun getColorFromString(color: String): Color {
-    return when(color) {
+    return when (color) {
         "green" -> Color.GREEN
         "blue" -> Color.BLUE
         "pink" -> Color.PINK
@@ -32,7 +32,7 @@ private fun getColorFromString(color: String): Color {
 }
 
 private fun getStringFromColor(color: Color): String {
-    return when(color) {
+    return when (color) {
         Color.GREEN -> "green"
         Color.BLUE -> "blue"
         Color.PINK -> "pink"
