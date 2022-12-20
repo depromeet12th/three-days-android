@@ -46,7 +46,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                 } else {
                     setUncheckedButton(
                         targetIndex = targetIndex,
-                        resId = com.depromeet.threedays.home.R.drawable.bg_oval_gray,
+                        resId = R.drawable.bg_oval_gray,
                         textColor = R.color.gray_400
                     )
                 }
