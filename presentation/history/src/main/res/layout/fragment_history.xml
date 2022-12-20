@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray_100"
         tools:context=".HistoryFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:constraint_referenced_ids="tv_illustration, tv_no_habit_guide, btn_create_habit" />
+            app:constraint_referenced_ids="iv_illustration, tv_no_habit_guide, btn_create_habit" />
 
         <ImageView
             android:id="@+id/iv_prev_month"
@@ -286,14 +287,13 @@
         </androidx.core.widget.NestedScrollView>
 
         <!-- 습관이 없을 때 보여줄 Views -->
-        <TextView
-            android:id="@+id/tv_illustration"
+        <ImageView
+            android:id="@+id/iv_illustration"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="185dp"
-            android:background="@color/gray_300"
+            android:background="@drawable/bg_history_no_habit"
             android:gravity="center"
-            android:text="일러스트로 대체될 영역"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -309,7 +309,7 @@
             android:textColor="@color/gray_500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create_habit"
