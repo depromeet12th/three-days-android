@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="144dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/bg_rect_gray200_r10"
+            android:background="@drawable/bg_rect_gray100_r10"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_type_mate_guide"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end">
@@ -92,15 +92,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_whipping_mate"
                 app:layout_constraintStart_toStartOf="@+id/tv_whipping_mate" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/iv_whipping_mate_illustrator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rect_gray100_r10"
+                android:background="@drawable/ic_whipping_mate_unselected"
                 android:layout_marginVertical="17dp"
                 android:layout_marginEnd="29dp"
-                android:paddingHorizontal="34dp"
-                android:paddingVertical="47dp"
                 android:text="임시영역"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -113,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="144dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_rect_gray200_r10"
+            android:background="@drawable/bg_rect_gray100_r10"
             app:layout_constraintTop_toBottomOf="@+id/cl_whipping_mate"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end">
@@ -140,15 +138,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_carrot_mate"
                 app:layout_constraintStart_toStartOf="@+id/tv_carrot_mate" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/iv_carrot_mate_illustrator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rect_gray100_r10"
+                android:background="@drawable/ic_carrot_mate_unselected"
                 android:layout_marginVertical="17dp"
                 android:layout_marginEnd="29dp"
-                android:paddingHorizontal="34dp"
-                android:paddingVertical="47dp"
                 android:text="임시영역"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
