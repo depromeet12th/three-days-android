@@ -13,7 +13,7 @@ import kotlin.reflect.KFunction1
 class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHolder(view.root) {
     lateinit var context: Context
 
-    fun onBind(habitUI: HabitUI, context: Context, onHabitClick: KFunction1<Int, Unit>, onMoreClick: KFunction1<Int, Unit>) {
+    fun onBind(habitUI: HabitUI, context: Context, onHabitClick: KFunction1<Long, Unit>, onMoreClick: KFunction1<Long, Unit>) {
         this.context = context
         initView(habitUI)
         initEvent(habitUI, onHabitClick, onMoreClick)
@@ -119,7 +119,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         }
     }
 
-    private fun initEvent(habitUI: HabitUI, onHabitClick: KFunction1<Int, Unit>, onMoreClick: KFunction1<Int, Unit>) {
+    private fun initEvent(habitUI: HabitUI, onHabitClick: KFunction1<Long, Unit>, onMoreClick: KFunction1<Long, Unit>) {
         view.ivMore.setOnClickListener {
             onMoreClick(habitUI.habitId)
         }
@@ -138,7 +138,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
     private fun switchHabitState(
         clickedIndex: Int,
         habitUI: HabitUI,
-        onHabitClick: KFunction1<Int, Unit>,
+        onHabitClick: KFunction1<Long, Unit>,
     ) {
         val isTodayClicked = clickedIndex == habitUI.todayIndex
 

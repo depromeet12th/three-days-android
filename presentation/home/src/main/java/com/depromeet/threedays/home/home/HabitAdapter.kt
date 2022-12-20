@@ -7,8 +7,8 @@ import com.depromeet.threedays.home.home.model.HabitUI
 import kotlin.reflect.KFunction1
 
 class HabitAdapter(
-    private val onHabitClick: KFunction1<Int, Unit>,
-    private val onMoreClick: KFunction1<Int, Unit>
+    private val onHabitClick: KFunction1<Long, Unit>,
+    private val onMoreClick: KFunction1<Long, Unit>
 ) : ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {

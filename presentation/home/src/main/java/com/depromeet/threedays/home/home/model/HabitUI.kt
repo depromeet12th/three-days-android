@@ -6,12 +6,12 @@ import com.depromeet.threedays.home.R
 import com.depromeet.threedays.core_design_system.R as core_color
 
 data class HabitUI(
-    val habitId: Int,
+    val habitId: Long,
     val title: String,
     val imojiPath: String,
     val dayOfWeeks: List<String>,
     val reward: Int,
-    val todayHabitAchievementId: Int?, // null이면 오늘 체크를 하지 않은 것
+    val todayHabitAchievementId: Long?, // null이면 오늘 체크를 하지 않은 것
     val createAt: String,
     val todayIndex: Int,
     val isTodayChecked: Boolean,

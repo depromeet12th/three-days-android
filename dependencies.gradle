@@ -28,6 +28,7 @@ ext {
             "google"                : "20.2.0",
             "room"                  : "2.4.3",
             "emoji"                 : "1.0.0-alpha03",
+            "lottie"                : "5.2.0",
     ]
     deps = [
             "kotlin"          : [
@@ -108,7 +109,9 @@ ext {
             "emoji"                        : [
                     "emoji2"               : "androidx.emoji2:emoji2:${versions.emoji}",
                     "emoji2View"           : "androidx.emoji2:emoji2-views:${versions.emoji}"
-            ]
+            ],
+            "lottie"                       : "com.airbnb.android:lottie:${versions.lottie}",
+            "splash"                       : "androidx.core:core-splashscreen:1.0.0",
     ]
 
     coroutines = [
@@ -166,5 +169,13 @@ ext {
     emojiDeps = [
             deps.emoji.emoji2,
             deps.emoji.emoji2View
+    ]
+
+    lottieDeps = [
+            deps.lottie,
+    ]
+
+    splashDeps = [
+            deps.splash,
     ]
 }

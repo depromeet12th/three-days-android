@@ -19,6 +19,13 @@ class ArchivedHabitViewModel @Inject constructor(
     val archivedHabits: StateFlow<List<ArchivedHabitUI>>
         get() = _archivedHabits
 
+    private val _editable: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val editable: StateFlow<Boolean>
+        get() = _editable
+
+    /**
+     * 습관 보관함 > 보관한 습관 목록 조회
+     */
     fun fetchArchivedHabits() {
         viewModelScope.launch {
             getArchivedHabitsUseCase().collect { response ->
@@ -31,6 +38,87 @@ class ArchivedHabitViewModel @Inject constructor(
                     Status.FAIL -> TODO()
                 }
             }
+        }
+    }
+
+    /**
+     * 습관 보관함 > activity 수정 가능/불가능 상태 변경
+     */
+    fun toggleEditable() {
+        viewModelScope.launch {
+            val updated = !editable.value
+            _editable.emit(updated)
+            // 보관한 습관 수정가능/불가능 상태로 변경
+            _archivedHabits.emit(
+                _archivedHabits.value.map {
+                    it.copyOf(
+                        editable = updated,
+                    )
+                }
+            )
+        }
+    }
+
+    /**
+     * 습관 보관함 > 보관한 습관 선택 여부 변경
+     */
+    fun toggleSelected(habitId: Long) {
+        viewModelScope.launch {
+            _archivedHabits.emit(
+                _archivedHabits.value.map {
+                    if (it.habitId == habitId) {
+                        it.copyOf(selected = !it.selected)
+                    } else {
+                        it
+                    }
+                }
+            )
+        }
+    }
+
+    /**
+     * 습관 보관함 > 함께했던 짝궁 열기
+     */
+    fun openMateUI(archivedHabitUI: ArchivedHabitUI) {
+        viewModelScope.launch {
+            _archivedHabits.emit(
+                archivedHabits.value.map {
+                    if (it.habitId == archivedHabitUI.habitId) {
+                        it.copyOf(mateOpened = true)
+                    } else {
+                        it
+                    }
+                }
+            )
+        }
+    }
+
+    /**
+     * 습관 보관함 > 함께했던 짝궁 닫기
+     */
+    fun closeMateUI(archivedHabitUI: ArchivedHabitUI) {
+        viewModelScope.launch {
+            _archivedHabits.emit(
+                archivedHabits.value.map {
+                    if (it.habitId == archivedHabitUI.habitId) {
+                        it.copyOf(mateOpened = false)
+                    } else {
+                        it
+                    }
+                }
+            )
+        }
+    }
+
+    /**
+     * 습관 보관함 > 삭제하기
+     */
+    fun deleteSelected() {
+        viewModelScope.launch {
+            _archivedHabits.emit(
+                // TODO: API 호출
+                archivedHabits.value.filter { !it.selected }
+            )
         }
     }
 }
