@@ -389,7 +389,7 @@
             android:gravity="center"
             android:onClick="@{() -> viewModel.onSaveGoalClick()}"
             android:paddingVertical="18dp"
-            android:text="@string/habit_create"
+            android:text="@string/habit_update"
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@drawable/selector_complete_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
