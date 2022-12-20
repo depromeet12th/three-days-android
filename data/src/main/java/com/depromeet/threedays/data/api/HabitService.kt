@@ -29,6 +29,6 @@ interface HabitService {
 
     @DELETE("/api/v1/habits/{habitId}")
     suspend fun deleteHabit(
-        @Path("productId") productId: Int
+        @Path("productId") productId: Long
     )
 }
