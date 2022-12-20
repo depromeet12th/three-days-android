@@ -6,6 +6,7 @@ import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
+import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.util.EmojiUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,8 @@ class HabitUpdateViewModel @Inject constructor(
     private val initEmoji = Emoji.from(EmojiUtil.Word.SMILE)
     private val initColor = Color.GREEN
     private var habitId: Long = 0
+
+    private lateinit var oldHabit: SingleHabit
 
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
@@ -42,11 +45,13 @@ class HabitUpdateViewModel @Inject constructor(
     val color: StateFlow<Color>
         get() = _color.asStateFlow()
 
-    private val _notification = MutableStateFlow(Notification(
-        initNotificationTime = false,
-        notificationTime = initTime,
-        notificationContent = String.Empty
-    ))
+    private val _notification = MutableStateFlow(
+        Notification(
+            initNotificationTime = false,
+            notificationTime = initTime,
+            notificationContent = String.Empty
+        )
+    )
     val notification: StateFlow<Notification>
         get() = _notification.asStateFlow()
 
@@ -60,25 +65,30 @@ class HabitUpdateViewModel @Inject constructor(
     val isSaveHabitEnable: StateFlow<Boolean>
         get() = _isSaveHabitEnable
 
-//    fun getHabit(habitId: Long) {
-//        viewModelScope.launch {
-//            kotlin.runCatching {
-//                habitRepository.getHabit(habitId = habitId)
-//            }.onSuccess { habit ->
-//                title.value = habit.title
-//                _emoji.value = habit.emoji
-//                _dayOfWeekList.value = habit.dayOfWeeks
-//                _color.value = habit.color
-//                _notification.value = _notification.value.copy(
-//                    initNotificationTime = habit.notification != null,
-//                    notificationTime = habit.notification?.notificationTime ?: LocalTime.now(),
-//                    notificationContent = habit.notification?.contents ?: String.Empty
-//                )
-//            }.onFailure { throwable ->
-//                sendErrorMessage(throwable.message)
-//            }
-//        }
-//    }
+    fun getHabit(habitId: Long) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                habitRepository.getHabit(habitId = habitId)
+            }.onSuccess { habit ->
+                oldHabit = habit
+                setOldData(habit)
+            }.onFailure { throwable ->
+                sendErrorMessage(throwable.message)
+            }
+        }
+    }
+
+    private fun setOldData(oldData: SingleHabit) {
+        title.value = oldData.title
+        _emoji.value = oldData.emoji
+        _dayOfWeekList.value = oldData.dayOfWeeks
+        _color.value = oldData.color
+        _notification.value = _notification.value.copy(
+            initNotificationTime = oldData.notification != null,
+            notificationTime = oldData.notification?.notificationTime ?: initTime,
+            notificationContent = oldData.notification?.contents ?: String.Empty
+        )
+    }
 
     fun setHabitId(habitId: Long) {
         this.habitId = habitId
@@ -111,10 +121,16 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun setSaveHabitEnable() {
         viewModelScope.launch {
-            combine(title, dayOfWeekList, notification, isNotificationInfoActive) { title, dayOfWeekList, notification, isNotificationInfoActive ->
+            combine(
+                title,
+                dayOfWeekList,
+                notification,
+                isNotificationInfoActive
+            ) { title, dayOfWeekList, notification, isNotificationInfoActive ->
                 val notificationEnable =
-                    if(isNotificationInfoActive) { notification.notificationContent.isNotEmpty() && notification.initNotificationTime }
-                    else true
+                    if (isNotificationInfoActive) {
+                        notification.notificationContent.isNotEmpty() && notification.initNotificationTime
+                    } else true
                 title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
             }.collect {
                 _isSaveHabitEnable.value = it
@@ -124,8 +140,14 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun setInformationEntered() {
         viewModelScope.launch {
-            combine(title, emoji, dayOfWeekList, notification, color) { title, emoji, dayOfWeekList, notification, color ->
-                title.isNotEmpty()|| dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor
+            combine(
+                title,
+                emoji,
+                dayOfWeekList,
+                notification,
+                color
+            ) { title, emoji, dayOfWeekList, notification, color ->
+                title.isNotEmpty() || dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor
             }.collect {
                 _isInformationEntered.value = it
             }
@@ -136,7 +158,7 @@ class HabitUpdateViewModel @Inject constructor(
         viewModelScope.launch {
             kotlin.runCatching {
                 val notification = if (isNotificationInfoActive.value) {
-                    CreateHabit.Notification (
+                    CreateHabit.Notification(
                         contents = notification.value.notificationContent,
                         notificationTime = notification.value.notificationTime,
                     )
@@ -181,7 +203,7 @@ class HabitUpdateViewModel @Inject constructor(
         object SaveClick : Action()
     }
 
-    data class Notification (
+    data class Notification(
         val initNotificationTime: Boolean,
         val notificationContent: String,
         val notificationTime: LocalTime

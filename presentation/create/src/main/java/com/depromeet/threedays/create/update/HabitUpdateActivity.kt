@@ -2,7 +2,6 @@ package com.depromeet.threedays.create.update
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
@@ -93,10 +92,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
     }
 
     private fun getHabitId() {
-        val habitId = intent.getLongExtra("habitId", 17)
-        Log.d("테스트", "habitId : $habitId")
+        val habitId = intent.getLongExtra("habitId", 1)
         viewModel.setHabitId(habitId)
-        //viewModel.getHabit(habitId)
+        viewModel.getHabit(habitId)
     }
 
     private fun initView() {
