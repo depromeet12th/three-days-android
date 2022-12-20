@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.di
 
+import com.depromeet.threedays.data.BuildConfig
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.api.Serializer.LocalTimeSerializer
 import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
@@ -66,4 +67,4 @@ class NetworkModule {
         }
 }
 
-const val BASE_URL = "https://api.jjaksim.com"
+const val BASE_URL = BuildConfig.BASE_URL
