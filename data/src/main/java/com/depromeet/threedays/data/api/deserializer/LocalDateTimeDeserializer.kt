@@ -15,7 +15,16 @@ class LocalDateTimeDeserializer: JsonDeserializer<LocalDateTime?> {
     ): LocalDateTime {
         return LocalDateTime.parse(
             json?.asString,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+            DateTimeFormatter.ofPattern( when(json?.asString?.length) {
+                21 -> "yyyy-MM-dd HH:mm:ss.S"
+                22 -> "yyyy-MM-dd HH:mm:ss.SS"
+                23-> "yyyy-MM-dd HH:mm:ss.SSS"
+                24-> "yyyy-MM-dd HH:mm:ss.SSSS"
+                25-> "yyyy-MM-dd HH:mm:ss.SSSSS"
+                26-> "yyyy-MM-dd HH:mm:ss.SSSSSS"
+                27-> "yyyy-MM-dd HH:mm:ss.SSSSSSS"
+                else -> "yyyy-MM-dd HH:mm:ss"
+            })
         )
     }
 }
