@@ -13,7 +13,7 @@ interface HabitService {
 
     @GET("/api/v1/habits")
     suspend fun getHabits(
-
+        @Query("status") status: String
     ): ApiResponse<List<HabitEntity>>
 
 //    @GET("/api/v1/habits/{habitId}")

@@ -4,6 +4,7 @@ import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.mapper.toHabit
 import com.depromeet.threedays.data.mapper.toPostHabitRequest
 import com.depromeet.threedays.domain.entity.DataState
+import com.depromeet.threedays.domain.entity.HabitStatus
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.entity.habit.Habit
 import com.depromeet.threedays.domain.repository.HabitRepository
@@ -18,10 +19,16 @@ class HabitRepositoryImpl @Inject constructor(
         return habitRemoteDataSource.postHabit(request = habit.toPostHabitRequest())
     }
 
-    override suspend fun getHabits(): Flow<DataState<List<Habit>>> =
+    override suspend fun getHabits(status: HabitStatus): Flow<DataState<List<Habit>>> =
         flow {
             emit(DataState.loading())
-            val response = habitRemoteDataSource.getHabits()
+            val response = habitRemoteDataSource.getHabits(
+                when(status) {
+                    HabitStatus.ACTIVE -> "ACTIVE"
+                    HabitStatus.ARCHIVED -> "ARCHIVED"
+                    HabitStatus.UNKNOWN -> "UNKNOWN"
+                }
+            )
 
             if(response.isNotEmpty()) {
                 emit(DataState.success(data = response.map { it.toHabit() }))

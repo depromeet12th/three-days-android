@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".create.step2.ChooseMateTypeFragment">
+        tools:context=".create.step2.ChooseMateTypeActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_begin"
