@@ -51,8 +51,8 @@ class HabitRepositoryImpl @Inject constructor(
 //
 //    }
 
-    override suspend fun updateHabit(habitId: Long) {
-
+    override suspend fun updateHabit(habitId: Long, habit: CreateHabit) {
+        return habitRemoteDataSource.updateHabit(habitId = habitId, request = habit.toPostHabitRequest())
     }
 
     override suspend fun deleteHabit(habitId: Long): Flow<DataState<Any>> =
