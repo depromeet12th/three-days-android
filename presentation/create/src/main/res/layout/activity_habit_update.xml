@@ -387,7 +387,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/selector_habit_button"
             android:gravity="center"
-            android:onClick="@{() -> viewModel.onSaveGoalClick()}"
+            android:onClick="@{() -> viewModel.onUpdateHabitClick()}"
             android:paddingVertical="18dp"
             android:text="@string/habit_update"
             android:textAppearance="@style/Typography.Button1"
