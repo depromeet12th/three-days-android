@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:background="@color/gray_100">
 
-        <View
+        <ImageView
             android:id="@+id/iv_logo"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_rect_gray600_r10"
+            android:src="@drawable/ic_logo_notification"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

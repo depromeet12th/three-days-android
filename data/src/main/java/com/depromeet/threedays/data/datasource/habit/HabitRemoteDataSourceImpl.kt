@@ -116,11 +116,11 @@ class HabitRemoteDataSourceImpl @Inject constructor(
 //
 //    }
 
-    override suspend fun updateHabit(habitId: Long) {
-
+    override suspend fun updateHabit(habitId: Long, request: PostHabitRequest) {
+        return habitService.updateHabit(habitId = habitId, request = request)
     }
 
     override suspend fun deleteHabit(habitId: Long) {
-        return habitService.deleteHabit(habitId.toInt())
+        return habitService.deleteHabit(habitId)
     }
 }

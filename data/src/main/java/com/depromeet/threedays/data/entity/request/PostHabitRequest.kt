@@ -10,7 +10,7 @@ data class PostHabitRequest(
     val notification: Notification?,
     val title: String
 ) {
-    data class Notification(
+   data class Notification(
         val contents: String,
         val notificationTime: LocalTime
     )
