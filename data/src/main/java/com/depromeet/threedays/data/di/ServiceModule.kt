@@ -66,4 +66,4 @@ class NetworkModule {
         }
 }
 
-const val BASE_URL = "https://jjaksim.com"
+const val BASE_URL = "https://api.jjaksim.com"
