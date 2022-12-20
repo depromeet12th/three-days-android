@@ -64,6 +64,9 @@
 
         <activity android:name=".mate.create.step2.ChooseMateTypeActivity"
             android:exported="false" />
+
+        <activity android:name=".mate.create.step3.SetMateNicknameActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

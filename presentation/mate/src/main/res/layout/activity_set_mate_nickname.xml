@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".create.SetMateNicknameFragment">
+        tools:context=".create.step3.SetMateNicknameActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_begin"
@@ -81,23 +81,37 @@
             android:id="@+id/tv_count_nickname_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
             android:text="@string/count_nickname_length"
+            app:layout_constraintTop_toTopOf="@id/tv_nickname_max_length"
+            app:layout_constraintBottom_toBottomOf="@id/tv_nickname_max_length"
+            app:layout_constraintEnd_toStartOf="@+id/tv_nickname_max_length" />
+
+        <TextView
+            android:id="@+id/tv_nickname_max_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/gray_500"
+            android:text="@string/count_nickname_max_length"
             app:layout_constraintTop_toTopOf="@id/et_nickname"
             app:layout_constraintBottom_toBottomOf="@id/et_nickname"
             app:layout_constraintEnd_toEndOf="@+id/et_nickname" />
 
         <TextView
+            android:id="@+id/tv_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/green_system_color"
             android:text="@string/available_nickname_guide"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/et_nickname"
-            app:layout_constraintStart_toStartOf="@id/gl_begin" />
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            tools:visibility="visible"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"

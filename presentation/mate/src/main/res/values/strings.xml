@@ -32,7 +32,8 @@
     <string name="step_3_button_text">짝꿍 시작하기</string>
     <string name="input_nickname_hint">별명을 입력해주세요.</string>
     <string name="available_nickname_guide">별명은 바꿀 수 없어요. 신중하게 지어주세요.</string>
-    <string name="count_nickname_length">0/10</string>
+    <string name="count_nickname_length">0</string>
+    <string name="count_nickname_max_length">/10</string>
 
     <!-- onBoarding -->
     <string name="on_boarding_first_title">짝꿍과 함께하는 66일 챌린지</string>

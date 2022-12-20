@@ -1,5 +1,6 @@
 package com.depromeet.threedays.mate.create.step2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -8,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
+import com.depromeet.threedays.mate.create.step3.SetMateNicknameActivity
 import com.depromeet.threedays.mate.databinding.ActivityChooseMateTypeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,6 +34,10 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
         }
         binding.ivOut.setOnSingleClickListener {
             finish()
+        }
+        binding.btnNext.setOnSingleClickListener {
+            val intent = Intent(this, SetMateNicknameActivity::class.java)
+            startActivity(intent)
         }
     }
 
