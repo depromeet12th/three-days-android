@@ -104,7 +104,7 @@ class HabitCreateViewModel @Inject constructor(
         }
     }
 
-    fun onSaveGoalClick() {
+    fun onCreateHabitClick() {
         viewModelScope.launch {
             kotlin.runCatching {
                 val notification = if (isNotificationInfoActive.value) {

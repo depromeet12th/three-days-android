@@ -1,7 +1,8 @@
 package com.depromeet.threedays.data.api
 
-import com.depromeet.threedays.data.entity.HabitEntity
 import com.depromeet.threedays.data.entity.base.ApiResponse
+import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
 import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import retrofit2.http.*
 
@@ -16,10 +17,10 @@ interface HabitService {
         @Query("status") status: String
     ): ApiResponse<List<HabitEntity>>
 
-//    @GET("/api/v1/habits/{habitId}")
-//    suspend fun getHabit(
-//        @Body request: PostProductsRequest
-//    )
+    @GET("/api/v1/habits/{habitId}")
+    suspend fun getHabit(
+        @Path("habitId") habitId: Long
+    ): ApiResponse<SingleHabitEntity>
 
     @PUT("/api/v1/habits/{habitId}")
     suspend fun updateHabit(

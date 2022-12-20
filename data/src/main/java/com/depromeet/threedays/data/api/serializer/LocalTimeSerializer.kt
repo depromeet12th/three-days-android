@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.api.Serializer
+package com.depromeet.threedays.data.api.serializer
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive

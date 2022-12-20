@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.entity
+package com.depromeet.threedays.data.entity.habit
 
 import com.depromeet.threedays.domain.entity.mate.Mate
 
