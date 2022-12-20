@@ -25,34 +25,38 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
 
     private fun initEvent() {
         binding.clWhippingMate.setOnSingleClickListener {
-            viewModel.setMateType(ChooseMateTypeViewModel.MateType.WHIPPING)
+            viewModel.setMateType(MateType.WhippingMate)
         }
         binding.clCarrotMate.setOnSingleClickListener {
-            viewModel.setMateType(ChooseMateTypeViewModel.MateType.CARROT)
+            viewModel.setMateType(MateType.CarrotMate)
         }
         binding.ivOut.setOnSingleClickListener {
             finish()
         }
     }
 
-    private fun setMateSelected(mateType: ChooseMateTypeViewModel.MateType) {
-        when(mateType) {
-            ChooseMateTypeViewModel.MateType.WHIPPING -> {
-                binding.clWhippingMate.setBackgroundResource(R.drawable.bg_rect_gray_200_border_gray_400_r10)
-                binding.clCarrotMate.setBackgroundResource(com.depromeet.threedays.core_design_system.R.drawable.bg_rect_gray200_r10)
-            }
-            ChooseMateTypeViewModel.MateType.CARROT -> {
-                binding.clWhippingMate.setBackgroundResource(com.depromeet.threedays.core_design_system.R.drawable.bg_rect_gray200_r10)
-                binding.clCarrotMate.setBackgroundResource(R.drawable.bg_rect_gray_200_border_gray_400_r10)
-            }
-        }
+    private fun setMateSelected(
+        whippingMateBackgroundRes: Int,
+        carrotMateBackgroundRes: Int,
+        whippingMateRes: Int,
+        carrotMateRes: Int
+    ) {
+        binding.clWhippingMate.setBackgroundResource(whippingMateBackgroundRes)
+        binding.clCarrotMate.setBackgroundResource(carrotMateBackgroundRes)
+        binding.ivWhippingMateIllustrator.setBackgroundResource(whippingMateRes)
+        binding.ivCarrotMateIllustrator.setBackgroundResource(carrotMateRes)
     }
 
     private fun setUiStateObserver() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    setMateSelected(uiState.mateType)
+                viewModel.uiState.collect {
+                    setMateSelected(
+                        whippingMateBackgroundRes = it.whippingMateBackgroundRes,
+                        carrotMateBackgroundRes = it.carrotMateBackgroundRes,
+                        whippingMateRes = it.whippingMateRes,
+                        carrotMateRes = it.carrotMateRes,
+                    )
                 }
             }
         }
