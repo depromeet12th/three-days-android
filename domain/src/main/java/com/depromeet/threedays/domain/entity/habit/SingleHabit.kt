@@ -6,7 +6,7 @@ import com.depromeet.threedays.domain.entity.mate.Mate
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 
-class SingleHabit (
+data class SingleHabit (
     val color: Color,
     val createAt: LocalDateTime,
     val dayOfWeeks: List<DayOfWeek>,
@@ -21,4 +21,23 @@ class SingleHabit (
     val title: String,
     val todayHabitAchievementId: Long?,
     val totalAchievementCount: Long
-)
+) {
+    companion object {
+        val EMPTY = SingleHabit(
+            color = Color.GREEN,
+            createAt = LocalDateTime.now(),
+            dayOfWeeks = emptyList(),
+            id = 0,
+            emoji = Emoji(""),
+            mate = null,
+            memberId = 0,
+            notification = null,
+            reward = 0,
+            sequence = 0,
+            status = "",
+            title = "",
+            todayHabitAchievementId = null,
+            totalAchievementCount = 0
+        )
+    }
+}

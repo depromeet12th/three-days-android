@@ -6,6 +6,7 @@ import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
+import com.depromeet.threedays.domain.entity.habit.HabitNotification
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.util.EmojiUtil
@@ -25,7 +26,20 @@ class HabitUpdateViewModel @Inject constructor(
     private val initColor = Color.GREEN
     private var habitId: Long = 0
 
-    private lateinit var oldHabit: SingleHabit
+    private val _oldHabit = MutableStateFlow(
+        SingleHabit.EMPTY.copy(
+            title = String.Empty,
+            emoji = initEmoji,
+            dayOfWeeks = emptyList<DayOfWeek>(),
+            color = initColor,
+            notification = HabitNotification(
+                notificationTime = initTime,
+                contents = String.Empty
+            )
+        )
+    )
+    val oldHabit: StateFlow<SingleHabit>
+        get() = _oldHabit.asStateFlow()
 
     private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
@@ -57,20 +71,20 @@ class HabitUpdateViewModel @Inject constructor(
 
     private val isNotificationInfoActive = MutableStateFlow(true)
 
-    private val _isInformationEntered = MutableStateFlow(false)
-    val isInformationEntered: StateFlow<Boolean>
-        get() = _isInformationEntered.asStateFlow()
+    private val _isInformationChanged = MutableStateFlow(false)
+    val isInformationChanged: StateFlow<Boolean>
+        get() = _isInformationChanged.asStateFlow()
 
-    private var _isSaveHabitEnable = MutableStateFlow(false)
-    val isSaveHabitEnable: StateFlow<Boolean>
-        get() = _isSaveHabitEnable
+    private var _isUpdateHabitEnable = MutableStateFlow(false)
+    val isUpdateHabitEnable: StateFlow<Boolean>
+        get() = _isUpdateHabitEnable
 
     fun getHabit(habitId: Long) {
         viewModelScope.launch {
             kotlin.runCatching {
                 habitRepository.getHabit(habitId = habitId)
             }.onSuccess { habit ->
-                oldHabit = habit
+                _oldHabit.value = habit
                 setOldData(habit)
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
@@ -119,7 +133,7 @@ class HabitUpdateViewModel @Inject constructor(
         )
     }
 
-    fun setSaveHabitEnable() {
+    fun setUpdateHabitEnable() {
         viewModelScope.launch {
             combine(
                 title,
@@ -133,12 +147,12 @@ class HabitUpdateViewModel @Inject constructor(
                     } else true
                 title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
             }.collect {
-                _isSaveHabitEnable.value = it
+                _isUpdateHabitEnable.value = it
             }
         }
     }
 
-    fun setInformationEntered() {
+    fun setInformationChanged() {
         viewModelScope.launch {
             combine(
                 title,
@@ -147,9 +161,18 @@ class HabitUpdateViewModel @Inject constructor(
                 notification,
                 color
             ) { title, emoji, dayOfWeekList, notification, color ->
-                title.isNotEmpty() || dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor
+                val isNotificationTimeChanged = if (oldHabit.value.notification == null) {
+                    notification.initNotificationTime
+                } else {
+                    oldHabit.value.notification!!.notificationTime.hour != notification.notificationTime.hour || oldHabit.value.notification!!.notificationTime.minute != notification.notificationTime.minute
+                }
+
+                title != oldHabit.value.title || dayOfWeekList != oldHabit.value.dayOfWeeks || emoji != oldHabit.value.emoji ||
+                        notification.notificationContent != (oldHabit.value.notification?.contents
+                    ?: String.Empty) ||
+                        isNotificationTimeChanged || color != oldHabit.value.color
             }.collect {
-                _isInformationEntered.value = it
+                _isInformationChanged.value = it
             }
         }
     }
