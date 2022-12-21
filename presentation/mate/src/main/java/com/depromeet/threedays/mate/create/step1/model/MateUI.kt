@@ -2,19 +2,21 @@ package com.depromeet.threedays.mate.create.step1.model
 
 import com.depromeet.threedays.domain.entity.RewardHistory
 import com.depromeet.threedays.domain.entity.mate.Mate
+import com.depromeet.threedays.domain.entity.mate.MateType
+import java.time.LocalDateTime
 
 data class MateUI(
-    val characterType: String,
-    val createAt: String,
-    val habitId: Long,
     val id: Long,
-    val level: Int,
-    val levelUpAt: String?,
-    val levelUpSectioin: List<Int>?,
+    val habitId: Long,
     val memberId: Long,
+    val title: String,
+    val createAt: LocalDateTime,
+    val level: Int,
     val reward: Int?,
     val rewardHistory: List<RewardHistory>?,
-    val title: String,
+    val levelUpAt: LocalDateTime?,
+    val characterType: MateType,
+    val levelUpSectioin: List<Int>?,
     val bubble: String,
 )
 
