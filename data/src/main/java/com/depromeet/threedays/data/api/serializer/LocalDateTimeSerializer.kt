@@ -1,18 +1,17 @@
 package com.depromeet.threedays.data.api.serializer
 
-import com.google.gson.JsonElement
-import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializationContext
-import com.google.gson.JsonSerializer
+import com.google.gson.*
 import java.lang.reflect.Type
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class LocalDateTimeSerializer: JsonSerializer<LocalDateTime> {
+class LocalDateTimeSerializer : JsonSerializer<LocalDateTime> {
     override fun serialize(
         src: LocalDateTime?,
         typeOfSrc: Type?,
         context: JsonSerializationContext?
     ): JsonElement {
-        return JsonPrimitive(src.toString())
+        return src?.let { JsonPrimitive(it.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)) }
+            ?: JsonNull.INSTANCE
     }
 }

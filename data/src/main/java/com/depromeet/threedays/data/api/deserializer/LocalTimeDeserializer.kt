@@ -12,10 +12,12 @@ class LocalTimeDeserializer : JsonDeserializer<LocalTime?> {
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): LocalTime {
-        return LocalTime.parse(
-            json?.asString,
-            DateTimeFormatter.ofPattern("HH:mm:ss")
-        )
+    ): LocalTime? {
+        return json?.let {
+            LocalTime.parse(
+                it.asString,
+                DateTimeFormatter.ISO_LOCAL_TIME,
+            )
+        }
     }
 }
