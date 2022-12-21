@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.depromeet.threedays.notification.NotificationActivity" />
+            type="com.depromeet.threedays.notification.NotificationHistoryActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".NotificationActivity">
+        tools:context=".NotificationHistoryActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_header"

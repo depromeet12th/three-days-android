@@ -8,8 +8,8 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class NotificationModule {
+internal abstract class NotificationHistoryModule {
 
     @Binds
-    abstract fun bindNotificationNavigator(navi: NotificationNavigatorImpl): NotificationNavigator
+    abstract fun bindNotificationNavigator(navi: NotificationHistoryNavigatorImpl): NotificationNavigator
 }

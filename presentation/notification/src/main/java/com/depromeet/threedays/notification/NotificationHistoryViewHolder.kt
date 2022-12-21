@@ -7,8 +7,8 @@ import com.depromeet.threedays.notification.databinding.ItemNotificationBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class NotificationViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun onBind(notificationUI: NotificationUI) {
+class NotificationHistoryViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun onBind(notificationUI: NotificationHistoryUI) {
         // 데이터 연결해주는 작업
         binding.tvNotificationTitle.text = notificationUI.title
         binding.tvNotificationContent.text = notificationUI.content
@@ -16,8 +16,8 @@ class NotificationViewHolder(private val binding: ItemNotificationBinding) : Rec
     }
 
     companion object {
-        fun create(parent: ViewGroup, attachToParent: Boolean): NotificationViewHolder {
-            return NotificationViewHolder(
+        fun create(parent: ViewGroup, attachToParent: Boolean): NotificationHistoryViewHolder {
+            return NotificationHistoryViewHolder(
                 ItemNotificationBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,

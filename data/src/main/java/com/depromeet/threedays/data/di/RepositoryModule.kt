@@ -1,9 +1,9 @@
 package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.repository.HabitRepositoryImpl
-import com.depromeet.threedays.data.repository.NotificationRepositoryImpl
+import com.depromeet.threedays.data.repository.NotificationHistoryRepositoryImpl
 import com.depromeet.threedays.domain.repository.HabitRepository
-import com.depromeet.threedays.domain.repository.NotificationRepository
+import com.depromeet.threedays.domain.repository.NotificationHistoryRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,12 +17,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsHabitRepository(
-        repository: HabitRepositoryImpl
+        repository: HabitRepositoryImpl,
     ): HabitRepository
 
     @Binds
     @Singleton
-    abstract fun bindsNotificationRepository(
-        repository: NotificationRepositoryImpl
-    ): NotificationRepository
+    abstract fun bindsNotificationHistoryRepository(
+        repository: NotificationHistoryRepositoryImpl,
+    ): NotificationHistoryRepository
 }

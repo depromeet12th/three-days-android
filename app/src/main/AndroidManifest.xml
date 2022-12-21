@@ -44,7 +44,7 @@
             android:exported="false" />
 
         <activity
-            android:name="com.depromeet.threedays.notification.NotificationActivity"
+            android:name="com.depromeet.threedays.notification.NotificationHistoryActivity"
             android:exported="false" />
 
         <activity
