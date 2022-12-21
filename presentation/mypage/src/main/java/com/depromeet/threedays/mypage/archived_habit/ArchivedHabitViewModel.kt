@@ -3,7 +3,7 @@ package com.depromeet.threedays.mypage.archived_habit
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
-import com.depromeet.threedays.domain.usecase.GetArchivedHabitsUseCase
+import com.depromeet.threedays.domain.usecase.habit.GetArchivedHabitsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +30,9 @@ class ArchivedHabitViewModel @Inject constructor(
         viewModelScope.launch {
             getArchivedHabitsUseCase().collect { response ->
                 when (response.status) {
-                    Status.LOADING -> {}
+                    Status.LOADING -> {
+                        // Do nothing
+                    }
                     Status.SUCCESS -> {
                         _archivedHabits.value = response.data!!.map { ArchivedHabitUI.from(it) }
                     }

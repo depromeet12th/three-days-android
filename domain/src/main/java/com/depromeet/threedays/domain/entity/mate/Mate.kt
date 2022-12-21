@@ -8,14 +8,14 @@ data class Mate(
     val habitId: Long,
     val id: Long,
     val level: Int,
-    val levelUpAt: LocalDateTime,
-    val levelUpSectioin: List<Int>,
+    val levelUpAt: LocalDateTime?,
+    val levelUpSection: List<Int>,
     val memberId: Long,
-    val reward: Long,
-    val rewardHistory: List<RewardHistory?>,
+    val reward: Int,
+    val rewardHistory: List<RewardHistory>?,
     val title: String
 ) {
     data class RewardHistory(
-        val createAt: LocalDateTime
+        val createAt: LocalDateTime,
     )
 }
