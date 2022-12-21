@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.api.HabitService
+import com.depromeet.threedays.data.api.NotificationHistoryService
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalTimeDeserializer
@@ -31,8 +32,14 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesHabitService(
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): HabitService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesNotificationHistoryService(
+        retrofit: Retrofit,
+    ): NotificationHistoryService = retrofit.create()
 
     @Provides
     @Singleton
@@ -77,7 +84,6 @@ class NetworkModule {
 
     private fun getLoggingInterceptor() =
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.HEADERS
             level = HttpLoggingInterceptor.Level.BODY
         }
 }

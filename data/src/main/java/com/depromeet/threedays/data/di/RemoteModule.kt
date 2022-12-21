@@ -2,8 +2,8 @@ package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSourceImpl
-import com.depromeet.threedays.data.datasource.notification.NotificationRemoteDataSource
-import com.depromeet.threedays.data.datasource.notification.NotificationRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSource
+import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ internal abstract class RemoteModule {
 
     @Binds
     @Singleton
-    abstract fun bindNotificationRemoteDataSource(
-        dataSource: NotificationRemoteDataSourceImpl
-    ): NotificationRemoteDataSource
+    abstract fun bindNotificationHistoryRemoteDataSource(
+        dataSource: NotificationHistoryRemoteDataSourceImpl
+    ): NotificationHistoryRemoteDataSource
 }

@@ -14,13 +14,13 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class NotificationActivity : BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
-    private val viewModel by viewModels<NotificationViewModel>()
-    lateinit var notificationAdapter: NotificationAdapter
+class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
+    private val viewModel by viewModels<NotificationHistoryViewModel>()
+    lateinit var notificationAdapter: NotificationHistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        notificationAdapter = NotificationAdapter()
+        notificationAdapter = NotificationHistoryAdapter()
         binding.rvNotification.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = notificationAdapter
