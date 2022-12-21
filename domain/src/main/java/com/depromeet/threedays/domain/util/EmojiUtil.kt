@@ -120,6 +120,7 @@ object EmojiUtil{
         0x1F525,
         0x1F4A5,
         0x1F30F,
+        0x1F41D,
     )
 
     private val foodEmojiList = listOf(
@@ -203,6 +204,7 @@ object EmojiUtil{
         0x1F3DD,
         0x1FA90,
         0x1F3E0,
+        0x26FA,
     )
 
     private val objectEmojiList = listOf(
@@ -249,9 +251,10 @@ object EmojiUtil{
         0x1F6AB,
         0x2668,
         0x1F4AF,
-        0x1F4A,
+        0x1F4A2,
         0x2B55,
         0x274C,
         0x26A0,
+        0x1F3B6,
     )
 }
