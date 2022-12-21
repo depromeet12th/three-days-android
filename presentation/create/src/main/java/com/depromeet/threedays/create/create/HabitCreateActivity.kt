@@ -22,6 +22,7 @@ import com.depromeet.threedays.create.create.HabitCreateViewModel.Action
 import com.depromeet.threedays.create.databinding.ActivityHabitCreateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.key.RESULT_CREATE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -147,6 +148,7 @@ class HabitCreateActivity :
             .onEach { action ->
                 when(action) {
                     is Action.SaveClick -> {
+                        setResult(RESULT_CREATE)
                         finish()
                     }
                     is Action.NotificationTimeClick -> {

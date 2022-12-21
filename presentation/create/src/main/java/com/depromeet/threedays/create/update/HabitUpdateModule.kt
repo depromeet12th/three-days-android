@@ -1,6 +1,6 @@
 package com.depromeet.threedays.create.update
 
-import com.depromeet.threedays.navigator.GoalUpdateNavigator
+import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 internal abstract class HabitUpdateModule {
 
     @Binds
-    abstract fun bindGoalUpdateNavigator(navi: HabitUpdateNavigatorImpl): GoalUpdateNavigator
+    abstract fun bindHabitUpdateNavigator(navi: HabitUpdateNavigatorImpl): HabitUpdateNavigator
 }

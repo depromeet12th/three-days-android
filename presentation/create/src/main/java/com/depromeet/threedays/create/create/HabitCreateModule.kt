@@ -1,6 +1,6 @@
 package com.depromeet.threedays.create.create
 
-import com.depromeet.threedays.navigator.GoalAddNavigator
+import com.depromeet.threedays.navigator.HabitCreateNavigator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 internal abstract class HabitCreateModule {
 
     @Binds
-    abstract fun bindGoalAddNavigator(navi: HabitCreateNavigatorImpl): GoalAddNavigator
+    abstract fun bindHabitCreateNavigator(navi: HabitCreateNavigatorImpl): HabitCreateNavigator
 }

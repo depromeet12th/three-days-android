@@ -23,6 +23,8 @@ import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import com.depromeet.threedays.create.update.HabitUpdateViewModel.Action
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.key.HABIT_ID
+import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -93,7 +95,7 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
     }
 
     private fun getHabitId() {
-        val habitId = intent.getLongExtra("habitId", 1)
+        val habitId = intent.getLongExtra(HABIT_ID, 1)
         viewModel.setHabitId(habitId)
         viewModel.getHabit(habitId)
     }
@@ -182,7 +184,8 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
         viewModel.action
             .onEach { action ->
                 when(action) {
-                    is Action.SaveClick -> {
+                    is Action.UpdateClick -> {
+                        setResult(RESULT_UPDATE)
                         finish()
                     }
                     is Action.NotificationTimeClick -> {
