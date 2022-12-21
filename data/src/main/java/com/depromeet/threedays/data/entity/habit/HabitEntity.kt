@@ -3,7 +3,7 @@ package com.depromeet.threedays.data.entity.habit
 import com.depromeet.threedays.domain.entity.mate.Mate
 
 class HabitEntity (
-    val habitId: Long,
+    val id: Long,
     val memberId: Int,
     val title: String,
     val imojiPath: String,
