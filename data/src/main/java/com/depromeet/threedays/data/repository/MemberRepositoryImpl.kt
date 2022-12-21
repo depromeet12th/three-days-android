@@ -26,4 +26,19 @@ class MemberRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun updateNickname(nickname: String): Flow<DataState<Member>> {
+        return flow {
+            emit(DataState.loading())
+            memberRemoteDataSource.updateNickname(nickname).apply {
+                emit(
+                    DataState.success(
+                        data = this.toMember()
+                    )
+                )
+            }.runCatching {
+                emit(DataState.fail("Failed to get response"))
+            }
+        }
+    }
 }

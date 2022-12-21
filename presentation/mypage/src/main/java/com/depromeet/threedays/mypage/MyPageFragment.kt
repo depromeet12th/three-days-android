@@ -81,7 +81,10 @@ class MyPageFragment :
         val nickname = binding.tvNickname.text.toString()
         EditNicknameDialogFragment(
             nickname = nickname,
-            onSubmit = { ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.") },
+            onSubmit = {
+                viewModel.updateNickname(nickname = it)
+                ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.")
+            },
         ).show(
             requireActivity().supportFragmentManager,
             EditNicknameDialogFragment.TAG,

@@ -8,13 +8,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.depromeet.threedays.mypage.R
-import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 import com.depromeet.threedays.mypage.databinding.FragmentEditNicknameDialogBinding
+import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
-
+// FIXME: 다이얼로그 나오면 키보드 자동으로 띄우기
 class EditNicknameDialogFragment(
     val nickname: String,
-    val onSubmit: () -> Unit,
+    val onSubmit: (String) -> Unit,
 ) : DialogFragment() {
     private var _binding: FragmentEditNicknameDialogBinding? = null
     private val binding get() = _binding!!
@@ -23,7 +23,12 @@ class EditNicknameDialogFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_nickname_dialog, container, false)
+        _binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_edit_nickname_dialog,
+            container,
+            false
+        )
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -51,7 +56,6 @@ class EditNicknameDialogFragment(
     private fun initView() {
         binding.etNickname.apply {
             setText(nickname)
-
         }
 //            requestFocus()
 //            val inputMethodManager = getSystemService(context, InputMethodManager::class.java)
@@ -63,7 +67,8 @@ class EditNicknameDialogFragment(
             dismiss()
         }
         binding.tvSubmit.setOnClickListener {
-            onSubmit()
+            val updatedNickname = binding.etNickname.text.toString()
+            onSubmit(updatedNickname)
             dismiss()
         }
 

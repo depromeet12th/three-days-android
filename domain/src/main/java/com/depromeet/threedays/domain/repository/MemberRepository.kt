@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MemberRepository {
     fun getMyInfo(): Flow<DataState<Member>>
+    fun updateNickname(nickname: String): Flow<DataState<Member>>
 }
