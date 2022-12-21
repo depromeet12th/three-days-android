@@ -5,6 +5,7 @@ import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.member.GetMyInfoUseCase
+import com.depromeet.threedays.domain.usecase.member.UpdateNicknameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val getMyInfoUseCase: GetMyInfoUseCase,
+    private val updateNicknameUseCase: UpdateNicknameUseCase,
 ) : BaseViewModel() {
     private val _nickname: MutableStateFlow<String> = MutableStateFlow(String.Empty)
     val nickname: StateFlow<String>
@@ -25,6 +27,26 @@ class MyPageViewModel @Inject constructor(
     fun fetchMyInfo() {
         viewModelScope.launch {
             getMyInfoUseCase().collect { response ->
+                when (response.status) {
+                    Status.LOADING -> {
+                        // Do nothing
+                    }
+                    Status.SUCCESS -> {
+                        _nickname.value = response.data!!.name
+                    }
+                    Status.ERROR -> TODO()
+                    Status.FAIL -> TODO()
+                }
+            }
+        }
+    }
+
+    /**
+     * 닉네임 수정
+     */
+    fun updateNickname(nickname: String) {
+        viewModelScope.launch {
+            updateNicknameUseCase(nickname = nickname).collect { response ->
                 when (response.status) {
                     Status.LOADING -> {
                         // Do nothing
