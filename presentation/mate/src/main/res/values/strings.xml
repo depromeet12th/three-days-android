@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- 짝꿍 (캐릭터 페이지) -->
     <string name="mate">짝꿍</string>
-    <string name="start_date_with_mate">2022.05.11부터 함께했어요</string>
-    <string name="level">Lv. </string>
+    <string name="start_date_with_mate">%s부터 함께했어요</string>
+    <string name="level">Lv. %d</string>
     <string name="level_sample">Lv. 2</string>
     <string name="mate_nickname_sample">별명</string>
     <string name="next_level_guide">다음 레벨까지 박수[n]개를 더 모아보세요!</string>
