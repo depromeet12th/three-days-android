@@ -13,7 +13,7 @@ data class ArchivedHabitUI(
 ) {
     companion object {
         fun from(habit: Habit) = ArchivedHabitUI(
-            habitId = habit.habitId.toLong(),
+            habitId = habit.id,
             title = habit.title,
             mate = habit.mate?.let { ArchivedMateUI.from(it) },
             editable = false,

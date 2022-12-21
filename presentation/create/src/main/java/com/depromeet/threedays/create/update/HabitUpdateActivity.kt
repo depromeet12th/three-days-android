@@ -23,6 +23,8 @@ import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import com.depromeet.threedays.create.update.HabitUpdateViewModel.Action
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.key.HABIT_ID
+import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +32,8 @@ import java.time.DayOfWeek
 import java.time.LocalTime
 
 @AndroidEntryPoint
-class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.activity_habit_update) {
+class HabitUpdateActivity :
+    BaseActivity<ActivityHabitUpdateBinding>(R.layout.activity_habit_update) {
     private val viewModel by viewModels<HabitUpdateViewModel>()
 
     private val dayOfWeekCheckBoxIdMap = mapOf(
@@ -48,9 +51,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
             val dayOfWeek = requireNotNull(dayOfWeekCheckBoxIdMap[view.id]) {
                 "요일을 선택하지 않았습니다"
             }
-            if (isChecked && viewModel.dayOfWeekList.value.all{ it != dayOfWeek }) {
+            if (isChecked && viewModel.dayOfWeekList.value.all { it != dayOfWeek }) {
                 viewModel.addSavingDayOfWeek(dayOfWeek)
-            } else if(!isChecked && viewModel.dayOfWeekList.value.any{ it == dayOfWeek }) {
+            } else if (!isChecked && viewModel.dayOfWeekList.value.any { it == dayOfWeek }) {
                 viewModel.deleteSavingDayOfWeek(dayOfWeek)
             }
         }
@@ -93,7 +96,7 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
     }
 
     private fun getHabitId() {
-        val habitId = intent.getLongExtra("habitId", 1)
+        val habitId = intent.getLongExtra(HABIT_ID, 0)
         viewModel.setHabitId(habitId)
         viewModel.getHabit(habitId)
     }
@@ -123,9 +126,9 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
             }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
         }
 
-        binding.groupColor.setOnCheckedChangeListener { _ , id ->
+        binding.groupColor.setOnCheckedChangeListener { _, id ->
             viewModel.setColor(
-                when(id) {
+                when (id) {
                     R.id.rb_green -> Color.GREEN
                     R.id.rb_blue -> Color.BLUE
                     R.id.rb_pink -> Color.PINK
@@ -153,18 +156,32 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
         viewModel.oldHabit
             .onEach { oldHabit ->
                 oldHabit.dayOfWeeks.forEach { dayOfWeek ->
-                    when(dayOfWeek) {
-                        DayOfWeek.MONDAY -> { binding.cbMonday.isChecked = true }
-                        DayOfWeek.TUESDAY -> { binding.cbTuesday.isChecked = true }
-                        DayOfWeek.WEDNESDAY -> { binding.cbWednesday.isChecked = true }
-                        DayOfWeek.THURSDAY -> { binding.cbThursday.isChecked = true }
-                        DayOfWeek.FRIDAY -> { binding.cbFriday.isChecked = true }
-                        DayOfWeek.SATURDAY -> { binding.cbSaturday.isChecked = true }
-                        DayOfWeek.SUNDAY -> { binding.cbSunday.isChecked = true }
+                    when (dayOfWeek) {
+                        DayOfWeek.MONDAY -> {
+                            binding.cbMonday.isChecked = true
+                        }
+                        DayOfWeek.TUESDAY -> {
+                            binding.cbTuesday.isChecked = true
+                        }
+                        DayOfWeek.WEDNESDAY -> {
+                            binding.cbWednesday.isChecked = true
+                        }
+                        DayOfWeek.THURSDAY -> {
+                            binding.cbThursday.isChecked = true
+                        }
+                        DayOfWeek.FRIDAY -> {
+                            binding.cbFriday.isChecked = true
+                        }
+                        DayOfWeek.SATURDAY -> {
+                            binding.cbSaturday.isChecked = true
+                        }
+                        DayOfWeek.SUNDAY -> {
+                            binding.cbSunday.isChecked = true
+                        }
                     }
                 }
 
-                when(oldHabit.color) {
+                when (oldHabit.color) {
                     Color.GREEN -> binding.rbGreen.isChecked = true
                     Color.BLUE -> binding.rbBlue.isChecked = true
                     Color.PINK -> binding.rbPink.isChecked = true
@@ -174,15 +191,17 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
 
         viewModel.notification
             .onEach { notification ->
-                if(notification.initNotificationTime) {
-                    binding.tvNotificationTime.text = notification.notificationTime.formatHourMinute()
+                if (notification.initNotificationTime) {
+                    binding.tvNotificationTime.text =
+                        notification.notificationTime.formatHourMinute()
                 }
             }.launchIn(lifecycleScope)
 
         viewModel.action
             .onEach { action ->
-                when(action) {
-                    is Action.SaveClick -> {
+                when (action) {
+                    is Action.UpdateClick -> {
+                        setResult(RESULT_UPDATE)
                         finish()
                     }
                     is Action.NotificationTimeClick -> {
@@ -206,7 +225,7 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
     }
 
     fun setBackBtnClickEvent() {
-        if(viewModel.isInformationChanged.value) {
+        if (viewModel.isInformationChanged.value) {
             ThreeDaysDialogFragment.newInstance(
                 data = DialogInfo.EMPTY.copy(
                     onPositiveAction = { finish() },
@@ -216,8 +235,7 @@ class HabitUpdateActivity : BaseActivity<ActivityHabitUpdateBinding>(R.layout.ac
                     confirmText = getString(com.depromeet.threedays.core.R.string.reply_go_out)
                 )
             ).show(supportFragmentManager, ThreeDaysDialogFragment.TAG)
-        }
-        else {
+        } else {
             finish()
         }
     }

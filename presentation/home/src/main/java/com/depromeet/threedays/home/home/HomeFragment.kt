@@ -16,12 +16,14 @@ import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.domain.entity.emoji.Emoji
+import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
+import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.domain.util.EmojiUtil
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
-import com.depromeet.threedays.navigator.GoalAddNavigator
-import com.depromeet.threedays.navigator.GoalUpdateNavigator
+import com.depromeet.threedays.navigator.HabitCreateNavigator
+import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,10 +37,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     lateinit var habitAdapter: HabitAdapter
 
     @Inject
-    lateinit var goalAddNavigator: GoalAddNavigator
+    lateinit var habitCreateNavigator: HabitCreateNavigator
 
     @Inject
-    lateinit var goalUpdateNavigator: GoalUpdateNavigator
+    lateinit var habitUpdateNavigator: HabitUpdateNavigator
 
     @Inject
     lateinit var notificationNavigator: NotificationNavigator
@@ -47,13 +49,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         when(result.resultCode) {
             RESULT_CREATE -> viewModel.fetchGoals()
-//            RESULT_MODIFY -> {
-//                viewModel.fetchGoals()
-//                ThreeDaysToast().show(
-//                    requireContext(),
-//                    resources.getString(R.string.three_day_goal_modify_toast)
-//                )
-//            }
+            RESULT_UPDATE -> {
+                viewModel.fetchGoals()
+                ThreeDaysToast().show(
+                    requireContext(),
+                    resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
+                )
+            }
         }
     }
 
@@ -83,10 +85,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onEditClick(habitId: Long) {
-        // 수정 페이지로 이동
-//        val intent = goalUpdateNavigator.intent(requireContext())
-//        intent.putExtra(GOAL_ID, habit.goalId)
-//        addResultLauncher.launch(intent)
+        val intent = habitUpdateNavigator.intent(requireContext())
+        intent.putExtra(HABIT_ID, habitId)
+        addResultLauncher.launch(intent)
     }
 
     private fun onDeleteClick(habitId: Long) {
@@ -136,7 +137,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun initEvent() {
         binding.ivNotification.setOnClickListener {
-            onNotificationClick()
+            //onNotificationClick()
+            /**
+             * 임시로 알림버튼 클릭 했을 때 습관 생성 화면으로 넘어갑니다 */
+            val intent = habitCreateNavigator.intent(requireContext())
+            addResultLauncher.launch(intent)
         }
     }
 

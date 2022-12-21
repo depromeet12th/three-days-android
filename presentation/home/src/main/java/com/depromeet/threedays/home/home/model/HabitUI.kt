@@ -21,7 +21,7 @@ data class HabitUI(
 
 fun Habit.toHabitUI(): HabitUI {
     return HabitUI(
-        habitId = this.habitId,
+        habitId = this.id,
         title = this.title,
         imojiPath = this.imojiPath,
         dayOfWeeks = this.dayOfWeeks,

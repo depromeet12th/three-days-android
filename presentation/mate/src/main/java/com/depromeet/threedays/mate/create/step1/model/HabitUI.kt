@@ -13,7 +13,7 @@ data class HabitUI(
 
 fun Habit.toHabitUI(): HabitUI {
     return HabitUI(
-        habitId = habitId,
+        habitId = id,
         title = title,
         imojiPath = imojiPath,
         color = color,

@@ -195,7 +195,7 @@ class HabitUpdateViewModel @Inject constructor(
                 )
                 habitRepository.updateHabit(habitId = habitId, habit = habit)
             }.onSuccess {
-                _action.emit(Action.SaveClick)
+                _action.emit(Action.UpdateClick)
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
             }
@@ -223,7 +223,7 @@ class HabitUpdateViewModel @Inject constructor(
 
     sealed class Action {
         data class NotificationTimeClick(val currentTime: LocalTime) : Action()
-        object SaveClick : Action()
+        object UpdateClick: Action()
     }
 
     data class Notification(

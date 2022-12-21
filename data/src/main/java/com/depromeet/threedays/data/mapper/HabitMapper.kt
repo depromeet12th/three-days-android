@@ -11,7 +11,7 @@ import com.depromeet.threedays.domain.entity.habit.SingleHabit
 
 fun HabitEntity.toHabit(): Habit {
     return Habit(
-        habitId = habitId,
+        id = id,
         memberId = memberId,
         title = title,
         imojiPath = imojiPath,
