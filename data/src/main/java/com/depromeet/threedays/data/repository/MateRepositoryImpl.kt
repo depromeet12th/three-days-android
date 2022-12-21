@@ -24,12 +24,12 @@ class MateRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getMate(): Flow<DataState<Mate>> = flow {
+    override suspend fun getMates(): Flow<DataState<List<Mate>>> = flow {
         emit(DataState.loading())
-        val response = mateRemoteDataSource.getMate()
+        val response = mateRemoteDataSource.getMates()
 
         if (response.data != null) {
-            emit(DataState.success(data = response.data.toMate()))
+            emit(DataState.success(data = response.data.map { it.toMate() }))
         } else {
             emit(DataState.error(msg = "response has error"))
         }.runCatching {

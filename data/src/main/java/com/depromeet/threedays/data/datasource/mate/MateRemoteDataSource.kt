@@ -7,5 +7,5 @@ interface MateRemoteDataSource {
     suspend fun postMate(mateEntity: MateEntity): ApiResponse<MateEntity>
     suspend fun getMateDetail(habitId: Long, mateId: Long): ApiResponse<MateEntity>
     suspend fun deleteMate(habitId: Long, mateId: Long): ApiResponse<Unit>
-    suspend fun getMate(): ApiResponse<MateEntity>
+    suspend fun getMates(): ApiResponse<List<MateEntity>>
 }

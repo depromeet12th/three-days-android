@@ -6,11 +6,11 @@ import com.depromeet.threedays.domain.repository.MateRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetMateUseCase @Inject constructor(
+class GetMatesUseCase @Inject constructor(
     private val mateRepository: MateRepository
 ) {
-    suspend operator fun invoke(): Flow<DataState<Mate>> {
-        return mateRepository.getMate()
+    suspend operator fun invoke(): Flow<DataState<List<Mate>>> {
+        return mateRepository.getMates()
     }
 
 }

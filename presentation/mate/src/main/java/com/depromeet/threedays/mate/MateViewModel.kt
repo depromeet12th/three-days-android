@@ -3,7 +3,7 @@ package com.depromeet.threedays.mate
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
-import com.depromeet.threedays.domain.usecase.mate.GetMateUseCase
+import com.depromeet.threedays.domain.usecase.mate.GetMatesUseCase
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MateViewModel @Inject constructor(
-    val getMateUseCase: GetMateUseCase
+    val getMatesUseCase: GetMatesUseCase
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -28,7 +28,7 @@ class MateViewModel @Inject constructor(
 
     private fun fetchMate() {
         viewModelScope.launch {
-            getMateUseCase().collect { response ->
+            getMatesUseCase().collect { response ->
                 when (response.status) {
                     Status.LOADING -> {
 
@@ -36,7 +36,7 @@ class MateViewModel @Inject constructor(
                     Status.SUCCESS -> {
                         _uiState.update {
                             it.copy(
-                                mate = response.data!!.toMateUI(),
+                                mate = response.data!!.map { it.toMateUI() },
                                 hasMate = true,
                             )
                         }
@@ -54,6 +54,6 @@ class MateViewModel @Inject constructor(
 }
 
 data class UiState(
-    val mate: MateUI? = null,
+    val mate: List<MateUI?> = emptyList(),
     val hasMate: Boolean = false,
 )

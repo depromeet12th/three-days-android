@@ -23,7 +23,7 @@ interface MateService {
     ): ApiResponse<Unit>
 
     @GET("/api/v1/mates")
-    suspend fun getMate(
+    suspend fun getMates(
 
-    ): ApiResponse<MateEntity>
+    ): ApiResponse<List<MateEntity>>
 }

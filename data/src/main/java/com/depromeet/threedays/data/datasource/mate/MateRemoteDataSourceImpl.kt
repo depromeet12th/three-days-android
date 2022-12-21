@@ -20,8 +20,8 @@ class MateRemoteDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getMate(): ApiResponse<MateEntity> {
-        return mateService.getMate()
+    override suspend fun getMates(): ApiResponse<List<MateEntity>> {
+        return mateService.getMates()
     }
 
 }

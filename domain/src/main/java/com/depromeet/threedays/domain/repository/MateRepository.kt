@@ -8,5 +8,5 @@ interface MateRepository {
     suspend fun createMate(mateEntity: Mate): Flow<DataState<Mate>>
     suspend fun getMateDetail(habitId: Long, mateId: Long): Flow<DataState<Mate>>
     suspend fun deleteMate(habitId: Long, mateId: Long): Flow<DataState<Unit>>
-    suspend fun getMate(): Flow<DataState<Mate>>
+    suspend fun getMates(): Flow<DataState<List<Mate>>>
 }
