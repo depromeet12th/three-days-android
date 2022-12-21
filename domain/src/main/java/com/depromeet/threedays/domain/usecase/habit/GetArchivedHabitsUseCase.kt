@@ -10,8 +10,9 @@ import javax.inject.Inject
 class GetArchivedHabitsUseCase @Inject constructor(
     private val habitRepository: HabitRepository
 ) {
-    suspend operator fun invoke(): Flow<DataState<List<Habit>>> {
-        return habitRepository.getHabits(status = HabitStatus.ARCHIVED)
+    operator fun invoke(): Flow<DataState<List<Habit>>> {
+        return habitRepository.getHabits(
+            status = HabitStatus.ARCHIVED,
+        )
     }
-
 }

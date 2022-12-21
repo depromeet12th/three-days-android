@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetActiveHabitsUseCase @Inject constructor(
     private val habitRepository: HabitRepository
 ) {
-    suspend operator fun invoke(): Flow<DataState<List<Habit>>> {
+    operator fun invoke(): Flow<DataState<List<Habit>>> {
         return habitRepository.getHabits(status = HabitStatus.ACTIVE)
     }
 
