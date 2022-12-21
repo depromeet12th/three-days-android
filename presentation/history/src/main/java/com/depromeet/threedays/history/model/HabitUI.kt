@@ -1,8 +1,8 @@
-package com.depromeet.threedays.home.home.model
+package com.depromeet.threedays.history.model
 
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.Habit
-import com.depromeet.threedays.core_design_system.R as core_color
+import com.depromeet.threedays.core_design_system.R as core_desgin
 
 data class HabitUI(
     val habitId: Long,
@@ -31,19 +31,19 @@ fun Habit.toHabitUI(): HabitUI {
         todayIndex = this.sequence % 3,
         isTodayChecked = this.todayHabitAchievementId != null,
         checkedBackgroundResId = when (this.color) {
-            Color.GREEN -> core_color.drawable.selector_check_green
-            Color.BLUE -> core_color.drawable.selector_check_blue
-            Color.PINK -> core_color.drawable.selector_check_pink
+            Color.GREEN -> core_desgin.drawable.selector_check_green
+            Color.BLUE -> core_desgin.drawable.selector_check_blue
+            Color.PINK -> core_desgin.drawable.selector_check_pink
         },
         checkableBackgroundResId = when (this.color) {
-            Color.GREEN -> core_color.drawable.selector_check_light_green
-            Color.BLUE -> core_color.drawable.selector_check_light_blue
-            Color.PINK -> core_color.drawable.selector_check_light_pink
+            Color.GREEN -> core_desgin.drawable.selector_check_light_green
+            Color.BLUE -> core_desgin.drawable.selector_check_light_blue
+            Color.PINK -> core_desgin.drawable.selector_check_light_pink
         },
         checkableTextColor = when (this.color) {
-            Color.GREEN -> core_color.color.green_50
-            Color.BLUE -> core_color.color.blue_50
-            Color.PINK -> core_color.color.pink_50
+            Color.GREEN -> core_desgin.color.green_50
+            Color.BLUE -> core_desgin.color.blue_50
+            Color.PINK -> core_desgin.color.pink_50
         },
     )
 }
