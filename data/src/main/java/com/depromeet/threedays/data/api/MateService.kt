@@ -11,7 +11,7 @@ interface MateService {
     ): ApiResponse<MateEntity>
 
     @GET("/api/v1/habits/{habitId}/mates/{mateId}")
-    suspend fun getMate(
+    suspend fun getMateDetail(
         @Query("habitId") habitId: Long,
         @Query("mateId") mateId: Long,
     ): ApiResponse<MateEntity>
@@ -21,4 +21,9 @@ interface MateService {
         @Query("habitId") habitId: Long,
         @Query("mateId") mateId: Long,
     ): ApiResponse<Unit>
+
+    @GET("/api/v1/mates")
+    suspend fun getMate(
+
+    ): ApiResponse<MateEntity>
 }

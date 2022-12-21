@@ -2,6 +2,7 @@ package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.api.MemberService
+import com.depromeet.threedays.data.api.MateService
 import com.depromeet.threedays.data.api.NotificationHistoryService
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
@@ -35,6 +36,12 @@ class NetworkModule {
     fun providesHabitService(
         retrofit: Retrofit,
     ): HabitService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesMateService(
+        retrofit: Retrofit
+    ): MateService = retrofit.create()
 
     @Provides
     @Singleton

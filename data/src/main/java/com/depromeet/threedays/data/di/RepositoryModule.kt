@@ -24,6 +24,12 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
+    abstract fun bindsMateRepository(
+        repository: MateRepositoryImpl
+    ): MateRepository
+
+    @Binds
+    @Singleton
     abstract fun bindsNotificationHistoryRepository(
         repository: NotificationHistoryRepositoryImpl,
     ): NotificationHistoryRepository
