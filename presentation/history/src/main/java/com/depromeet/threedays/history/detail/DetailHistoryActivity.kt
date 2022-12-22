@@ -1,9 +1,12 @@
 package com.depromeet.threedays.history.detail
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.extensions.getDrawableCompat
+import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.history.R
 import com.depromeet.threedays.history.databinding.ActivityDetailHistoryBinding
@@ -14,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
+import com.depromeet.threedays.core_design_system.R as designR
 
 @AndroidEntryPoint
 class DetailHistoryActivity :
@@ -37,7 +41,6 @@ class DetailHistoryActivity :
         super.onCreate(savedInstanceState)
 
         initData()
-        initCalendar()
         initView()
         observe()
     }
@@ -48,10 +51,68 @@ class DetailHistoryActivity :
         viewModel.getHabit(habitId)
     }
 
-    private fun initCalendar() {
+    private fun initView() {
+        binding.ivPrevious.setOnClickListener {
+            binding.cvHistory.findFirstVisibleMonth()?.let {
+                binding.cvHistory.smoothScrollToMonth(it.yearMonth.previousMonth)
+                binding.tvToday.text = String.format(
+                    "%d년 %02d월",
+                    it.yearMonth.previousMonth.year,
+                    it.yearMonth.previousMonth.monthValue
+                )
+
+                binding.ivNext.isEnabled = (currentMonth != it.yearMonth.previousMonth)
+            }
+        }
+
+        binding.ivNext.isEnabled = false
+        binding.ivNext.setOnClickListener {
+            binding.cvHistory.findFirstVisibleMonth()?.let {
+                binding.cvHistory.smoothScrollToMonth(it.yearMonth.nextMonth)
+                binding.tvToday.text = String.format(
+                    "%d년 %02d월",
+                    it.yearMonth.nextMonth.year,
+                    it.yearMonth.nextMonth.monthValue
+                )
+
+                binding.ivNext.isEnabled = (currentMonth != it.yearMonth.nextMonth)
+            }
+        }
+
+        binding.tvToday.text = String.format(
+            "%d년 %02d월",
+            currentMonth.year,
+            currentMonth.monthValue
+        )
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun observe() {
+        viewModel.state
+            .onEach { state ->
+                val (isInitialized, _, habit) = state
+                if(isInitialized) {
+                    initCalendar(habit.color)
+                    setColorView(habit.color)
+
+                    binding.tvTitle.text = habit.title
+                    binding.tvEmoji.text = habit.emoji.value
+                    binding.tvCreateDays.text = String.format("%d일째", state.daysAfterCreate)
+                    binding.tvDayOfWeek.text = state.dayOfWeekText
+                    binding.tvStartDate.text = String.format("시작일 : %s", state.formattedCreatedDay)
+                    binding.tvClapCount.text = habit.reward.toString()
+                    binding.tvExecuteDayCount.text = habit.totalAchievementCount.toString()
+                }
+            }.launchIn(lifecycleScope)
+    }
+
+    private fun initCalendar(color: Color) {
         val executeDateWithStatusList = getExecuteDateWithStatusList(list).toMap()
         with(binding) {
-            cvHistory.dayBinder = DayBind.newInstance(executeDateWithStatusList)
+            cvHistory.dayBinder = DayBind.newInstance(executeDateWithStatusList, color)
             cvHistory.setup(firstMonth, lastMonth, firstDayOfWeek)
             cvHistory.scrollToMonth(currentMonth)
             cvHistory.monthScrollListener = { calendar ->
@@ -108,58 +169,22 @@ class DetailHistoryActivity :
         return periodList
     }
 
-    private fun initView() {
-        binding.ivPrevious.setOnClickListener {
-            binding.cvHistory.findFirstVisibleMonth()?.let {
-                binding.cvHistory.smoothScrollToMonth(it.yearMonth.previousMonth)
-                binding.tvToday.text = String.format(
-                    "%d년 %02d월",
-                    it.yearMonth.previousMonth.year,
-                    it.yearMonth.previousMonth.monthValue
-                )
+    private fun setColorView(color: Color) {
+        val habitColor = this.getHabitColor(color)
+        val habitLightColor = this.getHabitLightColor(color)
+        val createDaysDrawable = this.getDrawableCompat(designR.drawable.bg_rect_green10_r5) as GradientDrawable
+        val rangeDrawable = this.getDrawableCompat(designR.drawable.bg_rect_green50_r4) as GradientDrawable
+        val singleDrawable = this.getDrawableCompat(R.drawable.bg_single_selection) as GradientDrawable
 
-                binding.ivNext.isEnabled = (currentMonth != it.yearMonth.previousMonth)
-            }
+        createDaysDrawable.setColor(habitLightColor)
+        rangeDrawable.setColor(habitColor)
+        singleDrawable.setColor(habitColor)
+
+        binding.tvCreateDays.run {
+            background = createDaysDrawable
+            binding.tvCreateDays.setTextColor(habitColor)
         }
-
-        binding.ivNext.isEnabled = false
-        binding.ivNext.setOnClickListener {
-            binding.cvHistory.findFirstVisibleMonth()?.let {
-                binding.cvHistory.smoothScrollToMonth(it.yearMonth.nextMonth)
-                binding.tvToday.text = String.format(
-                    "%d년 %02d월",
-                    it.yearMonth.nextMonth.year,
-                    it.yearMonth.nextMonth.monthValue
-                )
-
-                binding.ivNext.isEnabled = (currentMonth != it.yearMonth.nextMonth)
-            }
-        }
-
-        binding.tvToday.text = String.format(
-            "%d년 %02d월",
-            currentMonth.year,
-            currentMonth.monthValue
-        )
-
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun observe() {
-        viewModel.state
-            .onEach { state ->
-                val (isInitialized, _, habit) = state
-                if(isInitialized) {
-                    binding.tvTitle.text = habit.title
-                    binding.tvEmoji.text = habit.emoji.value
-                    binding.tvCreateDays.text = String.format("%d일째", state.daysAfterCreate)
-                    binding.tvDayOfWeek.text = state.dayOfWeekText
-                    binding.tvStartDate.text = String.format("시작일 : %s", state.formattedCreatedDay)
-                    binding.tvClapCount.text = habit.reward.toString()
-                    binding.tvExecuteDayCount.text = habit.totalAchievementCount.toString()
-                }
-            }.launchIn(lifecycleScope)
+        binding.vRange.background = rangeDrawable
+        binding.vSingle.background = singleDrawable
     }
 }
