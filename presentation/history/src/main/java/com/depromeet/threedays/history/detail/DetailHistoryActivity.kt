@@ -1,18 +1,26 @@
 package com.depromeet.threedays.history.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.history.R
 import com.depromeet.threedays.history.databinding.ActivityDetailHistoryBinding
-import com.depromeet.threedays.history.view.*
+import com.depromeet.threedays.history.detail.view.*
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 
 @AndroidEntryPoint
 class DetailHistoryActivity :
     BaseActivity<ActivityDetailHistoryBinding>(R.layout.activity_detail_history) {
+
+    private val viewModel by viewModels<DetailHistoryViewModel>()
+
     private val list = listOf(
         "2022-07-04", "2022-07-05", "2022-07-06", "2022-07-07", "2022-07-14", "2022-07-26",
         "2022-06-03", "2022-06-17", "2022-06-18", "2022-06-19", "2022-06-20", "2022-06-21",
@@ -28,8 +36,16 @@ class DetailHistoryActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initData()
         initCalendar()
         initView()
+        observe()
+    }
+
+    private fun initData() {
+        val habitId = intent.getLongExtra(HABIT_ID, 1)
+        viewModel.setHabitId(habitId)
+        viewModel.getHabit(habitId)
     }
 
     private fun initCalendar() {
@@ -129,5 +145,21 @@ class DetailHistoryActivity :
         binding.ivBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun observe() {
+        viewModel.state
+            .onEach { state ->
+                val (isInitialized, _, habit) = state
+                if(isInitialized) {
+                    binding.tvTitle.text = habit.title
+                    binding.tvEmoji.text = habit.emoji.value
+                    binding.tvCreateDays.text = String.format("%d일째", state.daysAfterCreate)
+                    binding.tvDayOfWeek.text = state.dayOfWeekText
+                    binding.tvStartDate.text = String.format("시작일 : %s", state.formattedCreatedDay)
+                    binding.tvClapCount.text = habit.reward.toString()
+                    binding.tvExecuteDayCount.text = habit.totalAchievementCount.toString()
+                }
+            }.launchIn(lifecycleScope)
     }
 }

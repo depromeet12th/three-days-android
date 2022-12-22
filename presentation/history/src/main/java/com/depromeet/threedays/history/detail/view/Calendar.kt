@@ -1,4 +1,4 @@
-package com.depromeet.threedays.history.view
+package com.depromeet.threedays.history.detail.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
