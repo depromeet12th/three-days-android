@@ -1,17 +1,31 @@
 package com.depromeet.threedays.notification
 
 import com.depromeet.threedays.domain.entity.notification.NotificationHistory
+import com.depromeet.threedays.domain.entity.notification.NotificationHistoryStatus
 
 data class NotificationHistoryUI(
     val id: Long,
     val title: String,
-    val content: String
+    val content: String,
+    var status: NotificationHistoryStatus,
 ) {
     companion object {
-        fun from(notification: NotificationHistory) = NotificationHistoryUI(
-            id = notification.notificationHistoryId,
-            title = notification.title,
-            content = notification.content
+        fun from(notificationHistory: NotificationHistory) = NotificationHistoryUI(
+            id = notificationHistory.notificationHistoryId,
+            title = notificationHistory.title,
+            content = notificationHistory.content,
+            status = notificationHistory.status,
+        )
+    }
+
+    fun copyOf(
+        status: NotificationHistoryStatus?,
+    ): NotificationHistoryUI {
+        return NotificationHistoryUI(
+            id = this.id,
+            title = this.title,
+            content = this.content,
+            status = status ?: this.status,
         )
     }
 }

@@ -7,22 +7,39 @@ import com.depromeet.threedays.notification.databinding.ItemNotificationBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class NotificationHistoryViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun onBind(notificationUI: NotificationHistoryUI) {
+class NotificationHistoryViewHolder(
+    private val binding: ItemNotificationBinding,
+    private val onItemClicked: (NotificationHistoryUI) -> Unit,
+) : RecyclerView.ViewHolder(binding.root) {
+
+    fun onBind(notificationHistoryUI: NotificationHistoryUI) {
         // 데이터 연결해주는 작업
-        binding.tvNotificationTitle.text = notificationUI.title
-        binding.tvNotificationContent.text = notificationUI.content
-        binding.tvTime.text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        binding.tvNotificationTitle.text = notificationHistoryUI.title
+        binding.tvNotificationContent.text = notificationHistoryUI.content
+        binding.tvTime.text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+
+        initEvent(notificationHistoryUI = notificationHistoryUI)
+    }
+
+    private fun initEvent(notificationHistoryUI: NotificationHistoryUI) {
+        binding.clNotificationItem.setOnClickListener {
+            onItemClicked(notificationHistoryUI)
+        }
     }
 
     companion object {
-        fun create(parent: ViewGroup, attachToParent: Boolean): NotificationHistoryViewHolder {
+        fun create(
+            parent: ViewGroup,
+            attachToParent: Boolean,
+            onItemClicked: (NotificationHistoryUI) -> Unit,
+        ): NotificationHistoryViewHolder {
             return NotificationHistoryViewHolder(
-                ItemNotificationBinding.inflate(
+                binding = ItemNotificationBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    attachToParent
-                )
+                    attachToParent,
+                ),
+                onItemClicked = onItemClicked,
             )
         }
     }
