@@ -8,4 +8,5 @@ interface MemberRepository {
     fun getMyInfo(): Flow<DataState<Member>>
     fun updateNickname(nickname: String): Flow<DataState<Member>>
     fun logout(deviceId: String): Flow<DataState<Unit>>
+    fun withdraw(): Flow<DataState<Unit>>
 }

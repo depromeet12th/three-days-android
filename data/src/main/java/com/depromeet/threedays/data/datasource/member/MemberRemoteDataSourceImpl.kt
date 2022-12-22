@@ -28,4 +28,8 @@ class MemberRemoteDataSourceImpl @Inject constructor(
             ),
         )
     }
+
+    override suspend fun withdraw() {
+        memberService.withdraw()
+    }
 }

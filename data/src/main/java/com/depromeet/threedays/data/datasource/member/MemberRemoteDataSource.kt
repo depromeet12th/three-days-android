@@ -6,4 +6,5 @@ interface MemberRemoteDataSource {
     suspend fun getMyInfo(): MemberEntity
     suspend fun updateNickname(nickname: String): MemberEntity
     suspend fun logout(deviceId: String)
+    suspend fun withdraw()
 }
