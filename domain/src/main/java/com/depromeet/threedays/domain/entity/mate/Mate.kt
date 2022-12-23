@@ -1,6 +1,5 @@
 package com.depromeet.threedays.domain.entity.mate
 
-import com.depromeet.threedays.domain.entity.RewardHistory
 import java.time.LocalDateTime
 
 data class Mate(
@@ -14,6 +13,10 @@ data class Mate(
     val rewardHistory: List<RewardHistory>?,
     val levelUpAt: LocalDateTime?,
     val characterType: MateType,
-    val levelUpSectioin: List<Int>,
+    val levelUpSection: List<Int>,
     val bubble: String,
-)
+) {
+    data class RewardHistory(
+        val createAt: LocalDateTime,
+    )
+}
