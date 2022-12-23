@@ -30,6 +30,6 @@ interface HabitService {
 
     @DELETE("/api/v1/habits/{habitId}")
     suspend fun deleteHabit(
-        @Path("productId") productId: Long
-    )
+        @Path("habitId") habitId: Long,
+    ): ApiResponse<Unit>
 }

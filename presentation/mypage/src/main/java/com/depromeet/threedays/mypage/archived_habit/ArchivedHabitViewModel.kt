@@ -3,16 +3,19 @@ package com.depromeet.threedays.mypage.archived_habit
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.usecase.habit.DeleteArchivedHabitUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetArchivedHabitsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ArchivedHabitViewModel @Inject constructor(
     private val getArchivedHabitsUseCase: GetArchivedHabitsUseCase,
+    private val deleteArchivedHabitUseCase: DeleteArchivedHabitUseCase,
 ) : BaseViewModel() {
     private val _archivedHabits: MutableStateFlow<List<ArchivedHabitUI>> =
         MutableStateFlow(emptyList())
@@ -117,10 +120,11 @@ class ArchivedHabitViewModel @Inject constructor(
      */
     fun deleteSelected() {
         viewModelScope.launch {
-            _archivedHabits.emit(
-                // TODO: API 호출
-                archivedHabits.value.filter { !it.selected }
-            )
+            archivedHabits.value
+                .filter { it.selected }
+                .map { deleteArchivedHabitUseCase.invoke(habitId = it.habitId).collect() }
+            val updatedHabits  = archivedHabits.value.filter { !it.selected }
+            _archivedHabits.emit(updatedHabits)
         }
     }
 }
