@@ -15,13 +15,9 @@ import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-import java.time.temporal.WeekFields
-import java.util.*
 import com.depromeet.threedays.core_design_system.R as designR
 
-class DayBind(private val executeDateWithStatusList: Map<String, Status> = emptyMap(), private val color: Color) :
+class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = emptyMap(), private val color: Color) :
     MonthDayBinder<DayContainer> {
     private val today = LocalDate.now()
     private val clipLevelHalf = 5000
@@ -61,7 +57,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
         textView.setTextAppearance(designR.style.Typography_Calendar_10dp)
 
         val isExecuteDate = executeDateWithStatusList.any {
-            val day = LocalDate.parse(it.key)
+            val day = it.key
             day == data.date
         }
 
@@ -74,7 +70,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
             }
 
             if(isExecuteDate) {
-                val key: String = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val key: LocalDate = data.date
                 val status = executeDateWithStatusList[key]!!
 
                 textView.setTextColor(context.getColorCompat(designR.color.white))
@@ -122,7 +118,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
     override fun create(view: View): DayContainer = DayContainer(view)
 
     companion object {
-        fun newInstance(executeDateList: Map<String, Status> = emptyMap(), color: Color): DayBind =
+        fun newInstance(executeDateList: Map<LocalDate, Status> = emptyMap(), color: Color): DayBind =
             DayBind(executeDateWithStatusList = executeDateList, color = color)
     }
 }
@@ -135,11 +131,6 @@ class DayContainer(view: View) : ViewContainer(view) {
     val leftSpaceView = binding.vLeftSpace
     val rightSpaceView = binding.vRightSpace
 }
-
-internal val currentMonth = YearMonth.now()
-internal val firstMonth = currentMonth.minusMonths(100)
-internal val lastMonth = currentMonth.plusMonths(0)
-internal val firstDayOfWeek = WeekFields.of(Locale.KOREAN).firstDayOfWeek
 
 fun Context.getHabitColor(color: Color): Int {
     return when(color) {

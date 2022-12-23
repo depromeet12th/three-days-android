@@ -255,7 +255,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_today"
                 app:layout_constraintEnd_toStartOf="@id/tv_today"
                 app:layout_constraintTop_toTopOf="@id/tv_today"
-                app:srcCompat="@drawable/ic_left_arrow_default" />
+                app:srcCompat="@drawable/selector_left_arrow" />
 
             <ImageView
                 android:id="@+id/iv_next"

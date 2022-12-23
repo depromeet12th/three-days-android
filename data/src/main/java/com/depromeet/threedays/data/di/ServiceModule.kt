@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.di
 
+import com.depromeet.threedays.data.api.AchievementService
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.api.NotificationHistoryService
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
@@ -40,6 +41,12 @@ class NetworkModule {
     fun providesNotificationHistoryService(
         retrofit: Retrofit,
     ): NotificationHistoryService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesAchievementService(
+        retrofit: Retrofit,
+    ): AchievementService = retrofit.create()
 
     @Provides
     @Singleton
