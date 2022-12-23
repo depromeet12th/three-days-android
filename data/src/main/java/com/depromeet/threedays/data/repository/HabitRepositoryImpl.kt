@@ -21,40 +21,22 @@ class HabitRepositoryImpl @Inject constructor(
         return habitRemoteDataSource.postHabit(request = habit.toPostHabitRequest())
     }
 
-    override suspend fun getHabits(status: HabitStatus): Flow<DataState<List<Habit>>> =
+    override fun getHabits(status: HabitStatus): Flow<DataState<List<Habit>>> =
         flow {
-            emit(DataState.loading())
-            val response = habitRemoteDataSource.getHabits(
-                when(status) {
-                    HabitStatus.ACTIVE -> "ACTIVE"
-                    HabitStatus.ARCHIVED -> "ARCHIVED"
-                    HabitStatus.UNKNOWN -> "UNKNOWN"
-                }
-            )
-
-            if(response.isNotEmpty()) {
+            run {
+                emit(DataState.loading())
+                val response = habitRemoteDataSource.getHabits(
+                    when (status) {
+                        HabitStatus.ACTIVE -> "ACTIVE"
+                        HabitStatus.ARCHIVED -> "ARCHIVED"
+                        HabitStatus.UNKNOWN -> "UNKNOWN"
+                    }
+                )
                 emit(DataState.success(data = response.map { it.toHabit() }))
-            } else {
-                emit(DataState.error(msg = "response has error"))
             }.runCatching {
                 emit(DataState.fail("response is fail"))
             }
         }
-
-    override suspend fun getArchivedHabits(): Flow<DataState<List<Habit>>> {
-        return flow {
-            emit(DataState.loading())
-            val response = habitRemoteDataSource.getArchivedHabits()
-
-            if(response.isNotEmpty()) {
-                emit(DataState.success(data = response.map { it.toHabit() }))
-            } else {
-                emit(DataState.error(msg = "response has error"))
-            }.runCatching {
-                emit(DataState.fail("response is fail"))
-            }
-        }
-    }
 
     override suspend fun getHabit(habitId: Long): SingleHabit {
         return habitRemoteDataSource.getHabit(habitId = habitId).toSingleHabit()
@@ -64,17 +46,15 @@ class HabitRepositoryImpl @Inject constructor(
         return habitRemoteDataSource.updateHabit(habitId = habitId, request = habit.toPostHabitRequest())
     }
 
-    override suspend fun deleteHabit(habitId: Long): Flow<DataState<Any>> =
+    override fun deleteHabit(habitId: Long): Flow<DataState<Unit>> =
         flow {
+            run {
             emit(DataState.loading())
-            val response = habitRemoteDataSource.deleteHabit(habitId)
-
-            if(response != null) {
-                emit(DataState.success(data = response))
-            } else {
-                emit(DataState.error(msg = "response has error"))
+            habitRemoteDataSource.deleteHabit(habitId = habitId).apply {
+                emit(DataState.success(data = this))
+            }
             }.runCatching {
-                emit(DataState.fail("response is fail"))
+                emit(DataState.error(msg = "response has error"))
             }
         }
 }

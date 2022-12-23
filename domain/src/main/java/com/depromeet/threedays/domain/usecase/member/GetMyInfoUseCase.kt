@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetMyInfoUseCase @Inject constructor(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
 ) {
     operator fun invoke(): Flow<DataState<Member>> {
         return memberRepository.getMyInfo()

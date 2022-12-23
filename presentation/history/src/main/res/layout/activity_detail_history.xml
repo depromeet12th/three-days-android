@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.depromeet.threedays.history.detail.DetailHistoryViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -45,9 +48,9 @@
                 <TextView
                     android:id="@+id/tv_emoji"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:textColor="@color/transparency_color"
-                    android:textSize="23sp" />
+                    android:autoSizeTextType="uniform" />
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -69,7 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/container_title">
 
                 <TextView
-                    android:id="@+id/tv_day"
+                    android:id="@+id/tv_create_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rect_green10_r5"
@@ -252,7 +255,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_today"
                 app:layout_constraintEnd_toStartOf="@id/tv_today"
                 app:layout_constraintTop_toTopOf="@id/tv_today"
-                app:srcCompat="@drawable/ic_left_arrow_default" />
+                app:srcCompat="@drawable/selector_left_arrow" />
 
             <ImageView
                 android:id="@+id/iv_next"

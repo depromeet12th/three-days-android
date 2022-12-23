@@ -51,6 +51,12 @@ class MyPageFragment :
         binding.ivEdit.setOnClickListener {
             onEditButtonClicked()
         }
+        binding.tvLogout.setOnClickListener {
+            onLogoutButtonClicked()
+        }
+        binding.tvWithdraw.setOnClickListener {
+            onWithdrawButtonClicked()
+        }
     }
 
     /**
@@ -99,4 +105,19 @@ class MyPageFragment :
         TODO("개인정보처리방침")
     }
 
+    /**
+     * 마이페이지 > 로그아웃 버튼
+     */
+    private fun onLogoutButtonClicked() {
+        viewModel.logout()
+        // TODO: login 페이지로 이동
+    }
+
+    /**
+     * 마이페이지 > 회원탈퇴 버튼
+     */
+    private fun onWithdrawButtonClicked() {
+        viewModel.withdraw()
+        // TODO: 로그인 페이지로 이동
+    }
 }

@@ -137,7 +137,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun initEvent() {
         binding.ivNotification.setOnClickListener {
-            //onNotificationClick()
+//            onNotificationClick()
             /**
              * 임시로 알림버튼 클릭 했을 때 습관 생성 화면으로 넘어갑니다 */
             val intent = habitCreateNavigator.intent(requireContext())

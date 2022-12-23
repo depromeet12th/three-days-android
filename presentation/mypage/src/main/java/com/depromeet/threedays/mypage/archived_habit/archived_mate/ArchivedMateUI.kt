@@ -11,8 +11,8 @@ data class ArchivedMateUI(
     companion object {
         fun from(mate: Mate) = ArchivedMateUI(
             mateId = mate.id,
-            habitId = 1L,
-            nickname = "닉네임닉네임",
+            habitId = mate.habitId,
+            nickname = mate.title,
             level = mate.level,
         )
     }

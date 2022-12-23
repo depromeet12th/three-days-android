@@ -17,10 +17,6 @@ class HabitRemoteDataSourceImpl @Inject constructor(
         return habitService.getHabits(status).data ?: emptyList()
     }
 
-    override suspend fun getArchivedHabits(): List<HabitEntity> {
-        return emptyList()
-    }
-
     override suspend fun getHabit(habitId: Long): SingleHabitEntity {
         return habitService.getHabit(habitId = habitId).data ?: throw IllegalStateException()
     }
@@ -30,6 +26,6 @@ class HabitRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun deleteHabit(habitId: Long) {
-        return habitService.deleteHabit(habitId)
+        habitService.deleteHabit(habitId)
     }
 }

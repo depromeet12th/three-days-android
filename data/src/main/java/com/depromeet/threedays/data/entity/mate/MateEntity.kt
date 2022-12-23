@@ -11,7 +11,7 @@ data class MateEntity(
     val title: String,
     val createAt: LocalDateTime,
     val level: Int,
-    val reward: Int?,
+    val reward: Int,
     val rewardHistory: List<RewardHistory>?,
     val levelUpAt: LocalDateTime?,
     val characterType: MateType,

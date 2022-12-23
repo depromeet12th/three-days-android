@@ -1,10 +1,12 @@
-package com.depromeet.threedays.history.view
+package com.depromeet.threedays.history.detail.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import com.depromeet.threedays.core.extensions.getColorCompat
 import com.depromeet.threedays.core.extensions.getDrawableCompat
+import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.history.R
 import com.depromeet.threedays.history.databinding.CalendarDayBinding
 import com.kizitonwose.calendar.core.CalendarDay
@@ -13,15 +15,10 @@ import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-import java.time.temporal.WeekFields
-import java.util.*
 import com.depromeet.threedays.core_design_system.R as designR
 
-class DayBind(private val executeDateWithStatusList: Map<String, Status> = emptyMap()) :
+class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = emptyMap(), private val color: Color) :
     MonthDayBinder<DayContainer> {
-
     private val today = LocalDate.now()
     private val clipLevelHalf = 5000
 
@@ -33,12 +30,24 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
         val leftSpaceView = container.leftSpaceView
         val rightSpaceView = container.rightSpaceView
 
-        val rangeStartBackground = context.getDrawableCompat(R.drawable.bg_range_start).also { it.level = clipLevelHalf }
-        val rangeEndBackground = context.getDrawableCompat(R.drawable.bg_range_end).also { it.level = clipLevelHalf }
-        val rangeBetweenBackground = context.getDrawableCompat(R.drawable.bg_range_middle)
-        val singleBackground = context.getDrawableCompat(R.drawable.bg_single_selection)
+        val rangeStartBackgroundCompat = when(color) {
+            Color.GREEN -> context.getDrawableCompat(R.drawable.bg_range_start_green50)
+            Color.BLUE -> context.getDrawableCompat(R.drawable.bg_range_start_blue50)
+            Color.PINK -> context.getDrawableCompat(R.drawable.bg_range_start_pink50)
+        }
+        val rangeEndBackgroundCompat = when(color) {
+            Color.GREEN -> context.getDrawableCompat(R.drawable.bg_range_end_green50)
+            Color.BLUE -> context.getDrawableCompat(R.drawable.bg_range_end_blue50)
+            Color.PINK -> context.getDrawableCompat(R.drawable.bg_range_end_pink50)
+        }
+        val rangeStartBackground = rangeStartBackgroundCompat.also { it.level = clipLevelHalf }
+        val rangeEndBackground = rangeEndBackgroundCompat.also { it.level = clipLevelHalf }
+        val rangeBetweenBackground = context.getDrawableCompat(R.drawable.bg_range_middle) as GradientDrawable
+        val singleBackground = context.getDrawableCompat(R.drawable.bg_single_selection) as GradientDrawable
         val todayBackground = context.getDrawableCompat(R.drawable.bg_today)
 
+        rangeBetweenBackground.setColor(context.getHabitColor(color))
+        singleBackground.setColor(context.getHabitColor(color))
 
         container.textView.text = data.date.dayOfMonth.toString()
         roundBgView.visibility = View.INVISIBLE
@@ -48,7 +57,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
         textView.setTextAppearance(designR.style.Typography_Calendar_10dp)
 
         val isExecuteDate = executeDateWithStatusList.any {
-            val day = LocalDate.parse(it.key)
+            val day = it.key
             day == data.date
         }
 
@@ -61,7 +70,7 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
             }
 
             if(isExecuteDate) {
-                val key: String = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val key: LocalDate = data.date
                 val status = executeDateWithStatusList[key]!!
 
                 textView.setTextColor(context.getColorCompat(designR.color.white))
@@ -99,16 +108,18 @@ class DayBind(private val executeDateWithStatusList: Map<String, Status> = empty
 
     private fun View.applyEndBackground(context: Context, isEnd: Boolean) {
         visibility = View.VISIBLE
-        background = if(isEnd) context.getDrawableCompat(R.drawable.bg_rect_white) else
-            context.getDrawableCompat(R.drawable.bg_rect_green50)
+        val backGroundWithColor = if(isEnd) (context.getDrawableCompat(R.drawable.bg_rect_white)) as GradientDrawable else
+            (context.getDrawableCompat(R.drawable.bg_rect_green50)) as GradientDrawable
+        backGroundWithColor.setColor(context.getHabitColor(color))
+        background = backGroundWithColor
+
     }
 
     override fun create(view: View): DayContainer = DayContainer(view)
 
-
     companion object {
-        fun newInstance(executeDateList: Map<String, Status> = emptyMap()): DayBind =
-            DayBind(executeDateList)
+        fun newInstance(executeDateList: Map<LocalDate, Status> = emptyMap(), color: Color): DayBind =
+            DayBind(executeDateWithStatusList = executeDateList, color = color)
     }
 }
 
@@ -121,10 +132,21 @@ class DayContainer(view: View) : ViewContainer(view) {
     val rightSpaceView = binding.vRightSpace
 }
 
-internal val currentMonth = YearMonth.now()
-internal val firstMonth = currentMonth.minusMonths(100)
-internal val lastMonth = currentMonth.plusMonths(0)
-internal val firstDayOfWeek = WeekFields.of(Locale.KOREAN).firstDayOfWeek
+fun Context.getHabitColor(color: Color): Int {
+    return when(color) {
+        Color.GREEN -> this.getColorCompat(designR.color.green_50)
+        Color.BLUE -> this.getColorCompat(designR.color.blue_50)
+        Color.PINK -> this.getColorCompat(designR.color.pink_50)
+    }
+}
+
+fun Context.getHabitLightColor(color: Color): Int {
+    return when(color) {
+        Color.GREEN -> this.getColorCompat(designR.color.green_10)
+        Color.BLUE -> this.getColorCompat(designR.color.blue_10)
+        Color.PINK -> this.getColorCompat(designR.color.pink_10)
+    }
+}
 
 enum class Status {
     START,

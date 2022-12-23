@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DeleteHabitUseCase @Inject constructor(
-    private val habitRepository: HabitRepository
+    private val habitRepository: HabitRepository,
 ) {
-    suspend operator fun invoke(habitId: Long): Flow<DataState<Any>> {
+    operator fun invoke(habitId: Long): Flow<DataState<Unit>> {
         return habitRepository.deleteHabit(habitId)
     }
 }

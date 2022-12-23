@@ -8,6 +8,7 @@ import com.depromeet.threedays.core.extensions.invisible
 import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.mypage.archived_habit.archived_mate.ArchivedMateUI
 import com.depromeet.threedays.mypage.databinding.ItemHabitArchivedBinding
+import java.time.format.DateTimeFormatter
 import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
 class ArchivedHabitViewHolder(
@@ -21,7 +22,19 @@ class ArchivedHabitViewHolder(
      * 데이터 연결해주는 작업
      */
     fun onBind(archivedHabitUI: ArchivedHabitUI) {
+        // 이모지
+        binding.tvEmoji.text = archivedHabitUI.emoji.value
+        // 습관 제목
         binding.tvTitle.text = archivedHabitUI.title
+        // 실천 기간 (시작 ~ 종료일자)
+        // FIXME: 종료일자 적용
+        val formatter = DateTimeFormatter.ofPattern("yyyy. MM. dd")
+        binding.tvHabitArchivedPeriod.text = "${archivedHabitUI.createdAt.format(formatter)} ~ ${archivedHabitUI.createdAt.format(formatter)}"
+        // 박수
+        binding.tvHabitArchivedClap.text = "${archivedHabitUI.rewardCount}개"
+        // 실천 횟수
+        binding.tvHabitArchivedAchievement.text = "${archivedHabitUI.achievementCount}일 실천"
+        // 함께했던 짝궁
         if (archivedHabitUI.hasMate()) {
             if (archivedHabitUI.mateOpened) {
                 binding.clMateOpened.visible()
@@ -38,6 +51,7 @@ class ArchivedHabitViewHolder(
             binding.clMateOpened.gone()
             binding.clMateClosed.gone()
         }
+        // 체크 버튼
         binding.ivHabitArchivedIconCheck.apply {
             // editable 일때만 체크 아이콘 보이기
             if (archivedHabitUI.editable) {

@@ -5,7 +5,9 @@ import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.member.GetMyInfoUseCase
+import com.depromeet.threedays.domain.usecase.member.LogoutUseCase
 import com.depromeet.threedays.domain.usecase.member.UpdateNicknameUseCase
+import com.depromeet.threedays.domain.usecase.member.WithdrawUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +18,8 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val getMyInfoUseCase: GetMyInfoUseCase,
     private val updateNicknameUseCase: UpdateNicknameUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val withdrawUseCase: WithdrawUseCase,
 ) : BaseViewModel() {
     private val _nickname: MutableStateFlow<String> = MutableStateFlow(String.Empty)
     val nickname: StateFlow<String>
@@ -53,6 +57,46 @@ class MyPageViewModel @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         _nickname.value = response.data!!.name
+                    }
+                    Status.ERROR -> TODO()
+                    Status.FAIL -> TODO()
+                }
+            }
+        }
+    }
+
+    /**
+     * 로그아웃
+     */
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase().collect { response ->
+                when (response.status) {
+                    Status.LOADING -> {
+                        // Do nothing
+                    }
+                    Status.SUCCESS -> {
+                        // Do nothing
+                    }
+                    Status.ERROR -> TODO()
+                    Status.FAIL -> TODO()
+                }
+            }
+        }
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    fun withdraw() {
+        viewModelScope.launch {
+            withdrawUseCase().collect { response ->
+                when (response.status) {
+                    Status.LOADING -> {
+                        // Do nothing
+                    }
+                    Status.SUCCESS -> {
+                        // Do nothing
                     }
                     Status.ERROR -> TODO()
                     Status.FAIL -> TODO()
