@@ -1,4 +1,4 @@
-package com.depromeet.threedays.domain.usecase
+package com.depromeet.threedays.domain.usecase.notification
 
 import com.depromeet.threedays.domain.entity.DataState
 import com.depromeet.threedays.domain.entity.notification.NotificationHistory

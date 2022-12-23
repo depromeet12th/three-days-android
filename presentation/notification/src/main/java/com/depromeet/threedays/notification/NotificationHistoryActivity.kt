@@ -20,7 +20,13 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        notificationAdapter = NotificationHistoryAdapter()
+        notificationAdapter = NotificationHistoryAdapter(
+            onItemClicked = {
+                viewModel.markAsRead(
+                    notificationHistoryId = it.id,
+                )
+            },
+        )
         binding.rvNotification.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = notificationAdapter
