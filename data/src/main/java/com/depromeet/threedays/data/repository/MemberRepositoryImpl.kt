@@ -46,9 +46,18 @@ class MemberRepositoryImpl @Inject constructor(
         return flow {
             emit(DataState.loading())
             memberRemoteDataSource.logout(deviceId = deviceId).apply {
-                emit(
-                    DataState.success(data = Unit)
-                )
+                emit(DataState.success(data = Unit))
+            }.runCatching {
+                emit(DataState.fail("Failed to get response"))
+            }
+        }
+    }
+
+    override fun withdraw(): Flow<DataState<Unit>> {
+        return flow {
+            emit(DataState.loading())
+            memberRemoteDataSource.withdraw().apply {
+                emit(DataState.success(data = Unit))
             }.runCatching {
                 emit(DataState.fail("Failed to get response"))
             }

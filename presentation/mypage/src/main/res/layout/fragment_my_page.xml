@@ -202,6 +202,7 @@
                 app:layout_constraintEnd_toStartOf="@id/iv_divider" />
 
             <TextView
+                android:id="@+id/tv_withdraw"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"

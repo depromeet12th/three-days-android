@@ -54,6 +54,9 @@ class MyPageFragment :
         binding.tvLogout.setOnClickListener {
             onLogoutButtonClicked()
         }
+        binding.tvWithdraw.setOnClickListener {
+            onWithdrawButtonClicked()
+        }
     }
 
     /**
@@ -110,4 +113,11 @@ class MyPageFragment :
         // TODO: login 페이지로 이동
     }
 
+    /**
+     * 마이페이지 > 회원탈퇴 버튼
+     */
+    private fun onWithdrawButtonClicked() {
+        viewModel.withdraw()
+        // TODO: 로그인 페이지로 이동
+    }
 }
