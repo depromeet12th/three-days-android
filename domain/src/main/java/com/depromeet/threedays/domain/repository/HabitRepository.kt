@@ -12,5 +12,5 @@ interface HabitRepository {
     fun getHabits(status: HabitStatus): Flow<DataState<List<Habit>>>
     suspend fun getHabit(habitId: Long): SingleHabit
     suspend fun updateHabit(habitId: Long, habit: CreateHabit)
-    suspend fun deleteHabit(habitId: Long): Flow<DataState<Any>>
+    fun deleteHabit(habitId: Long): Flow<DataState<Unit>>
 }
