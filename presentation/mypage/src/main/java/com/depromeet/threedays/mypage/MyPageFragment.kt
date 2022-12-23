@@ -1,16 +1,18 @@
 package com.depromeet.threedays.mypage
 
-import android.content.pm.PackageManager
-import android.content.pm.PackageManager.GET_CONFIGURATIONS
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.mypage.databinding.FragmentMyPageBinding
 import com.depromeet.threedays.mypage.nickname.EditNicknameDialogFragment
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,8 +25,11 @@ class MyPageFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.fetchMyInfo()
+
         initEvent()
         initView(view)
+        setObserve()
     }
 
     /**
@@ -46,18 +51,46 @@ class MyPageFragment :
         binding.ivEdit.setOnClickListener {
             onEditButtonClicked()
         }
+        binding.tvLogout.setOnClickListener {
+            onLogoutButtonClicked()
+        }
+        binding.tvWithdraw.setOnClickListener {
+            onWithdrawButtonClicked()
+        }
     }
 
+    /**
+     * observer 초기화
+     */
+    private fun setObserve() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nickname.collect { nickname ->
+                    binding.tvNickname.text = nickname
+                }
+            }
+        }
+    }
+
+    /**
+     * 마이페이지 > 습관 보관함 버튼
+     */
     private fun onHabitArchivedButtonClicked() {
         val intent = archivedHabitNavigator.intent(requireContext())
         startActivity(intent)
     }
 
+    /**
+     * 마이페이지 > 닉네임 수정 버튼
+     */
     private fun onEditButtonClicked() {
         val nickname = binding.tvNickname.text.toString()
         EditNicknameDialogFragment(
             nickname = nickname,
-            onSubmit = { ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.") },
+            onSubmit = {
+                viewModel.updateNickname(nickname = it)
+                ThreeDaysToast().show(requireContext(), "닉네임이 변경됐어요.")
+            },
         ).show(
             requireActivity().supportFragmentManager,
             EditNicknameDialogFragment.TAG,
@@ -72,4 +105,19 @@ class MyPageFragment :
         TODO("개인정보처리방침")
     }
 
+    /**
+     * 마이페이지 > 로그아웃 버튼
+     */
+    private fun onLogoutButtonClicked() {
+        viewModel.logout()
+        // TODO: login 페이지로 이동
+    }
+
+    /**
+     * 마이페이지 > 회원탈퇴 버튼
+     */
+    private fun onWithdrawButtonClicked() {
+        viewModel.withdraw()
+        // TODO: 로그인 페이지로 이동
+    }
 }

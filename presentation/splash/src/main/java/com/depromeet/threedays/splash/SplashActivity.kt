@@ -30,7 +30,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             binding.animationView.apply {
                 layoutParams.width = (width * 0.61).toInt() // 220/360 = 0.611
                 layoutParams.height = layoutParams.width
-                setAnimation(R.raw.lottie_sample)
+                setAnimation(R.raw.lottie_splash)
                 repeatCount = 1
                 playAnimation()
             }

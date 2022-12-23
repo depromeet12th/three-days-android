@@ -4,6 +4,8 @@ import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteData
 import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSource
+import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSource
 import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSourceImpl
 import dagger.Binds
@@ -19,13 +21,13 @@ internal abstract class RemoteModule {
     @Binds
     @Singleton
     abstract fun bindHabitRemoteDataSource(
-        dataSource: HabitRemoteDataSourceImpl
+        dataSource: HabitRemoteDataSourceImpl,
     ): HabitRemoteDataSource
 
     @Binds
     @Singleton
     abstract fun bindNotificationHistoryRemoteDataSource(
-        dataSource: NotificationHistoryRemoteDataSourceImpl
+        dataSource: NotificationHistoryRemoteDataSourceImpl,
     ): NotificationHistoryRemoteDataSource
 
     @Binds
@@ -33,4 +35,11 @@ internal abstract class RemoteModule {
     abstract fun bindAchievementRemoteDataSource(
         dataSource: AchievementRemoteDataSourceImpl
     ): AchievementRemoteDataSource
+    
+    @Binds
+    @Singleton
+    abstract fun bindMemberRemoteDataSource(
+        dataSource: MemberRemoteDataSourceImpl,
+    ): MemberRemoteDataSource
+
 }
