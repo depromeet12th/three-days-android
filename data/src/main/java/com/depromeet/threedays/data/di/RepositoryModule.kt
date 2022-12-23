@@ -1,8 +1,10 @@
 package com.depromeet.threedays.data.di
 
+import com.depromeet.threedays.data.repository.AchievementRepositoryImpl
 import com.depromeet.threedays.data.repository.HabitRepositoryImpl
 import com.depromeet.threedays.data.repository.MemberRepositoryImpl
 import com.depromeet.threedays.data.repository.NotificationHistoryRepositoryImpl
+import com.depromeet.threedays.domain.repository.AchievementRepository
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.repository.MemberRepository
 import com.depromeet.threedays.domain.repository.NotificationHistoryRepository
@@ -27,6 +29,12 @@ abstract class RepositoryModule {
     abstract fun bindsNotificationHistoryRepository(
         repository: NotificationHistoryRepositoryImpl,
     ): NotificationHistoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsAchievementRepository(
+        repository: AchievementRepositoryImpl,
+    ): AchievementRepository
 
     @Binds
     @Singleton

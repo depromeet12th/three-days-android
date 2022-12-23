@@ -1,5 +1,7 @@
 package com.depromeet.threedays.data.di
 
+import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteDataSource
+import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSource
@@ -30,7 +32,14 @@ internal abstract class RemoteModule {
 
     @Binds
     @Singleton
+    abstract fun bindAchievementRemoteDataSource(
+        dataSource: AchievementRemoteDataSourceImpl
+    ): AchievementRemoteDataSource
+    
+    @Binds
+    @Singleton
     abstract fun bindMemberRemoteDataSource(
         dataSource: MemberRemoteDataSourceImpl,
     ): MemberRemoteDataSource
+
 }
