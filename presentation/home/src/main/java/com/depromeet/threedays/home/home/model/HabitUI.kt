@@ -2,6 +2,8 @@ package com.depromeet.threedays.home.home.model
 
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.Habit
+import com.depromeet.threedays.mate.create.step1.model.MateUI
+import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.core_design_system.R as core_color
 
 data class HabitUI(
@@ -12,6 +14,7 @@ data class HabitUI(
     val reward: Int,
     val todayHabitAchievementId: Long?, // null이면 오늘 체크를 하지 않은 것
     val createAt: String,
+    val mate: MateUI?,
     val todayIndex: Int,
     val isTodayChecked: Boolean,
     val checkedBackgroundResId: Int,
@@ -28,6 +31,7 @@ fun Habit.toHabitUI(): HabitUI {
         reward = this.reward,
         todayHabitAchievementId = this.todayHabitAchievementId,
         createAt = this.createAt,
+        mate = this.mate?.toMateUI(),
         todayIndex = this.sequence % 3,
         isTodayChecked = this.todayHabitAchievementId != null,
         checkedBackgroundResId = when (this.color) {

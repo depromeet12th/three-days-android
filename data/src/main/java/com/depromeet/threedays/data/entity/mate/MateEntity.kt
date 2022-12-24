@@ -17,4 +17,5 @@ data class MateEntity(
     val characterType: MateType,
     val levelUpSection: List<Int>?,
     val bubble: String,
+    val status: String,
 )

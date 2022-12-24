@@ -17,6 +17,7 @@ data class MateUI(
     val characterType: MateType,
     val levelUpSectioin: List<Int>?,
     val bubble: String,
+    val status: String,
 )
 
 fun Mate.toMateUI(): MateUI {
@@ -33,5 +34,6 @@ fun Mate.toMateUI(): MateUI {
         rewardHistory = rewardHistory,
         title = title,
         bubble = bubble,
+        status = status,
     )
 }
