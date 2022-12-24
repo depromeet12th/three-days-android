@@ -3,14 +3,17 @@ package com.depromeet.threedays.data.di
 import com.depromeet.threedays.data.api.AchievementService
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.api.MemberService
+import com.depromeet.threedays.data.api.MateService
 import com.depromeet.threedays.data.api.NotificationHistoryService
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalTimeDeserializer
+import com.depromeet.threedays.data.api.deserializer.MateTypeDeserializer
 import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
 import com.depromeet.threedays.data.api.serializer.LocalDateSerializer
 import com.depromeet.threedays.data.api.serializer.LocalDateTimeSerializer
 import com.depromeet.threedays.data.api.serializer.LocalTimeSerializer
+import com.depromeet.threedays.domain.entity.mate.MateType
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -36,6 +39,12 @@ class NetworkModule {
     fun providesHabitService(
         retrofit: Retrofit,
     ): HabitService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesMateService(
+        retrofit: Retrofit
+    ): MateService = retrofit.create()
 
     @Provides
     @Singleton
@@ -87,6 +96,7 @@ class NetworkModule {
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeSerializer())
             .registerTypeAdapter(LocalDate::class.java, LocalDateSerializer())
             .registerTypeAdapter(LocalTime::class.java, LocalTimeSerializer())
+            .registerTypeAdapter(MateType::class.java, MateTypeDeserializer())
             .create()
 
         return Retrofit.Builder()

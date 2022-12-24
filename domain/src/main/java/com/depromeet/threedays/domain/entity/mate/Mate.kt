@@ -3,17 +3,18 @@ package com.depromeet.threedays.domain.entity.mate
 import java.time.LocalDateTime
 
 data class Mate(
-    val characterType: String,
-    val createAt: LocalDateTime,
-    val habitId: Long,
     val id: Long,
-    val level: Int,
-    val levelUpAt: LocalDateTime?,
-    val levelUpSection: List<Int>,
+    val habitId: Long,
     val memberId: Long,
+    val title: String,
+    val createAt: LocalDateTime,
+    val level: Int,
     val reward: Int,
     val rewardHistory: List<RewardHistory>?,
-    val title: String
+    val levelUpAt: LocalDateTime?,
+    val characterType: MateType,
+    val levelUpSection: List<Int>,
+    val bubble: String,
 ) {
     data class RewardHistory(
         val createAt: LocalDateTime,

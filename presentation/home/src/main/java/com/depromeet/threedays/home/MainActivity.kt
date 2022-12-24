@@ -7,14 +7,11 @@ import com.depromeet.threedays.history.HistoryFragment
 import com.depromeet.threedays.home.databinding.ActivityMainBinding
 import com.depromeet.threedays.home.home.HomeFragment
 import com.depromeet.threedays.mate.MateFragment
-import com.depromeet.threedays.mate.nomate.NoMateFragment
 import com.depromeet.threedays.mypage.MyPageFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    val hasMate = false // TODO: 나중에 api 호출로 유무 판단
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,13 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         changeFragment(HistoryFragment())
                     }
                     R.id.mateFragment -> {
-                        changeFragment(
-                            if (hasMate) {
-                                MateFragment()
-                            } else {
-                                NoMateFragment()
-                            }
-                        )
+                        changeFragment(MateFragment())
                     }
                     R.id.mypageFragment -> {
                         changeFragment(MyPageFragment())

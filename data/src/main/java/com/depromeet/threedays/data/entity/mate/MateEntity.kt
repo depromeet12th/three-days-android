@@ -1,18 +1,20 @@
 package com.depromeet.threedays.data.entity.mate
 
 import com.depromeet.threedays.data.entity.RewardHistoryEntity
+import com.depromeet.threedays.domain.entity.mate.MateType
 import java.time.LocalDateTime
 
 data class MateEntity(
-    val characterType: String,
-    val createAt: LocalDateTime,
-    val habitId: Long,
     val id: Long,
-    val level: Int,
-    val levelUpAt: LocalDateTime?,
-    val levelUpSection: List<Int>?,
+    val habitId: Long,
     val memberId: Long,
+    val title: String,
+    val createAt: LocalDateTime,
+    val level: Int,
     val reward: Int,
     val rewardHistory: List<RewardHistoryEntity>?,
-    val title: String,
+    val levelUpAt: LocalDateTime?,
+    val characterType: MateType,
+    val levelUpSection: List<Int>?,
+    val bubble: String,
 )

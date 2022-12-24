@@ -45,11 +45,25 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_end="108dp" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_has_habit"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_of_30_percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date" />
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_no_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="iv_no_mate_illustration, tv_create_mate_guide, btn_create_mate" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_has_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date, iv_illustration" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_speech_bubble"
@@ -75,6 +89,46 @@
                 app:layout_constraintStart_toStartOf="@id/gl_begin"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- 짝꿍이 없을 때 -->
+            <ImageView
+                android:id="@+id/iv_no_mate_illustration"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:src="@drawable/bg_help_mate_image"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/gl_top_of_30_percent" />
+
+            <TextView
+                android:id="@+id/tv_create_mate_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/create_mate_guide"
+                android:textAppearance="@style/Typography.Paragraph3.13dp"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_no_mate_illustration" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_rect_gray800_r30"
+                android:gravity="center"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:text="@string/create_mate"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide" />
+
+            <!-- 짝꿍이 있을 때-->
             <ImageView
                 android:id="@+id/iv_tooltip"
                 android:layout_width="24dp"
@@ -169,7 +223,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tv_illustration"/>
+                app:layout_constraintBottom_toTopOf="@+id/iv_illustration"/>
 
             <TextView
                 android:id="@+id/tv_speech_bubble"
@@ -198,19 +252,17 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_polygon"
                 android:translationY="-8dp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_illustration"
+                app:layout_constraintBottom_toTopOf="@+id/iv_illustration"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_speech_bubble" />
 
-            <TextView
-                android:id="@+id/tv_illustration"
+            <ImageView
+                android:id="@+id/iv_illustration"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:background="@color/gray_200"
-                android:gravity="center"
-                android:text="일러스트로 대체될 영역"
+                android:background="@drawable/bg_help_mate_image"
                 app:layout_constraintBottom_toTopOf="@+id/gl_mock_bottom_sheet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +282,7 @@
                 android:textSize="11dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_illustration" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
 
             <TextView
                 android:id="@+id/tv_mate_nickname"

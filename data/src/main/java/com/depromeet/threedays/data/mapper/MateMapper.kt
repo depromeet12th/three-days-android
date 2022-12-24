@@ -16,5 +16,6 @@ fun MateEntity.toMate(): Mate {
         reward = this.reward,
         rewardHistory = this.rewardHistory?.map { it.toRewardHistory() },
         title = this.title,
+        bubble = bubble,
     )
 }
