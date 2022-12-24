@@ -7,7 +7,8 @@ import com.depromeet.threedays.home.home.model.HabitUI
 import kotlin.reflect.KFunction1
 
 class HabitAdapter(
-    private val onHabitClick: KFunction1<Long, Unit>,
+    private val createHabitAchievement: KFunction1<Long, Unit>,
+    private val deleteHabitAchievement: (Long, Long) -> Unit,
     private val onMoreClick: KFunction1<Long, Unit>
 ) : ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
 
@@ -16,13 +17,13 @@ class HabitAdapter(
     }
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        holder.onBind(getItem(position), holder.itemView.context, onHabitClick, onMoreClick)
+        holder.onBind(getItem(position), holder.itemView.context, createHabitAchievement, deleteHabitAchievement, onMoreClick)
     }
 
     override fun getItemCount(): Int = currentList.size
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).habitId.toLong()
+        return getItem(position).habitId
     }
 
     companion object {

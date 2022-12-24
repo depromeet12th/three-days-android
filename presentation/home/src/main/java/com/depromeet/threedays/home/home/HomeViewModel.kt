@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
+import com.depromeet.threedays.domain.usecase.achievement.CreateHabitAchievementUseCase
+import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
@@ -18,6 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
+    private val createHabitAchievementUseCase: CreateHabitAchievementUseCase,
+    private val deleteHabitAchievementUseCase: DeleteHabitAchievementUseCase,
 //    private val updateHabitUseCase: UpdateHabitUseCase,
     private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
@@ -51,19 +55,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-//    fun updateGoals(updateGoalRequest: UpdateGoalRequest) {
-//        viewModelScope.launch {
-//            try {
-//                updateHabitUseCase(updateGoalRequest)
-//            } catch (exception: Exception) {
-//                exception.printStackTrace()
-//            }
-//        }
-//    }
-//
-    fun deleteGoals(habitId: Long) {
+    fun createHabitAchievement(habitId: Long) {
         viewModelScope.launch {
-            deleteHabitUseCase(habitId).collect { response ->
+            createHabitAchievementUseCase(habitId).collect { response ->
                 when(response.status) {
                     Status.LOADING -> {
 
@@ -84,7 +78,55 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    sealed interface UiEffect {
-        object DeleteDialog: UiEffect
+    fun deleteHabitAchievement(habitId: Long, habitAchievementId: Long) {
+        viewModelScope.launch {
+            deleteHabitAchievementUseCase(
+                habitId = habitId,
+                habitAchievementId = habitAchievementId,
+            ).collect { response ->
+                when(response.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        _uiEffect.emit(
+                            UiEffect.DeleteDialog
+                        )
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
+            }
+        }
     }
+
+    fun deleteGoals(habitId: Long) {
+        viewModelScope.launch {
+            deleteHabitUseCase(habitId).collect { response ->
+                when(response.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+sealed interface UiEffect {
+    object DeleteDialog: UiEffect
 }
