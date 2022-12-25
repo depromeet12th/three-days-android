@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun createHabitAchievement(habitId: Long) {
+    fun createHabitAchievement(habitId: Long, isThirdClap: Boolean) {
         viewModelScope.launch {
             createHabitAchievementUseCase(habitId).collect { response ->
                 when(response.status) {
@@ -63,9 +63,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        _uiEffect.emit(
-                            UiEffect.DeleteDialog
-                        )
+
                     }
                     Status.ERROR -> {
 
@@ -74,6 +72,12 @@ class HomeViewModel @Inject constructor(
 
                     }
                 }
+            }
+
+            if(isThirdClap) {
+                _uiEffect.emit(
+                    UiEffect.ShowClapAnimation
+                )
             }
         }
     }
@@ -89,9 +93,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        _uiEffect.emit(
-                            UiEffect.DeleteDialog
-                        )
+
                     }
                     Status.ERROR -> {
 
@@ -128,5 +130,6 @@ class HomeViewModel @Inject constructor(
 }
 
 sealed interface UiEffect {
-    object DeleteDialog: UiEffect
+    data class ShowToastMessage(val resId: Int): UiEffect
+    object ShowClapAnimation: UiEffect
 }

@@ -21,6 +21,7 @@ import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.domain.util.EmojiUtil
+import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.navigator.HabitCreateNavigator
@@ -70,8 +71,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initEvent()
     }
 
-    private fun createHabitAchievement(habitId: Long) {
-        viewModel.createHabitAchievement(habitId)
+    private fun createHabitAchievement(habitId: Long, isThirdClap: Boolean) {
+        viewModel.createHabitAchievement(habitId, isThirdClap)
     }
 
     private fun deleteHabitAchievement(habitId: Long, habitAchievementId: Long) {
@@ -171,7 +172,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 launch {
                     viewModel.uiEffect.collect {
                         when(it) {
-
+                            UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()
                         }
                     }
                 }

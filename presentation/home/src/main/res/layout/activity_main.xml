@@ -34,5 +34,48 @@
             app:itemTextColor="@drawable/selector_menu_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_nav_menu"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/congratulation_animation_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_background_for_animation, lottie_clap, tv_congratulation_for_third_clap" />
+
+        <View
+            android:id="@+id/view_background_for_animation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#99121213"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_clap"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toTopOf="@+id/tv_congratulation_for_third_clap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:lottie_rawRes="@raw/lottie_clap" />
+
+        <TextView
+            android:id="@+id/tv_congratulation_for_third_clap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/congratulation_for_third_clap"
+            android:textAppearance="@style/Typography.Display2"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lottie_clap"
+            app:layout_constraintStart_toStartOf="@+id/lottie_clap"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_clap" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

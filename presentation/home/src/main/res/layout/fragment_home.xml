@@ -31,8 +31,8 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
-            android:textAppearance="@style/Typography.Heading"
             android:gravity="center"
+            android:textAppearance="@style/Typography.Heading"
             app:layout_constraintStart_toStartOf="@id/gl_begin_cardview"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="10월19일 목요일" />
@@ -41,18 +41,18 @@
             android:id="@+id/iv_notification"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/ic_noti_default"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="@+id/gl_end_cardview"
             app:layout_constraintTop_toTopOf="@+id/tv_date"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_date" />
+            app:srcCompat="@drawable/ic_noti_default" />
 
         <!-- 등록된 목표가 없는 경우에 보여지는 레이아웃 -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_no_goal"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            android:background="@drawable/bg_rect_white_r20"
             android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rect_white_r20"
             app:layout_constraintEnd_toEndOf="@id/gl_end_cardview"
             app:layout_constraintStart_toStartOf="@+id/gl_begin_cardview"
             app:layout_constraintTop_toBottomOf="@id/tv_date">
@@ -75,14 +75,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:gravity="center"
-                android:textAppearance="@style/Typography.Body2"
                 android:text="@string/create_habit"
+                android:textAppearance="@style/Typography.Body2"
                 android:textColor="@color/gray_600"
-                app:layout_constraintTop_toTopOf="@+id/cl_no_goal"
                 app:layout_constraintBottom_toBottomOf="@+id/cl_no_goal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/iv_create_habit" />
+                app:layout_constraintStart_toEndOf="@+id/iv_create_habit"
+                app:layout_constraintTop_toTopOf="@+id/cl_no_goal" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -92,9 +92,9 @@
             android:clipToPadding="false"
             android:paddingTop="12dp"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/gl_begin_cardview"
-            app:layout_constraintEnd_toEndOf="@id/gl_end_cardview"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_end_cardview"
+            app:layout_constraintStart_toStartOf="@id/gl_begin_cardview"
             app:layout_constraintTop_toBottomOf="@+id/tv_date" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

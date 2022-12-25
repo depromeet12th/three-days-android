@@ -16,4 +16,7 @@
     <string name="noti_recommend_title">셀프 잔소리로 동기부여까지</string>
     <string name="noti_recommend_content">푸시 알림을 활성화하시면 동기부여를\n받을 수 있어요! 짝심삼일이 함께 도와드릴게요.</string>
     <string name="confirm">확인</string>
+
+    <!-- 박수 애니메이션 -->
+    <string name="congratulation_for_third_clap">짝짝짝!\n박수를 받았어요</string>
 </resources>
