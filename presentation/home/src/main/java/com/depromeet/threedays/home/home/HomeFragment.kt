@@ -1,5 +1,6 @@
 package com.depromeet.threedays.home.home
 
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -20,7 +21,6 @@ import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
-import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
@@ -66,35 +66,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        viewModel.fetchGoals()
         setObserve()
         initView()
         initEvent()
     }
 
-    private fun createHabitAchievement(habitId: Long, isThirdClap: Boolean) {
-        viewModel.createHabitAchievement(habitId, isThirdClap)
-    }
-
-    private fun deleteHabitAchievement(habitId: Long, habitAchievementId: Long) {
-        viewModel.deleteHabitAchievement(
-            habitId = habitId,
-            habitAchievementId = habitAchievementId
-        )
-    }
-
     private fun onCreateHabitClick() {
         addResultLauncher.launch(habitCreateNavigator.intent(requireContext()))
-    }
-
-    private fun onMoreClick(habitUI: HabitUI) {
-        MoreActionModal
-            .newInstance(
-                habitUI = habitUI,
-                onEditClick = ::onEditClick,
-                onDeleteClick = { viewModel.deleteHabit(habitUI) }
-            )
-            .show(parentFragmentManager, MoreActionModal.TAG)
     }
 
     private fun onEditClick(habitId: Long) {
@@ -110,10 +88,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun initAdapter() {
         habitAdapter = HabitAdapter(
-            createHabitAchievement = ::createHabitAchievement,
-            deleteHabitAchievement = ::deleteHabitAchievement,
+            createHabitAchievement = { habitId, isThirdClap ->
+                viewModel.createHabitAchievement(habitId, isThirdClap)
+            },
+            deleteHabitAchievement = { habitId, habitAchievementId ->
+                viewModel.deleteHabitAchievement(
+                    habitId = habitId,
+                    habitAchievementId = habitAchievementId
+                )
+            },
             onCreateHabitClick = ::onCreateHabitClick,
-            onMoreClick = ::onMoreClick
+            onMoreClick = {
+                MoreActionModal
+                    .newInstance(
+                        habitUI = it,
+                        onEditClick = ::onEditClick,
+                        onDeleteClick = { viewModel.deleteHabit(it) }
+                    )
+                    .show(parentFragmentManager, MoreActionModal.TAG)
+            }
         )
     }
 
@@ -133,6 +126,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             })
         }
 
+        // TODO: 하드코딩되어있는거 수정 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
         binding.tvDate.text = String.format("%02d월%02d일 %s요일", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
@@ -145,6 +139,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.clNoGoal.setOnSingleClickListener {
             onCreateHabitClick()
         }
+    }
+
+    private fun showToastMessage(context: Context, title: String) {
+        ThreeDaysToast().show(
+            context = context,
+            title = title,
+        )
+    }
+
+    private fun showDeleteHabitDialog(
+        title: String,
+        description: String,
+        cancelText: String,
+        confirmText: String,
+        buttonTopMargin: Float,
+        onPositiveAction: () -> Unit,
+    ) {
+        val dialog = ThreeDaysDialogFragment.newInstance(
+            DialogInfo.EMPTY.copy(
+                onPositiveAction = onPositiveAction,
+                title = title,
+                description = description,
+                cancelText = cancelText,
+                confirmText = confirmText,
+                buttonTopMargin = buttonTopMargin,
+            )
+        )
+        dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
+    }
+
+    private fun showSnackBar(
+        view: View,
+        text: String,
+        actionText: String,
+        onAction: () -> Unit
+    ) {
+        ThreeDaysSnackBar().show(
+            view = view,
+            text = text,
+            actionText = actionText,
+            onAction = onAction
+        )
     }
 
     private fun setObserve() {
@@ -163,38 +199,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 launch {
                     viewModel.uiEffect.collect {
                         when(it) {
-                            is UiEffect.ShowToastMessage -> ThreeDaysToast().show(
+                            is UiEffect.ShowToastMessage -> showToastMessage(
                                 context = requireContext(),
                                 title = getString(it.resId),
                             )
-                            is UiEffect.ShowDeleteHabitDialog -> {
-                                val dialog = ThreeDaysDialogFragment.newInstance(
-                                    DialogInfo.EMPTY.copy(
-                                        onPositiveAction = {
-                                            viewModel.onDeleteHabitClick(
-                                                it.habitType,
-                                                it.habitId
-                                            )
-                                        },
-                                        title = getString(it.titleResId),
-                                        description = it.descriptionResId?.let { getString(it) } ?: String.Empty,
-                                        cancelText = getString(it.cancelTextResId),
-                                        confirmText = getString(it.confirmTextResId),
-                                        buttonTopMargin = it.buttonTopMargin,
+                            is UiEffect.ShowDeleteHabitDialog -> showDeleteHabitDialog(
+                                onPositiveAction = {
+                                    viewModel.onDeleteHabitClick(
+                                        it.habitType,
+                                        it.habitId
                                     )
-                                )
-                                dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
-                            }
-                            is UiEffect.ShowSnackBar -> {
-                                ThreeDaysSnackBar().show(
-                                    view = binding.clTopLayout,
-                                    text = getString(it.textResId),
-                                    actionText = getString(it.actionTextResId),
-                                    onAction = {
-                                        addResultLauncher.launch(archivedHabitNavigator.intent(requireContext()))
-                                    }
-                                )
-                            }
+                                },
+                                title = getString(it.titleResId),
+                                description = it.descriptionResId?.let { getString(it) } ?: String.Empty,
+                                cancelText = getString(it.cancelTextResId),
+                                confirmText = getString(it.confirmTextResId),
+                                buttonTopMargin = it.buttonTopMargin,
+                            )
+                            is UiEffect.ShowSnackBar -> showSnackBar(
+                                view = binding.clTopLayout,
+                                text = getString(it.textResId),
+                                actionText = getString(it.actionTextResId),
+                                onAction = {
+                                    addResultLauncher.launch(archivedHabitNavigator.intent(requireContext()))
+                                }
+                            )
                             UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()
                         }
                     }

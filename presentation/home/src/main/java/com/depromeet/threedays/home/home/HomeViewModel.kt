@@ -35,6 +35,10 @@ class HomeViewModel @Inject constructor(
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
+    init {
+        fetchGoals()
+    }
+
     fun fetchGoals() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
