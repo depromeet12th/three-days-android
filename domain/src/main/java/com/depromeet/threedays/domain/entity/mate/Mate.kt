@@ -15,6 +15,7 @@ data class Mate(
     val characterType: MateType,
     val levelUpSection: List<Int>,
     val bubble: String,
+    val status: String,
 ) {
     data class RewardHistory(
         val createAt: LocalDateTime,

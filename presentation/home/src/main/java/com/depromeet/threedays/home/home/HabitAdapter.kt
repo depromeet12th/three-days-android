@@ -3,37 +3,68 @@ package com.depromeet.threedays.home.home
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.home.home.model.HabitUI
+import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction1
 
 class HabitAdapter(
-    private val onHabitClick: KFunction1<Long, Unit>,
-    private val onMoreClick: KFunction1<Long, Unit>
-) : ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
+    private val createHabitAchievement: KFunction1<Long, Unit>,
+    private val deleteHabitAchievement: (Long, Long) -> Unit,
+    private val onCreateHabitClick: KFunction0<Unit>,
+    private val onMoreClick: KFunction1<Long, Unit>,
+) : ListAdapter<HabitUI, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
-        return HabitViewHolder.create(parent, false)
+    override fun getItemViewType(position: Int): Int {
+        return if(position == currentList.size) {
+            HABIT_FOOTER_VIEW_TYPE
+        } else {
+            HABIT_BODY_VIEW_TYPE
+        }
     }
 
-    override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        holder.onBind(getItem(position), holder.itemView.context, onHabitClick, onMoreClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if(viewType == HABIT_BODY_VIEW_TYPE) {
+            HabitViewHolder.create(parent, false)
+        } else {
+            HabitFooterViewHolder.create(parent, false)
+        }
     }
 
-    override fun getItemCount(): Int = currentList.size
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (getItemViewType(position) == HABIT_BODY_VIEW_TYPE) {
+            (holder as HabitViewHolder).onBind(
+                getItem(position),
+                holder.itemView.context,
+                createHabitAchievement,
+                deleteHabitAchievement,
+                onMoreClick
+            )
+        } else {
+            (holder as HabitFooterViewHolder).onBind(
+                onCreateHabitClick,
+            )
+        }
+    }
+
+    override fun getItemCount(): Int = currentList.size + 1
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).habitId.toLong()
+        return getItem(position).habitId
     }
 
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<HabitUI>() {
             override fun areItemsTheSame(oldItem: HabitUI, newItem: HabitUI): Boolean {
-                return oldItem.habitId == newItem.habitId
+                return (oldItem.habitId == newItem.habitId)
             }
 
             override fun areContentsTheSame(oldItem: HabitUI, newItem: HabitUI): Boolean {
                 return oldItem == newItem
             }
         }
+
+        const val HABIT_BODY_VIEW_TYPE = 0
+        const val HABIT_FOOTER_VIEW_TYPE = 1
     }
 }

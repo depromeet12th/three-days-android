@@ -13,10 +13,16 @@ import kotlin.reflect.KFunction1
 class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHolder(view.root) {
     lateinit var context: Context
 
-    fun onBind(habitUI: HabitUI, context: Context, onHabitClick: KFunction1<Long, Unit>, onMoreClick: KFunction1<Long, Unit>) {
+    fun onBind(
+        habitUI: HabitUI,
+        context: Context,
+        createHabitAchievement: KFunction1<Long, Unit>,
+        deleteHabitAchievement: (Long, Long) -> Unit,
+        onMoreClick: KFunction1<Long, Unit>
+    ) {
         this.context = context
         initView(habitUI)
-        initEvent(habitUI, onHabitClick, onMoreClick)
+        initEvent(habitUI, createHabitAchievement, deleteHabitAchievement, onMoreClick)
     }
 
     private fun initView(habitUI: HabitUI) {
@@ -31,10 +37,11 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                         resId = checkedBackgroundResId
                     )
                 } else if (targetIndex == todayIndex) {
-                    if (isTodayChecked) {
-                        setCheckedButton(
+                    if(isTodayChecked) {
+                        setUncheckedButton(
                             targetIndex = targetIndex,
-                            resId = checkedBackgroundResId
+                            resId = R.drawable.bg_oval_gray,
+                            textColor = R.color.gray_400
                         )
                     } else {
                         setUncheckedButton(
@@ -119,46 +126,52 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         }
     }
 
-    private fun initEvent(habitUI: HabitUI, onHabitClick: KFunction1<Long, Unit>, onMoreClick: KFunction1<Long, Unit>) {
+    private fun initEvent(
+        habitUI: HabitUI,
+        onHabitClick: KFunction1<Long, Unit>,
+        deleteHabitAchievement: (Long, Long) -> Unit,
+        onMoreClick: KFunction1<Long, Unit>
+    ) {
         view.ivMore.setOnClickListener {
             onMoreClick(habitUI.habitId)
         }
 
         view.ivFirstDay.setOnClickListener {
-            switchHabitState(0, habitUI, onHabitClick)
+            switchHabitState(0, habitUI, onHabitClick, deleteHabitAchievement)
         }
         view.ivSecondDay.setOnClickListener {
-            switchHabitState(1, habitUI, onHabitClick)
+            switchHabitState(1, habitUI, onHabitClick, deleteHabitAchievement)
         }
         view.ivThirdDay.setOnClickListener {
-            switchHabitState(2, habitUI, onHabitClick)
+            switchHabitState(2, habitUI, onHabitClick, deleteHabitAchievement)
         }
     }
 
     private fun switchHabitState(
         clickedIndex: Int,
         habitUI: HabitUI,
-        onHabitClick: KFunction1<Long, Unit>,
+        createHabitAchievement: KFunction1<Long, Unit>,
+        deleteHabitAchievement: (Long, Long) -> Unit,
     ) {
-        val isTodayClicked = clickedIndex == habitUI.todayIndex
+        val isDeleteAchievementAvailable = habitUI.isTodayChecked && (clickedIndex == habitUI.todayIndex - 1)
+        val isCreateAchievementAvailable = habitUI.isTodayChecked.not() && (clickedIndex == habitUI.todayIndex)
 
-        if (isTodayClicked) {
-            if (habitUI.isTodayChecked) {
-                // todo 성취달성 취소로 변경 필요
-                onHabitClick(habitUI.todayHabitAchievementId ?: -1)
-                setUncheckedButton(
-                    targetIndex = clickedIndex,
-                    resId = habitUI.checkableBackgroundResId,
-                    textColor = habitUI.checkableTextColor
-                )
-            } else {
-                // todo 성취달성으로 변경 필요
-                onHabitClick(habitUI.habitId)
-                setCheckedButton(
-                    targetIndex = clickedIndex,
-                    resId = habitUI.checkedBackgroundResId
-                )
-            }
+        if (isDeleteAchievementAvailable) {
+            deleteHabitAchievement(
+                habitUI.habitId,
+                habitUI.todayHabitAchievementId ?: -1,
+            )
+            setUncheckedButton(
+                targetIndex = clickedIndex,
+                resId = habitUI.checkableBackgroundResId,
+                textColor = habitUI.checkableTextColor
+            )
+        } else if(isCreateAchievementAvailable) {
+            createHabitAchievement(habitUI.habitId)
+            setCheckedButton(
+                targetIndex = clickedIndex,
+                resId = habitUI.checkedBackgroundResId
+            )
         }
     }
 
