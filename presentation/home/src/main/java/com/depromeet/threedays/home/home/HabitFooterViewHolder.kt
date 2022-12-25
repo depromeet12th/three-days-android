@@ -12,7 +12,7 @@ class HabitFooterViewHolder(private val binding: ItemHabitFooterBinding) : Recyc
     fun onBind(
         onCreateHabitClick: KFunction0<Unit>,
     ) {
-        binding.llCreateHabit.setOnSingleClickListener {
+        binding.tvCreateHabit.setOnSingleClickListener {
             onCreateHabitClick()
         }
     }

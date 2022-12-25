@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.DialogInfo
 import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
@@ -148,6 +149,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun initEvent() {
         binding.ivNotification.setOnClickListener {
             onNotificationClick()
+        }
+        binding.clNoGoal.setOnSingleClickListener {
+            onCreateHabitClick()
         }
     }
 
