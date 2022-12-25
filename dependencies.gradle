@@ -29,6 +29,7 @@ ext {
             "room"                  : "2.4.3",
             "emoji"                 : "1.0.0-alpha03",
             "lottie"                : "5.2.0",
+            "datastore"             : "1.0.0",
     ]
     deps = [
             "kotlin"          : [
@@ -52,7 +53,11 @@ ext {
                             "process"      : "androidx.lifecycle:lifecycle-process:${versions.lifecycle}",
                             "service"      : "androidx.lifecycle:lifecycle-service:${versions.lifecycle}",
                             "savedstate"   : "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
-                    ]
+                    ],
+                    "datastore"            : [
+                            "androidx.datastore:datastore-preferences:${versions.datastore}",
+                            "androidx.datastore:datastore-preferences-core:${versions.datastore}",
+                    ],
 
             ],
             "hilt"                         : [
@@ -133,7 +138,8 @@ ext {
             deps.jetpack.lifecycle.runtime,
             deps.jetpack.lifecycle.process,
             deps.jetpack.lifecycle.service,
-            deps.jetpack.lifecycle.savedstate
+            deps.jetpack.lifecycle.savedstate,
+            deps.jetpack.datastore
     ]
 
     firebaseDeps = [
