@@ -11,10 +11,7 @@ import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,12 +28,24 @@ class HomeViewModel @Inject constructor(
     val habits: StateFlow<List<HabitUI>>
         get() = _habits
 
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState>
+        get() = _uiState
+
     private val _uiEffect: MutableSharedFlow<UiEffect> = MutableSharedFlow()
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
     init {
         fetchGoals()
+    }
+
+    fun setDeviceNotificationState(isDeviceNotificationOn: Boolean) {
+        _uiState.update {
+            it.copy(
+                isDeviceNotificationOn = isDeviceNotificationOn,
+            )
+        }
     }
 
     fun fetchGoals() {
@@ -216,6 +225,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
+
+data class UiState (
+    val isDeviceNotificationOn: Boolean = true,
+)
 
 sealed interface UiEffect {
     data class ShowToastMessage(val resId: Int): UiEffect
