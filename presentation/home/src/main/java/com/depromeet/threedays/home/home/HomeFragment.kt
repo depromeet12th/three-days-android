@@ -1,10 +1,13 @@
 package com.depromeet.threedays.home.home
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +24,8 @@ import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
+import com.depromeet.threedays.home.home.dialog.MoreActionModal
+import com.depromeet.threedays.home.home.dialog.NotiGuideBottomSheet
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
@@ -65,10 +70,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkNotificationPermission()
         initAdapter()
         setObserve()
         initView()
         initEvent()
+    }
+
+    private fun checkNotificationPermission() {
+        val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+        viewModel.setDeviceNotificationState(isDeviceNotificationOn)
     }
 
     private fun onCreateHabitClick() {
@@ -85,7 +96,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         val intent = notificationNavigator.intent(requireContext())
         addResultLauncher.launch(intent)
     }
-
     private fun initAdapter() {
         habitAdapter = HabitAdapter(
             createHabitAchievement = { habitId, isThirdClap ->
@@ -183,6 +193,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
     }
 
+    private fun showNotiGuideBottomSheet(isDeviceNotificationOn: Boolean) {
+        if(isDeviceNotificationOn.not()) {
+            NotiGuideBottomSheet.newInstance (
+                moveToSettingForTurnOnPermission = { moveToSettingForTurnOnPermission() }
+            ).show(parentFragmentManager, NotiGuideBottomSheet.TAG)
+        }
+    }
+
+    private fun moveToSettingForTurnOnPermission() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
+        startActivity(intent)
+    }
+
     private fun setObserve() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -192,6 +216,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+                    }
+                }
+                launch {
+                    viewModel.uiState.collect {
+                        showNotiGuideBottomSheet(isDeviceNotificationOn = it.isDeviceNotificationOn)
                     }
                 }
                 launch {
