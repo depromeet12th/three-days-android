@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-
+                        fetchGoals()
                     }
                     Status.ERROR -> {
 
@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-
+                        fetchGoals()
                     }
                     Status.ERROR -> {
 

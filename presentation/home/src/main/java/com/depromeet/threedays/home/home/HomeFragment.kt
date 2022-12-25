@@ -188,9 +188,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        habitAdapter.submitList(list.sortedBy { it.createAt }) {
-                            binding.rvGoal.scrollToPosition(0)
-                        }
+                        habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
