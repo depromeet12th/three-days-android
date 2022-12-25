@@ -87,8 +87,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onMoreClick(habitId: Long) {
-        val modal = EditHabitModal(habitId, ::onEditClick, ::onDeleteClick)
-        modal.show(parentFragmentManager, EditHabitModal.TAG)
+        MoreActionModal
+            .newInstance(habitId, ::onEditClick, ::onDeleteClick)
+            .show(parentFragmentManager, MoreActionModal.TAG)
     }
 
     private fun onEditClick(habitId: Long) {

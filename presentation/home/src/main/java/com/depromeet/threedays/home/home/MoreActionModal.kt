@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class EditHabitModal(
+class MoreActionModal(
     val habitId: Long,
     val onEditClick: (Long) -> Unit,
     val onDeleteClick: (Long) -> Unit
@@ -18,7 +20,7 @@ class EditHabitModal(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = ModalEditHabitBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,6 +41,16 @@ class EditHabitModal(
     }
 
     companion object {
-        const val TAG = "ModalExample3"
+        const val TAG = "MoreActionModal"
+
+        fun newInstance(
+            habitId: Long,
+            onEditClick: (Long) -> Unit,
+            onDeleteClick: (Long) -> Unit
+        ): MoreActionModal {
+            val modal = MoreActionModal(habitId, onEditClick, onDeleteClick)
+            modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+            return modal
+        }
     }
 }
