@@ -13,7 +13,7 @@ class HabitAdapter(
     private val createHabitAchievement: KFunction2<Long, Boolean, Unit>,
     private val deleteHabitAchievement: (Long, Long) -> Unit,
     private val onCreateHabitClick: KFunction0<Unit>,
-    private val onMoreClick: KFunction1<Long, Unit>,
+    private val onMoreClick: KFunction1<HabitUI, Unit>,
 ) : ListAdapter<HabitUI, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
     override fun getItemViewType(position: Int): Int {

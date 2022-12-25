@@ -86,9 +86,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         addResultLauncher.launch(habitCreateNavigator.intent(requireContext()))
     }
 
-    private fun onMoreClick(habitId: Long) {
+    private fun onMoreClick(habitUI: HabitUI) {
         MoreActionModal
-            .newInstance(habitId, ::onEditClick, ::onDeleteClick)
+            .newInstance(
+                habitUI = habitUI,
+                onEditClick = ::onEditClick,
+                onDeleteClick = { viewModel.deleteHabit(habitUI) }
+            )
             .show(parentFragmentManager, MoreActionModal.TAG)
     }
 
