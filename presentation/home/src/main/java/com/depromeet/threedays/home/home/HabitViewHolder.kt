@@ -37,10 +37,11 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                         resId = checkedBackgroundResId
                     )
                 } else if (targetIndex == todayIndex) {
-                    if (isTodayChecked) {
-                        setCheckedButton(
+                    if(isTodayChecked) {
+                        setUncheckedButton(
                             targetIndex = targetIndex,
-                            resId = checkedBackgroundResId
+                            resId = R.drawable.bg_oval_gray,
+                            textColor = R.color.gray_400
                         )
                     } else {
                         setUncheckedButton(
@@ -152,26 +153,25 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         createHabitAchievement: KFunction1<Long, Unit>,
         deleteHabitAchievement: (Long, Long) -> Unit,
     ) {
-        val isTodayClicked = clickedIndex == habitUI.todayIndex
+        val isDeleteAchievementAvailable = habitUI.isTodayChecked && (clickedIndex == habitUI.todayIndex - 1)
+        val isCreateAchievementAvailable = habitUI.isTodayChecked.not() && (clickedIndex == habitUI.todayIndex)
 
-        if (isTodayClicked) {
-            if (habitUI.isTodayChecked) {
-                deleteHabitAchievement(
-                    habitUI.habitId,
-                    habitUI.todayHabitAchievementId ?: -1,
-                )
-                setUncheckedButton(
-                    targetIndex = clickedIndex,
-                    resId = habitUI.checkableBackgroundResId,
-                    textColor = habitUI.checkableTextColor
-                )
-            } else {
-                createHabitAchievement(habitUI.habitId)
-                setCheckedButton(
-                    targetIndex = clickedIndex,
-                    resId = habitUI.checkedBackgroundResId
-                )
-            }
+        if (isDeleteAchievementAvailable) {
+            deleteHabitAchievement(
+                habitUI.habitId,
+                habitUI.todayHabitAchievementId ?: -1,
+            )
+            setUncheckedButton(
+                targetIndex = clickedIndex,
+                resId = habitUI.checkableBackgroundResId,
+                textColor = habitUI.checkableTextColor
+            )
+        } else if(isCreateAchievementAvailable) {
+            createHabitAchievement(habitUI.habitId)
+            setCheckedButton(
+                targetIndex = clickedIndex,
+                resId = habitUI.checkedBackgroundResId
+            )
         }
     }
 
