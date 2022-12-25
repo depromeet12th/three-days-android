@@ -15,6 +15,7 @@ data class HabitUI(
     val todayHabitAchievementId: Long?, // null이면 오늘 체크를 하지 않은 것
     val createAt: String,
     val mate: MateUI?,
+    val sequence: Int,
     val todayIndex: Int,
     val isTodayChecked: Boolean,
     val checkedBackgroundResId: Int,
@@ -32,6 +33,7 @@ fun Habit.toHabitUI(): HabitUI {
         todayHabitAchievementId = this.todayHabitAchievementId,
         createAt = this.createAt,
         mate = this.mate?.toMateUI(),
+        sequence = this.sequence,
         todayIndex = this.sequence % 3,
         isTodayChecked = this.todayHabitAchievementId != null,
         checkedBackgroundResId = when (this.color) {
