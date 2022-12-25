@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:gravity="center"
-            android:textAppearance="@style/Typography.Title1"
+            android:textAppearance="@style/Typography.Display2"
             android:textColor="@color/gray_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
