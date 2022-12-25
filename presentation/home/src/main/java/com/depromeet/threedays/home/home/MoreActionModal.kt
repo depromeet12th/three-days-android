@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.depromeet.threedays.core_design_system.R
-import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
+import com.depromeet.threedays.home.databinding.ModalMoreActionBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class MoreActionModal(
@@ -14,7 +14,7 @@ class MoreActionModal(
     val onEditClick: (Long) -> Unit,
     val onDeleteClick: (Long) -> Unit
 ) : BottomSheetDialogFragment() {
-    lateinit var binding: ModalEditHabitBinding
+    lateinit var binding: ModalMoreActionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +22,7 @@ class MoreActionModal(
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = ModalEditHabitBinding.inflate(inflater, container, false)
+        binding = ModalMoreActionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
