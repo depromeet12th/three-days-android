@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MateViewModel @Inject constructor(
-    val getMatesUseCase: GetMatesUseCase
+    private val getMatesUseCase: GetMatesUseCase,
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -36,7 +36,7 @@ class MateViewModel @Inject constructor(
                     Status.SUCCESS -> {
                         _uiState.update {
                             it.copy(
-                                mate = response.data!!.map { it.toMateUI() },
+                                mate = response.data!!.find { it.status == "ACTIVE" }?.toMateUI() ,
                                 hasMate = true,
                             )
                         }
@@ -54,6 +54,6 @@ class MateViewModel @Inject constructor(
 }
 
 data class UiState(
-    val mate: List<MateUI?> = emptyList(),
+    val mate: MateUI? = null,
     val hasMate: Boolean = false,
 )

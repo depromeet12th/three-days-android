@@ -12,13 +12,17 @@ data class MateUI(
     val createAt: LocalDateTime,
     val level: Int,
     val reward: Int?,
-    val rewardHistory: List<Mate.RewardHistory>?,
+    val rewardHistory: List<RewardHistoryUI>?,
     val levelUpAt: LocalDateTime?,
     val characterType: MateType,
     val levelUpSectioin: List<Int>?,
     val bubble: String,
     val status: String,
-)
+) {
+    data class RewardHistoryUI(
+        val createAt: LocalDateTime,
+    )
+}
 
 fun Mate.toMateUI(): MateUI {
     return MateUI(
@@ -31,9 +35,13 @@ fun Mate.toMateUI(): MateUI {
         levelUpSectioin = levelUpSection,
         memberId = memberId,
         reward = reward,
-        rewardHistory = rewardHistory,
+        rewardHistory = rewardHistory?.map { it.toRewardHistoryUI() },
         title = title,
         bubble = bubble,
         status = status,
     )
 }
+
+fun Mate.RewardHistory.toRewardHistoryUI() = MateUI.RewardHistoryUI(
+    createAt = this.createAt,
+)

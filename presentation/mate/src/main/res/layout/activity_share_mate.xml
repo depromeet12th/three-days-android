@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="singleHabit"
+            type="com.depromeet.threedays.domain.entity.habit.SingleHabit" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="413dp"
             android:layout_marginTop="35dp"
-            android:background="@color/green_50"
+            android:background="@drawable/bg_rect_green50_r10"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@+id/iv_close">
@@ -72,14 +74,15 @@
                     android:id="@+id/tv_emoji"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/medicine"
+                    android:text="@{singleHabit.emoji.value}"
                     android:textAppearance="@style/Typography.Title1"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_mate_name"
                     app:layout_constraintEnd_toStartOf="@+id/tv_mate_name"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_mate_name" />
+                    app:layout_constraintTop_toTopOf="@id/tv_mate_name"
+                    tools:text="@string/medicine"/>
 
                 <TextView
                     android:id="@+id/tv_mate_name"
@@ -87,25 +90,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="32dp"
-                    android:text="가나다라마바사아자차어쩌십오자"
+                    android:text="@{singleHabit.title}"
                     android:textAppearance="@style/Typography.Title1"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/tv_emoji"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="가나다라마바사아자차어쩌십오자"/>
 
                 <TextView
                     android:id="@+id/tv_achieve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12번 실천 완료"
+                    android:text="@{singleHabit.sequence + `번 실천 완료`}"
                     android:textAppearance="@style/Typography.Body1"
                     android:textColor="@color/gray_500"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_mate_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mate_name"
+                    tools:text="12번 실천 완료"/>
 
                 <ImageView
                     android:id="@+id/iv_mate"
@@ -136,30 +141,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:drawableTop="@drawable/ic_image_save"
             android:drawablePadding="12dp"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:text="@string/save_as_image"
             android:textColor="@color/gray_600"
+            app:drawableTopCompat="@drawable/selector_save_as_image_button"
             app:layout_constraintEnd_toStartOf="@+id/tv_instargram_share"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_screen_shot_area" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_screen_shot_area"
+            tools:drawableTop="@drawable/ic_image_save" />
 
         <TextView
             android:id="@+id/tv_instargram_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="37dp"
-            android:drawableTop="@drawable/ic_instagram_share_resized"
             android:drawablePadding="12dp"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:text="@string/share_story"
             android:textColor="@color/gray_600"
+            app:drawableTopCompat="@drawable/selector_instragram_share"
             app:layout_constraintBottom_toBottomOf="@id/tv_image_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_image_save"
-            app:layout_constraintTop_toTopOf="@id/tv_image_save"/>
+            app:layout_constraintTop_toTopOf="@id/tv_image_save"
+            tools:drawableTop="@drawable/ic_instagram_share_resized" />
 
         <TextView
             android:layout_width="wrap_content"
