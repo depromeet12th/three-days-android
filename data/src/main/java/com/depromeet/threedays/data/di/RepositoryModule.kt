@@ -13,9 +13,9 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
     @Binds
     @Singleton
-    abstract fun bindsDataStoreRepository(
-        repository: DataStoreRepositoryImpl,
-    ): DataStoreRepository
+    abstract fun bindsNotificationPermissionRepository(
+        repository: NotificationPermissionRepositoryImpl,
+    ): NotificationPermissionRepository
 
     @Binds
     @Singleton
