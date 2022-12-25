@@ -19,7 +19,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         context: Context,
         createHabitAchievement: KFunction2<Long, Boolean, Unit>,
         deleteHabitAchievement: (Long, Long) -> Unit,
-        onMoreClick: KFunction1<Long, Unit>
+        onMoreClick: KFunction1<HabitUI, Unit>
     ) {
         this.context = context
         initView(habitUI)
@@ -131,10 +131,10 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         habitUI: HabitUI,
         createHabitAchievement: KFunction2<Long, Boolean, Unit>,
         deleteHabitAchievement: (Long, Long) -> Unit,
-        onMoreClick: KFunction1<Long, Unit>
+        onMoreClick: KFunction1<HabitUI, Unit>
     ) {
         view.ivMore.setOnClickListener {
-            onMoreClick(habitUI.habitId)
+            onMoreClick(habitUI)
         }
 
         view.ivFirstDay.setOnClickListener {
