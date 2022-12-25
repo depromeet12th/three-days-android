@@ -11,6 +11,8 @@ import com.depromeet.threedays.domain.repository.AchievementRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class AchievementRepositoryImpl @Inject constructor(
@@ -26,7 +28,9 @@ class AchievementRepositoryImpl @Inject constructor(
 
     override fun createHabitAchievement(habitId: Long): Flow<DataState<Habit>> = flow {
         emit(DataState.loading())
-        val response = achievementRemoteDataSource.postHabitAchievement(habitId, AchievementDateEntity("2022-12-25"))
+        val nowDateTime = ZonedDateTime.now(ZoneId.systemDefault())
+        val nowDate = String.format("%d-%d-%d", nowDateTime.year, nowDateTime.monthValue, nowDateTime.dayOfMonth)
+        val response = achievementRemoteDataSource.postHabitAchievement(habitId, AchievementDateEntity(nowDate))
 
         if (response.data != null) {
             emit(DataState.success(data = response.data.toHabit() ))
