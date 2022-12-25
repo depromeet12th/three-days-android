@@ -50,4 +50,5 @@
     <string name="save_as_image">이미지로 저장</string>
     <string name="share_story">스토리 공유</string>
     <string name="share_page_guide">\@ZZAKSIM 을 태그해주시면 리포스팅 해드려요</string>
+    <string name="save_screen_shot_success">이미지로 저장했습니다.</string>
 </resources>
