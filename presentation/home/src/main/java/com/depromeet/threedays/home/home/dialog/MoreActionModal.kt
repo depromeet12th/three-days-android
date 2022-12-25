@@ -1,4 +1,4 @@
-package com.depromeet.threedays.home.home
+package com.depromeet.threedays.home.home.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
