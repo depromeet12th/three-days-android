@@ -7,6 +7,7 @@ import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
 import com.depromeet.threedays.domain.usecase.achievement.CreateHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
+import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -106,15 +107,69 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteGoals(habitId: Long) {
+    fun deleteHabit(habitUI: HabitUI) {
+        if(habitUI.mate != null) {
+            deleteConnectedMateHabitType(habitUI.habitId)
+        } else if(habitUI.sequence > 0) {
+            deleteHasAchievementHabitType(habitUI.habitId)
+        } else {
+            deleteNoAchievementHabitType(habitUI.habitId)
+        }
+    }
+
+    private fun deleteConnectedMateHabitType(habitId: Long) {
+        viewModelScope.launch {
+            _uiEffect.emit(
+                UiEffect.ShowDeleteHabitDialog(
+                    habitId = habitId,
+                    habitType = HabitType.ConnectedMate,
+                    titleResId = R.string.delete_dialog_title_connected_mate,
+                    descriptionResId = R.string.delete_dialog_description_connected_mate,
+                )
+            )
+        }
+    }
+
+    private fun deleteHasAchievementHabitType(habitId: Long) {
+        viewModelScope.launch {
+            _uiEffect.emit(
+                UiEffect.ShowDeleteHabitDialog(
+                    habitId = habitId,
+                    habitType = HabitType.HasAchievement,
+                    titleResId = R.string.delete_dialog_title,
+                    descriptionResId = R.string.delete_dialog_description_has_achievement,
+                )
+            )
+        }
+    }
+
+    private fun deleteNoAchievementHabitType(habitId: Long) {
+        viewModelScope.launch {
+            _uiEffect.emit(
+                UiEffect.ShowDeleteHabitDialog(
+                    habitId = habitId,
+                    habitType = HabitType.NoAchievement,
+                    titleResId = R.string.delete_dialog_title,
+                )
+            )
+        }
+    }
+
+    fun onDeleteHabitClick(habitType: HabitType, habitId: Long?) {
+        if(habitId == null) {
+            // TODO: show error dialog
+            return
+        }
+        
         viewModelScope.launch {
             deleteHabitUseCase(habitId).collect { response ->
-                when(response.status) {
+                when (response.status) {
                     Status.LOADING -> {
 
                     }
                     Status.SUCCESS -> {
-
+                        onSuccessDeleteHabit(habitType)
+                        fetchGoals()
                     }
                     Status.ERROR -> {
 
@@ -127,9 +182,57 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun onSuccessDeleteHabit(habitType: HabitType) {
+        viewModelScope.launch {
+            when(habitType) {
+                HabitType.ConnectedMate -> {
+                    _uiEffect.emit(
+                        UiEffect.ShowSnackBar(
+                            textResId = R.string.snack_bar_text_connected_mate,
+                            actionTextResId = R.string.move,
+                        )
+                    )
+                }
+                HabitType.HasAchievement -> {
+                    _uiEffect.emit(
+                        UiEffect.ShowSnackBar(
+                            textResId = R.string.snack_bar_text_has_achievement,
+                            actionTextResId = R.string.move,
+                        )
+                    )
+                }
+                HabitType.NoAchievement -> {
+                    _uiEffect.emit(
+                        UiEffect.ShowToastMessage(
+                            resId = R.string.habit_delete_success_message,
+                        )
+                    )
+                }
+            }
+        }
+    }
 }
 
 sealed interface UiEffect {
     data class ShowToastMessage(val resId: Int): UiEffect
+    data class ShowDeleteHabitDialog(
+        val habitType: HabitType,
+        val habitId: Long? = null,
+        val titleResId: Int,
+        val descriptionResId: Int? = null,
+        val cancelTextResId: Int = R.string.delete_dialog_cancel_text,
+        val confirmTextResId: Int = R.string.delete_dialog_confirm_text,
+        val buttonTopMargin: Float = 30f,
+    ): UiEffect
+    data class ShowSnackBar(
+        val textResId: Int,
+        val actionTextResId: Int,
+    ): UiEffect
     object ShowClapAnimation: UiEffect
+}
+
+sealed interface HabitType {
+    object ConnectedMate: HabitType
+    object HasAchievement: HabitType
+    object NoAchievement: HabitType
 }

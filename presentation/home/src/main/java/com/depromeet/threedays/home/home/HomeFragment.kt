@@ -11,19 +11,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.core.util.DialogInfo
-import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
-import com.depromeet.threedays.core.util.ThreeDaysToast
-import com.depromeet.threedays.core.util.dpToPx
-import com.depromeet.threedays.domain.entity.emoji.Emoji
+import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
-import com.depromeet.threedays.domain.util.EmojiUtil
 import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
+import com.depromeet.threedays.home.home.model.HabitUI
+import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import com.depromeet.threedays.navigator.NotificationNavigator
@@ -46,6 +44,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     @Inject
     lateinit var notificationNavigator: NotificationNavigator
+
+    @Inject
+    lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
@@ -100,21 +101,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         val intent = habitUpdateNavigator.intent(requireContext())
         intent.putExtra(HABIT_ID, habitId)
         addResultLauncher.launch(intent)
-    }
-
-    private fun onDeleteClick(habitId: Long) {
-        val dialog = ThreeDaysDialogFragment.newInstance(
-            DialogInfo.EMPTY.copy(
-                onPositiveAction = {
-                    viewModel.deleteGoals(habitId)
-                },
-                emoji = Emoji.from(EmojiUtil.Word.TRASH).value,
-                title = getString(R.string.delete_dialog_title),
-                cancelText = getString(R.string.delete_dialog_cancel_text),
-                confirmText = getString(R.string.delete_dialog_confirm_text),
-            )
-        )
-        dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
     }
     
     private fun onNotificationClick() {
@@ -177,6 +163,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 launch {
                     viewModel.uiEffect.collect {
                         when(it) {
+                            is UiEffect.ShowToastMessage -> ThreeDaysToast().show(
+                                context = requireContext(),
+                                title = getString(it.resId),
+                            )
+                            is UiEffect.ShowDeleteHabitDialog -> {
+                                val dialog = ThreeDaysDialogFragment.newInstance(
+                                    DialogInfo.EMPTY.copy(
+                                        onPositiveAction = {
+                                            viewModel.onDeleteHabitClick(
+                                                it.habitType,
+                                                it.habitId
+                                            )
+                                        },
+                                        title = getString(it.titleResId),
+                                        description = it.descriptionResId?.let { getString(it) } ?: String.Empty,
+                                        cancelText = getString(it.cancelTextResId),
+                                        confirmText = getString(it.confirmTextResId),
+                                        buttonTopMargin = it.buttonTopMargin,
+                                    )
+                                )
+                                dialog.show(requireActivity().supportFragmentManager, ThreeDaysDialogFragment.TAG)
+                            }
+                            is UiEffect.ShowSnackBar -> {
+                                ThreeDaysSnackBar().show(
+                                    view = binding.clTopLayout,
+                                    text = getString(it.textResId),
+                                    actionText = getString(it.actionTextResId),
+                                    onAction = {
+                                        addResultLauncher.launch(archivedHabitNavigator.intent(requireContext()))
+                                    }
+                                )
+                            }
                             UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()
                         }
                     }
