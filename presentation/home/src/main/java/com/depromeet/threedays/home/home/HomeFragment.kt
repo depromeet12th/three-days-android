@@ -80,6 +80,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
     }
 
+    private fun onCreateHabitClick() {
+        addResultLauncher.launch(habitCreateNavigator.intent(requireContext()))
+    }
+
     private fun onMoreClick(habitId: Long) {
         val modal = EditHabitModal(habitId, ::onEditClick, ::onDeleteClick)
         modal.show(parentFragmentManager, EditHabitModal.TAG)
@@ -115,6 +119,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         habitAdapter = HabitAdapter(
             createHabitAchievement = ::createHabitAchievement,
             deleteHabitAchievement = ::deleteHabitAchievement,
+            onCreateHabitClick = ::onCreateHabitClick,
             onMoreClick = ::onMoreClick
         )
     }
@@ -142,11 +147,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun initEvent() {
         binding.ivNotification.setOnClickListener {
-//            onNotificationClick()
-            /**
-             * 임시로 알림버튼 클릭 했을 때 습관 생성 화면으로 넘어갑니다 */
-            val intent = habitCreateNavigator.intent(requireContext())
-            addResultLauncher.launch(intent)
+            onNotificationClick()
         }
     }
 
@@ -155,7 +156,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        habitAdapter.submitList(list.sortedBy { it.createAt })
+                        habitAdapter.submitList(list.sortedBy { it.createAt }) {
+                            binding.rvGoal.scrollToPosition(0)
+                        }
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE
                         binding.rvGoal.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
@@ -164,12 +167,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 launch {
                     viewModel.uiEffect.collect {
                         when(it) {
-                            UiEffect.DeleteDialog ->  {
-                                ThreeDaysToast().show(
-                                    requireContext(),
-                                    resources.getString(R.string.habit_delete_success_message)
-                                )
-                            }
+
                         }
                     }
                 }
