@@ -4,23 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.depromeet.threedays.home.databinding.ModalEditHabitBinding
+import androidx.fragment.app.DialogFragment
+import com.depromeet.threedays.core_design_system.R
+import com.depromeet.threedays.home.databinding.ModalMoreActionBinding
+import com.depromeet.threedays.home.home.model.HabitUI
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class EditHabitModal(
-    val habitId: Long,
+class MoreActionModal(
+    val habitUI: HabitUI,
     val onEditClick: (Long) -> Unit,
-    val onDeleteClick: (Long) -> Unit
+    val onDeleteClick: (HabitUI) -> Unit
 ) : BottomSheetDialogFragment() {
-    lateinit var binding: ModalEditHabitBinding
+    lateinit var binding: ModalMoreActionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = ModalEditHabitBinding.inflate(inflater, container, false)
+        binding = ModalMoreActionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,17 +31,27 @@ class EditHabitModal(
         super.onViewCreated(view, savedInstanceState)
 
         binding.clEdit.setOnClickListener {
-            onEditClick(habitId)
+            onEditClick(habitUI.habitId)
             dismiss()
         }
 
         binding.clDelete.setOnClickListener {
-            onDeleteClick(habitId)
+            onDeleteClick(habitUI)
             dismiss()
         }
     }
 
     companion object {
-        const val TAG = "ModalExample3"
+        const val TAG = "MoreActionModal"
+
+        fun newInstance(
+            habitUI: HabitUI,
+            onEditClick: (Long) -> Unit,
+            onDeleteClick: (HabitUI) -> Unit
+        ): MoreActionModal {
+            val modal = MoreActionModal(habitUI, onEditClick, onDeleteClick)
+            modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+            return modal
+        }
     }
 }

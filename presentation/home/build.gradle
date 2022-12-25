@@ -53,6 +53,7 @@ dependencies {
 
     implementation(jetpackDeps)
     implementation(coroutines)
+    implementation deps.lottie
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.home.databinding.ItemHabitBinding
 import com.depromeet.threedays.home.home.model.HabitUI
-import kotlin.reflect.KFunction1
 
 class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHolder(view.root) {
     lateinit var context: Context
@@ -16,9 +15,9 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
     fun onBind(
         habitUI: HabitUI,
         context: Context,
-        createHabitAchievement: KFunction1<Long, Unit>,
+        createHabitAchievement: (Long, Boolean) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
-        onMoreClick: KFunction1<Long, Unit>
+        onMoreClick: (HabitUI) -> Unit
     ) {
         this.context = context
         initView(habitUI)
@@ -128,29 +127,29 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
 
     private fun initEvent(
         habitUI: HabitUI,
-        onHabitClick: KFunction1<Long, Unit>,
+        createHabitAchievement: (Long, Boolean) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
-        onMoreClick: KFunction1<Long, Unit>
+        onMoreClick: (HabitUI) -> Unit
     ) {
         view.ivMore.setOnClickListener {
-            onMoreClick(habitUI.habitId)
+            onMoreClick(habitUI)
         }
 
         view.ivFirstDay.setOnClickListener {
-            switchHabitState(0, habitUI, onHabitClick, deleteHabitAchievement)
+            switchHabitState(0, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
         view.ivSecondDay.setOnClickListener {
-            switchHabitState(1, habitUI, onHabitClick, deleteHabitAchievement)
+            switchHabitState(1, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
         view.ivThirdDay.setOnClickListener {
-            switchHabitState(2, habitUI, onHabitClick, deleteHabitAchievement)
+            switchHabitState(2, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
     }
 
     private fun switchHabitState(
         clickedIndex: Int,
         habitUI: HabitUI,
-        createHabitAchievement: KFunction1<Long, Unit>,
+        createHabitAchievement: (Long, Boolean) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
     ) {
         val isDeleteAchievementAvailable = habitUI.isTodayChecked && (clickedIndex == habitUI.todayIndex - 1)
@@ -167,7 +166,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                 textColor = habitUI.checkableTextColor
             )
         } else if(isCreateAchievementAvailable) {
-            createHabitAchievement(habitUI.habitId)
+            createHabitAchievement(habitUI.habitId, clickedIndex == LAST_CLAP_INDEX)
             setCheckedButton(
                 targetIndex = clickedIndex,
                 resId = habitUI.checkedBackgroundResId
@@ -186,5 +185,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                 )
             )
         }
+
+        const val LAST_CLAP_INDEX = 2
     }
 }

@@ -1,6 +1,8 @@
 package com.depromeet.threedays.home
 
+import android.animation.Animator
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.history.HistoryFragment
@@ -16,6 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
         initNavigationBar()
+        initEvent()
     }
 
     private fun initNavigationBar() {
@@ -41,7 +44,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
-    fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
+    }
+
+    private fun initEvent() {
+        binding.lottieClap.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator) {
+                binding.congratulationAnimationGroup.isVisible = true
+            }
+
+            override fun onAnimationEnd(p0: Animator) {
+                binding.congratulationAnimationGroup.isVisible = false
+            }
+
+            override fun onAnimationCancel(p0: Animator) {
+
+            }
+
+            override fun onAnimationRepeat(p0: Animator) {
+
+            }
+        })
+    }
+
+    fun startCongratulateThirdClapAnimation() {
+        binding.lottieClap.playAnimation()
     }
 }
