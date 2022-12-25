@@ -68,7 +68,7 @@ ext {
                     "core"                 : "com.airbnb:deeplinkdispatch:${versions.deepLink}",
                     "processor"            : "com.airbnb:deeplinkdispatch-processor:${versions.deepLink}"
             ],
-            "firebaseBom"                  : "com.google.firebase:firebase-bom:30.0.1",
+            "firebaseBom"                  : "com.google.firebase:firebase-bom:31.1.1",
             "remoteConfig"                 : "com.google.firebase:firebase-config-ktx",
             "analyticsKtx"                 : "com.google.firebase:firebase-analytics-ktx",
             "crashlyticsKtx"               : "com.google.firebase:firebase-crashlytics-ktx",
