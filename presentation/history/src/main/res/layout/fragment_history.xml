@@ -60,7 +60,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/ic_right_arrow_disable"
+            android:src="@drawable/ic_right_arrow_default"
             app:layout_constraintTop_toTopOf="@+id/tv_this_month"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
             app:layout_constraintStart_toEndOf="@+id/tv_this_month"/>
@@ -236,6 +236,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_most_achieve_habit_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/medicine"
@@ -247,6 +248,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <TextView
+                        android:id="@+id/tv_most_achieve_habit_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"

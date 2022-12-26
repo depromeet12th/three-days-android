@@ -15,7 +15,6 @@ import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
-import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,10 +59,10 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
             startActivity(Intent(requireActivity(), HabitCreateActivity::class.java))
         }
         binding.ivPrevMonth.setOnSingleClickListener {
-            startActivity(Intent(requireActivity(), DetailHistoryActivity::class.java))
+            viewModel.onClickPrevMonth()
         }
         binding.ivNextMonth.setOnSingleClickListener {
-
+            viewModel.onClickNextMonth()
         }
     }
 
@@ -73,13 +72,40 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.ncvHasHabit.isVisible = habits.isNotEmpty()
     }
 
+    private fun setThisMonthInfo(
+        rewardCount: String,
+        achievementCount: String,
+        emoji: String,
+        title: String,
+        cardBackgroundResId: Int,
+    ) {
+        binding.tvThisMonthClap.text = rewardCount
+        binding.tvThisMonthAchieveDays.text = achievementCount
+        binding.tvMostAchieveHabitIcon.text = emoji
+        binding.tvMostAchieveHabitTitle.text = title
+        binding.clMostAchieve.setBackgroundResource(cardBackgroundResId)
+    }
+
+    private fun setMonth(month: String) {
+        binding.tvThisMonth.text = getString(R.string.this_month_history_title, month)
+        binding.tvThisMonthClapTitle.text = getString(R.string.this_month_clap_title, month)
+        binding.tvThisMonthAchieveDaysTitle.text = getString(R.string.this_month_achieve_days_title, month)
+    }
+
     private fun setObserve() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
                         fetchHabits(it.habits)
-                        binding.tvThisMonth.text = getString(R.string.this_month_history_title, it.thisMonth)
+                        setMonth(it.thisMonth.month.value.toString())
+                        setThisMonthInfo(
+                            rewardCount = it.rewardCount,
+                            achievementCount = it.achievementCount,
+                            emoji = it.emoji,
+                            title = it.title,
+                            cardBackgroundResId = it.cardBackgroundResId,
+                        )
                     }
                 }
             }
