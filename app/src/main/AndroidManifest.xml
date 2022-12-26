@@ -9,6 +9,7 @@
     <application
         android:name=".ThreeDaysApplication"
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -67,6 +68,9 @@
             android:exported="false" />
 
         <activity android:name=".mate.create.step3.SetMateNicknameActivity"
+            android:exported="false" />
+
+        <activity android:name="com.depromeet.threedays.policy.PolicyActivity"
             android:exported="false" />
 
         <service
