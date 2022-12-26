@@ -53,6 +53,7 @@ dependencies {
     implementation(project(":presentation:onboarding"))
     implementation(project(":presentation:mypage"))
     implementation(project(":presentation:splash"))
+    implementation(project(":presentation:policy"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

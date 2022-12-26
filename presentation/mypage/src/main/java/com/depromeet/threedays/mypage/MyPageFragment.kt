@@ -8,9 +8,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.domain.key.WEB_VIEW_URL
 import com.depromeet.threedays.mypage.databinding.FragmentMyPageBinding
 import com.depromeet.threedays.mypage.nickname.EditNicknameDialogFragment
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
+import com.depromeet.threedays.navigator.PolicyNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +24,8 @@ class MyPageFragment :
 
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
+    @Inject
+    lateinit var policyNavigator: PolicyNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +54,12 @@ class MyPageFragment :
         }
         binding.ivEdit.setOnClickListener {
             onEditButtonClicked()
+        }
+        binding.tvPolicyService.setOnClickListener {
+            onServicePolicyButtonClicked()
+        }
+        binding.tvPolicyPrivacy.setOnClickListener {
+            onPrivacyPolicyButtonClicked()
         }
         binding.tvLogout.setOnClickListener {
             onLogoutButtonClicked()
@@ -97,12 +107,24 @@ class MyPageFragment :
         )
     }
 
+    /**
+     * 마이페이지 > 이용약관
+     */
     private fun onServicePolicyButtonClicked() {
-        TODO("이용 약관")
+        val intent = policyNavigator.intent(requireContext())
+        // FIXME: notion 링크 나오면 변경
+        intent.putExtra(WEB_VIEW_URL, "https://www.daum.net")
+        startActivity(intent)
     }
 
+    /**
+     * 마이페이지 > 개인정보처리방침
+     */
     private fun onPrivacyPolicyButtonClicked() {
-        TODO("개인정보처리방침")
+        val intent = policyNavigator.intent(requireContext())
+        // FIXME: notion 링크 나오면 변경
+        intent.putExtra(WEB_VIEW_URL, "https://www.naver.com")
+        startActivity(intent)
     }
 
     /**
