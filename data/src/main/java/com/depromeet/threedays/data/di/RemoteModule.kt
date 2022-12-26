@@ -10,6 +10,8 @@ import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSource
 import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSource
 import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.record.RecordRemoteDataSource
+import com.depromeet.threedays.data.datasource.record.RecordRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -50,4 +52,9 @@ internal abstract class RemoteModule {
         dataSource: MemberRemoteDataSourceImpl,
     ): MemberRemoteDataSource
 
+    @Binds
+    @Singleton
+    abstract fun bindRecordRemoteDataSource(
+        dataSource: RecordRemoteDataSourceImpl,
+    ): RecordRemoteDataSource
 }
