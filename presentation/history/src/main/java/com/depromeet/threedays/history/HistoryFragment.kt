@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
+import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
+import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,7 +35,13 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     }
 
     private fun initView() {
-        habitAdapter = HabitAdapter()
+        habitAdapter = HabitAdapter (
+            onHabitClick = {
+                val intent = Intent(requireActivity(), DetailHistoryActivity::class.java)
+                intent.putExtra(HABIT_ID, it)
+                startActivity(intent)
+            }
+        )
         binding.rvHabit.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = habitAdapter

@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.depromeet.threedays.history.model.HabitUI
 
-class HabitAdapter: ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
+class HabitAdapter(
+    private val onHabitClick: (Long) -> Unit,
+): ListAdapter<HabitUI, HabitViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HabitViewHolder.create(
             parent = parent,
             attachToParent = false,
+            onHabitClick = onHabitClick
         )
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {

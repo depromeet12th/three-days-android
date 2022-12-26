@@ -9,12 +9,13 @@ import com.depromeet.threedays.history.model.HabitUI
 
 class HabitViewHolder(
     private val binding: ItemHabitRecordBinding,
+    private val onHabitClick: (Long) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(habitUI: HabitUI) {
         binding.habitUI = habitUI
         binding.clHabit.setOnSingleClickListener {
-            // TODO: 습관 보관함으로 이동하는 함수 호출 
+            onHabitClick(habitUI.habitId)
         }
     }
 
@@ -22,10 +23,12 @@ class HabitViewHolder(
         fun create(
             parent: ViewGroup,
             attachToParent: Boolean,
+            onHabitClick: (Long) -> Unit,
         ) = HabitViewHolder(
             binding = ItemHabitRecordBinding.inflate(
                 LayoutInflater.from(parent.context), parent, attachToParent
             ),
+            onHabitClick = onHabitClick
         )
     }
 }
