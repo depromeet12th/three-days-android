@@ -36,15 +36,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageView
             android:id="@+id/iv_illustrator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rect_gray200_r10"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@drawable/bg_box_mate_whip_green"
             android:layout_marginTop="32dp"
             android:paddingHorizontal="49dp"
             android:paddingVertical="62dp"
-            android:text="임시영역"
             app:layout_constraintEnd_toEndOf="@+id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@+id/iv_out" />
