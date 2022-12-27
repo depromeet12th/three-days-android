@@ -3,15 +3,14 @@ package com.depromeet.threedays.mate.onboarding
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.mate.databinding.ItemOnBoardingMateBinding
 
 class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
     // TODO: 임시 데이터 (일러스터 나오면 변경)
     private var list = mutableListOf(
-        R.drawable.ic_clap,
-        R.drawable.ic_close,
-        R.drawable.ic_arrow_down
+        com.depromeet.threedays.mate.R.drawable.on_boarding_mate_1,
+        com.depromeet.threedays.mate.R.drawable.on_boarding_mate_2,
+        com.depromeet.threedays.mate.R.drawable.on_boarding_mate_3
     )
 
     inner class OnBoardingViewHolder(val binding: ItemOnBoardingMateBinding) :
