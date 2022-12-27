@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 
 class ConnectHabitAdapter(
-    private val setHabitClickStatus: (Long) -> Unit,
+    private val setHabitClickStatus: (HabitUI) -> Unit,
 ) : ListAdapter<HabitUI, ConnectHabitViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
