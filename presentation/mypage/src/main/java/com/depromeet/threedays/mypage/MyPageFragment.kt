@@ -12,6 +12,7 @@ import com.depromeet.threedays.domain.key.WEB_VIEW_URL
 import com.depromeet.threedays.mypage.databinding.FragmentMyPageBinding
 import com.depromeet.threedays.mypage.nickname.EditNicknameDialogFragment
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
+import com.depromeet.threedays.navigator.LicenseNavigator
 import com.depromeet.threedays.navigator.PolicyNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,6 +27,8 @@ class MyPageFragment :
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
     @Inject
     lateinit var policyNavigator: PolicyNavigator
+    @Inject
+    lateinit var licenseNavigator: LicenseNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,6 +63,9 @@ class MyPageFragment :
         }
         binding.tvPolicyPrivacy.setOnClickListener {
             onPrivacyPolicyButtonClicked()
+        }
+        binding.tvOpensourceLicense.setOnClickListener {
+            onOpensourceLicenseButtonClicked()
         }
         binding.tvLogout.setOnClickListener {
             onLogoutButtonClicked()
@@ -124,6 +130,14 @@ class MyPageFragment :
         val intent = policyNavigator.intent(requireContext())
         // FIXME: notion 링크 나오면 변경
         intent.putExtra(WEB_VIEW_URL, "https://www.naver.com")
+        startActivity(intent)
+    }
+
+    /**
+     * 마이페이지 > 오픈소스 라이선스
+     */
+    private fun onOpensourceLicenseButtonClicked() {
+        val intent = licenseNavigator.intent(requireContext())
         startActivity(intent)
     }
 

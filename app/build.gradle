@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'com.google.android.gms.oss-licenses-plugin'
     id 'com.google.firebase.crashlytics'
 }
 
@@ -71,6 +72,7 @@ dependencies {
 
     implementation deps.gson
     implementation deps.splashscreen
+    implementation deps.ossLicenses
 
     implementation deps.login.kakao
 
