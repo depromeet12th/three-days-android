@@ -4,9 +4,9 @@
     <string name="habit_sample_title">아침 챙겨먹기</string>
 
     <!-- 기록 화면 -->
-    <string name="this_month_history_title">%d월 기록</string>
-    <string name="this_month_clap_title">%d월 박수</string>
-    <string name="this_month_achieve_days_title">%d월 습관 실천일</string>
+    <string name="this_month_history_title">%s월 기록</string>
+    <string name="this_month_clap_title">%s월 박수</string>
+    <string name="this_month_achieve_days_title">%s월 습관 실천일</string>
     <string name="this_month_most_achieve_habit_guide">이번달,\n가장 많이 실천한 습관</string>
     <string name="this_month_most_achieve_habit_title">점심먹은 직후\n종합 비타민 호다닥</string>
     <string name="ongoing_habit">진행중인 습관</string>

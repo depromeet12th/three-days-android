@@ -22,7 +22,7 @@ ext {
             "jodaTime"              : "2.10.6",
             "espresso"              : "3.4.0",
             "interceptor"           : "4.9.3",
-            "kakao"                 : "2.10.0",
+            "kakao"                 : "2.12.0",
             "leakcanary"            : "2.9.1",
             "chucker"               : "3.5.2",
             "google"                : "20.2.0",
@@ -30,6 +30,7 @@ ext {
             "emoji"                 : "1.0.0-alpha03",
             "lottie"                : "5.2.0",
             "datastore"             : "1.0.0",
+            "ossLicenses"          : "17.0.0",
     ]
     deps = [
             "kotlin"          : [
@@ -117,6 +118,7 @@ ext {
             ],
             "lottie"                       : "com.airbnb.android:lottie:${versions.lottie}",
             "splash"                       : "androidx.core:core-splashscreen:1.0.0",
+            "ossLicenses"                  : "com.google.android.gms:play-services-oss-licenses:${versions.ossLicenses}",
     ]
 
     coroutines = [

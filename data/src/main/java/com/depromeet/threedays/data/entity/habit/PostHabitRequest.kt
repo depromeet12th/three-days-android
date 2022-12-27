@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.entity.request
+package com.depromeet.threedays.data.entity.habit
 
 import java.time.DayOfWeek
 import java.time.LocalTime
