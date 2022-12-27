@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,11 +13,13 @@ import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
+import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.depromeet.threedays.core_design_system.R as core_design
 
 @AndroidEntryPoint
 class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
@@ -61,6 +64,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         backgroundResColor = it.backgroundResColor
                     )
                     setMateInfo(mateUI = it.mate)
+                    showMateOnboarding(it.isFirstVisitor)
                 }
             }
         }
@@ -80,6 +84,16 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvLevel.text = getString(R.string.level, it.level)
             binding.tvMateNickname.text = it.title
             binding.tvStartDate.text = getString(R.string.start_date_with_mate, it.createAt.toString().substring(0, 10).replace("-", "."))
+        }
+    }
+
+    private fun showMateOnboarding(isFirstVisitor: Boolean) {
+        if(isFirstVisitor) {
+            val modal = OnBoardingBottomSheet {
+                viewModel.writeIsFirstVisitor()
+            }
+            modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+            modal.show(parentFragmentManager, OnBoardingBottomSheet.TAG)
         }
     }
 }
