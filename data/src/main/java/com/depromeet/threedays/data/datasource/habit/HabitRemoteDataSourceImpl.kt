@@ -2,8 +2,8 @@ package com.depromeet.threedays.data.datasource.habit
 
 import com.depromeet.threedays.data.api.HabitService
 import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.habit.PostHabitRequest
 import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
-import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import javax.inject.Inject
 
 class HabitRemoteDataSourceImpl @Inject constructor(

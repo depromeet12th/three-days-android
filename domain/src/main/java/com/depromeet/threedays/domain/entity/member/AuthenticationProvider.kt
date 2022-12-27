@@ -24,5 +24,9 @@ enum class AuthenticationProvider(
                     ignoreCase = true,
                 )
             } ?: UNKNOWN
+
+        fun from(value: AuthenticationProvider) = (values().firstOrNull {
+            it == value
+        } ?: UNKNOWN).name
     }
 }

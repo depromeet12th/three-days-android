@@ -1,12 +1,12 @@
 package com.depromeet.threedays.domain.entity.auth
 
+import com.depromeet.threedays.domain.entity.member.AuthenticationProvider
+
 data class SignupMember(
-    val certificationSubject: Certification,
+    val certificationSubject: AuthenticationProvider,
     val id: Long,
     val name: String,
     val notificationConsent: Boolean,
-    val resource: Resource,
+    val resource: String,
     val token: Token
-) {
-    enum class Certification { KAKAO, GOOGLE }
-}
+)

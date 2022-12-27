@@ -1,8 +1,8 @@
 package com.depromeet.threedays.data.mapper
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.habit.PostHabitRequest
 import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
-import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit

@@ -1,8 +1,8 @@
 package com.depromeet.threedays.data.datasource.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.habit.PostHabitRequest
 import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
-import com.depromeet.threedays.data.entity.request.PostHabitRequest
 
 interface HabitRemoteDataSource {
     suspend fun postHabit(request: PostHabitRequest)
