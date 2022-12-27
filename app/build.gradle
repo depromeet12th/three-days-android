@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":presentation:mypage"))
     implementation(project(":presentation:splash"))
     implementation(project(":presentation:policy"))
+    implementation(project(":presentation:signup"))
 
     implementation(jetpackDeps)
     implementation(coroutines)
@@ -72,6 +73,8 @@ dependencies {
     implementation deps.gson
     implementation deps.splashscreen
     implementation deps.ossLicenses
+
+    implementation deps.login.kakao
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)

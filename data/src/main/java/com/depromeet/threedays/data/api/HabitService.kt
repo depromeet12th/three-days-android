@@ -2,8 +2,8 @@ package com.depromeet.threedays.data.api
 
 import com.depromeet.threedays.data.entity.base.ApiResponse
 import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.habit.PostHabitRequest
 import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
-import com.depromeet.threedays.data.entity.request.PostHabitRequest
 import retrofit2.http.*
 
 interface HabitService {

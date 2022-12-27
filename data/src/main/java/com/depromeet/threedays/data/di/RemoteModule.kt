@@ -2,6 +2,8 @@ package com.depromeet.threedays.data.di
 
 import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteDataSource
 import com.depromeet.threedays.data.datasource.achievement.AchievementRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.auth.AuthRemoteDataSource
+import com.depromeet.threedays.data.datasource.auth.AuthRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSource
 import com.depromeet.threedays.data.datasource.habit.HabitRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.mate.MateRemoteDataSource
@@ -51,6 +53,12 @@ internal abstract class RemoteModule {
     abstract fun bindMemberRemoteDataSource(
         dataSource: MemberRemoteDataSourceImpl,
     ): MemberRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRemoteDataSource(
+        dataSource: AuthRemoteDataSourceImpl,
+    ): AuthRemoteDataSource
 
     @Binds
     @Singleton

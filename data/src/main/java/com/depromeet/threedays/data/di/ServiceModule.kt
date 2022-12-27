@@ -62,6 +62,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun providesAuthService(
+        retrofit: Retrofit,
+    ): AuthService = retrofit.create()
+
+    @Provides
+    @Singleton
     fun providesRecordService(
         retrofit: Retrofit,
     ): RecordService = retrofit.create()
