@@ -41,10 +41,11 @@
             tools:text="@string/first_on_boarding_page_content" />
 
         <ImageView
-            android:layout_width="260dp"
-            android:layout_height="260dp"
-            android:src="@drawable/bg_rect_gray200_r10"
-            android:layout_marginTop="70dp"
+            android:id="@+id/iv_onboarding"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:background="@drawable/on_boarding_after_splash_1"
+            android:layout_marginTop="42dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_content" />
