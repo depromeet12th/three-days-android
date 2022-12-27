@@ -34,7 +34,9 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
 
     private fun initView() {
         connectHabitAdatper = ConnectHabitAdapter(
-            setHabitClickStatus = { viewModel.setHabitClickStatus(habitId = it) },
+            setHabitClickStatus = {
+                viewModel.setHabitClickStatus(clickedHabit = it)
+            },
         )
         binding.rvConnectHabit.apply {
             layoutManager = LinearLayoutManager(this@ConnectHabitActivity)
@@ -58,6 +60,7 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
         }
         binding.btnNext.setOnSingleClickListener {
             val intent = Intent(this, ChooseMateTypeActivity::class.java)
+            intent.putExtra("clickedHabit", viewModel.uiState.value.clickedHabit)
             startActivity(intent)
         }
     }
@@ -65,8 +68,15 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
     private fun setObserve() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.habits.collect {
-                    connectHabitAdatper.submitList(it)
+                launch {
+                    viewModel.habits.collect {
+                        connectHabitAdatper.submitList(it)
+                    }
+                }
+                launch {
+                    viewModel.uiState.collect {
+                        binding.ivIllustrator.setBackgroundResource(it.boxImageResId)
+                    }
                 }
             }
         }

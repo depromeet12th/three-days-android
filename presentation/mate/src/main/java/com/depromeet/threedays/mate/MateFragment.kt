@@ -59,7 +59,10 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    showMateOrDefaultView(hasMate = it.hasMate)
+                    showMateOrDefaultView(
+                        hasMate = it.hasMate,
+                        backgroundResColor = it.backgroundResColor
+                    )
                     setMateInfo(mateUI = it.mate)
                     showMateOnboarding(it.isFirstVisitor)
                 }
@@ -67,11 +70,12 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         }
     }
 
-    private fun showMateOrDefaultView(hasMate: Boolean) {
+    private fun showMateOrDefaultView(hasMate: Boolean, backgroundResColor: Int) {
         binding.groupHasMate.isVisible = hasMate
         binding.groupNoHabit.isVisible = hasMate.not()
         binding.groupSpeechBubble.isVisible = hasMate
         binding.clBottomSheet.isVisible = hasMate
+        binding.clTopLayout.setBackgroundResource(backgroundResColor)
     }
 
     private fun setMateInfo(mateUI: MateUI?) {

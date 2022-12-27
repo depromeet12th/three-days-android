@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.depromeet.threedays.core_design_system.R as core_desin
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,10 +40,16 @@ class MateViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
+                        val myMate = response.data!!.find { it.status == "ACTIVE" }
                         _uiState.update {
                             it.copy(
-                                mate = response.data!!.find { it.status == "ACTIVE" }?.toMateUI() ,
-                                hasMate = true,
+                                mate = myMate?.toMateUI() ,
+                                hasMate = myMate != null,
+                                backgroundResColor = if(myMate == null) {
+                                    core_desin.color.white
+                                } else {
+                                    core_desin.color.gray_100
+                                }
                             )
                         }
                     }
@@ -84,5 +91,6 @@ class MateViewModel @Inject constructor(
 data class UiState(
     val mate: MateUI? = null,
     val hasMate: Boolean = false,
+    val backgroundResColor: Int = core_desin.color.gray_100,
     val isFirstVisitor: Boolean = false,
 )

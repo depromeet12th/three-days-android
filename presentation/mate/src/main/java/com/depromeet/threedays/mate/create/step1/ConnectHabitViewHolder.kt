@@ -10,17 +10,14 @@ import com.depromeet.threedays.mate.databinding.ItemConnectHabitBinding
 
 class ConnectHabitViewHolder(
     private val binding: ItemConnectHabitBinding,
-    private val setHabitClickStatus: (Long) -> Unit,
+    private val setHabitClickStatus: (HabitUI) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(habitUI: HabitUI) {
         binding.habitUI = habitUI
         binding.clHabit.setOnSingleClickListener {
-            setHabitClickStatus(habitUI.habitId)
-
-            if(habitUI.clicked) {
-                binding.clHabit.setBackgroundResource(R.drawable.bg_rect_gray_200_border_gray_400_r10)
-            }
+            setHabitClickStatus(habitUI)
+            binding.clHabit.setBackgroundResource(R.drawable.bg_rect_gray_200_border_gray_400_r10)
         }
     }
 
@@ -28,7 +25,7 @@ class ConnectHabitViewHolder(
         fun create(
             parent: ViewGroup,
             attachToParent: Boolean,
-            setHabitClickStatus: (Long) -> Unit,
+            setHabitClickStatus: (HabitUI) -> Unit,
         ) = ConnectHabitViewHolder(
             binding = ItemConnectHabitBinding.inflate(
                 LayoutInflater.from(parent.context), parent, attachToParent

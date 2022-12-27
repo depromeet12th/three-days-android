@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
+import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.databinding.ActivitySetMateNicknameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -22,6 +23,12 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(intent.hasExtra("clickedHabit")) {
+            val clickedHabit = intent.getParcelableExtra<HabitUI>("clickedHabit")
+            val mateType = intent.getStringExtra("mateType")
+            viewModel.setClickHabit(clickedHabit!!, mateType!!)
+        }
 
         initEditText()
         initEvent()
@@ -58,6 +65,7 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
                         buttonTextColor = it.buttonTextColor,
                     )
                     setAvailableInputLength(it.inputTextLength)
+                    binding.ivIllustrator.setBackgroundResource(it.boxImageResId)
                 }
             }
         }
