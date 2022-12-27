@@ -43,7 +43,16 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
         }
         binding.btnNext.setOnSingleClickListener {
             val intent = Intent(this, SetMateNicknameActivity::class.java)
-            //intent.putExtra("clickedHabit", viewModel.uiState.value.clickedHabit)
+            intent.putExtra("clickedHabit", viewModel.habit)
+
+            // TODO: bad code
+            intent.putExtra("mateType",
+                if (viewModel.uiState.value.mateType == MateType.WhippingMate) {
+                    "Whipping"
+                } else {
+                    "Carrot"
+                }
+            )
             startActivity(intent)
         }
     }

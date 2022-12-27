@@ -25,6 +25,7 @@ class ChooseMateTypeViewModel @Inject constructor(
             MateType.WhippingMate -> {
                 _uiState.update {
                     it.copy(
+                        mateType = MateType.WhippingMate,
                         whippingMateBackgroundRes = R.drawable.bg_rect_gray_200_border_gray_400_r10,
                         carrotMateBackgroundRes = core_design.drawable.bg_rect_gray100_r10,
                         whippingMateRes = R.drawable.ic_whipping_mate_selected,
@@ -40,6 +41,7 @@ class ChooseMateTypeViewModel @Inject constructor(
             MateType.CarrotMate -> {
                 _uiState.update {
                     it.copy(
+                        mateType = MateType.CarrotMate,
                         whippingMateBackgroundRes = core_design.drawable.bg_rect_gray100_r10,
                         carrotMateBackgroundRes = R.drawable.bg_rect_gray_200_border_gray_400_r10,
                         whippingMateRes = R.drawable.ic_whipping_mate_unselected,

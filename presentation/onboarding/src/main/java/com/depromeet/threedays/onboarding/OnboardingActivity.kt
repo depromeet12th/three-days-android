@@ -1,7 +1,6 @@
 package com.depromeet.threedays.onboarding
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -56,9 +55,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         binding.btnNext.setOnSingleClickListener {
             binding.vpOnBoarding.run {
                 if (currentItem == 2) {
-                    Log.d("juhwan", "initEvent: 11111")
                     onboardingViewModel.writeIsFirstVisitor()
-                    Log.d("juhwan", "initEvent: 9999")
                     startActivity(homeNavigator.intent(this@OnboardingActivity))
                 } else {
                     currentItem += 1
