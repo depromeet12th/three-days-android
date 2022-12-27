@@ -31,7 +31,7 @@
             android:id="@+id/group_no_habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="iv_illustration, tv_no_habit_guide, btn_create_habit" />
 
         <ImageView
@@ -60,7 +60,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/ic_right_arrow_disable"
+            android:src="@drawable/ic_right_arrow_default"
             app:layout_constraintTop_toTopOf="@+id/tv_this_month"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
             app:layout_constraintStart_toEndOf="@+id/tv_this_month"/>
@@ -100,7 +100,6 @@
             android:id="@+id/ncv_has_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             android:fillViewport="true"
             app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
@@ -237,6 +236,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_most_achieve_habit_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/medicine"
@@ -248,6 +248,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <TextView
+                        android:id="@+id/tv_most_achieve_habit_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
@@ -277,13 +278,12 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="12dp"
                     android:clipToPadding="false"
-                    android:paddingBottom="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
-                    tools:listitem="@layout/item_habit"/>
+                    tools:listitem="@layout/item_habit_record"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

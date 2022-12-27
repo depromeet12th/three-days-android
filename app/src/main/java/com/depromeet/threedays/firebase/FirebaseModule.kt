@@ -1,4 +1,4 @@
-package com.depromeet.threedays.di
+package com.depromeet.threedays.firebase
 
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.Module
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object FirebaseModule {
 
     @Singleton
     @Provides
