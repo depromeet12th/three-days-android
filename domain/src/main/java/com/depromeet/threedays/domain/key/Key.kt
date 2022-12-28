@@ -11,3 +11,5 @@ const val WEB_VIEW_URL = "WEB_VIEW_URL"
 const val ACCESS_TOKEN_KEY = "accessTokenKey"
 
 const val REFRESH_TOKEN_KEY = "refreshTokenKey"
+
+const val SHARED_PREFERENCE_KEY = "sharedPreferenceKey"

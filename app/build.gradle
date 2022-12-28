@@ -76,6 +76,8 @@ dependencies {
 
     implementation deps.login.kakao
 
+    implementation deps.timber
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

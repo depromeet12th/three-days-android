@@ -1,7 +1,7 @@
 package com.depromeet.threedays.data.repository
 
+import com.depromeet.threedays.data.datasource.ThreeDaysSharedPreference
 import com.depromeet.threedays.data.datasource.auth.AuthRemoteDataSource
-import com.depromeet.threedays.data.datasource.datastore.DataStoreDataSource
 import com.depromeet.threedays.data.entity.auth.PostSignupRequest
 import com.depromeet.threedays.data.mapper.toSignupMember
 import com.depromeet.threedays.domain.entity.auth.SignupMember
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authRemoteDataSource: AuthRemoteDataSource,
-    private val dataStoreDataSource: DataStoreDataSource
+    private val threeDaysSharedPreference: ThreeDaysSharedPreference
 ): AuthRepository {
     override suspend fun createMember(
         certificationSubject: AuthenticationProvider,
@@ -27,8 +27,12 @@ class AuthRepositoryImpl @Inject constructor(
         return authRemoteDataSource.postSignup(request = request).toSignupMember()
     }
 
-    override suspend fun saveTokensToLocal(tokens: Token) {
-        dataStoreDataSource.writeDataStore(ACCESS_TOKEN_KEY, tokens.accessToken)
-        dataStoreDataSource.writeDataStore(REFRESH_TOKEN_KEY, tokens.refreshToken)
+    override fun saveTokensToLocal(tokens: Token) {
+        threeDaysSharedPreference.putString(ACCESS_TOKEN_KEY, tokens.accessToken)
+        threeDaysSharedPreference.putString(REFRESH_TOKEN_KEY, tokens.refreshToken)
+    }
+
+    override fun getAccessTokenFromLocal(): String {
+        return threeDaysSharedPreference.getString(ACCESS_TOKEN_KEY)
     }
 }

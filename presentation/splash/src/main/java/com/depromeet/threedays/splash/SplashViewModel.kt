@@ -1,5 +1,6 @@
 package com.depromeet.threedays.splash
 
+import com.depromeet.threedays.domain.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
     private val readOnboardingUseCase: ReadOnboardingUseCase,
 ) : BaseViewModel() {
 
@@ -30,6 +32,10 @@ class SplashViewModel @Inject constructor(
                 (response == null || response == "true")
             }
         }
+    }
+    
+    fun isSignedUp(): Boolean {
+        return authRepository.getAccessTokenFromLocal().isNotEmpty()
     }
 
     companion object {

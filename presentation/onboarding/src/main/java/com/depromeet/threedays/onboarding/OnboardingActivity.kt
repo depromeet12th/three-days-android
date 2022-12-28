@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.navigator.HomeNavigator
+import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.onboarding.databinding.ActivityOnboardingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import com.depromeet.threedays.core_design_system.R as core_R
 @AndroidEntryPoint
 class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.activity_onboarding) {
     @Inject
-    lateinit var homeNavigator: HomeNavigator
+    lateinit var signupNavigator: SignupNavigator
 
     private val onboardingViewModel by viewModels<OnboardingViewModel>()
 
@@ -56,7 +56,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             binding.vpOnBoarding.run {
                 if (currentItem == 2) {
                     onboardingViewModel.writeIsFirstVisitor()
-                    startActivity(homeNavigator.intent(this@OnboardingActivity))
+                    startActivity(signupNavigator.intent(this@OnboardingActivity))
                 } else {
                     currentItem += 1
                 }

@@ -6,5 +6,6 @@ import com.depromeet.threedays.domain.entity.member.AuthenticationProvider
 
 interface AuthRepository {
     suspend fun createMember(certificationSubject: AuthenticationProvider, socialToken: String): SignupMember
-    suspend fun saveTokensToLocal(tokens: Token)
+    fun saveTokensToLocal(tokens: Token)
+    fun getAccessTokenFromLocal(): String
 }
