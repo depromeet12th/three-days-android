@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.depromeet.threedays.core.R
 import com.depromeet.threedays.core.databinding.FragmentThreeDaysOneButtonDialogBinding
 import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.core_design_system.R as core_design
 import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
@@ -67,7 +68,7 @@ class ThreeDaysOneButtonDialogFragment : DialogFragment() {
         }
         context?.let {
             Glide.with(it)
-                .load(data.imageUrl)
+                .load(data.resId)
                 .placeholder(com.depromeet.threedays.core_design_system.R.drawable.bg_rect_gray200_r10)
                 .into(binding.ivIllustration)
         }
@@ -87,14 +88,14 @@ class ThreeDaysOneButtonDialogFragment : DialogFragment() {
 }
 
 data class OneButtonDialogInfo (
-    val imageUrl: String,
+    val resId: Int,
     val level: Int?,
     val title: String,
     val description: String
 ) {
     companion object {
         val EMPTY = OneButtonDialogInfo(
-            imageUrl = String.Empty,
+            resId = core_design.drawable.bg_mate_level_1,
             title = String.Empty,
             level = null,
             description = String.Empty
