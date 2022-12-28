@@ -53,6 +53,10 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
         binding.ivOut.setOnSingleClickListener {
             finish()
         }
+        binding.btnNext.setOnSingleClickListener {
+            viewModel.createMate()
+            finish()
+        }
     }
 
     private fun setUiStateObserver() {
