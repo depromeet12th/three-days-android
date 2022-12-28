@@ -11,12 +11,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+    // DataStore
     @Binds
     @Singleton
     abstract fun bindsNotificationPermissionRepository(
         repository: NotificationPermissionRepositoryImpl,
     ): NotificationPermissionRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindsOnboardingRepository(
+        repository: OnboardingRepositoryImpl,
+    ): OnboardingRepository
+
+
+    // Remote
     @Binds
     @Singleton
     abstract fun bindsHabitRepository(

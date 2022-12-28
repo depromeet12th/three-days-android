@@ -38,7 +38,7 @@ class ArchivedHabitActivity :
             openMateDialogFunction = {
                 ThreeDaysOneButtonDialogFragment.newInstance(
                     data = OneButtonDialogInfo(
-                        imageUrl = it.resolveImageUrl(),
+                        resId = com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_1,
                         level = it.level,
                         title = it.nickname,
                         description = it.getLevelDescription(),

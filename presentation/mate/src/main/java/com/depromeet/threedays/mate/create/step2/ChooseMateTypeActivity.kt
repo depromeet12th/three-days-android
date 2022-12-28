@@ -9,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
+import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.create.step3.SetMateNicknameActivity
 import com.depromeet.threedays.mate.databinding.ActivityChooseMateTypeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,11 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(intent.hasExtra("clickedHabit")) {
+            val clickedHabit = intent.getParcelableExtra<HabitUI>("clickedHabit")
+            viewModel.setClickHabit(clickedHabit!!)
+        }
 
         initEvent()
         setUiStateObserver()
@@ -37,6 +43,16 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
         }
         binding.btnNext.setOnSingleClickListener {
             val intent = Intent(this, SetMateNicknameActivity::class.java)
+            intent.putExtra("clickedHabit", viewModel.habit)
+
+            // TODO: bad code
+            intent.putExtra("mateType",
+                if (viewModel.uiState.value.mateType == MateType.WhippingMate) {
+                    "WHIP"
+                } else {
+                    "CARROT"
+                }
+            )
             startActivity(intent)
         }
     }
@@ -45,12 +61,14 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
         whippingMateBackgroundRes: Int,
         carrotMateBackgroundRes: Int,
         whippingMateRes: Int,
-        carrotMateRes: Int
+        carrotMateRes: Int,
+        boxImageResId: Int,
     ) {
         binding.clWhippingMate.setBackgroundResource(whippingMateBackgroundRes)
         binding.clCarrotMate.setBackgroundResource(carrotMateBackgroundRes)
         binding.ivWhippingMateIllustrator.setBackgroundResource(whippingMateRes)
         binding.ivCarrotMateIllustrator.setBackgroundResource(carrotMateRes)
+        binding.ivIllustrator.setBackgroundResource(boxImageResId)
     }
 
     private fun setUiStateObserver() {
@@ -62,6 +80,7 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                         carrotMateBackgroundRes = it.carrotMateBackgroundRes,
                         whippingMateRes = it.whippingMateRes,
                         carrotMateRes = it.carrotMateRes,
+                        boxImageResId = it.boxImageResId
                     )
                 }
             }

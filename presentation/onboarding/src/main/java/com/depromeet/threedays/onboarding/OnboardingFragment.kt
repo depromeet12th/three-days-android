@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM3 = "param3"
 
 @AndroidEntryPoint
 class OnboardingFragment : Fragment() {
@@ -18,6 +19,7 @@ class OnboardingFragment : Fragment() {
 
     private var title: String? = null
     private var content: String? = null
+    private var onboardingImageResId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +30,7 @@ class OnboardingFragment : Fragment() {
         arguments?.let {
             title = it.getString(ARG_PARAM1)
             content = it.getString(ARG_PARAM2)
+            onboardingImageResId = it.getInt(ARG_PARAM3)
         }
 
         _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
@@ -41,6 +44,9 @@ class OnboardingFragment : Fragment() {
 
         binding.tvTitle.text = title
         binding.tvContent.text = content
+        onboardingImageResId?.let {
+            binding.ivOnboarding.setBackgroundResource(it)
+        }
     }
 
     override fun onDestroyView() {
@@ -50,11 +56,12 @@ class OnboardingFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(title: String, content: String) =
+        fun newInstance(title: String, content: String, onboardingImageResId: Int) =
             OnboardingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, title)
                     putString(ARG_PARAM2, content)
+                    putInt(ARG_PARAM3, onboardingImageResId)
                 }
             }
     }

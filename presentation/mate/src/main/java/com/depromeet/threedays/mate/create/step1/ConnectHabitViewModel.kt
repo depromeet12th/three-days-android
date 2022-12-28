@@ -2,8 +2,10 @@ package com.depromeet.threedays.mate.create.step1
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
+import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.create.step1.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,10 @@ class ConnectHabitViewModel @Inject constructor(
     private val _habits: MutableStateFlow<List<HabitUI>> = MutableStateFlow(emptyList())
     val habits: StateFlow<List<HabitUI>>
         get() = _habits
+
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState>
+        get() = _uiState
 
     init {
         fetchHabits()
@@ -47,15 +53,31 @@ class ConnectHabitViewModel @Inject constructor(
         }
     }
 
-    fun setHabitClickStatus(habitId: Long) {
+    fun setHabitClickStatus(clickedHabit: HabitUI) {
         // TODO: mock server에서 모든 id가 0으로 넘어오고 있음. api 변경 후 동작확인 필요 
         
         _habits.update { list ->
             list.map {
                 it.copy(
-                    clicked = it.habitId == habitId
+                    clicked = it.habitId == clickedHabit.habitId
                 )
             }
         }
+
+        _uiState.update {
+            it.copy(
+                clickedHabit = clickedHabit,
+                boxImageResId = when(clickedHabit.color) {
+                    Color.PINK -> R.drawable.bg_box_mate_default_pink
+                    Color.BLUE -> R.drawable.bg_box_mate_default_blue
+                    Color.GREEN -> R.drawable.bg_box_mate_default_green
+                }
+            )
+        }
     }
 }
+
+data class UiState(
+    val clickedHabit: HabitUI? = null,
+    val boxImageResId: Int = R.drawable.bg_box_mate_default,
+)
