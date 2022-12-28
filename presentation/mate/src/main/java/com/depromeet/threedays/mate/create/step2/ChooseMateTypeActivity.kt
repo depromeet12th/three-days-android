@@ -48,9 +48,9 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
             // TODO: bad code
             intent.putExtra("mateType",
                 if (viewModel.uiState.value.mateType == MateType.WhippingMate) {
-                    "Whipping"
+                    "WHIP"
                 } else {
-                    "Carrot"
+                    "CARROT"
                 }
             )
             startActivity(intent)

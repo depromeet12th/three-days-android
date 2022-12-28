@@ -1,18 +1,24 @@
 package com.depromeet.threedays.mate.create.step3
 
+import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.entity.mate.CreateMate
+import com.depromeet.threedays.domain.usecase.mate.CreateMateUseCase
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as core_design
 
 @HiltViewModel
 class SetMateNicknameViewMoodel @Inject constructor(
+    private val createMateUseCase: CreateMateUseCase
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -20,6 +26,7 @@ class SetMateNicknameViewMoodel @Inject constructor(
         get() = _uiState
 
     lateinit var habit: HabitUI
+    lateinit var mateType: String
 
     fun handleInputText(inputText: String) {
         if(inputText.length <= NICKNAME_MAX_LENGTH) {
@@ -43,12 +50,14 @@ class SetMateNicknameViewMoodel @Inject constructor(
         }
     }
 
-    fun setClickHabit(clickedHabit: HabitUI, mateType: String) {
+    fun setClickHabit(clickedHabit: HabitUI, type: String) {
         habit = clickedHabit
+        mateType = type
+
         _uiState.update {
             it.copy(
                 boxImageResId = when(mateType) {
-                    "Whipping" -> {
+                    "WHIP" -> {
                         when(habit.color) {
                             Color.GREEN -> R.drawable.bg_box_mate_completion_whip_green
                             Color.BLUE -> R.drawable.bg_box_mate_completion_whip_blue
@@ -64,6 +73,33 @@ class SetMateNicknameViewMoodel @Inject constructor(
                     }
                 }
             )
+        }
+    }
+
+    fun createMate() {
+        viewModelScope.launch {
+            createMateUseCase(
+                habitId = habit.habitId,
+                CreateMate(
+                    title = uiState.value.inputText,
+                    characterType = mateType,
+                )
+            ).collect { response ->
+                when (response.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
+            }
         }
     }
 
