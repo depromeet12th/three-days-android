@@ -32,8 +32,18 @@ class MateRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteMate(habitId: Long, mateId: Long): Flow<DataState<Unit>> = flow {
+    override suspend fun deleteMate(habitId: Long, mateId: Long): Flow<DataState<Mate?>> = flow {
+        emit(DataState.loading())
 
+        val response = mateRemoteDataSource.deleteMate(habitId, mateId)
+
+        if (response.data != null) {
+            emit(DataState.success(data = response.data.toMate()))
+        } else {
+            emit(DataState.error(msg = "response has error"))
+        }.runCatching {
+            emit(DataState.fail("response is fail"))
+        }
     }
 
     override suspend fun getMates(): Flow<DataState<List<Mate>>> = flow {

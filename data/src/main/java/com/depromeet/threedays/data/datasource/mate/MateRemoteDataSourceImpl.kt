@@ -21,8 +21,8 @@ class MateRemoteDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteMate(habitId: Long, mateId: Long): ApiResponse<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun deleteMate(habitId: Long, mateId: Long): ApiResponse<MateEntity?> {
+        return mateService.deleteMate(habitId, mateId)
     }
 
     override suspend fun getMates(): ApiResponse<List<MateEntity>> {
