@@ -12,6 +12,7 @@
     <string name="create_mate">짝꿍과 함께하기</string>
     <string name="achieve_max_level">최종레벨 달성!</string>
     <string name="save_mate">함께한 짝꿍에 저장하기</string>
+    <string name="slash">/</string>
 
     <!-- step1 -->
     <string name="connect_habit_guide">어떤 습관을 연결하시겠어요?</string>
