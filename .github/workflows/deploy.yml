@@ -22,6 +22,11 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Fetch keystore file from secrets
+        uses: timheuer/base64-to-file@v1
+        with:
+          encodedString: ${{ secrets.KEYSTORE_DEBUG }}
+          fileName: 'debug.keystore'
       - name: Build
         run: chmod +x ./gradlew && ./gradlew --quiet build
       - name: Fetch credential file from secrets
