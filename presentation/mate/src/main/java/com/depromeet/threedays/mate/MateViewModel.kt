@@ -9,6 +9,8 @@ import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
+import com.depromeet.threedays.mate.model.StampType
+import com.depromeet.threedays.mate.model.StampUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -53,7 +55,8 @@ class MateViewModel @Inject constructor(
                                     core_desin.color.white
                                 } else {
                                     core_desin.color.gray_100
-                                }
+                                },
+                                stamps = getStampsFromMate(myMate?.toMateUI())
                             )
                         }
                     }
@@ -119,6 +122,57 @@ class MateViewModel @Inject constructor(
         }
     }
 
+    private fun getStampsFromMate(mate: MateUI?): MutableList<StampUI> {
+        val stamps = mutableListOf<StampUI>()
+
+        if(mate?.levelUpSectioin != null) {
+            val maxLevel = mate.levelUpSectioin.last()
+            for (stampCount in 1..maxLevel) {
+                if (stampCount <= mate.reward ?: 0) {
+                    if (mate.levelUpSectioin.contains(stampCount)) {
+                        stamps.add(getCharacterStamp(stampCount, mate.levelUpSectioin))
+                    } else {
+                        // TODO: api에 색상 추가되면 색상 분기 처리를 위해 color도 넣어야 함
+                        stamps.add(getColorStamp(stampCount))
+                    }
+                } else {
+                    if (mate.levelUpSectioin.contains(stampCount)) {
+                        stamps.add(getLockedStamp(stampCount))
+                    } else {
+                        stamps.add(StampUI(stampCount = stampCount.toLong(), stampType = StampType.UnStamp))
+                    }
+                }
+            }
+        }
+
+
+        return stamps
+    }
+
+    private fun getCharacterStamp(stampCount: Int, levelUpSection: List<Int>): StampUI {
+        return StampUI(
+            stampCount = stampCount.toLong(),
+            stampType = StampType.Character,
+            backgroundResId = levelUpSection.indexOf(stampCount) + 1,
+        )
+    }
+
+    private fun getColorStamp(stampCount: Int): StampUI {
+        return StampUI(
+            stampCount = stampCount.toLong(),
+            stampType = StampType.ColorStamp,
+            backgroundResId = R.drawable.bg_oval_hand_green,
+        )
+    }
+
+    private fun getLockedStamp(stampCount: Int): StampUI {
+        return StampUI(
+            stampCount = stampCount.toLong(),
+            stampType = StampType.Locked,
+            backgroundResId = R.drawable.bg_oval_gray,
+        )
+    }
+
     companion object {
         private const val IS_FIRST_VISIT_ONBOARDING_MATE = "IS_FIRST_VISIT_ONBOARDING_MATE"
     }
@@ -129,6 +183,7 @@ data class UiState(
     val hasMate: Boolean = false,
     val backgroundResColor: Int = core_desin.color.gray_100,
     val isFirstVisitor: Boolean = false,
+    val stamps: List<StampUI> = emptyList(),
 )
 
 sealed interface UiEffect {

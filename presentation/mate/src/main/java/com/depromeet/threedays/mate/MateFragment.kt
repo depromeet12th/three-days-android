@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.setOnSingleClickListener
@@ -25,10 +26,12 @@ import java.time.LocalDate
 import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as core_design
 
+
 @AndroidEntryPoint
 class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
     override val viewModel by viewModels<MateViewModel>()
-    
+    lateinit var clapAdapter: ClapAdapter
+
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
 
@@ -41,8 +44,17 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         initEvent()
         setObserve()
+    }
+
+    private fun initView() {
+        clapAdapter = ClapAdapter()
+        binding.rvClap.apply {
+            layoutManager = GridLayoutManager(requireActivity(), 6)
+            adapter = clapAdapter
+        }
     }
 
     private fun initEvent() {
@@ -103,6 +115,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         )
                         setMateInfo(mateUI = it.mate)
                         showMateOnboarding(it.isFirstVisitor)
+                        clapAdapter.submitList(it.stamps)
                     }
                 }
 
