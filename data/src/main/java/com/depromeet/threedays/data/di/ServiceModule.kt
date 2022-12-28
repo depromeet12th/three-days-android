@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.di
 
+import android.content.Context
 import com.depromeet.threedays.data.api.*
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
@@ -10,11 +11,13 @@ import com.depromeet.threedays.data.api.serializer.LocalDateSerializer
 import com.depromeet.threedays.data.api.serializer.LocalDateTimeSerializer
 import com.depromeet.threedays.data.api.serializer.LocalTimeSerializer
 import com.depromeet.threedays.domain.entity.mate.MateType
+import com.depromeet.threedays.navigator.SignupNavigator
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -74,13 +77,17 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesHttpClient(): OkHttpClient {
+    fun providesHttpClient(
+        @ApplicationContext context: Context,
+        gson: Gson,
+        signupNavigator: SignupNavigator
+    ): OkHttpClient {
         val client = OkHttpClient.Builder()
             .readTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(getLoggingInterceptor())
-            .addInterceptor(AuthInterceptor())
+            .addInterceptor(AuthInterceptor(context, gson, signupNavigator))
 
         return client.build()
     }
@@ -96,7 +103,7 @@ class NetworkModule {
     fun providesRetrofit(
         okHttpClient: OkHttpClient
     ): Retrofit {
-        val gson: Gson = GsonBuilder()
+        val gsonWithAdapter: Gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeDeserializer())
             .registerTypeAdapter(LocalDate::class.java, LocalDateDeserializer())
             .registerTypeAdapter(LocalTime::class.java, LocalTimeDeserializer())
@@ -109,8 +116,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .client(providesHttpClient())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(gsonWithAdapter))
             .build()
     }
 
