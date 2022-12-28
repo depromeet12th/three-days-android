@@ -22,16 +22,12 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Fetch keystore file from secrets
+        run: echo $KEYSTORE_DEBUG | base64 -d > debug.keystore
       - name: Build
         run: chmod +x ./gradlew && ./gradlew --quiet build
       - name: Fetch credential file from secrets
-        id: fetch_credential_file
-        uses: timheuer/base64-to-file@v1
-        with:
-          encodedString: ${{ secrets.FIREBASE_CREDENTIAL_FILE }}
-          fileName: 'credential_file.json'
-      - name: Move credential file to repository location
-        run: mv ${{ steps.fetch_credential_file.outputs.filePath }} /home/runner/work/three-days-android/three-days-android/
+        run: echo $FIREBASE_CREDENTIAL_FILE | base64 -d > credential_file.json
       - name: Upload artifact to Firebase Distribution using credential file
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.5
         with:
