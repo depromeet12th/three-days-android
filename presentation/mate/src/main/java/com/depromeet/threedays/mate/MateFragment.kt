@@ -10,7 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.OneButtonDialogInfo
+import com.depromeet.threedays.core.util.ThreeDaysOneButtonDialogFragment
+import com.depromeet.threedays.domain.util.GetStringFromDateTime
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
@@ -18,6 +22,7 @@ import com.depromeet.threedays.mate.share.ShareMateActivity
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as core_design
 
@@ -53,6 +58,19 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             intent.putExtra("habitId", viewModel.uiState.value.mate?.habitId)
             startActivity(intent)
         }
+        binding.ivIllustration.setOnSingleClickListener {
+            // TODO: very bad quality
+            ThreeDaysOneButtonDialogFragment.newInstance(
+                data = OneButtonDialogInfo(
+                    resId = core_design.drawable.bg_mate_level_1,
+                    level = viewModel.uiState.value.mate?.level ?: 0,
+                    title = viewModel.uiState.value.mate?.title ?: String.Empty,
+                    description = GetStringFromDateTime().invoke(
+                        viewModel.uiState.value.mate?.createAt?.toLocalDate() ?: LocalDate.now()
+                    ) + "에 진화"
+                )
+            ).show(parentFragmentManager, ThreeDaysOneButtonDialogFragment.TAG)
+        }
     }
 
     private fun setObserve() {
@@ -84,6 +102,15 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvLevel.text = getString(R.string.level, it.level)
             binding.tvMateNickname.text = it.title
             binding.tvStartDate.text = getString(R.string.start_date_with_mate, it.createAt.toString().substring(0, 10).replace("-", "."))
+            binding.ivIllustration.setImageResource(
+                when(it.level) {
+                    1 -> core_design.drawable.bg_mate_level_1
+                    2 -> core_design.drawable.bg_mate_level_2
+                    3 -> core_design.drawable.bg_mate_level_3
+                    4 -> core_design.drawable.bg_mate_level_4
+                    else -> core_design.drawable.bg_mate_level_5
+                }
+            )
         }
     }
 
