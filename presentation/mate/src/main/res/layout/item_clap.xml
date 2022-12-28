@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <View
+            android:id="@+id/view_background"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_oval_hand_gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_locked_clap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_background_2, iv_lock, tv_level" />
+
+        <View
+            android:id="@+id/view_background_2"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_oval_gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_lock"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/tv_level"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textSize="10dp"
+            android:textColor="@color/gray_450"
+            app:layout_constraintTop_toBottomOf="@+id/iv_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Lv.n" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
