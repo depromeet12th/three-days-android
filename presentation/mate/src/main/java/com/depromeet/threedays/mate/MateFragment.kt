@@ -12,8 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.core.util.OneButtonDialogInfo
-import com.depromeet.threedays.core.util.ThreeDaysOneButtonDialogFragment
+import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
@@ -32,6 +31,12 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.fetchMate()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,18 +76,42 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             ).show(parentFragmentManager, ThreeDaysOneButtonDialogFragment.TAG)
         }
+        binding.ivDelete.setOnSingleClickListener {
+            // TODO: move to strings.xml and viewModel
+            ThreeDaysDialogFragment.newInstance(
+                data = DialogInfo.EMPTY.copy (
+                    title = "정말 삭제하시겠어요?",
+                    description = "지금까지의 짝꿍과 함께한 기록이\n전부 사라져요.",
+                    cancelText = "아니요",
+                    confirmText = "삭제할래요",
+                    onPositiveAction = {
+                        viewModel.deleteMate()
+                    }
+                )
+            ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+        }
     }
 
     private fun setObserve() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    showMateOrDefaultView(
-                        hasMate = it.hasMate,
-                        backgroundResColor = it.backgroundResColor
-                    )
-                    setMateInfo(mateUI = it.mate)
-                    showMateOnboarding(it.isFirstVisitor)
+                launch {
+                    viewModel.uiState.collect {
+                        showMateOrDefaultView(
+                            hasMate = it.hasMate,
+                            backgroundResColor = it.backgroundResColor
+                        )
+                        setMateInfo(mateUI = it.mate)
+                        showMateOnboarding(it.isFirstVisitor)
+                    }
+                }
+
+                launch {
+                    viewModel.uiEffect.collect {
+                        when(it) {
+                            is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
+                        }
+                    }
                 }
             }
         }
@@ -122,5 +151,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
             modal.show(parentFragmentManager, OnBoardingBottomSheet.TAG)
         }
+    }
+
+    private fun showDeleteSuccessMessage(resId: Int) {
+        ThreeDaysToast().show(requireActivity(), getString(resId))
     }
 }
