@@ -3,7 +3,7 @@ package com.depromeet.threedays.domain.entity
 data class DataState<out T>(
     val status: Status,
     var data: @UnsafeVariance T?,
-    val message: String?
+    val message: String?,
 ){
     companion object{
         fun <T> loading(): DataState<T> {
