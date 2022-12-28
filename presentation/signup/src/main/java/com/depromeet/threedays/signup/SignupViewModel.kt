@@ -1,6 +1,5 @@
 package com.depromeet.threedays.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
@@ -10,6 +9,7 @@ import com.depromeet.threedays.domain.entity.member.AuthenticationProvider
 import com.depromeet.threedays.domain.usecase.auth.CreateMemberUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,9 +28,10 @@ class SignupViewModel @Inject constructor(
                     socialToken = socialToken
                 )
             }.onSuccess {
+                Timber.i("--- SignupViewModel - token: ${it.getOrNull()?.token}")
                 _isSuccess.value = true
             }.onFailure { throwable ->
-                Log.e("테스트", "--- SignupViewModel - Signup error: ${throwable.message}")
+                Timber.e("--- SignupViewModel - Signup error: ${throwable.message}")
             }
         }
     }
