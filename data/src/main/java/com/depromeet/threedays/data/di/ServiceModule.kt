@@ -87,9 +87,10 @@ class NetworkModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(getLoggingInterceptor())
-            .addInterceptor(AuthInterceptor(context, gson, signupNavigator))
 
-        return client.build()
+        val clientWithAuthInterceptor = client
+            .addInterceptor(AuthInterceptor(context, client.build(), gson, signupNavigator))
+        return clientWithAuthInterceptor.build()
     }
 
     @Provides
