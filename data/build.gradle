@@ -51,6 +51,8 @@ dependencies {
     implementation(roomDeps)
     kapt deps.room.roomCompiler
 
+    implementation deps.timber
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

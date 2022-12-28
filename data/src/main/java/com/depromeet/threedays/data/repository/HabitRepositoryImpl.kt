@@ -12,6 +12,7 @@ import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import javax.inject.Inject
 
 class HabitRepositoryImpl @Inject constructor(
@@ -23,18 +24,20 @@ class HabitRepositoryImpl @Inject constructor(
 
     override fun getHabits(status: HabitStatus): Flow<DataState<List<Habit>>> =
         flow {
-            run {
+            kotlin.runCatching {
                 emit(DataState.loading())
-                val response = habitRemoteDataSource.getHabits(
+                habitRemoteDataSource.getHabits(
                     when (status) {
                         HabitStatus.ACTIVE -> "ACTIVE"
                         HabitStatus.ARCHIVED -> "ARCHIVED"
                         HabitStatus.UNKNOWN -> "UNKNOWN"
                     }
                 )
+            }.onSuccess { response ->
                 emit(DataState.success(data = response.map { it.toHabit() }))
-            }.runCatching {
+            }.onFailure { throwable ->
                 emit(DataState.fail("response is fail"))
+                Timber.e("--- HabitRepositoryImpl error: ${throwable.message}")
             }
         }
 
