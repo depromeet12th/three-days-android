@@ -63,35 +63,20 @@
 
     <!-- Paragraph1 -->
     <style name="Typography.Paragraph1">
-        <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Paragraph1.15dp">
         <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
-    </style>
-    <style name="Typography.Paragraph1.24dp">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
     </style>
 
     <!-- Paragraph2 -->
     <style name="Typography.Paragraph2">
         <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Paragraph2.14dp">
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-    </style>
-    <style name="Typography.Paragraph2.22dp">
-        <item name="android:textSize" tools:ignore="SpUsage">22dp</item>
     </style>
 
     <!-- Paragraph3 -->
     <style name="Typography.Paragraph3">
         <item name="fontFamily">@font/suit_medium</item>
-    </style>
-    <style name="Typography.Paragraph3.13dp">
         <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
-    </style>
-    <style name="Typography.Paragraph3.20dp">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
     </style>
 
     <!-- Caption -->
@@ -142,9 +127,11 @@
     </style>
     <style name="Typography.Calendar.11dp">
         <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
     <style name="Typography.Calendar.10dp">
         <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
+        <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
     <style name="Typography.CalendarDay">

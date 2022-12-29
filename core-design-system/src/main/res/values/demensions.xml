@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="Typography.Paragraph1.LineSpacingExtra">9dp</dimen>
+    <dimen name="Typography.Paragraph2.LineSpacingExtra">8dp</dimen>
+    <dimen name="Typography.Paragraph3.LineSpacingExtra">7dp</dimen>
+</resources>
