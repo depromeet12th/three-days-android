@@ -36,6 +36,9 @@ class MateViewModel @Inject constructor(
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
+    private val _isFirstVisitor: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isFirstVisitor: StateFlow<Boolean>
+        get() = _isFirstVisitor
 
     init {
         checkIsFirstVisitor()
@@ -95,12 +98,10 @@ class MateViewModel @Inject constructor(
 
     private fun checkIsFirstVisitor() {
         viewModelScope.launch {
-            if(uiState.value.isFirstVisitor.not()) {
+            if (isFirstVisitor.value.not()) {
                 val response = readOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_MATE)
-                _uiState.update {
-                    it.copy(
-                        isFirstVisitor = response == null || response == "true"
-                    )
+                _isFirstVisitor.update {
+                    response == null || response == "true"
                 }
             }
         }
@@ -200,7 +201,6 @@ data class UiState(
     val habit: SingleHabit? = null,
     val hasMate: Boolean = false,
     val backgroundResColor: Int = core_design.color.gray_100,
-    val isFirstVisitor: Boolean = false,
     val stamps: List<StampUI> = emptyList(),
 )
 

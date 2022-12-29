@@ -117,7 +117,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         )
                         setMateInfo(mateUI = it.mate)
                         setHabitInfo(habit = it.habit)
-                        showMateOnboarding(it.isFirstVisitor)
                         clapAdapter.submitList(it.stamps)
                     }
                 }
@@ -127,6 +126,12 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         when(it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
                         }
+                    }
+                }
+
+                launch {
+                    viewModel.isFirstVisitor.collect {
+                        showMateOnboarding(isFirstVisitor = it)
                     }
                 }
             }
