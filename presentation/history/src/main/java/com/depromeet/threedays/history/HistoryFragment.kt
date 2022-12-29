@@ -78,6 +78,13 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         habitAdapter.submitList(habits)
         binding.groupNoHabit.isVisible = habits.isEmpty()
         binding.ncvHasHabit.isVisible = habits.isNotEmpty()
+
+        if(habits.isEmpty()) {
+            binding.groupToolbar.visibility = View.INVISIBLE
+            binding.tvTooltip.isVisible = false
+        } else {
+            binding.groupToolbar.visibility = View.VISIBLE
+        }
     }
 
     private fun setThisMonthInfo(
