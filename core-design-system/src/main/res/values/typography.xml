@@ -63,7 +63,6 @@
     <!-- Paragraph1 -->
     <style name="Typography.Paragraph1">
         <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
-        <item name="android:lineSpacingExtra" tools:ignore="SpUsage">9dp</item>
         <item name="fontFamily">@font/suit_medium</item>
     </style>
 
@@ -71,14 +70,12 @@
     <style name="Typography.Paragraph2">
         <item name="fontFamily">@font/suit_medium</item>
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
-        <item name="android:lineSpacingExtra" tools:ignore="SpUsage">8dp</item>
     </style>
 
     <!-- Paragraph3 -->
     <style name="Typography.Paragraph3">
         <item name="fontFamily">@font/suit_medium</item>
         <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
-        <item name="android:lineSpacingExtra" tools:ignore="SpUsage">7dp</item>
     </style>
 
     <!-- Caption -->
