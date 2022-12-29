@@ -42,7 +42,7 @@ class HabitCreateViewModel @Inject constructor(
 
     private val notification = MutableStateFlow(CreateNotification(
         initNotificationTime = false,
-        notificationInfoActive = false,
+        notificationInfoActive = true,
         notificationTime = initTime,
         notificationContent = String.Empty)
     )
@@ -122,6 +122,7 @@ class HabitCreateViewModel @Inject constructor(
                         notificationTime = notification.value.notificationTime,
                     )
                 } else null
+
                 val habit = CreateHabit(
                     title = title.value,
                     emoji = emoji.value,

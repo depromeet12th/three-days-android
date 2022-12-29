@@ -63,11 +63,14 @@ private fun getStringFromColor(color: Color): String {
 }
 
 fun CreateHabit.toPostHabitRequest(): PostHabitRequest {
-    val notificationNullChecked: PostHabitRequest.Notification? = if(this.notification == null) {null} else {
-        PostHabitRequest.Notification(
-            notificationTime = this.notification!!.notificationTime,
-            contents = this.notification!!.contents
-        )
+    val notificationNullChecked: PostHabitRequest.Notification? =
+        if(this.notification == null) {
+            null
+        } else {
+            PostHabitRequest.Notification(
+                notificationTime = this.notification!!.notificationTime,
+                contents = this.notification!!.contents
+            )
     }
     return PostHabitRequest(
         color = getStringFromColor(color),
