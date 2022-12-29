@@ -3,6 +3,7 @@ package com.depromeet.threedays.create.update
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.create.CreateNotification
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
@@ -60,16 +61,14 @@ class HabitUpdateViewModel @Inject constructor(
         get() = _color.asStateFlow()
 
     private val _notification = MutableStateFlow(
-        Notification(
+        CreateNotification(
             initNotificationTime = false,
+            notificationInfoActive = false,
             notificationTime = initTime,
-            notificationContent = String.Empty
-        )
+            notificationContent = String.Empty)
     )
-    val notification: StateFlow<Notification>
+    val notification: StateFlow<CreateNotification>
         get() = _notification.asStateFlow()
-
-    private val isNotificationInfoActive = MutableStateFlow(true)
 
     private val _isInformationChanged = MutableStateFlow(false)
     val isInformationChanged: StateFlow<Boolean>
@@ -99,6 +98,7 @@ class HabitUpdateViewModel @Inject constructor(
         _color.value = oldData.color
         _notification.value = _notification.value.copy(
             initNotificationTime = oldData.notification != null,
+            notificationInfoActive = oldData.notification != null,
             notificationTime = oldData.notification?.notificationTime ?: initTime,
             notificationContent = oldData.notification?.contents ?: String.Empty
         )
@@ -124,7 +124,9 @@ class HabitUpdateViewModel @Inject constructor(
     }
 
     fun setNotificationInfoActive(isActive: Boolean) {
-        isNotificationInfoActive.value = isActive
+        _notification.value = _notification.value.copy(
+            notificationInfoActive = isActive
+        )
     }
 
     fun setNotificationContent(text: String) {
@@ -135,14 +137,9 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun setUpdateHabitEnable() {
         viewModelScope.launch {
-            combine(
-                title,
-                dayOfWeekList,
-                notification,
-                isNotificationInfoActive
-            ) { title, dayOfWeekList, notification, isNotificationInfoActive ->
+            combine(title, dayOfWeekList, notification) { title, dayOfWeekList, notification ->
                 val notificationEnable =
-                    if (isNotificationInfoActive) {
+                    if (notification.notificationInfoActive) {
                         notification.notificationContent.isNotEmpty() && notification.initNotificationTime
                     } else true
                 title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
@@ -154,23 +151,22 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun setInformationChanged() {
         viewModelScope.launch {
-            combine(
-                title,
-                emoji,
-                dayOfWeekList,
-                notification,
-                color
-            ) { title, emoji, dayOfWeekList, notification, color ->
+            combine(title, emoji, dayOfWeekList, notification, color) { title, emoji, dayOfWeekList, notification, color ->
                 val isNotificationTimeChanged = if (oldHabit.value.notification == null) {
                     notification.initNotificationTime
                 } else {
                     oldHabit.value.notification!!.notificationTime.hour != notification.notificationTime.hour || oldHabit.value.notification!!.notificationTime.minute != notification.notificationTime.minute
                 }
 
+                val isChangedNotificationToNull =
+                    if (notification.notificationContent.isNotEmpty() || notification.initNotificationTime) {
+                        !notification.notificationInfoActive
+                    }
+                    else false
+
                 title != oldHabit.value.title || dayOfWeekList != oldHabit.value.dayOfWeeks || emoji != oldHabit.value.emoji ||
-                        notification.notificationContent != (oldHabit.value.notification?.contents
-                    ?: String.Empty) ||
-                        isNotificationTimeChanged || color != oldHabit.value.color
+                        notification.notificationContent != (oldHabit.value.notification?.contents ?: String.Empty) ||
+                        isNotificationTimeChanged || color != oldHabit.value.color || isChangedNotificationToNull
             }.collect {
                 _isInformationChanged.value = it
             }
@@ -180,8 +176,8 @@ class HabitUpdateViewModel @Inject constructor(
     fun onUpdateHabitClick() {
         viewModelScope.launch {
             kotlin.runCatching {
-                val notification = if (isNotificationInfoActive.value) {
-                    CreateHabit.Notification(
+                val notification = if (notification.value.notificationInfoActive) {
+                    CreateHabit.Notification (
                         contents = notification.value.notificationContent,
                         notificationTime = notification.value.notificationTime,
                     )
@@ -225,12 +221,6 @@ class HabitUpdateViewModel @Inject constructor(
         data class NotificationTimeClick(val currentTime: LocalTime) : Action()
         object UpdateClick: Action()
     }
-
-    data class Notification(
-        val initNotificationTime: Boolean,
-        val notificationContent: String,
-        val notificationTime: LocalTime
-    )
 
     companion object {
         const val MIN_DAY_OF_WEEK_NUM = 3

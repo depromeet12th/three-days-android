@@ -3,6 +3,7 @@ package com.depromeet.threedays.create.create
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.create.CreateNotification
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
@@ -39,13 +40,12 @@ class HabitCreateViewModel @Inject constructor(
     val color: StateFlow<Color>
         get() = _color.asStateFlow()
 
-    private val notification = MutableStateFlow(Notification(
+    private val notification = MutableStateFlow(CreateNotification(
         initNotificationTime = false,
+        notificationInfoActive = false,
         notificationTime = initTime,
-        notificationContent = String.Empty
-    ))
-
-    private val isNotificationInfoActive = MutableStateFlow(true)
+        notificationContent = String.Empty)
+    )
 
     private val _isInformationEntered = MutableStateFlow(false)
     val isInformationEntered: StateFlow<Boolean>
@@ -72,7 +72,9 @@ class HabitCreateViewModel @Inject constructor(
     }
 
     fun setNotificationInfoActive(isActive: Boolean) {
-        isNotificationInfoActive.value = isActive
+        notification.value = notification.value.copy(
+            notificationInfoActive = isActive
+        )
     }
 
     fun setNotificationContent(text: String) {
@@ -83,9 +85,11 @@ class HabitCreateViewModel @Inject constructor(
 
     fun setSaveHabitEnable() {
         viewModelScope.launch {
-            combine(title, dayOfWeekList, notification, isNotificationInfoActive) { title, dayOfWeekList, notification, isNotificationInfoActive ->
+            combine(title, dayOfWeekList, notification) { title, dayOfWeekList, notification->
                 val notificationEnable =
-                    if(isNotificationInfoActive) { notification.notificationContent.isNotEmpty() && notification.initNotificationTime }
+                    if(notification.notificationInfoActive) {
+                        notification.notificationContent.isNotEmpty() && notification.initNotificationTime
+                    }
                     else true
                 title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
             }.collect {
@@ -97,7 +101,12 @@ class HabitCreateViewModel @Inject constructor(
     fun setInformationEntered() {
         viewModelScope.launch {
             combine(title, emoji, dayOfWeekList, notification, color) { title, emoji, dayOfWeekList, notification, color ->
-                title.isNotEmpty()|| dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor
+                val isChangedNotificationToNull =
+                    if (notification.notificationContent.isNotEmpty() || notification.initNotificationTime) {
+                        !notification.notificationInfoActive
+                    }
+                    else false
+                title.isNotEmpty()|| dayOfWeekList.isNotEmpty() || emoji != initEmoji || notification.notificationContent.isNotEmpty() || notification.initNotificationTime || color != initColor || isChangedNotificationToNull
             }.collect {
                 _isInformationEntered.value = it
             }
@@ -107,7 +116,7 @@ class HabitCreateViewModel @Inject constructor(
     fun onCreateHabitClick() {
         viewModelScope.launch {
             kotlin.runCatching {
-                val notification = if (isNotificationInfoActive.value) {
+                val notification = if (notification.value.notificationInfoActive) {
                     CreateHabit.Notification (
                         contents = notification.value.notificationContent,
                         notificationTime = notification.value.notificationTime,
@@ -152,12 +161,6 @@ class HabitCreateViewModel @Inject constructor(
         data class NotificationTimeClick(val currentTime: LocalTime) : Action()
         object SaveClick : Action()
     }
-
-    data class Notification (
-        val initNotificationTime: Boolean,
-        val notificationContent: String,
-        val notificationTime: LocalTime
-    )
 
     companion object {
         const val MIN_DAY_OF_WEEK_NUM = 3
