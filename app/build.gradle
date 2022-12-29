@@ -23,6 +23,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        ciDebug {
+            storeFile file("$project.rootDir/debug.keystore")
+            storePassword System.getenv('DEBUG_STORE_PASSWORD')
+            keyPassword System.getenv('DEBUG_KEY_PASSWORD')
+            keyAlias System.getenv('DEBUG_KEY_ALIAS')
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

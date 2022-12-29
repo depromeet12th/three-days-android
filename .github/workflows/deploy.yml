@@ -23,16 +23,20 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Fetch keystore file from secrets
-        run: echo $KEYSTORE_DEBUG | base64 -d > debug.keystore
+        run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
       - name: Build
-        run: chmod +x ./gradlew && ./gradlew --quiet build
+        run: chmod +x ./gradlew && ./gradlew --quiet -PbuildType=debug -PsigningConfig=ci :app:assemble
+        env:
+          DEBUG_STORE_PASSWORD: ${{ secrets.DEBUG_STORE_PASSWORD }}
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+          DEBUG_KEY_ALIAS: ${{ secrets.DEBUG_KEY_ALIAS }}
       - name: Fetch credential file from secrets
         run: echo $FIREBASE_CREDENTIAL_FILE | base64 -d > credential_file.json
       - name: Upload artifact to Firebase Distribution using credential file
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.5
         with:
-          appId: ${{secrets.FIREBASE_APP_ID}}
-          token: ${{secrets.FIREBASE_TOKEN}}
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
           serviceCredentialsFile: credential_file.json
           groups: android
           file: app/build/outputs/apk/debug/app-debug.apk
