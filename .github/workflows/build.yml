@@ -31,4 +31,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           gradle-version: wrapper
-          arguments: build sonarqube
+          arguments: |
+            build
+            sonarqube
+            -x assembleAlpha

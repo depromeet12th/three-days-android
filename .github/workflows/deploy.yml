@@ -25,7 +25,7 @@ jobs:
       - name: Fetch keystore file from secrets
         run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
       - name: Build
-        run: chmod +x ./gradlew && ./gradlew --quiet -PbuildType=debug -PsigningConfig=ciDebug :app:assemble
+        run: chmod +x ./gradlew && ./gradlew --quiet :app:assembleAlpha
         env:
           DEBUG_STORE_PASSWORD: ${{ secrets.DEBUG_STORE_PASSWORD }}
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
