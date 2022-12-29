@@ -11,7 +11,7 @@ class ClapAdapter : ListAdapter<StampUI, ClapViewHolder>(DIFF_UTIL) {
         ClapViewHolder.create(parent = parent, attachToParent = false)
 
     override fun onBindViewHolder(holder: ClapViewHolder, position: Int) {
-        holder.onBind(getItem(position), position)
+        holder.onBind(getItem(position))
     }
 
     override fun getItemCount(): Int = currentList.size

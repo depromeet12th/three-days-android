@@ -14,6 +14,8 @@ import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
+import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
@@ -114,6 +116,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                             backgroundResColor = it.backgroundResColor
                         )
                         setMateInfo(mateUI = it.mate)
+                        setHabitInfo(habit = it.habit)
                         showMateOnboarding(it.isFirstVisitor)
                         clapAdapter.submitList(it.stamps)
                     }
@@ -151,6 +154,26 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     3 -> core_design.drawable.bg_mate_level_3
                     4 -> core_design.drawable.bg_mate_level_4
                     else -> core_design.drawable.bg_mate_level_5
+                }
+            )
+
+            val clapCount = it.reward ?: 0
+            val maxLevel = it.levelUpSectioin?.last() ?: 22
+            binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
+            binding.tvClapCount.text = "${clapCount}개"
+            binding.tvMaxLevel.text = "${maxLevel}개"
+        }
+    }
+
+    private fun setHabitInfo(habit: SingleHabit?) {
+        habit?.let {
+            binding.tvHabitEmoji.text = habit.emoji.value
+            binding.tvHabitTitle.text = habit.title
+            binding.tvLevel.setBackgroundResource(
+                when(habit.color) {
+                    Color.GREEN -> core_design.drawable.bg_rect_green50_r10
+                    Color.PINK -> core_design.drawable.bg_rect_pink50_r10
+                    Color.BLUE -> core_design.drawable.bg_rect_blue50_r10
                 }
             )
         }

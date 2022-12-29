@@ -2,20 +2,22 @@ package com.depromeet.threedays.mate
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.usecase.mate.DeleteMateUseCase
 import com.depromeet.threedays.domain.usecase.mate.GetMatesUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
-import com.depromeet.threedays.mate.model.StampType
 import com.depromeet.threedays.mate.model.StampUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.depromeet.threedays.core_design_system.R as core_desin
+import com.depromeet.threedays.core_design_system.R as core_design
 
 @HiltViewModel
 class MateViewModel @Inject constructor(
@@ -23,6 +25,7 @@ class MateViewModel @Inject constructor(
     private val writeOnboardingUseCase: WriteOnboardingUseCase,
     private val readOnboardingUseCase: ReadOnboardingUseCase,
     private val deleteMateUseCase: DeleteMateUseCase,
+    private val habitRepository: HabitRepository,
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -52,12 +55,15 @@ class MateViewModel @Inject constructor(
                                 mate = myMate?.toMateUI() ,
                                 hasMate = myMate != null,
                                 backgroundResColor = if(myMate == null) {
-                                    core_desin.color.white
+                                    core_design.color.white
                                 } else {
-                                    core_desin.color.gray_100
+                                    core_design.color.gray_100
                                 },
                                 stamps = getStampsFromMate(myMate?.toMateUI())
                             )
+                        }
+                        myMate?.let {
+                            fetchHabit(it.habitId)
                         }
                     }
                     Status.ERROR -> {
@@ -67,6 +73,22 @@ class MateViewModel @Inject constructor(
 
                     }
                 }
+            }
+        }
+    }
+
+    fun fetchHabit(habitId: Long) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                habitRepository.getHabit(habitId = habitId)
+            }.onSuccess { habit ->
+                _uiState.update {
+                    it.copy(
+                        habit = habit
+                    )
+                }
+            }.onFailure { throwable ->
+                sendErrorMessage(throwable.message)
             }
         }
     }
@@ -128,19 +150,12 @@ class MateViewModel @Inject constructor(
         if(mate?.levelUpSectioin != null) {
             val maxLevel = mate.levelUpSectioin.last()
             for (stampCount in 1..maxLevel) {
-                if (stampCount <= mate.reward ?: 0) {
-                    if (mate.levelUpSectioin.contains(stampCount)) {
-                        stamps.add(getCharacterStamp(stampCount, mate.levelUpSectioin))
-                    } else {
-                        // TODO: api에 색상 추가되면 색상 분기 처리를 위해 color도 넣어야 함
-                        stamps.add(getColorStamp(stampCount))
-                    }
+                if (mate.levelUpSectioin.contains(stampCount)) {
+                    stamps.add(getCharacterStamp(stampCount, mate.levelUpSectioin.indexOf(stampCount)))
+                } else if (stampCount <= (mate.reward ?: 0)) {
+                    stamps.add(getColorStamp(stampCount))
                 } else {
-                    if (mate.levelUpSectioin.contains(stampCount)) {
-                        stamps.add(getLockedStamp(stampCount))
-                    } else {
-                        stamps.add(StampUI(stampCount = stampCount.toLong(), stampType = StampType.UnStamp))
-                    }
+                    stamps.add(StampUI(stampCount = stampCount.toLong()))
                 }
             }
         }
@@ -149,27 +164,29 @@ class MateViewModel @Inject constructor(
         return stamps
     }
 
-    private fun getCharacterStamp(stampCount: Int, levelUpSection: List<Int>): StampUI {
+    private fun getCharacterStamp(stampCount: Int, mateLevel: Int): StampUI {
+        val mates = listOf(
+            core_design.drawable.bg_mate_level_1,
+            core_design.drawable.bg_mate_level_2,
+            core_design.drawable.bg_mate_level_3,
+            core_design.drawable.bg_mate_level_4,
+            core_design.drawable.bg_mate_level_5,
+        )
+
         return StampUI(
             stampCount = stampCount.toLong(),
-            stampType = StampType.Character,
-            backgroundResId = levelUpSection.indexOf(stampCount) + 1,
+            backgroundResId = mates[mateLevel],
         )
     }
 
     private fun getColorStamp(stampCount: Int): StampUI {
         return StampUI(
             stampCount = stampCount.toLong(),
-            stampType = StampType.ColorStamp,
-            backgroundResId = R.drawable.bg_oval_hand_green,
-        )
-    }
-
-    private fun getLockedStamp(stampCount: Int): StampUI {
-        return StampUI(
-            stampCount = stampCount.toLong(),
-            stampType = StampType.Locked,
-            backgroundResId = R.drawable.bg_oval_gray,
+            backgroundResId = when(uiState.value.habit?.color) {
+                Color.GREEN -> R.drawable.bg_oval_hand_green
+                Color.PINK -> R.drawable.bg_oval_hand_pink
+                else -> R.drawable.bg_oval_hand_blue
+            }
         )
     }
 
@@ -180,8 +197,9 @@ class MateViewModel @Inject constructor(
 
 data class UiState(
     val mate: MateUI? = null,
+    val habit: SingleHabit? = null,
     val hasMate: Boolean = false,
-    val backgroundResColor: Int = core_desin.color.gray_100,
+    val backgroundResColor: Int = core_design.color.gray_100,
     val isFirstVisitor: Boolean = false,
     val stamps: List<StampUI> = emptyList(),
 )
