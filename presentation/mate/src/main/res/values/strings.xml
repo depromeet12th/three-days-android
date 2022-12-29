@@ -5,13 +5,14 @@
     <string name="level">Lv. %d</string>
     <string name="level_sample">Lv. 2</string>
     <string name="mate_nickname_sample">별명</string>
-    <string name="next_level_guide">다음 레벨까지 박수[n]개를 더 모아보세요!</string>
+    <string name="next_level_guide">다음 레벨까지 박수[%d]개를 더 모아보세요!</string>
     <string name="clap_guide_title">습관 박수와 짝꿍의 박수가 달라요!</string>
     <string name="clap_guide_content">레벨업을 위한 박수는 짝꿍 생성 시점부터 카운트돼요. 때문에 습관을 생성한 시점부터 모은 박수와 차이날 수 있어요!</string>
     <string name="create_mate_guide">혼자서는 힘드셨죠?\n짝꿍이 도와드릴게요.</string>
     <string name="create_mate">짝꿍과 함께하기</string>
     <string name="achieve_max_level">최종레벨 달성!</string>
     <string name="save_mate">함께한 짝꿍에 저장하기</string>
+    <string name="slash">/</string>
 
     <!-- step1 -->
     <string name="connect_habit_guide">어떤 습관을 연결하시겠어요?</string>
