@@ -308,7 +308,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="15dp"
                 android:text="@{viewModel.notification.notificationContent}"
-                android:textAppearance="@style/Typography.Paragraph1.15dp"
+                android:textAppearance="@style/Typography.Paragraph1"
                 android:textColor="@color/gray_800"
                 app:layout_constraintEnd_toEndOf="@+id/tv_notification_time"
                 app:layout_constraintStart_toStartOf="@+id/tv_notification_time"
@@ -398,4 +398,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-

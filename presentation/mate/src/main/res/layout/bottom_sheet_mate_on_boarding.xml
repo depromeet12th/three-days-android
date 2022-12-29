@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/on_boarding_first_content"
-            android:textAppearance="@style/Typography.Paragraph2.14dp"
+            android:textAppearance="@style/Typography.Paragraph2"
             android:textColor="@color/gray_500"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
             app:layout_constraintTop_toBottomOf="@+id/tv_on_boarding_title" />

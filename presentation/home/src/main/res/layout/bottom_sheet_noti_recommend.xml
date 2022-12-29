@@ -38,7 +38,7 @@
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/noti_recommend_content"
-        android:textAppearance="@style/Typography.Paragraph2.14dp"
+        android:textAppearance="@style/Typography.Paragraph2"
         android:textColor="@color/gray_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

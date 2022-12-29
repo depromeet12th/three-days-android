@@ -30,7 +30,7 @@
                 android:layout_marginVertical="18dp"
                 android:layout_marginStart="23dp"
                 android:layout_marginEnd="58dp"
-                android:textAppearance="@style/Typography.Paragraph3.13dp"
+                android:textAppearance="@style/Typography.Paragraph3"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:maxLines="2"
