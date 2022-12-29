@@ -45,9 +45,18 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
 
                 when (position) {
-                    0 -> binding.viewFirstIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
-                    1 -> binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
-                    else -> binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                    0 -> {
+                        binding.btnNext.text = getString(R.string.next)
+                        binding.viewFirstIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                    }
+                    1 -> {
+                        binding.btnNext.text = getString(R.string.next)
+                        binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                    }
+                    else -> {
+                        binding.btnNext.text = getString(R.string.start)
+                        binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                    }
                 }
             }
         })
@@ -70,7 +79,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         override fun createFragment(position: Int): Fragment {
             return when (position) { // 페이지 포지션에 따라 그에 맞는 프래그먼트를 보여줌
                 0 -> {
-                    binding.btnNext.text = getString(R.string.next)
                     OnboardingFragment.newInstance(
                         title = getString(R.string.first_on_boarding_page_title),
                         content = getString(R.string.first_on_boarding_page_content),
@@ -79,7 +87,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 }
 
                 1 -> {
-                    binding.btnNext.text = getString(R.string.next)
                     OnboardingFragment.newInstance(
                         title = getString(R.string.second_on_boarding_page_title),
                         content = getString(R.string.second_on_boarding_page_content),
@@ -88,7 +95,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 }
 
                 else -> {
-                    binding.btnNext.text = getString(R.string.start)
                     OnboardingFragment.newInstance(
                         title = getString(R.string.third_on_boarding_page_title),
                         content = getString(R.string.third_on_boarding_page_content),
