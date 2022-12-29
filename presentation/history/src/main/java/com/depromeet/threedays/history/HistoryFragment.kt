@@ -26,6 +26,13 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     override val viewModel by viewModels<HistoryViewModel>()
     lateinit var habitAdapter: HabitAdapter
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.fetchHabits()
+        viewModel.fetchRecord()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
