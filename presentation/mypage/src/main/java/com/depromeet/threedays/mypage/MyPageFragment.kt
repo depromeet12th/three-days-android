@@ -118,8 +118,8 @@ class MyPageFragment :
      */
     private fun onServicePolicyButtonClicked() {
         val intent = policyNavigator.intent(requireContext())
-        // FIXME: notion 링크 나오면 변경
-        intent.putExtra(WEB_VIEW_URL, "https://www.daum.net")
+        // FIXME: debug, release 빌드 환경 따라 url 변경
+        intent.putExtra(WEB_VIEW_URL, "https://zzaksim.notion.site/78e26f25307e4fcb9c6bc453e341e834")
         startActivity(intent)
     }
 
@@ -128,8 +128,8 @@ class MyPageFragment :
      */
     private fun onPrivacyPolicyButtonClicked() {
         val intent = policyNavigator.intent(requireContext())
-        // FIXME: notion 링크 나오면 변경
-        intent.putExtra(WEB_VIEW_URL, "https://www.naver.com")
+        // FIXME: debug, release 빌드 환경 따라 url 변경
+        intent.putExtra(WEB_VIEW_URL, "https://zzaksim.notion.site/a1e85e0b71ae42a4a970770f5b6cc885")
         startActivity(intent)
     }
 
