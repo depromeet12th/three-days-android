@@ -154,6 +154,9 @@ class ArchivedHabitActivity :
      * 이벤트 관련 초기화 작업
      */
     private fun initEvent() {
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         binding.tvActionButton.setOnClickListener {
             viewModel.toggleEditable()
         }

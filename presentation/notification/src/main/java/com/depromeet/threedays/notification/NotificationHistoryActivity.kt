@@ -37,6 +37,7 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
         }
         viewModel.fetchNotifications()
         setObserve()
+        initEvent()
     }
 
     private fun setObserve() {
@@ -49,6 +50,12 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
                     }
                 }
             }
+        }
+    }
+
+    private fun initEvent() {
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 }
