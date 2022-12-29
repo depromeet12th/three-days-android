@@ -186,6 +186,9 @@ class HabitUpdateActivity :
                     Color.BLUE -> binding.rbBlue.isChecked = true
                     Color.PINK -> binding.rbPink.isChecked = true
                 }
+
+                binding.swNotification.isChecked = (oldHabit.notification != null)
+
             }
             .launchIn(lifecycleScope)
 
