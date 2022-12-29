@@ -52,6 +52,7 @@
     <!-- Body4 -->
     <style name="Typography.Body4">
         <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
     </style>
     <style name="Typography.Body4.SemiBold">
         <item name="fontFamily">@font/suit_semi_bold</item>
