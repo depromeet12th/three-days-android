@@ -34,6 +34,12 @@
             android:visibility="gone"
             app:constraint_referenced_ids="iv_illustration, tv_no_habit_guide, btn_create_habit" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="iv_prev_month, iv_next_month, tv_this_month, iv_tooltip" />
+
         <ImageView
             android:id="@+id/iv_prev_month"
             android:layout_width="24dp"
