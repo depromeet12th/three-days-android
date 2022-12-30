@@ -5,7 +5,7 @@ on:
     branches:
       - develop
 jobs:
-  build:
+  deploy:
     name: Deploy debug app to firebase app distribution
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Fetch keystore file from secrets
-        uses: timheuer/base64-to-file@v1
+        id: write_file_debug_keystore
+        uses: timheuer/base64-to-file@v1.2
         with:
           encodedString: ${{ secrets.DEBUG_KEYSTORE_FILE }}
           fileName: 'debug.keystore'
@@ -38,8 +39,9 @@ jobs:
           arguments: |
             :app:assembleAlpha
             --quiet
+          filelocation: ${{ steps.write_file_debug_keystore.outputs.filePath }}
       - name: Fetch credential file from secrets
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@v1.2
         with:
           encodedString: ${{ secrets.FIREBASE_CREDENTIAL_FILE }}
           fileName: 'credential_file.json'
