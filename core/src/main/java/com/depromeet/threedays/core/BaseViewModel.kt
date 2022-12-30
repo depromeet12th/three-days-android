@@ -27,12 +27,12 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected fun sendErrorMessage(throwable: Throwable) {
-        sendErrorMessage(throwable.message.toString())
+        sendErrorMessage(throwable.message)
     }
 
     protected fun sendErrorMessage(message: String?) {
         viewModelScope.launch {
-            _error.emit(message.orEmpty())
+            _error.emit(message ?: "오류가 발생했습니다.")
         }
     }
 }

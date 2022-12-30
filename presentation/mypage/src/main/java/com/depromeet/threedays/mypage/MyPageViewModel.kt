@@ -70,17 +70,10 @@ class MyPageViewModel @Inject constructor(
      */
     fun logout() {
         viewModelScope.launch {
-            logoutUseCase().collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        // Do nothing
-                    }
-                    Status.SUCCESS -> {
-                        // Do nothing
-                    }
-                    Status.ERROR -> TODO()
-                    Status.FAIL -> TODO()
-                }
+            kotlin.runCatching {
+                logoutUseCase()
+            }.onFailure {
+                sendErrorMessage(it.message ?: "로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
             }
         }
     }
@@ -90,17 +83,10 @@ class MyPageViewModel @Inject constructor(
      */
     fun withdraw() {
         viewModelScope.launch {
-            withdrawUseCase().collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        // Do nothing
-                    }
-                    Status.SUCCESS -> {
-                        // Do nothing
-                    }
-                    Status.ERROR -> TODO()
-                    Status.FAIL -> TODO()
-                }
+            kotlin.runCatching {
+                withdrawUseCase()
+            }.onFailure {
+                sendErrorMessage(it.message ?: "회원탈퇴를 실패했습니다. 잠시 후 다시 시도해주세요.")
             }
         }
     }

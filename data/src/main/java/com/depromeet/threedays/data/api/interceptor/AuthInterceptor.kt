@@ -55,10 +55,11 @@ class AuthInterceptor @Inject constructor(
             401 -> {
                 for (i in 1..REPEAT_NUM) {
                     val requestBody: RequestBody = FormBody.Builder().build()
-                    val renewalTokensRequest = chain.request().newBuilder().get()
+                    val renewalTokensRequest = chain.request().newBuilder()
+                        .post(requestBody)
                         .url("${BASE_URL}/api/v1/members/tokens")
                         .addHeader(X_THREE_DAYS_REFRESH_TOKEN, refreshToken)
-                        .post(requestBody)
+                        .addHeader("Content-Type", "application/json; charset=UTF-8")
                         .build()
                     val renewalTokensResponse = client.newCall(renewalTokensRequest).execute()
 

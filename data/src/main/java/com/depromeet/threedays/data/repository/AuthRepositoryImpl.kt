@@ -35,4 +35,9 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getAccessTokenFromLocal(): String {
         return threeDaysSharedPreference.getString(ACCESS_TOKEN_KEY)
     }
+
+    override fun removeTokensFromLocal() {
+        threeDaysSharedPreference.remove(ACCESS_TOKEN_KEY)
+        threeDaysSharedPreference.remove(REFRESH_TOKEN_KEY)
+    }
 }

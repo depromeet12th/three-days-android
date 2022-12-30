@@ -38,6 +38,10 @@ class ThreeDaysSharedPreferenceImpl @Inject constructor(
     override fun getString(key: String): String {
         return preference.getString(key, "").toString()
     }
+
+    override fun remove(key: String) {
+        preference.edit(true) { remove(key) }
+    }
 }
 
 interface ThreeDaysSharedPreference {
@@ -46,6 +50,7 @@ interface ThreeDaysSharedPreference {
     fun putInt(key: String, value: Int)
     fun putParcelable(key: String, value: Parcelable)
     fun getString(key: String): String
+    fun remove(key: String)
 }
 
 class SerializablePreference<T>(
