@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - develop
+    if: |
+      !contains(toJson(github.event.head_commit.message), 'docs')
   pull_request:
     types: [opened, synchronize, reopened]
+    if: |
+      !contains(toJson(github.event.head_commit.message), 'docs')
 jobs:
   build:
     name: Build
