@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textAppearance="@style/Typography.Calendar.10dp"
+            android:textAppearance="@style/Typography.Display3"
             android:textColor="@color/gray_600"
             tools:text="22" />
     </FrameLayout>

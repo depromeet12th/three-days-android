@@ -5,6 +5,7 @@ import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.AchievementRepository
 import com.depromeet.threedays.domain.repository.HabitRepository
+import com.depromeet.threedays.history.detail.view.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,10 +57,13 @@ class DetailHistoryViewModel @Inject constructor(
                     achievement.achievementDate
                 }
             }.onSuccess { habitAchievementDateList ->
+                val sortedHabitAchievementDateList = habitAchievementDateList.sorted()
                 _state.value = _state.value.copy(
                     isAchievementInitialized = true,
-                    achievementDateList = habitAchievementDateList
+                    achievementDateList = sortedHabitAchievementDateList,
+                    achievementDateWithStatusList = getAchievementDateWithStatusList(sortedHabitAchievementDateList)
                 )
+                setCurrentMonthStatic()
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
             }
@@ -82,27 +86,96 @@ class DetailHistoryViewModel @Inject constructor(
         )
     }
 
+    private fun getAchievementDateWithStatusList(achievementDateList: List<LocalDate>): MutableMap<LocalDate, Status> {
+        val map = mutableMapOf<LocalDate, Status>()
+        var status = Status.SINGLE
+
+        for (index in achievementDateList.indices) {
+            if (index + 1 < achievementDateList.size) {
+                val current = achievementDateList[index]
+                val tomorrow = achievementDateList[index + 1]
+                when (status) {
+                    Status.SINGLE, Status.END -> {
+                        if (index + 2 < achievementDateList.size) {
+                            val afterTomorrow = achievementDateList[index + 2]
+                            if (current.plusDays(1) == tomorrow && current.plusDays(2) == afterTomorrow) {
+                                status = Status.START
+                                map[achievementDateList[index]] = status
+                                continue
+                            }
+                        }
+                        status = Status.SINGLE
+                    }
+                    Status.START -> {
+                        status = Status.BETWEEN
+                    }
+                    Status.BETWEEN -> {
+                        status = Status.END
+                    }
+                }
+
+                map[achievementDateList[index]] = status
+            } else {
+                when (status) {
+                    Status.START, Status.SINGLE, Status.END -> {
+                        map[achievementDateList[index]] = Status.SINGLE
+                    }
+                    Status.BETWEEN -> {
+                        map[achievementDateList[index]] = Status.END
+                    }
+                }
+            }
+        }
+
+        return map
+    }
+
+    private fun setCurrentMonthStatic() {
+        val achievements = state.value.achievementDateWithStatusList.filter {
+            it.key.monthValue == state.value.currentCalendarDate.monthValue
+        }.size
+        val claps = state.value.achievementDateWithStatusList.filter {
+            it.key.monthValue == state.value.currentCalendarDate.monthValue && it.value == Status.END
+        }.size
+        _state.value = _state.value.copy(
+            currentMonthStatic = MonthStatic(
+                achievements = achievements,
+                claps = claps
+            )
+        )
+    }
+
     data class State(
         val isInitialized: Boolean = false,
         val isAchievementInitialized: Boolean = false,
         val isOnlyListChanged: Boolean = false,
         val habit: SingleHabit = SingleHabit.EMPTY,
-        val achievementDateList: List<LocalDate> = emptyList(),
-        val today: LocalDateTime = LocalDateTime.now(),
+        val currentMonthStatic: MonthStatic = MonthStatic.EMPTY,
+        val achievementDateWithStatusList: Map<LocalDate, Status> = emptyMap(),
         val currentCalendarDate: LocalDate = LocalDate.now(),
+        val today: LocalDateTime = LocalDateTime.now(),
+        val achievementDateList: List<LocalDate> = emptyList(),
     ) {
         val daysAfterCreate: Int
             get() {
-                return ChronoUnit.DAYS.between(habit.createAt, today).toInt()
+                return (ChronoUnit.DAYS.between(habit.createAt, today).toInt() + 1)
             }
 
         val dayOfWeekText: String
             get() {
-                return if(habit.dayOfWeeks.size == 7) "매일"
-                else if (habit.dayOfWeeks.size == 5 && habit.dayOfWeeks.containsAll(listOf(DayOfWeek.MONDAY, DayOfWeek.THURSDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY))) {
+                return if (habit.dayOfWeeks.size == 7) "매일"
+                else if (habit.dayOfWeeks.size == 5 && habit.dayOfWeeks.containsAll(
+                        listOf(
+                            DayOfWeek.MONDAY,
+                            DayOfWeek.THURSDAY,
+                            DayOfWeek.WEDNESDAY,
+                            DayOfWeek.THURSDAY,
+                            DayOfWeek.FRIDAY
+                        )
+                    )
+                ) {
                     "평일"
-                }
-                else {
+                } else {
                     val formattedDayOfWeekList = habit.dayOfWeeks.map { dayOfWeek ->
                         when (dayOfWeek) {
                             DayOfWeek.MONDAY -> "월"
@@ -114,7 +187,7 @@ class DetailHistoryViewModel @Inject constructor(
                             DayOfWeek.SUNDAY -> "일"
                         }
                     }
-                    return formattedDayOfWeekList.joinToString(", " )
+                    return formattedDayOfWeekList.joinToString(", ")
                 }
             }
 
@@ -138,5 +211,17 @@ class DetailHistoryViewModel @Inject constructor(
                 } else
                     date.plusMonths(1)
             }
+    }
+
+    data class MonthStatic(
+        val claps: Int,
+        val achievements: Int
+    ) {
+        companion object {
+            val EMPTY = MonthStatic(
+                claps = 0,
+                achievements = 0
+            )
+        }
     }
 }

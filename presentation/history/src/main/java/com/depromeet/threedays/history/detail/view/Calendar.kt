@@ -54,7 +54,6 @@ class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = em
         continuousBgView.visibility = View.INVISIBLE
         leftSpaceView.visibility = View.INVISIBLE
         rightSpaceView.visibility = View.INVISIBLE
-        textView.setTextAppearance(designR.style.Typography_Calendar_10dp)
 
         val isExecuteDate = executeDateWithStatusList.any {
             val day = it.key
@@ -65,7 +64,6 @@ class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = em
             textView.setTextColor(context.getColorCompat(designR.color.gray_600))
 
             if (data.date == today) {
-                textView.setTextAppearance(designR.style.Typography_CalendarDay)
                 roundBgView.applyBackground(todayBackground)
             }
 
