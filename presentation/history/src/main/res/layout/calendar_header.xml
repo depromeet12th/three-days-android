@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -19,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/red_system_color"
-            android:textSize="14sp"
-            android:text="@string/sunday" />
+            android:text="@string/sunday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/red_system_color" />
 
         <TextView
             android:id="@+id/tv_monday"
@@ -29,53 +28,58 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/monday" />
+            android:text="@string/monday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
         <TextView
             android:id="@+id/tv_tuesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/tuesday" />
+            android:text="@string/tuesday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
         <TextView
             android:id="@+id/tv_wednesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/wednesday" />
+            android:text="@string/wednesday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
         <TextView
             android:id="@+id/tv_thursday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/thursday" />
+            android:text="@string/thursday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
         <TextView
             android:id="@+id/tv_friday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/friday" />
+            android:text="@string/friday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
         <TextView
             android:id="@+id/tv_saturday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray_500"
-            android:textSize="14sp"
-            android:text="@string/saturday" />
+            android:text="@string/saturday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
     </LinearLayout>
 </layout>

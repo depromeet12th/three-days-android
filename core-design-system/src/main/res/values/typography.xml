@@ -120,22 +120,4 @@
         <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
-
-    <!-- Calendar -->
-    <style name="Typography.Calendar">
-        <item name="fontFamily">@font/suit_semi_bold</item>
-    </style>
-    <style name="Typography.Calendar.11dp">
-        <item name="android:textSize" tools:ignore="SpUsage">11dp</item>
-        <item name="fontFamily">@font/suit_semi_bold</item>
-    </style>
-    <style name="Typography.Calendar.10dp">
-        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
-        <item name="fontFamily">@font/suit_semi_bold</item>
-    </style>
-
-    <style name="Typography.CalendarDay">
-        <item name="android:textSize" tools:ignore="SpUsage">10dp</item>
-        <item name="fontFamily">@font/suit_extra_bold</item>
-    </style>
 </resources>
