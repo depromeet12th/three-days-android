@@ -30,12 +30,7 @@ class HistoryViewModel @Inject constructor(
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    init {
-        fetchHabits()
-        fetchRecord()
-    }
-
-    private fun fetchHabits() {
+    fun fetchHabits() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
                 when(response.status) {
@@ -60,7 +55,7 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
-    private fun fetchRecord() {
+    fun fetchRecord() {
         val firstDayOfMonth = uiState.value.thisMonth.run {
             LocalDate.of(year, month, 1)
         }
