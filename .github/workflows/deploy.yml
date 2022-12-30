@@ -15,11 +15,9 @@ jobs:
           distribution: temurin
           java-version: 11
           cache: gradle
-      - name: Fetch credential file from secrets
-        uses: timheuer/base64-to-file@v1.2
-        with:
-          encodedString: ${{ secrets.DEBUG_KEYSTORE_FILE }}
-          fileName: 'debug.keystore'
+      - run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
+        env:
+          DEBUG_KEYSTORE_FILE: ${{ secrets.DEBUG_KEYSTORE_FILE }}
       - run: ls -al
       - name: Build
         run: chmod +x ./gradlew && ./gradlew :app::assembleAlpha --quiet
