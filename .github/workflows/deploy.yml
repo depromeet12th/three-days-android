@@ -23,15 +23,26 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Fetch keystore file from secrets
-        run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          encodedString: ${{ secrets.$DEBUG_KEYSTORE_FILE }}
+          fileName: 'debug.keystore'
       - name: Build
-        run: chmod +x ./gradlew && ./gradlew --quiet :app:assembleAlpha
+        uses: gradle/gradle-build-action@v2
         env:
           DEBUG_STORE_PASSWORD: ${{ secrets.DEBUG_STORE_PASSWORD }}
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
           DEBUG_KEY_ALIAS: ${{ secrets.DEBUG_KEY_ALIAS }}
+        with:
+          gradle-version: wrapper
+          arguments: |
+            :app:assembleAlpha
+            --quiet
       - name: Fetch credential file from secrets
-        run: echo $FIREBASE_CREDENTIAL_FILE | base64 -d > credential_file.json
+        uses: timheuer/base64-to-file@v1
+        with:
+          encodedString: ${{ secrets.$FIREBASE_CREDENTIAL_FILE }}
+          fileName: 'credential_file.json'
       - name: Upload artifact to Firebase Distribution using credential file
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.5
         with:
