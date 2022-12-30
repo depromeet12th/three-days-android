@@ -8,4 +8,5 @@ interface AuthRepository {
     suspend fun createMember(certificationSubject: AuthenticationProvider, socialToken: String): SignupMember
     fun saveTokensToLocal(tokens: Token)
     fun getAccessTokenFromLocal(): String
+    fun removeTokensFromLocal()
 }
