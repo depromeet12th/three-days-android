@@ -48,15 +48,19 @@
                 <TextView
                     android:id="@+id/tv_emoji"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23sp"
+                    android:layout_gravity="center"
                     android:textColor="@color/transparency_color"
-                    android:autoSizeTextType="uniform" />
+                    android:autoSizeTextType="uniform"
+                    tools:text="\uD83D\uDE00"/>
 
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
                     android:textAppearance="@style/Typography.Heading"
                     android:textColor="@color/gray_800"
                     tools:text="아침 챙겨먹기" />
