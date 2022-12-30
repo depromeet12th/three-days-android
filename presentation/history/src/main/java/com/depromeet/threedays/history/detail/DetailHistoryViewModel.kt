@@ -93,7 +93,7 @@ class DetailHistoryViewModel @Inject constructor(
     ) {
         val daysAfterCreate: Int
             get() {
-                return ChronoUnit.DAYS.between(habit.createAt, today).toInt()
+                return (ChronoUnit.DAYS.between(habit.createAt, today).toInt() + 1)
             }
 
         val dayOfWeekText: String
