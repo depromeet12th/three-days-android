@@ -160,6 +160,7 @@
             android:text="@string/step_2_button_text"
             android:textColor="@color/white"
             android:gravity="center"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/gl_begin"
             app:layout_constraintEnd_toEndOf="@id/gl_end" />

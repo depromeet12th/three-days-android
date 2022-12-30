@@ -332,6 +332,7 @@
             android:text="@string/create_habit"
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@color/white"
+            android:stateListAnimator="@null"
             app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

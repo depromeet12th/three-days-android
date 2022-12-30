@@ -125,6 +125,7 @@
                 android:text="@string/create_mate"
                 android:textAppearance="@style/Typography.Button1"
                 android:textColor="@color/white"
+                android:stateListAnimator="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide" />
@@ -223,6 +224,7 @@
                 android:text="@string/save_mate"
                 android:textAppearance="@style/Typography.Button1"
                 android:textColor="@color/white"
+                android:stateListAnimator="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/iv_illustration"/>
