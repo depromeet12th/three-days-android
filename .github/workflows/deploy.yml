@@ -5,33 +5,30 @@ on:
     branches:
       - develop
 jobs:
-  build:
+  deploy:
     name: Deploy debug app to firebase app distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
+          distribution: temurin
           java-version: 11
-      - name: Cache Gradle packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle
-      - name: Fetch keystore file from secrets
-        run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
+          cache: gradle
+      - run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
+        env:
+          DEBUG_KEYSTORE_FILE: ${{ secrets.DEBUG_KEYSTORE_FILE }}
       - name: Build
-        run: chmod +x ./gradlew && ./gradlew --quiet :app:assembleAlpha
+        run: chmod +x ./gradlew && ./gradlew :app::assembleAlpha --quiet
         env:
           DEBUG_STORE_PASSWORD: ${{ secrets.DEBUG_STORE_PASSWORD }}
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
           DEBUG_KEY_ALIAS: ${{ secrets.DEBUG_KEY_ALIAS }}
       - name: Fetch credential file from secrets
-        run: echo $FIREBASE_CREDENTIAL_FILE | base64 -d > credential_file.json
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          encodedString: ${{ secrets.FIREBASE_CREDENTIAL_FILE }}
+          fileName: 'credential_file.json'
       - name: Upload artifact to Firebase Distribution using credential file
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.5
         with:
@@ -39,5 +36,5 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           serviceCredentialsFile: credential_file.json
           groups: android
-          file: app/build/outputs/apk/debug/app-debug.apk
+          file: app/build/outputs/apk/alpha/app-alpha.apk
           debug: true
