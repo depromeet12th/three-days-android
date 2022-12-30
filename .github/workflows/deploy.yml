@@ -35,11 +35,11 @@ jobs:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
           DEBUG_KEY_ALIAS: ${{ secrets.DEBUG_KEY_ALIAS }}
         with:
+          filelocation: ${{ steps.write_file_debug_keystore.outputs.filePath }}
           gradle-version: wrapper
           arguments: |
             :app:assembleAlpha
             --quiet
-          filelocation: ${{ steps.write_file_debug_keystore.outputs.filePath }}
       - name: Fetch credential file from secrets
         uses: timheuer/base64-to-file@v1.2
         with:
