@@ -100,10 +100,11 @@ class DetailHistoryActivity :
     private fun observe() {
         viewModel.state
             .onEach { state ->
-                val (isInitialized, isAchievementInitialized, isOnlyListChanged, habit, achievementDateList) = state
+                val (isInitialized, isAchievementInitialized, isOnlyListChanged, habit, currentMonthStatic, achievementDateWithStatusList, currentCalendarDate) = state
                 if(isInitialized) {
                     if(isAchievementInitialized) {
-                        val achievementDateWithStatusList = getAchievementDateWithStatusList(achievementDateList).toMap()
+                        binding.tvClapCountOfMonth.text = String.format(getString(R.string.month_clap_count), currentCalendarDate.monthValue, currentMonthStatic.claps)
+                        binding.tvAchievementDayCountOfMonth.text = String.format(getString(R.string.month_achievement_day_count), currentCalendarDate.monthValue, currentMonthStatic.achievements)
 
                         if(!isOnlyListChanged) {
                             firstMonth = immutableCurrentMonth.minusMonths(
@@ -157,48 +158,7 @@ class DetailHistoryActivity :
         }
     }
 
-    private fun getAchievementDateWithStatusList(dateList: List<LocalDate>): MutableMap<LocalDate, Status> {
-        val periodList = mutableMapOf<LocalDate, Status>()
-        var status = Status.SINGLE
-        for (index in dateList.indices) {
-            if (index + 1 < dateList.size) {
-                val current = dateList[index]
-                val tomorrow = dateList[index + 1]
-                when (status) {
-                    Status.SINGLE, Status.END -> {
-                        if(index + 2 < dateList.size) {
-                            val afterTomorrow = dateList[index + 2]
-                            if (current.plusDays(1) == tomorrow && current.plusDays(2) == afterTomorrow) {
-                                status = Status.START
-                                periodList[dateList[index]] = status
-                                continue
-                            }
-                        }
-                        status = Status.SINGLE
-                    }
-                    Status.START -> {
-                        status = Status.BETWEEN
-                    }
-                    Status.BETWEEN -> {
-                        status = Status.END
-                    }
-                }
 
-                periodList[dateList[index]] = status
-            } else {
-                when (status) {
-                    Status.START, Status.SINGLE, Status.END -> {
-                        periodList[dateList[index]] = Status.SINGLE
-                    }
-                    Status.BETWEEN -> {
-                        periodList[dateList[index]] = Status.END
-                    }
-                }
-            }
-        }
-
-        return periodList
-    }
 
     private fun setColorView(color: Color) {
         val habitColor = this.getHabitColor(color)

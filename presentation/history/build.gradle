@@ -50,6 +50,8 @@ dependencies {
 
     implementation deps.calendar
 
+    implementation deps.timber
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

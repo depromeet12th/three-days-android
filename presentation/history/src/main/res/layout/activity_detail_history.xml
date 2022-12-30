@@ -49,18 +49,18 @@
                     android:id="@+id/tv_emoji"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="23sp"
                     android:layout_gravity="center"
-                    android:textColor="@color/transparency_color"
                     android:autoSizeTextType="uniform"
-                    tools:text="\uD83D\uDE00"/>
+                    android:textColor="@color/transparency_color"
+                    android:textSize="23sp"
+                    tools:text="\uD83D\uDE00" />
 
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
                     android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
                     android:textAppearance="@style/Typography.Heading"
                     android:textColor="@color/gray_800"
                     tools:text="아침 챙겨먹기" />
@@ -322,23 +322,23 @@
                 android:layout_height="6dp"
                 android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_rect_green50_r4"
-                app:layout_constraintBottom_toBottomOf="@id/tv_clap_description"
-                app:layout_constraintEnd_toStartOf="@id/tv_clap_description"
-                app:layout_constraintTop_toTopOf="@id/tv_clap_description" />
+                app:layout_constraintBottom_toBottomOf="@id/tv_clap_count_of_month"
+                app:layout_constraintEnd_toStartOf="@id/tv_clap_count_of_month"
+                app:layout_constraintTop_toTopOf="@id/tv_clap_count_of_month" />
 
             <TextView
-                android:id="@+id/tv_clap_description"
+                android:id="@+id/tv_clap_count_of_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="56dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
-                android:text="@string/month_clap_count_description"
                 android:textAppearance="@style/Typography.Body4"
                 android:textColor="@color/gray_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_divider_bottom" />
+                app:layout_constraintTop_toBottomOf="@+id/v_divider_bottom"
+                tools:text="@string/month_clap_count" />
 
             <View
                 android:id="@+id/v_single"
@@ -346,21 +346,21 @@
                 android:layout_height="6dp"
                 android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_single_selection"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_execute_day_description"
-                app:layout_constraintEnd_toStartOf="@id/tv_execute_day_description"
-                app:layout_constraintTop_toTopOf="@+id/tv_execute_day_description" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_achievement_day_count_of_month"
+                app:layout_constraintEnd_toStartOf="@id/tv_achievement_day_count_of_month"
+                app:layout_constraintTop_toTopOf="@+id/tv_achievement_day_count_of_month" />
 
             <TextView
-                android:id="@+id/tv_execute_day_description"
+                android:id="@+id/tv_achievement_day_count_of_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="37dp"
-                android:text="@string/month_execute_day_count_description"
                 android:textAppearance="@style/Typography.Body4"
                 android:textColor="@color/gray_500"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_clap_description"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_clap_count_of_month"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_clap_description" />
+                app:layout_constraintTop_toTopOf="@+id/tv_clap_count_of_month"
+                tools:text="@string/month_achievement_day_count" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

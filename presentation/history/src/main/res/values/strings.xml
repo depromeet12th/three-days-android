@@ -29,6 +29,6 @@
     <string name="thursday">목</string>
     <string name="friday">금</string>
     <string name="saturday">토</string>
-    <string name="month_clap_count_description">N월의 박수: N개</string>
-    <string name="month_execute_day_count_description">N월의 습관 실천일: N일</string>
+    <string name="month_clap_count">%d월의 박수: %d개</string>
+    <string name="month_achievement_day_count">%d월의 습관 실천일: %d일</string>
 </resources>
