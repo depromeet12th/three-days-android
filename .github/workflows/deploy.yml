@@ -17,7 +17,7 @@ jobs:
           distribution: temurin
           java-version: 11
           cache: gradle
-      - run: sed -i "s/threeDaysAppVersionCode [0-9]*/threeDaysAppVersionCode $((`sed -n 's/threeDaysAppVersionCode \([0-9]*\)/\1/p' build.gradle` + 1))/" build.gradle
+      - run: sed -i "s/threeDaysAppVersionCode = [0-9]*/threeDaysAppVersionCode = $((`sed -n 's/threeDaysAppVersionCode \([0-9]*\)/\1/p' build.gradle` + 1))/" build.gradle
       - run: "git config --global user.email \"depromeet12th.team8@gmail.com\""
       - run: "git config --global user.name \"depromeet-12th-team8\""
       - run: git add build.gradle
