@@ -25,7 +25,7 @@ jobs:
       - name: Fetch keystore file from secrets
         uses: timheuer/base64-to-file@v1
         with:
-          encodedString: ${{ secrets.$DEBUG_KEYSTORE_FILE }}
+          encodedString: ${{ secrets.DEBUG_KEYSTORE_FILE }}
           fileName: 'debug.keystore'
       - name: Build
         uses: gradle/gradle-build-action@v2
@@ -41,7 +41,7 @@ jobs:
       - name: Fetch credential file from secrets
         uses: timheuer/base64-to-file@v1
         with:
-          encodedString: ${{ secrets.$FIREBASE_CREDENTIAL_FILE }}
+          encodedString: ${{ secrets.FIREBASE_CREDENTIAL_FILE }}
           fileName: 'credential_file.json'
       - name: Upload artifact to Firebase Distribution using credential file
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.5
