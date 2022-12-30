@@ -111,7 +111,10 @@ class DetailHistoryActivity :
                                     habit.createAt,
                                     state.today
                                 )
-                            )
+                            ).also {
+                                binding.ivPrevious.isEnabled = (immutableCurrentMonth != it)
+                            }
+
                             initCalendar(
                                 color = habit.color,
                                 dateList = achievementDateWithStatusList,
