@@ -50,9 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:autoSizeTextType="uniform"
                     android:textColor="@color/transparency_color"
-                    android:textSize="23sp"
+                    android:textSize="20sp"
                     tools:text="\uD83D\uDE00" />
 
                 <TextView
@@ -60,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="7dp"
                     android:textAppearance="@style/Typography.Heading"
                     android:textColor="@color/gray_800"
                     tools:text="아침 챙겨먹기" />
