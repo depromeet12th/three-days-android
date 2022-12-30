@@ -15,8 +15,10 @@ jobs:
           distribution: temurin
           java-version: 11
           cache: gradle
+      - run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
+      - run: ls -al
       - name: Build
-        run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore && chmod +x ./gradlew && ./gradlew :app::assembleAlpha --quiet
+        run: chmod +x ./gradlew && ./gradlew :app::assembleAlpha --quiet
         env:
           DEBUG_STORE_PASSWORD: ${{ secrets.DEBUG_STORE_PASSWORD }}
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
