@@ -114,6 +114,7 @@
             android:text="@string/next"
             android:textAppearance="@style/Typography.Button2"
             android:textColor="@color/white"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_begin"

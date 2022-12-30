@@ -66,6 +66,7 @@
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@color/white"
             android:gravity="center"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
