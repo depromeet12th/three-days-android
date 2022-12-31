@@ -17,9 +17,9 @@ class AchievementRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun postHabitAchievement(
         habitId: Long,
-        request: AchievementDateEntity
+        achievementDateEntity: AchievementDateEntity
     ): ApiResponse<HabitEntity> {
-        return achievementService.postHabitAchievement(habitId = habitId, request = request)
+        return achievementService.postHabitAchievement(habitId = habitId, request = achievementDateEntity)
     }
 
     override suspend fun deleteHabitAchievement(
