@@ -235,7 +235,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginTop="18dp"
                         android:gravity="center"
                         android:text="@string/this_month_most_achieve_habit_guide"
                         android:textAppearance="@style/Typography.Paragraph3"
@@ -249,14 +249,13 @@
                         android:id="@+id/tv_most_achieve_habit_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="77dp"
                         android:text="@string/medicine"
                         android:textAppearance="@style/Typography.Body1"
-                        android:textSize="40sp"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:textSize="38sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/iv_emoji_shadow"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <ImageView
                         android:id="@+id/iv_emoji_shadow"
@@ -266,8 +265,7 @@
                         android:src="@drawable/ic_emoji_shadow"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_most_achieve_habit_icon"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_most_achieve_habit_icon" />
 
                     <TextView
                         android:id="@+id/tv_most_achieve_habit_title"
