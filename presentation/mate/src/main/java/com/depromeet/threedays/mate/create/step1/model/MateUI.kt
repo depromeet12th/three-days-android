@@ -2,6 +2,8 @@ package com.depromeet.threedays.mate.create.step1.model
 
 import com.depromeet.threedays.domain.entity.mate.Mate
 import com.depromeet.threedays.domain.entity.mate.MateType
+import com.depromeet.threedays.mate.MateImageResourceResolver
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import java.time.LocalDateTime
 
 data class MateUI(
@@ -18,10 +20,14 @@ data class MateUI(
     val levelUpSectioin: List<Int>?,
     val bubble: String,
     val status: String,
-) {
+) : MateImageResourceResolver {
     data class RewardHistoryUI(
         val createAt: LocalDateTime,
     )
+
+    override fun resolveMateImageResource(): Int {
+        return levelToResourceFunction(level)
+    }
 }
 
 fun Mate.toMateUI(): MateUI {
