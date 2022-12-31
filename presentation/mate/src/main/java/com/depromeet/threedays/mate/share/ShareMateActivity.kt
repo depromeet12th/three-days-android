@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -125,17 +127,22 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
     // 이 아래로는 인스타그램 스토리 공유 관련 코드
     private fun startInstagramIntent() {
         val bgBitmap = drawBackgroundBitmap()
-        val backgroundAssetUri = saveImageOnAboveAndroidQ(bgBitmap)
         val viewBitmap = drawViewBitmap()
-        val stickerAssetUri = saveImageOnAboveAndroidQ(viewBitmap)
 
-        val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
-            setDataAndType(backgroundAssetUri, "image/*")
-            putExtra("interactive_asset_uri", stickerAssetUri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setPackage("com.instagram.android")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val backgroundAssetUri = saveImageOnAboveAndroidQ(bgBitmap)
+            val stickerAssetUri = saveImageOnAboveAndroidQ(viewBitmap)
+
+            val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
+                setDataAndType(backgroundAssetUri, "image/*")
+                putExtra("interactive_asset_uri", stickerAssetUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.instagram.android")
+            }
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "준비중인 기능입니다.", Toast.LENGTH_SHORT).show()
         }
-        startActivity(intent)
     }
 
     // 화면에 나타난 View를 Bitmap에 그릴 용도.
@@ -146,8 +153,7 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
 
         val backgroundBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888) // 비트맵 생성
         val canvas = Canvas(backgroundBitmap) // 캔버스에 비트맵을 Mapping.
-
-        canvas.drawColor(com.depromeet.threedays.core_design_system.R.color.black) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
+        canvas.drawColor(ContextCompat.getColor(this, com.depromeet.threedays.core_design_system.R.color.black)) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
 
         return backgroundBitmap
     }
