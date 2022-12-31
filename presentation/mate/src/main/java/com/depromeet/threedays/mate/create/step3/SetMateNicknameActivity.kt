@@ -55,7 +55,7 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
         }
         binding.btnNext.setOnSingleClickListener {
             viewModel.createMate()
-            finish()
+            finishAffinity()
         }
     }
 

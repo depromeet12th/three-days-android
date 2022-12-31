@@ -62,15 +62,15 @@
             android:exported="false" />
 
         <activity android:name=".mate.create.step1.ConnectHabitActivity"
-            android:noHistory="true"
+            android:taskAffinity="com.depromeet.threedays.mate"
             android:exported="false" />
 
         <activity android:name=".mate.create.step2.ChooseMateTypeActivity"
-            android:noHistory="true"
+            android:taskAffinity="com.depromeet.threedays.mate"
             android:exported="false" />
 
         <activity android:name=".mate.create.step3.SetMateNicknameActivity"
-            android:noHistory="true"
+            android:taskAffinity="com.depromeet.threedays.mate"
             android:exported="false" />
 
         <activity android:name="com.depromeet.threedays.policy.PolicyActivity"
