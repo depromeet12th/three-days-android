@@ -9,15 +9,24 @@ class ConnectHabitAdapter(
     private val setHabitClickStatus: (HabitUI) -> Unit,
 ) : ListAdapter<HabitUI, ConnectHabitViewHolder>(DIFF_UTIL) {
     private var selectCheck = mutableListOf<Boolean>()
+    private var checkedItem = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ConnectHabitViewHolder.create(parent, false)
 
     override fun onBindViewHolder(holder: ConnectHabitViewHolder, position: Int) {
+        val realPosition = holder.bindingAdapterPosition
+
         holder.onBind(
             getItem(position),
-            selectCheck[position],
-            onRadioButtonClick = { selectCheck[position] = it },
+            selectCheck[realPosition],
+            onRadioButtonClick = {
+                selectCheck[checkedItem] = false
+                notifyItemChanged(checkedItem)
+
+                checkedItem = realPosition
+                selectCheck[realPosition] = true
+            },
             setHabitClickStatus = { setHabitClickStatus(it) }
         )
     }

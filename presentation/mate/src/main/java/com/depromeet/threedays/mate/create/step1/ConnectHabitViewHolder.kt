@@ -14,7 +14,7 @@ class ConnectHabitViewHolder(
     fun onBind(
         habitUI: HabitUI,
         selectCheck: Boolean,
-        onRadioButtonClick: (Boolean) -> Unit,
+        onRadioButtonClick: () -> Unit,
         setHabitClickStatus: (HabitUI) -> Unit,
     ) {
         binding.habitUI = habitUI
@@ -22,7 +22,7 @@ class ConnectHabitViewHolder(
             isChecked = selectCheck
             setOnSingleClickListener {
                 setHabitClickStatus(habitUI)
-                onRadioButtonClick(isChecked)
+                onRadioButtonClick()
             }
         }
     }
