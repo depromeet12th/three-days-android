@@ -154,15 +154,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvLevel.text = getString(R.string.level, it.level)
             binding.tvMateNickname.text = it.title
             binding.tvStartDate.text = getString(R.string.start_date_with_mate, it.createAt.toString().substring(0, 10).replace("-", "."))
-            binding.ivIllustration.setImageResource(
-                when(it.level) {
-                    1 -> core_design.drawable.bg_mate_level_1
-                    2 -> core_design.drawable.bg_mate_level_2
-                    3 -> core_design.drawable.bg_mate_level_3
-                    4 -> core_design.drawable.bg_mate_level_4
-                    else -> core_design.drawable.bg_mate_level_5
-                }
-            )
+            binding.ivIllustration.setImageResource(it.resolveMateImageResource())
 
             val clapCount = it.reward ?: 0
             val maxLevel = it.levelUpSectioin?.last() ?: 22
