@@ -4,20 +4,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.setOnSingleClickListener
-import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.databinding.ItemConnectHabitBinding
 
 class ConnectHabitViewHolder(
     private val binding: ItemConnectHabitBinding,
-    private val setHabitClickStatus: (HabitUI) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun onBind(habitUI: HabitUI) {
+    fun onBind(
+        habitUI: HabitUI,
+        selectCheck: Boolean,
+        onRadioButtonClick: (Boolean) -> Unit,
+        setHabitClickStatus: (HabitUI) -> Unit,
+    ) {
         binding.habitUI = habitUI
-        binding.clHabit.setOnSingleClickListener {
-            setHabitClickStatus(habitUI)
-            binding.clHabit.setBackgroundResource(R.drawable.bg_rect_gray_200_border_gray_400_r10)
+        binding.rbHabit.apply {
+            isChecked = selectCheck
+            setOnSingleClickListener {
+                setHabitClickStatus(habitUI)
+                onRadioButtonClick(isChecked)
+            }
         }
     }
 
@@ -25,12 +31,10 @@ class ConnectHabitViewHolder(
         fun create(
             parent: ViewGroup,
             attachToParent: Boolean,
-            setHabitClickStatus: (HabitUI) -> Unit,
         ) = ConnectHabitViewHolder(
             binding = ItemConnectHabitBinding.inflate(
                 LayoutInflater.from(parent.context), parent, attachToParent
-            ),
-            setHabitClickStatus = setHabitClickStatus,
+            )
         )
     }
 }

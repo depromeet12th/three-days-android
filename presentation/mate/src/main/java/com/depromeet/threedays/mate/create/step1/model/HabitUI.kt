@@ -10,7 +10,6 @@ data class HabitUI(
     val title: String,
     val imojiPath: String,
     val color: Color,
-    val clicked: Boolean = false
 ) : Parcelable
 
 fun Habit.toHabitUI(): HabitUI {
