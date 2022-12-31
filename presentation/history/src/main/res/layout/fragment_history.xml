@@ -251,11 +251,23 @@
                         android:layout_height="wrap_content"
                         android:text="@string/medicine"
                         android:textAppearance="@style/Typography.Body1"
-                        android:textSize="48sp"
+                        android:textSize="40sp"
+                        app:layout_constraintVertical_chainStyle="packed"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toTopOf="@id/iv_emoji_shadow"/>
+
+                    <ImageView
+                        android:id="@+id/iv_emoji_shadow"
+                        android:layout_width="50dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="6dp"
+                        android:src="@drawable/ic_emoji_shadow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_most_achieve_habit_icon"
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_most_achieve_habit_title"
