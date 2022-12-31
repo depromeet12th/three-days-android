@@ -8,6 +8,6 @@ import java.time.LocalDate
 
 interface AchievementRemoteDataSource {
     suspend fun getHabitAchievements(habitId: Long, from: LocalDate, to: LocalDate): List<AchievementEntity>
-    suspend fun postHabitAchievement(habitId: Long, request: AchievementDateEntity): ApiResponse<HabitEntity>
+    suspend fun postHabitAchievement(habitId: Long, achievementDateEntity: AchievementDateEntity): ApiResponse<HabitEntity>
     suspend fun deleteHabitAchievement(habitId: Long, habitAchievementId: Long): ApiResponse<HabitEntity>
 }

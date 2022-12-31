@@ -28,9 +28,11 @@ class AchievementRepositoryImpl @Inject constructor(
 
     override fun createHabitAchievement(habitId: Long): Flow<DataState<Habit>> = flow {
         emit(DataState.loading())
-        val nowDateTime = ZonedDateTime.now(ZoneId.systemDefault())
-        val nowDate = String.format("%d-%d-%d", nowDateTime.year, nowDateTime.monthValue, nowDateTime.dayOfMonth)
-        val response = achievementRemoteDataSource.postHabitAchievement(habitId, AchievementDateEntity(nowDate))
+        val localDate = ZonedDateTime.now(ZoneId.systemDefault()).toLocalDate()
+        val response = achievementRemoteDataSource.postHabitAchievement(
+            habitId  = habitId,
+            achievementDateEntity = AchievementDateEntity(localDate),
+        )
 
         if (response.data != null) {
             emit(DataState.success(data = response.data.toHabit() ))
