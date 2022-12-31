@@ -46,6 +46,7 @@ class ArchivedHabitViewHolder(
             with(archivedHabitUI.mate!!) {
                 binding.tvMateNickname.text = nickname
                 binding.tvMateLevelDescription.text = getLevelDescription()
+                binding.ivMateProfileImage.setImageResource(resolveMateImageResource())
             }
         } else {
             binding.clMateOpened.gone()

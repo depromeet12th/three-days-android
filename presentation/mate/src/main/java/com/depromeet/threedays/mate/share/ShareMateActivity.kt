@@ -21,6 +21,7 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.mate.R
+import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.mate.databinding.ActivityShareMateBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,13 +32,6 @@ import java.util.*
 @AndroidEntryPoint
 class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activity_share_mate) {
     private val viewModel by viewModels<ShareMateViewModel>()
-    val mates = listOf(
-        com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_1,
-        com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_2,
-        com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_3,
-        com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_4,
-        com.depromeet.threedays.core_design_system.R.drawable.bg_mate_level_5,
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,12 +58,12 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    if(it.singleHabit != null) {
+                    if (it.singleHabit != null) {
                         binding.singleHabit = it.singleHabit
-                        val mateLevel = it.singleHabit.mate?.level ?: 1
-                        binding.ivMate.setImageResource(
-                            mates[mateLevel]
-                        )
+                        it.singleHabit.mate?.run {
+                            val mageImageResourceId = this.toMateUI().resolveMateImageResource()
+                            binding.ivMate.setImageResource(mageImageResourceId)
+                        }
                     }
                     setScreenShotBackgroundColor(it.backgroundResId)
                 }
