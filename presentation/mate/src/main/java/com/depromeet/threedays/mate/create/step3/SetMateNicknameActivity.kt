@@ -87,4 +87,9 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
     private fun setAvailableInputLength(inputTextLength: String) {
         binding.tvCountNicknameLength.text = inputTextLength
     }
+
+    override fun onPause() {
+        super.onPause()
+        overridePendingTransition(0, 0)
+    }
 }

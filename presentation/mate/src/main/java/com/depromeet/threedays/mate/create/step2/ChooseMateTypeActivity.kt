@@ -53,6 +53,7 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                     "CARROT"
                 }
             )
+            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             startActivity(intent)
         }
     }
@@ -85,5 +86,10 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        overridePendingTransition(0, 0)
     }
 }
