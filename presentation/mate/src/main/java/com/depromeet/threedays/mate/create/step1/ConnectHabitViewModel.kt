@@ -54,16 +54,6 @@ class ConnectHabitViewModel @Inject constructor(
     }
 
     fun setHabitClickStatus(clickedHabit: HabitUI) {
-        // TODO: mock server에서 모든 id가 0으로 넘어오고 있음. api 변경 후 동작확인 필요 
-        
-        _habits.update { list ->
-            list.map {
-                it.copy(
-                    clicked = it.habitId == clickedHabit.habitId
-                )
-            }
-        }
-
         _uiState.update {
             it.copy(
                 clickedHabit = clickedHabit,

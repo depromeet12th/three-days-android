@@ -10,36 +10,22 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_habit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="18dp"
-        android:background="@drawable/bg_rect_gray100_r10">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_habit_emoji"
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/rb_habit"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Typography.Body1"
-            android:textColor="@color/gray_700"
-            android:text="@{habitUI.imojiPath}"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="18dp"
+            android:background="@drawable/selector_gray_100_r_10_gray_200_r_10"
+            android:button="@null"
+            android:text="@{habitUI.imojiPath + `  ` + habitUI.title}"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/medicine"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="(이모지) 점심직후 비타민"/>
 
-        <TextView
-            android:id="@+id/tv_habit_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textAppearance="@style/Typography.Body1"
-            android:textColor="@color/gray_700"
-            android:text="@{habitUI.title}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji"
-            tools:text="@string/habit_sample_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
