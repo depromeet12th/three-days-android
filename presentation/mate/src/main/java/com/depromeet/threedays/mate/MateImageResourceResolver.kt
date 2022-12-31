@@ -14,6 +14,8 @@ interface MateImageResourceResolver {
          */
         val levelToResourceFunction: (Int) -> Int = { level: Int ->
             when (level) {
+                // FIXME: 0 레벨 이미지 적용
+                0 -> R.drawable.bg_mate_level_1
                 1 -> R.drawable.bg_mate_level_1
                 2 -> R.drawable.bg_mate_level_2
                 3 -> R.drawable.bg_mate_level_3
