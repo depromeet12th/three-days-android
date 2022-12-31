@@ -63,7 +63,7 @@
                 android:id="@+id/group_has_mate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date, iv_illustration" />
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date, iv_illustration, iv_share, iv_delete, iv_tooltip" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_speech_bubble"
