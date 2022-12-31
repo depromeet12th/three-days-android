@@ -61,6 +61,7 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
         binding.btnNext.setOnSingleClickListener {
             val intent = Intent(this, ChooseMateTypeActivity::class.java)
             intent.putExtra("clickedHabit", viewModel.uiState.value.clickedHabit)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             startActivity(intent)
         }
     }
