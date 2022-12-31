@@ -62,7 +62,7 @@ class PolicyActivity : BaseActivity<ActivityPolicyBinding>(R.layout.activity_pol
         with(binding.webView.settings) {
             builtInZoomControls = true
             domStorageEnabled = true
-            javaScriptEnabled = false
+            javaScriptEnabled = true
             loadWithOverviewMode = true
             useWideViewPort = true
             loadsImagesAutomatically = true
