@@ -18,6 +18,7 @@ import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
 import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
+import com.depromeet.threedays.core_design_system.R as core_design
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -114,6 +115,27 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.tvThisMonthAchieveDaysTitle.text = getString(R.string.this_month_achieve_days_title, month)
     }
 
+    private fun setPreviousNextButtonState(
+        previousMonthClickable: Boolean,
+        nextMonthClickable: Boolean,
+    ) {
+        binding.ivPrevMonth.setImageResource(
+            if(previousMonthClickable) {
+                core_design.drawable.ic_left_arrow_default
+            } else {
+                core_design.drawable.ic_left_arrow_disable
+            }
+        )
+
+        binding.ivNextMonth.setImageResource(
+            if(nextMonthClickable) {
+                core_design.drawable.ic_right_arrow_default
+            } else {
+                core_design.drawable.ic_right_arrow_disable
+            }
+        )
+    }
+
     private fun setObserve() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -127,6 +149,10 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
                             emoji = it.emoji,
                             title = it.title,
                             cardBackgroundResId = it.cardBackgroundResId,
+                        )
+                        setPreviousNextButtonState(
+                            previousMonthClickable = it.previousMonthClickable,
+                            nextMonthClickable = it.nextMonthClickable,
                         )
                     }
                 }
