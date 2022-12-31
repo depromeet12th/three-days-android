@@ -70,7 +70,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             }
         }
         binding.btnCreateMate.setOnSingleClickListener {
-            startActivity(connectHabitNavigator.intent(requireContext()))
+            val intent = connectHabitNavigator.intent(requireContext())
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
         binding.ivShare.setOnSingleClickListener {
             val intent = Intent(requireActivity(), ShareMateActivity::class.java)
