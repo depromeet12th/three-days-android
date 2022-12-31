@@ -58,6 +58,8 @@ class PolicyActivity : BaseActivity<ActivityPolicyBinding>(R.layout.activity_pol
         binding.webView.loadUrl(webViewUrl)
     }
 
+    // XXX: xss 때문에 js 없이 정적페이지만 쓰는게 좋다고 하지만, notion 페이지 보여주려면 js 가 필요한상황
+    @Suppress("S6362")
     private fun webViewSetting() {
         with(binding.webView.settings) {
             builtInZoomControls = true
