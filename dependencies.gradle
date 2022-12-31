@@ -30,7 +30,8 @@ ext {
             "emoji"                 : "1.0.0-alpha03",
             "lottie"                : "5.2.0",
             "datastore"             : "1.0.0",
-            "ossLicenses"          : "17.0.0",
+            "ossLicenses"           : "17.0.0",
+            "facebook"              : "15.2.0",
     ]
     deps = [
             "kotlin"          : [
@@ -119,6 +120,7 @@ ext {
             "lottie"                       : "com.airbnb.android:lottie:${versions.lottie}",
             "splash"                       : "androidx.core:core-splashscreen:1.0.0",
             "ossLicenses"                  : "com.google.android.gms:play-services-oss-licenses:${versions.ossLicenses}",
+            "facebook"                     : "com.facebook.android:facebook-share:${versions.facebook}"
     ]
 
     coroutines = [
