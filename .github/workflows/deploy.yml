@@ -19,12 +19,6 @@ jobs:
           distribution: temurin
           java-version: 11
           cache: gradle
-      - run: sed -i "s/threeDaysAppVersionCode = [0-9]*/threeDaysAppVersionCode = $((`sed -n 's/threeDaysAppVersionCode = \([0-9]*\)/\1/p' build.gradle` + 1))/" build.gradle
-      - run: "git config --local user.email `git log -1 --format='%ae'`"
-      - run: "git config --local user.name `git log -1 --format='%an'`"
-      - run: git add build.gradle
-      - run: "git commit --amend --no-edit"
-      - run: git push -f origin HEAD
       - run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
         env:
           DEBUG_KEYSTORE_FILE: ${{ secrets.DEBUG_KEYSTORE_FILE }}
