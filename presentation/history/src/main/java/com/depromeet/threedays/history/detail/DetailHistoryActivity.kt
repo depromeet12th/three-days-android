@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.temporal.ChronoUnit
 import java.time.temporal.WeekFields
 import java.util.*
 import com.depromeet.threedays.core_design_system.R as designR
@@ -53,36 +52,17 @@ class DetailHistoryActivity :
 
     private fun initView() {
         binding.ivPrevious.setOnSingleClickListener {
-            binding.cvHistory.findFirstVisibleMonth()?.let {
-                binding.cvHistory.smoothScrollToMonth(it.yearMonth.previousMonth)
-                binding.tvToday.text = String.format(
-                    "%d년 %02d월",
-                    it.yearMonth.previousMonth.year,
-                    it.yearMonth.previousMonth.monthValue
-                )
-                viewModel.setCurrentCalendarDate(it.yearMonth.previousMonth.atDay(viewModel.state.value.today.dayOfMonth))
-                viewModel.getHabitAchievementDateList(viewModel.habitId)
-
-                binding.ivPrevious.isEnabled = (firstMonth != it.yearMonth.previousMonth)
-                binding.ivNext.isEnabled = (immutableCurrentMonth != it.yearMonth.previousMonth)
+            binding.cvHistory.findFirstVisibleMonth()?.let { calendarMonth ->
+                binding.cvHistory.smoothScrollToMonth(calendarMonth.yearMonth.previousMonth)
+                onCalendarMonthMoved(calendarMonth.yearMonth.nextMonth)
             }
         }
 
         binding.ivNext.isEnabled = false
         binding.ivNext.setOnSingleClickListener {
-            binding.cvHistory.findFirstVisibleMonth()?.let {
-                binding.cvHistory.smoothScrollToMonth(it.yearMonth.nextMonth)
-                binding.tvToday.text = String.format(
-                    "%d년 %02d월",
-                    it.yearMonth.nextMonth.year,
-                    it.yearMonth.nextMonth.monthValue
-                )
-
-                viewModel.setCurrentCalendarDate(it.yearMonth.nextMonth.atDay(viewModel.state.value.today.dayOfMonth))
-                viewModel.getHabitAchievementDateList(viewModel.habitId)
-
-                binding.ivPrevious.isEnabled = (firstMonth != it.yearMonth.nextMonth)
-                binding.ivNext.isEnabled = (immutableCurrentMonth != it.yearMonth.nextMonth)
+            binding.cvHistory.findFirstVisibleMonth()?.let { calendarMonth ->
+                binding.cvHistory.smoothScrollToMonth(calendarMonth.yearMonth.nextMonth)
+                onCalendarMonthMoved(calendarMonth.yearMonth.nextMonth)
             }
         }
 
@@ -107,20 +87,16 @@ class DetailHistoryActivity :
                         binding.tvAchievementDayCountOfMonth.text = String.format(getString(R.string.month_achievement_day_count), currentCalendarDate.monthValue, currentMonthStatic.achievements)
 
                         if(!isOnlyListChanged) {
-                            firstMonth = immutableCurrentMonth.minusMonths(
-                                ChronoUnit.MONTHS.between(
-                                    habit.createAt,
-                                    state.today
-                                )
-                            ).also {
-                                binding.ivPrevious.isEnabled = (immutableCurrentMonth != it)
+                            firstMonth = YearMonth.of(habit.createAt.year, habit.createAt.monthValue)
+                            .also { firstMonth ->
+                                binding.ivPrevious.isEnabled = (immutableCurrentMonth != firstMonth)
                             }
 
                             initCalendar(
                                 color = habit.color,
                                 dateList = achievementDateWithStatusList,
                                 firstMonth = firstMonth,
-                                lastMonth = immutableCurrentMonth.plusMonths(0)
+                                lastMonth = immutableCurrentMonth
                             )
                             viewModel.setIsOnlyListChanged(true)
                         }
@@ -148,17 +124,25 @@ class DetailHistoryActivity :
             cvHistory.dayBinder = DayBind.newInstance(dateList, color)
             cvHistory.setup(firstMonth, lastMonth, firstDayOfWeek)
             cvHistory.scrollToMonth(immutableCurrentMonth)
-            cvHistory.monthScrollListener = { calendar ->
-                binding.tvToday.text = String.format(
-                    "%d년 %02d월",
-                    calendar.yearMonth.year,
-                    calendar.yearMonth.monthValue
-                )
+            cvHistory.monthScrollListener = { calendarMonth ->
+                onCalendarMonthMoved(calendarMonth.yearMonth)
             }
         }
     }
 
+    private fun onCalendarMonthMoved(now: YearMonth) {
+        binding.tvToday.text = String.format(
+            "%d년 %02d월",
+            now.year,
+            now.monthValue
+        )
 
+        viewModel.setCurrentCalendarDate(now.atDay(viewModel.state.value.today.dayOfMonth))
+        viewModel.getHabitAchievementDateList(viewModel.habitId)
+
+        binding.ivPrevious.isEnabled = (firstMonth != now)
+        binding.ivNext.isEnabled = (immutableCurrentMonth != now)
+    }
 
     private fun setColorView(color: Color) {
         val habitColor = this.getHabitColor(color)
