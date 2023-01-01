@@ -24,6 +24,11 @@ abstract class RepositoryModule {
         repository: OnboardingRepositoryImpl,
     ): OnboardingRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindsMaxLevelMateRepository(
+        repository: MaxLevelMateRepositoryImpl,
+    ): MaxLevelMateRepository
 
     // Remote
     @Binds
