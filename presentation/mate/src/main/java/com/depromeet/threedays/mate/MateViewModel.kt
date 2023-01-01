@@ -68,6 +68,7 @@ class MateViewModel @Inject constructor(
                         myMate?.let {
                             fetchHabit(it.habitId)
                         }
+                        checkMateAchieveMaxLevel(uiState.value.mate)
                     }
                     Status.ERROR -> {
 
@@ -191,8 +192,23 @@ class MateViewModel @Inject constructor(
         )
     }
 
+    private fun checkMateAchieveMaxLevel(mate: MateUI?) {
+        mate?.let {
+            if((mate.levelUpSectioin?.last() ?: MATE_MAX_CLAP) == mate.reward) {
+                viewModelScope.launch {
+                    _uiEffect.emit(
+                        UiEffect.ShowAchieveMaxLevel(
+                            mateLevel = mate.level
+                        )
+                    )
+                }
+            }
+        }
+    }
+
     companion object {
         private const val IS_FIRST_VISIT_ONBOARDING_MATE = "IS_FIRST_VISIT_ONBOARDING_MATE"
+        private const val MATE_MAX_CLAP = 22
     }
 }
 
@@ -206,4 +222,7 @@ data class UiState(
 
 sealed interface UiEffect {
     data class ShowToastMessage(val resId: Int) : UiEffect
+    data class ShowAchieveMaxLevel(
+        val mateLevel: Int
+    ) : UiEffect
 }

@@ -16,7 +16,9 @@ import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
@@ -127,6 +129,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     viewModel.uiEffect.collect {
                         when(it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
+                            is UiEffect.ShowAchieveMaxLevel -> showAchieveMaxLevel(it.mateLevel)
                         }
                     }
                 }
@@ -158,9 +161,22 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
             val clapCount = it.reward ?: 0
             val maxLevel = it.levelUpSectioin?.last() ?: 22
-            binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
             binding.tvClapCount.text = "${clapCount}개"
             binding.tvMaxLevel.text = "${maxLevel}개"
+
+            val isMaxLevel = (mateUI.levelUpSectioin?.last() ?: 22) == mateUI.reward
+            if(isMaxLevel) {
+                binding.tvNextLevelGuide.text = if(mateUI.characterType == MateType.CARROT) {
+                    getString(R.string.max_level_carrot_mate_guide)
+                } else {
+                    getString(R.string.max_level_whip_mate_guide)
+                }
+            } else {
+                binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
+            }
+
+            binding.groupAchieveMaxLevel.isVisible = isMaxLevel
+            binding.groupSpeechBubble.isVisible = isMaxLevel.not()
         }
     }
 
@@ -190,5 +206,16 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     private fun showDeleteSuccessMessage(resId: Int) {
         ThreeDaysToast().show(requireActivity(), getString(resId))
+    }
+
+    private fun showAchieveMaxLevel(
+        mateLevel: Int,
+    ) {
+        ThreeDaysNoButtonDialogFragment(
+            resId = levelToResourceFunction(mateLevel),
+            content = "최종 레벨 달성"
+        ).show(
+            parentFragmentManager, ThreeDaysNoButtonDialogFragment.TAG
+        )
     }
 }
