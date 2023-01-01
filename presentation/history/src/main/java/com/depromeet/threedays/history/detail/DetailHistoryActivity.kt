@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.temporal.ChronoUnit
 import java.time.temporal.WeekFields
 import java.util.*
 import com.depromeet.threedays.core_design_system.R as designR
@@ -107,20 +106,16 @@ class DetailHistoryActivity :
                         binding.tvAchievementDayCountOfMonth.text = String.format(getString(R.string.month_achievement_day_count), currentCalendarDate.monthValue, currentMonthStatic.achievements)
 
                         if(!isOnlyListChanged) {
-                            firstMonth = immutableCurrentMonth.minusMonths(
-                                ChronoUnit.MONTHS.between(
-                                    habit.createAt,
-                                    state.today
-                                )
-                            ).also {
-                                binding.ivPrevious.isEnabled = (immutableCurrentMonth != it)
+                            firstMonth = YearMonth.of(habit.createAt.year, habit.createAt.monthValue)
+                            .also { firstMonth ->
+                                binding.ivPrevious.isEnabled = (immutableCurrentMonth != firstMonth)
                             }
 
                             initCalendar(
                                 color = habit.color,
                                 dateList = achievementDateWithStatusList,
                                 firstMonth = firstMonth,
-                                lastMonth = immutableCurrentMonth.plusMonths(0)
+                                lastMonth = immutableCurrentMonth
                             )
                             viewModel.setIsOnlyListChanged(true)
                         }
