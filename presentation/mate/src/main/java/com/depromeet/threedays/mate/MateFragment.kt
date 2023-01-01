@@ -23,6 +23,7 @@ import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
+import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,6 +39,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
+
+    @Inject
+    lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
     override fun onResume() {
         super.onResume()
@@ -105,6 +109,18 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     onPositiveAction = {
                         viewModel.deleteMate()
                     }
+                )
+            ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+        }
+        binding.btnSaveMate.setOnSingleClickListener {
+            ThreeDaysDialogFragment.newInstance(
+                data = DialogInfo.EMPTY.copy(
+                    onPositiveAction = { startActivity(archivedHabitNavigator.intent(requireContext())) },
+                    iconResId = com.depromeet.threedays.core_design_system.R.drawable.ic_star_check,
+                    title = getString(R.string.max_level_dialog_title),
+                    description = getString(R.string.max_level_dialog_description, viewModel.uiState.value.mate?.level ?: 0),
+                    confirmText = getString(R.string.going_to_see),
+                    buttonTopMargin = 30f
                 )
             ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
         }
