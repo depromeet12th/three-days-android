@@ -17,8 +17,4 @@ jobs:
       - run: git config --local user.name `git log -1 --format='%an'`
       - run: git add build.gradle
       - run: "git commit -m \"docs: Increment version code\""
-      - run: |
-        # Get the current branch name
-        BRANCH_NAME=$(echo "$GITHUB_REF" | sed 's|refs/heads/||')
-        # Push the current branch to the origin remote repository
-        git push origin $BRANCH_NAME
+      - run: git push origin `echo $GITHUB_REF | sed 's|refs/heads/||'`
