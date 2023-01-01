@@ -53,4 +53,8 @@ class ThreeDaysNoButtonDialogFragment(val resId: Int, val content: String) : Dia
         super.onDestroyView()
         _binding = null
     }
+
+    companion object {
+        const val TAG = "ThreeDaysNoButtonDialogFragment"
+    }
 }

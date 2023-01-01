@@ -14,12 +14,32 @@
         tools:ignore="ContentDescription">
 
         <TextView
+            android:id="@+id/iv_icon"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="40dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tv_emoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:textColor="#FF000000"
             android:textSize="54sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/space_emoji_area"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="40dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +55,7 @@
             android:textColor="@color/gray_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_emoji"
+            app:layout_constraintTop_toBottomOf="@+id/space_emoji_area"
             tools:text="작성중인 내용이 있어요\n나가시겠어요?" />
 
         <TextView
