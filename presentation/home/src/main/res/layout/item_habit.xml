@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="habitUI"
+            type="com.depromeet.threedays.home.home.model.HabitUI" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rect_white_r20"
+        android:paddingBottom="20dp">
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{habitUI.mate == null ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="tv_pipe_2, tv_mate" />
+
+        <TextView
+            android:id="@+id/tv_habit_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="6dp"
+            android:text="@{habitUI.imojiPath}"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@+id/tv_habit"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/medicine" />
+
+        <TextView
+            android:id="@+id/tv_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{habitUI.title}"
+            android:textAppearance="@style/Typography.Title1"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji"
+            app:layout_constraintTop_toTopOf="@+id/tv_habit_emoji"
+            tools:text="영어 공부 1시간 하기" />
+
+        <ImageView
+            android:id="@+id/iv_clap"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/ic_clap"
+            android:backgroundTint="@color/gray_450"
+            app:layout_constraintEnd_toStartOf="@+id/tv_habit_reward"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_habit" />
+
+        <TextView
+            android:id="@+id/tv_habit_reward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{Integer.toString(habitUI.reward) + `개`}"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_clap"
+            app:layout_constraintEnd_toStartOf="@+id/view_pipe"
+            app:layout_constraintStart_toEndOf="@+id/iv_clap"
+            app:layout_constraintTop_toTopOf="@+id/iv_clap"
+            tools:text="5개" />
+
+        <View
+            android:id="@+id/view_pipe"
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_habit_reward"
+            app:layout_constraintEnd_toStartOf="@+id/tv_habit_day_of_week"
+            app:layout_constraintStart_toEndOf="@+id/tv_habit_reward"
+            app:layout_constraintTop_toTopOf="@+id/tv_habit_reward" />
+
+        <TextView
+            android:id="@+id/tv_habit_day_of_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/Typography.Body4.Medium"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/view_pipe"
+            app:layout_constraintEnd_toStartOf="@+id/tv_pipe_2"
+            app:layout_constraintStart_toEndOf="@+id/view_pipe"
+            app:layout_constraintTop_toTopOf="@+id/view_pipe"
+            tools:text="월,수,금" />
+
+        <View
+            android:id="@+id/tv_pipe_2"
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_habit_day_of_week"
+            app:layout_constraintEnd_toStartOf="@+id/tv_mate"
+            app:layout_constraintStart_toEndOf="@+id/tv_habit_day_of_week"
+            app:layout_constraintTop_toTopOf="@id/tv_habit_day_of_week" />
+
+        <TextView
+            android:id="@+id/tv_mate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rect_gray200_r4"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="4dp"
+            android:text="@string/mate"
+            android:textAppearance="@style/Typography.Body4.SemiBold"
+            android:textColor="@color/gray_500"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pipe_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_pipe_2"
+            app:layout_constraintTop_toTopOf="@id/tv_pipe_2" />
+
+        <ImageView
+            android:id="@+id/iv_first_day"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_oval_gray"
+            app:layout_constraintEnd_toStartOf="@+id/iv_second_day"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_habit_day_of_week" />
+
+        <ImageView
+            android:id="@+id/iv_second_day"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_oval_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
+            app:layout_constraintEnd_toStartOf="@+id/iv_third_day"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_first_day" />
+
+        <ImageView
+            android:id="@+id/iv_third_day"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_oval_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_second_day" />
+
+        <TextView
+            android:id="@+id/tv_first_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAppearance="@style/Typography.Title1"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_first_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_first_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_first_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_first_day"
+            tools:textColor="@color/green_50" />
+
+        <TextView
+            android:id="@+id/tv_second_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textAppearance="@style/Typography.Title1"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_second_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_second_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_second_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_second_day"
+            tools:textColor="@color/green_50" />
+
+        <TextView
+            android:id="@+id/tv_third_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textAppearance="@style/Typography.Title1"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_third_day"
+            app:layout_constraintEnd_toEndOf="@+id/iv_third_day"
+            app:layout_constraintStart_toStartOf="@+id/iv_third_day"
+            app:layout_constraintTop_toTopOf="@+id/iv_third_day"
+            tools:textColor="@color/green_50" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

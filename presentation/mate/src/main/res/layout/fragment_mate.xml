@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".HistoryFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_begin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_of_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="73dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_mock_bottom_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="108dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_of_30_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_no_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="iv_no_mate_illustration, tv_create_mate_guide, btn_create_mate" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_has_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon, tv_level, tv_mate_nickname, tv_start_date, iv_illustration, iv_share, iv_delete, iv_tooltip" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_speech_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_achieve_max_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tv_achieve_max_level, btn_save_mate" />
+
+            <TextView
+                android:id="@+id/tv_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/mate"
+                android:textAppearance="@style/Typography.Heading"
+                android:textColor="@color/gray_800"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 짝꿍이 없을 때 -->
+            <ImageView
+                android:id="@+id/iv_no_mate_illustration"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:src="@drawable/bg_help_mate_image"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/gl_top_of_30_percent" />
+
+            <TextView
+                android:id="@+id/tv_create_mate_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/create_mate_guide"
+                android:textAppearance="@style/Typography.Paragraph3"
+                android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_no_mate_illustration" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_rect_gray800_r30"
+                android:gravity="center"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:text="@string/create_mate"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_create_mate_guide" />
+
+            <!-- 짝꿍이 있을 때-->
+            <ImageView
+                android:id="@+id/iv_tooltip"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_tooltip"
+                app:layout_constraintBottom_toBottomOf="@id/tv_mate"
+                app:layout_constraintStart_toEndOf="@id/tv_mate"
+                app:layout_constraintTop_toTopOf="@id/tv_mate" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_tooltip"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_rect_white_r10"
+                android:elevation="2dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mate">
+
+                <TextView
+                    android:id="@+id/tv_tooltip_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:elevation="8dp"
+                    android:text="@string/clap_guide_title"
+                    android:textAppearance="@style/Typography.SubTitle"
+                    android:textColor="@color/gray_800"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_tooltip_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:elevation="8dp"
+                    android:minLines="3"
+                    android:text="@string/clap_guide_content"
+                    android:textAppearance="@style/Typography.Paragraph3"
+                    android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
+                    android:textColor="@color/gray_600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tooltip_title" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mate"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintTop_toTopOf="@id/tv_mate" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_share"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mate"
+                app:layout_constraintEnd_toStartOf="@+id/iv_delete"
+                app:layout_constraintTop_toTopOf="@id/tv_mate" />
+
+            <TextView
+                android:id="@+id/tv_achieve_max_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/achieve_max_level"
+                android:textAppearance="@style/Typography.Display2"
+                android:textColor="@color/gray_600"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_save_mate" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_save_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:background="@drawable/bg_rect_gray800_r30"
+                android:gravity="center"
+                android:paddingHorizontal="44dp"
+                android:paddingVertical="14dp"
+                android:text="@string/save_mate"
+                android:textAppearance="@style/Typography.Button1"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/iv_illustration"/>
+
+            <TextView
+                android:id="@+id/tv_speech_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/bg_rect_white_r15"
+                android:gravity="center"
+                android:maxLines="2"
+                android:paddingHorizontal="28dp"
+                android:paddingVertical="20dp"
+                android:text="안녕하세요 오늘은 어떤 하루를\n보내고 있으신가요오오오?"
+                android:textAppearance="@style/Typography.Display2"
+                android:textColor="@color/gray_600"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toTopOf="@+id/iv_polygon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gl_bottom_of_toolbar"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <ImageView
+                android:id="@+id/iv_polygon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_polygon"
+                android:translationY="-8dp"
+                app:layout_constraintBottom_toTopOf="@+id/iv_illustration"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_speech_bubble" />
+
+            <ImageView
+                android:id="@+id/iv_illustration"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                tools:background="@drawable/bg_mate_level_1"
+                app:layout_constraintBottom_toTopOf="@+id/gl_mock_bottom_sheet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gl_bottom_of_toolbar" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_rect_green50_r10"
+                android:fontFamily="@font/suit_bold"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="Lv. 2"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
+
+            <TextView
+                android:id="@+id/tv_mate_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/mate_nickname_sample"
+                android:textAppearance="@style/Typography.Title1"
+                android:textColor="@color/gray_800"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_level" />
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/start_date_with_mate"
+                android:textAppearance="@style/Typography.Body4.Medium"
+                android:textColor="@color/gray_450"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_begin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mate_nickname" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Persistent Bottom Sheet -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="352dp"
+            android:background="@drawable/bg_rect_white_top_r15"
+            app:behavior_halfExpandedRatio="0.5"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="108dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <ImageView
+                android:id="@+id/iv_arrow_up"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_arrow_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_habit_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/medicine"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_700"
+                app:layout_constraintEnd_toStartOf="@+id/tv_habit_title"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_habit_title" />
+
+            <TextView
+                android:id="@+id/tv_habit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/habit_sample_title"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_800"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji"
+                app:layout_constraintTop_toBottomOf="@id/iv_arrow_up" />
+
+            <TextView
+                android:id="@+id/tv_next_level_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/next_level_guide"
+                android:textAppearance="@style/Typography.Body4.Medium"
+                android:textColor="@color/gray_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_habit_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_clap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginHorizontal="34dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_next_level_guide"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_clap"
+                app:layout_constraintEnd_toEndOf="@id/rv_clap">
+
+                <TextView
+                    android:id="@+id/tv_clap_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Typography.Body3"
+                    android:textColor="@color/gray_500"
+                    tools:text="6개" />
+
+                <TextView
+                    android:id="@+id/tv_slash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/slash"
+                    android:textAppearance="@style/Typography.Body3"
+                    android:textColor="@color/gray_400" />
+
+                <TextView
+                    android:id="@+id/tv_max_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Typography.Body3"
+                    android:textColor="@color/gray_400"
+                    tools:text="22개" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

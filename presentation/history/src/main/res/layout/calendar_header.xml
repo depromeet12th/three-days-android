@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_legend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:id="@+id/tv_sunday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/sunday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/red_system_color" />
+
+        <TextView
+            android:id="@+id/tv_monday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/monday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
+        <TextView
+            android:id="@+id/tv_tuesday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tuesday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
+        <TextView
+            android:id="@+id/tv_wednesday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/wednesday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
+        <TextView
+            android:id="@+id/tv_thursday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
+        <TextView
+            android:id="@+id/tv_friday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/friday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+
+        <TextView
+            android:id="@+id/tv_saturday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/saturday"
+            android:textAppearance="@style/Typography.Caption"
+            android:textColor="@color/gray_500" />
+    </LinearLayout>
+</layout>

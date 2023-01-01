@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.depromeet.threedays">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".ThreeDaysApplication"
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ThreeDays"
+        tools:targetApi="31">
+
+        <activity
+            android:name="com.depromeet.threedays.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.depromeet.threedays.home.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.create.create.HabitCreateActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.create.update.HabitUpdateActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.history.detail.DetailHistoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.notification.NotificationHistoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.mate.share.ShareMateActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.onboarding.OnboardingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
+            android:exported="false" />
+
+        <activity android:name=".mate.create.step1.ConnectHabitActivity"
+            android:taskAffinity="com.depromeet.threedays.mate"
+            android:exported="false" />
+
+        <activity android:name=".mate.create.step2.ChooseMateTypeActivity"
+            android:taskAffinity="com.depromeet.threedays.mate"
+            android:exported="false" />
+
+        <activity android:name=".mate.create.step3.SetMateNicknameActivity"
+            android:taskAffinity="com.depromeet.threedays.mate"
+            android:exported="false" />
+
+        <activity android:name="com.depromeet.threedays.policy.PolicyActivity"
+            android:exported="false" />
+
+        <activity android:name=".signup.SignupActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakaof0c0458b5837b0f245c73b5a22908319" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".firebase.FCMService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

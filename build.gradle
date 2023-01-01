@@ -1,0 +1,38 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    apply from: 'dependencies.gradle'
+
+    dependencies {
+        //classpath 'org.jlleitschuh.gradle:ktlint-gradle:10.3.0'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'
+        classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
+    }
+
+    ext {
+        threeDaysApplicationId = "com.depromeet.threedays"
+        threeDaysAppVersionCode = 15
+        threeDaysAppVersionName = "0.0.1"
+    }
+}
+
+plugins {
+    id 'com.android.application' version '7.3.0' apply false
+    id 'com.android.library' version '7.3.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id "org.sonarqube" version "3.4.0.2513"
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "depromeet12th_three-days-android"
+        property "sonar.organization", "depromeet12th"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}

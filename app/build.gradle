@@ -1,0 +1,96 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+    id 'com.google.android.gms.oss-licenses-plugin'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        applicationId rootProject.ext.threeDaysApplicationId
+        minSdk 26
+        targetSdk 33
+        versionCode rootProject.ext.threeDaysAppVersionCode
+        versionName rootProject.ext.threeDaysAppVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        ciDebug {
+            storeFile file("$project.rootDir/debug.keystore")
+            storePassword System.getenv('DEBUG_STORE_PASSWORD')
+            keyPassword System.getenv('DEBUG_KEY_PASSWORD')
+            keyAlias System.getenv('DEBUG_KEY_ALIAS')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        alpha {
+            initWith debug
+            signingConfig signingConfigs.ciDebug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":core"))
+    implementation(project(":navigator"))
+    implementation(project(":presentation:home"))
+    implementation(project(":presentation:create"))
+    implementation(project(":presentation:history"))
+    implementation(project(":presentation:notification"))
+    implementation(project(":presentation:mate"))
+    implementation(project(":presentation:onboarding"))
+    implementation(project(":presentation:mypage"))
+    implementation(project(":presentation:splash"))
+    implementation(project(":presentation:policy"))
+    implementation(project(":presentation:signup"))
+
+    implementation(jetpackDeps)
+    implementation(coroutines)
+
+    implementation platform(deps.firebaseBom)
+    implementation(firebaseDeps)
+
+    implementation deps.hilt.core
+    kapt deps.hilt.compiler
+
+    implementation deps.glide.core
+    implementation deps.glide.okhttp
+    kapt deps.glide.compiler
+
+    implementation deps.gson
+    implementation deps.splashscreen
+    implementation deps.ossLicenses
+
+    implementation deps.login.kakao
+
+    implementation deps.timber
+
+    testImplementation(testDeps)
+    androidTestImplementation(androidTestDeps)
+}

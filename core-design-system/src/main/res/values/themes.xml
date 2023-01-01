@@ -1,0 +1,33 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.ThreeDays" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/press</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_50</item>
+        <item name="colorSecondaryVariant">@color/blue_10</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/gray_background</item>
+        <!-- Customize your theme here. -->
+
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="RoundCornerBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/RoundCornerModalStyle</item>
+    </style>
+
+    <style name="RoundCornerModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_rect_white_top_r20</item>
+    </style>
+
+    <style name="ThreeDaysTimePickerTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlNormal">@color/gray_400</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColorPrimary">@color/gray_800</item>
+        <item name="android:textAppearance">@style/Typography.Body1</item>
+    </style>
+</resources>

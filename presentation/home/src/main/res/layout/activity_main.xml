@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <FrameLayout
+            android:id="@+id/fl_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bnv_main"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_100"
+            app:layout_constraintBottom_toTopOf="@+id/bnv_main"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnv_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:labelVisibilityMode="labeled"
+            app:elevation="0dp"
+            app:itemIconTint="@drawable/selector_menu_color"
+            app:itemTextColor="@drawable/selector_menu_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_nav_menu"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/congratulation_animation_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_background_for_animation, lottie_clap, tv_congratulation_for_third_clap" />
+
+        <View
+            android:id="@+id/view_background_for_animation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#99121213"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_clap"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toTopOf="@+id/tv_congratulation_for_third_clap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:lottie_rawRes="@raw/lottie_clap" />
+
+        <TextView
+            android:id="@+id/tv_congratulation_for_third_clap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/congratulation_for_third_clap"
+            android:textAppearance="@style/Typography.Display2"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lottie_clap"
+            app:layout_constraintStart_toStartOf="@+id/lottie_clap"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_clap" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

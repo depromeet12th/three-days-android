@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <TextView
+            android:id="@+id/tv_noti_guide_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="@string/noti_guide_title"
+            android:textAppearance="@style/Typography.Heading"
+            android:textColor="@color/gray_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_noti_guide_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/noti_guide_sub_title"
+            android:textAppearance="@style/Typography.Paragraph2"
+            android:lineSpacingExtra="@dimen/Typography.Paragraph2.LineSpacingExtra"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_noti_guide_title" />
+
+        <ImageView
+            android:id="@+id/iv_noti_guide_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/bg_noti_guide_box"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_noti_guide_sub_title" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_rect_gray200_r10"
+            android:gravity="center"
+            android:text="@string/close"
+            android:textAppearance="@style/Typography.Button2"
+            android:textColor="@color/gray_600"
+            app:layout_constraintEnd_toStartOf="@+id/tv_noti_on"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@+id/iv_noti_guide_box" />
+
+        <TextView
+            android:id="@+id/tv_noti_on"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_rect_gray800_r10"
+            android:gravity="center"
+            android:text="@string/noti_on"
+            android:textAppearance="@style/Typography.Button2"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_cancel"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/tv_cancel"
+            app:layout_constraintTop_toTopOf="@+id/tv_cancel" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

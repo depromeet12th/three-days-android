@@ -1,0 +1,31 @@
+<resources>
+    <string name="create_habit">습관 만들기</string>
+    <string name="noti_guide_title">기기 알림을 켜주세요!</string>
+    <string name="noti_guide_sub_title">알림을 켜면 짝심삼일의\n모든 알림을 받아볼 수 있어요.</string>
+    <string name="close">닫기</string>
+    <string name="noti_on">알림켜기</string>
+    <string name="edit">수정하기</string>
+    <string name="delete">삭제하기</string>
+
+    <!-- 홈에서 사용하는 다이얼로그 -->
+    <string name="delete_dialog_title">습관을 삭제하시겠어요?</string>
+    <string name="delete_dialog_cancel_text">아니요</string>
+    <string name="delete_dialog_confirm_text">삭제할래요</string>
+    <string name="habit_delete_success_message">습관이 삭제됐어요.</string>
+    <string name="delete_dialog_description_has_achievement">실천 기록이 있는 습관은 삭제 후\n보관함으로 이동돼요.</string>
+    <string name="delete_dialog_description_connected_mate">삭제된 습관과 짝꿍은 보관함에서\n확인할 수 있어요.</string>
+    <string name="delete_dialog_title_connected_mate">짝꿍과 연결된 습관이예요.\n삭제하시겠어요?</string>
+
+    <!-- 홈에서 사용하는 스낵바 -->
+    <string name="move">이동</string>
+    <string name="snack_bar_text_has_achievement">습관이 홈에서 삭제됐어요.\n실천 기록이 있어 보관함으로 이동됐어요.</string>
+    <string name="snack_bar_text_connected_mate">습관이 홈에서 삭제됐어요.\n짝꿍과 실천 기록은 보관함으로 이동됐어요.</string>
+
+    <!-- 알림 권유 -->
+    <string name="noti_recommend_title">셀프 잔소리로 동기부여까지</string>
+    <string name="noti_recommend_content">푸시 알림을 활성화하시면 동기부여를\n받을 수 있어요! 짝심삼일이 함께 도와드릴게요.</string>
+    <string name="confirm">확인</string>
+
+    <!-- 박수 애니메이션 -->
+    <string name="congratulation_for_third_clap">짝짝짝!\n박수를 받았어요</string>
+</resources>
