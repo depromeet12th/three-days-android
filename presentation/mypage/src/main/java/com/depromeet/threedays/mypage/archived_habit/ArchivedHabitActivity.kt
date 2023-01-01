@@ -49,19 +49,18 @@ class ArchivedHabitActivity :
                 )
             }
         )
-        initView()
-
         viewModel.fetchArchivedHabits()
+        viewModel.fetchOnboardingEnabled()
+        initView()
         setObserve()
-
         initEvent()
     }
 
     private fun setObserve() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
-                viewModel.apply {
-                    archivedHabits.collect { archivedHabits ->
+                launch {
+                    viewModel.archivedHabits.collect { archivedHabits ->
                         // recycler view
                         archivedHabitAdapter.submitList(archivedHabits)
 
@@ -83,6 +82,13 @@ class ArchivedHabitActivity :
                             binding.btnDelete.text = "${selectedCount}개 삭제하기"
                             binding.btnDelete.setBackgroundResource(CoreDesignSystemResources.drawable.bg_rect_gray800_r15)
                             binding.btnDelete.setTextColor(getColor(CoreDesignSystemResources.color.white))
+                        }
+                    }
+                }
+                launch {
+                    viewModel.isOnboardingEnabled.collect {
+                        if (it) {
+                            showSnackBar()
                         }
                     }
                 }
@@ -137,17 +143,6 @@ class ArchivedHabitActivity :
                 }
             })
         }
-
-        // TODO: 최초진입인지 여부 조회
-        val isFirst = true
-        if (isFirst) {
-            ArchivedHabitOnboardingSnackBar.show(
-                view = binding.flArchivedHabitOnboarding,
-                onAction = {
-                    // TODO: 읽었다고 저장
-                }
-            )
-        }
     }
 
     /**
@@ -166,5 +161,17 @@ class ArchivedHabitActivity :
             // FIXME: bottom navigation bar 없는 화면에선 토스트가 위에 떠있음.
             ThreeDaysToast().show(it.context, "습관이 완전히 삭제됐어요.")
         }
+    }
+
+    /**
+     * 보관된 습관 안내
+     */
+    private fun showSnackBar() {
+        ArchivedHabitOnboardingSnackBar.show(
+            view = binding.flArchivedHabitOnboarding,
+            onAction = {
+                // TODO: 읽었다고 저장
+            }
+        )
     }
 }
