@@ -30,4 +30,12 @@
         <item name="android:textColorPrimary">@color/gray_800</item>
         <item name="android:textAppearance">@style/Typography.Body1</item>
     </style>
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11sp</item>
+    </style>
 </resources>
