@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE

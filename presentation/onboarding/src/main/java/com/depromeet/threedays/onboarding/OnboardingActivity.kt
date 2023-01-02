@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.depromeet.threedays.core.BaseActivity
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.onboarding.databinding.ActivityOnboardingBinding
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,6 +1,7 @@
 package com.depromeet.threedays
 
 import android.app.Application
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -12,6 +13,7 @@ class ThreeDaysApplication : Application() {
 
         initTimber()
         initKakaoSdk()
+        initAnalytics()
     }
 
     private fun initTimber() {
@@ -20,5 +22,9 @@ class ThreeDaysApplication : Application() {
 
     private fun initKakaoSdk() {
         KakaoSdk.init(this, "f0c0458b5837b0f245c73b5a22908319")
+    }
+
+    private fun initAnalytics() {
+        AnalyticsUtil.init(this)
     }
 }

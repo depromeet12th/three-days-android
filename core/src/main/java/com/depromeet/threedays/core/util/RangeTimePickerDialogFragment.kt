@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.depromeet.threedays.core.R
 import com.depromeet.threedays.core.databinding.FragmentRangeTimePickerDialogBinding
-import com.depromeet.threedays.core.setOnSingleClickListener
 import java.time.LocalTime
 
 class RangeTimePickerDialogFragment : DialogFragment() {

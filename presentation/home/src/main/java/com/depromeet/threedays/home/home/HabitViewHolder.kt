@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.home.databinding.ItemHabitBinding
 import com.depromeet.threedays.home.home.model.HabitUI
@@ -131,17 +132,17 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         deleteHabitAchievement: (Long, Long) -> Unit,
         onMoreClick: (HabitUI) -> Unit
     ) {
-        view.ivMore.setOnClickListener {
+        view.ivMore.setOnSingleClickListener {
             onMoreClick(habitUI)
         }
 
-        view.ivFirstDay.setOnClickListener {
+        view.ivFirstDay.setOnSingleClickListener {
             switchHabitState(0, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
-        view.ivSecondDay.setOnClickListener {
+        view.ivSecondDay.setOnSingleClickListener {
             switchHabitState(1, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
-        view.ivThirdDay.setOnClickListener {
+        view.ivThirdDay.setOnSingleClickListener {
             switchHabitState(2, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
     }

@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.home.R
-import com.depromeet.threedays.core_design_system.R as core_design
 import com.depromeet.threedays.home.databinding.BottomSheetNotiGuideBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.depromeet.threedays.core_design_system.R as core_design
 
 class NotiGuideBottomSheet(
     private val moveToSettingForTurnOnPermission: () -> Unit,

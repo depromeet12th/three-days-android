@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.getDrawableCompat
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.history.R
