@@ -3,6 +3,7 @@ package com.depromeet.threedays.mate
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
@@ -104,9 +105,9 @@ class MateViewModel @Inject constructor(
     private fun checkIsFirstVisitor() {
         viewModelScope.launch {
             if (isFirstVisitor.value.not()) {
-                val response = readOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_MATE)
+                val response = readOnboardingUseCase.execute(OnboardingType.MATE)
                 _isFirstVisitor.update {
-                    response == null || response == "true"
+                    response == null
                 }
             }
         }
@@ -114,7 +115,7 @@ class MateViewModel @Inject constructor(
 
     fun writeIsFirstVisitor() {
         viewModelScope.launch {
-            writeOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_MATE, "false")
+            writeOnboardingUseCase.execute(OnboardingType.MATE)
         }
     }
 
@@ -217,7 +218,6 @@ class MateViewModel @Inject constructor(
     }
 
     companion object {
-        private const val IS_FIRST_VISIT_ONBOARDING_MATE = "IS_FIRST_VISIT_ONBOARDING_MATE"
         private const val MATE_MAX_CLAP = 22
         private const val KEY_MAX_LEVEL_DIALOG_SHOWN = "KEY_MAX_LEVEL_DIALOG_SHOWN"
     }
