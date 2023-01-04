@@ -38,7 +38,7 @@ class OnSingleClickWithEventListener(
             return
         }
         lastClickedTime = elapsedRealTime
-        AnalyticsUtil.event(event.eventName.toString(), event.properties)
+        AnalyticsUtil.event(event.eventName, event.properties)
         onSingleClick(v)
     }
 }

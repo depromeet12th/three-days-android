@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
+import com.depromeet.threedays.core.analytics.getEventName
+import com.depromeet.threedays.core.analytics.getScreenName
+import com.depromeet.threedays.core.util.setOnSingleClickWithEventListener
 import com.depromeet.threedays.navigator.HomeNavigator
 import com.depromeet.threedays.signup.databinding.ActivitySignupBinding
 import com.depromeet.threedays.signup.extension.loginWithKakaoOrThrow
@@ -24,14 +29,21 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         startKakaoLogin()
         observe()
     }
 
     private fun startKakaoLogin() {
         val context = this
-        binding.containerSignup.setOnClickListener {
+        binding.containerSignup.setOnSingleClickWithEventListener(
+            event = MixPanelEvent(
+                eventName = getEventName(this.javaClass.simpleName),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to getScreenName(this.javaClass.simpleName),
+                    MixPanelEvent.ButtonType to ThreeDaysEvent.Next.toString()
+                )
+            )
+        ) {
             lifecycleScope.launch {
                 kotlin.runCatching {
                     UserApiClient.loginWithKakaoOrThrow(context)

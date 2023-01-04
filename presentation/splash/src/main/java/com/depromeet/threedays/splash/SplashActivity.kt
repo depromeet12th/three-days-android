@@ -13,12 +13,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
 import com.depromeet.threedays.navigator.HomeNavigator
-import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.navigator.OnboardingNavigator
+import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.splash.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -41,6 +42,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnalyticsUtil.viewedEvent(this.javaClass.simpleName)
+
         setObserve()
 
         // onCreate 보다 먼저 호출해야함

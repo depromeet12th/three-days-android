@@ -3,16 +3,28 @@ package com.depromeet.threedays.core.analytics
 import android.content.Context
 
 object AnalyticsUtil : AnalyticsSdk {
-    private val analyticsSdkList: List<AnalyticsSdk> =
-        listOf(
-            MixpanelAnalyticsSdk()
+    private const val MIXPANEL = "mixpanel"
+
+    private val analyticsSdkList: Map<String, AnalyticsSdk> =
+        mapOf(
+            MIXPANEL to MixpanelAnalyticsSdk()
         )
 
     override fun init(context: Context) {
-        analyticsSdkList.forEach { it.init(context) }
+        analyticsSdkList.forEach { it.value.init(context) }
     }
 
+    override fun isInitialized(): Boolean = analyticsSdkList.all { it.value.isInitialized() }
+
+
     override fun event(name: String, properties: Map<String, Any>) {
-        analyticsSdkList.forEach { it.event(name = name, properties = properties) }
+        analyticsSdkList.forEach { it.value.event(name = name, properties = properties) }
+    }
+
+    fun viewedEvent(className: String) {
+        analyticsSdkList[MIXPANEL]?.event(
+            name = getEventName(className),
+            properties = mapOf(MixPanelEvent.ScreenName to getScreenName(className))
+        )
     }
 }

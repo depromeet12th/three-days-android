@@ -7,10 +7,14 @@ import timber.log.Timber
 
 class MixpanelAnalyticsSdk : AnalyticsSdk {
     private lateinit var mixpanelAPI: MixpanelAPI
+    private var initialized = false
 
     override fun init(context: Context) {
         mixpanelAPI = MixpanelAPI.getInstance(context, "823f0e71338dd687bbe4d1b2f34e1272", true)
+        initialized = true
     }
+
+    override fun isInitialized(): Boolean = initialized
 
     override fun event(name: String, properties: Map<String, Any>) {
         Timber.i("eventName : $name , properties : ${JSONObject(properties)}")
