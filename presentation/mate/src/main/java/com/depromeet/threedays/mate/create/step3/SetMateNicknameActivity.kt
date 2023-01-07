@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
@@ -23,6 +24,13 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.MateMakingViewed.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to "${Screen.MateMaking}3",
+            )
+        )
 
         if(intent.hasExtra("clickedHabit")) {
             val clickedHabit = intent.getParcelableExtra<HabitUI>("clickedHabit")
@@ -54,6 +62,13 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
             finish()
         }
         binding.btnNext.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to "${Screen.MateMaking}3",
+                    MixPanelEvent.ButtonType to ButtonType.Next,
+                )
+            )
             viewModel.createMate()
             finishAffinity()
         }

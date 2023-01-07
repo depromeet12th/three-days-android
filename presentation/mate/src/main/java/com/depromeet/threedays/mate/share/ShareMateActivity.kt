@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.mate.R
@@ -44,12 +45,36 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
 
     private fun initEvent() {
         binding.ivClose.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateShare,
+                    MixPanelEvent.ButtonType to ButtonType.Close,
+                )
+            )
+
             finish()
         }
         binding.tvImageSave.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.SharedPathClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateShare,
+                    MixPanelEvent.ButtonType to ButtonType.SaveImg,
+                )
+            )
+
             saveScreenShot(binding.clScreenShotArea)
         }
         binding.tvInstagramShare.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.SharedPathClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateShare,
+                    MixPanelEvent.ButtonType to ButtonType.Insta,
+                )
+            )
+
             startInstagramIntent()
         }
     }

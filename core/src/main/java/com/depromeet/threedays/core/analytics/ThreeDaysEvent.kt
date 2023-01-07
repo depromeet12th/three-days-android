@@ -4,7 +4,16 @@ enum class ButtonType{
     Next,
     Save,
     NewHabit,
-    Check
+    Check,
+    NewMate,
+    Share,
+    SaveImg,
+    Insta,
+    Close,
+    MateClapOpen,
+    Carrot,
+    Sparta,
+    MateSave,
 }
 
 enum class Screen {
@@ -15,7 +24,9 @@ enum class Screen {
     MateHome,
     MateClap,
     MateLevelup,
-    MateCompleted
+    MateCompleted,
+    MateShare,
+    MateMaking,
 }
 
 enum class ThreeDaysEvent {
@@ -36,4 +47,10 @@ enum class ThreeDaysEvent {
     MateClapOpenClicked,
     MateClapViewed,
     NewHabitClicked,
+    SharedPathClicked,
+    MateMakingViewed,
+    MateSelected,
+    MateLevelupViewed,
+    MateCompletedViewed,
+    MateSaveClicked,
 }
