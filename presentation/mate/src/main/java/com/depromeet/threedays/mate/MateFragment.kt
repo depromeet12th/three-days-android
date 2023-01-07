@@ -15,11 +15,14 @@ import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
+import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,6 +38,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
+
+    @Inject
+    lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
     override fun onResume() {
         super.onResume()
@@ -105,6 +111,18 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
         }
+        binding.btnSaveMate.setOnSingleClickListener {
+            ThreeDaysDialogFragment.newInstance(
+                data = DialogInfo.EMPTY.copy(
+                    onPositiveAction = { startActivity(archivedHabitNavigator.intent(requireContext())) },
+                    iconResId = com.depromeet.threedays.core_design_system.R.drawable.ic_star_check,
+                    title = getString(R.string.max_level_dialog_title),
+                    description = getString(R.string.max_level_dialog_description, viewModel.uiState.value.mate?.level ?: 0),
+                    confirmText = getString(R.string.going_to_see),
+                    buttonTopMargin = 30f
+                )
+            ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+        }
     }
 
     private fun setObserve() {
@@ -126,6 +144,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     viewModel.uiEffect.collect {
                         when(it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
+                            is UiEffect.ShowAchieveMaxLevel -> showAchieveMaxLevel(it.mateLevel)
                         }
                     }
                 }
@@ -157,9 +176,22 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
             val clapCount = it.reward ?: 0
             val maxLevel = it.levelUpSectioin?.last() ?: 22
-            binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
             binding.tvClapCount.text = "${clapCount}개"
             binding.tvMaxLevel.text = "${maxLevel}개"
+
+            val isMaxLevel = (mateUI.levelUpSectioin?.last() ?: 22) == mateUI.reward
+            if(isMaxLevel) {
+                binding.tvNextLevelGuide.text = if(mateUI.characterType == MateType.CARROT) {
+                    getString(R.string.max_level_carrot_mate_guide)
+                } else {
+                    getString(R.string.max_level_whip_mate_guide)
+                }
+            } else {
+                binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
+            }
+
+            binding.groupAchieveMaxLevel.isVisible = isMaxLevel
+            binding.groupSpeechBubble.isVisible = isMaxLevel.not()
         }
     }
 
@@ -189,5 +221,16 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     private fun showDeleteSuccessMessage(resId: Int) {
         ThreeDaysToast().show(requireActivity(), getString(resId))
+    }
+
+    private fun showAchieveMaxLevel(
+        mateLevel: Int,
+    ) {
+        ThreeDaysNoButtonDialogFragment(
+            resId = levelToResourceFunction(mateLevel),
+            content = "최종 레벨 달성"
+        ).show(
+            parentFragmentManager, ThreeDaysNoButtonDialogFragment.TAG
+        )
     }
 }

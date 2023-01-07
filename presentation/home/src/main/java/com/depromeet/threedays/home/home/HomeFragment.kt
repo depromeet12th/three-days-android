@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,9 +24,11 @@ import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
+import com.depromeet.threedays.core_design_system.R as core_design
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.home.home.dialog.MoreActionModal
 import com.depromeet.threedays.home.home.dialog.NotiGuideBottomSheet
+import com.depromeet.threedays.home.home.dialog.NotiRecommendBottomSheet
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
@@ -71,6 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.checkIsFirstVisitor()
         checkNotificationPermission()
         initAdapter()
         setObserve()
@@ -211,11 +215,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
     }
 
-    private fun showNotiGuideBottomSheet(isDeviceNotificationOn: Boolean) {
-        if (isDeviceNotificationOn.not()) {
-            NotiGuideBottomSheet.newInstance(
+
+    private fun showBottomSheet(
+        isDeviceNotificationOn: Boolean,
+        isFirstVisitor: Boolean,
+    ) {
+        if(!isDeviceNotificationOn) {
+            NotiGuideBottomSheet.newInstance (
                 moveToSettingForTurnOnPermission = { moveToSettingForTurnOnPermission() }
             ).show(parentFragmentManager, NotiGuideBottomSheet.TAG)
+        }
+        if(isFirstVisitor) {
+            val modal = NotiRecommendBottomSheet()
+            modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+            modal.show(parentFragmentManager, NotiGuideBottomSheet.TAG)
         }
     }
 
@@ -255,7 +268,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 }
                 launch {
                     viewModel.uiState.collect {
-                        showNotiGuideBottomSheet(isDeviceNotificationOn = it.isDeviceNotificationOn)
+                        showBottomSheet(
+                            isDeviceNotificationOn = it.isDeviceNotificationOn,
+                            isFirstVisitor = it.isFirstVisitor,
+                        )
                     }
                 }
                 launch {

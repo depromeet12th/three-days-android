@@ -77,6 +77,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun providesNotificationTokenService(
+        retrofit: Retrofit,
+    ): NotificationTokenService = retrofit.create()
+
+    @Provides
+    @Singleton
     fun providesHttpClient(
         @ApplicationContext context: Context,
         gson: Gson,

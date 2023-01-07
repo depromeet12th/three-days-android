@@ -10,8 +10,10 @@ import com.depromeet.threedays.data.datasource.mate.MateRemoteDataSource
 import com.depromeet.threedays.data.datasource.mate.MateRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSource
 import com.depromeet.threedays.data.datasource.member.MemberRemoteDataSourceImpl
-import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSource
-import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.notification.history.NotificationHistoryRemoteDataSource
+import com.depromeet.threedays.data.datasource.notification.history.NotificationHistoryRemoteDataSourceImpl
+import com.depromeet.threedays.data.datasource.notification.token.NotificationTokenRemoteDataSource
+import com.depromeet.threedays.data.datasource.notification.token.NotificationTokenRemoteDataSourceImpl
 import com.depromeet.threedays.data.datasource.record.RecordRemoteDataSource
 import com.depromeet.threedays.data.datasource.record.RecordRemoteDataSourceImpl
 import dagger.Binds
@@ -65,4 +67,10 @@ internal abstract class RemoteModule {
     abstract fun bindRecordRemoteDataSource(
         dataSource: RecordRemoteDataSourceImpl,
     ): RecordRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationTokenRemoteDataSource(
+        dataSource: NotificationTokenRemoteDataSourceImpl,
+    ): NotificationTokenRemoteDataSource
 }

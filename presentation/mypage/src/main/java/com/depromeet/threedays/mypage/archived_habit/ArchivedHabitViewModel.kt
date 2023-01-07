@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,6 +26,10 @@ class ArchivedHabitViewModel @Inject constructor(
     private val _editable: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val editable: StateFlow<Boolean>
         get() = _editable
+
+    private val _isOnboardingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isOnboardingEnabled: StateFlow<Boolean>
+        get() = _isOnboardingEnabled
 
     /**
      * 습관 보관함 > 보관한 습관 목록 조회
@@ -125,6 +130,22 @@ class ArchivedHabitViewModel @Inject constructor(
                 .map { deleteArchivedHabitUseCase.invoke(habitId = it.habitId).collect() }
             val updatedHabits  = archivedHabits.value.filter { !it.selected }
             _archivedHabits.emit(updatedHabits)
+        }
+    }
+
+    /**
+     * 습관 보관홤 > SnackBar
+     */
+    fun fetchOnboardingEnabled() {
+        viewModelScope.launch {
+            var archivedHabitsAreEmpty = false
+            archivedHabits.collect {
+                archivedHabitsAreEmpty = it.isNotEmpty()
+                var isFirst = true
+                _isOnboardingEnabled.update {
+                    archivedHabitsAreEmpty && isFirst
+                }
+            }
         }
     }
 }

@@ -2,11 +2,14 @@ package com.depromeet.threedays.home.home
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
 import com.depromeet.threedays.domain.usecase.achievement.CreateHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
+import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
+import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
@@ -17,10 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val readOnboardingUseCase: ReadOnboardingUseCase,
+    private val writeOnboardingUseCase: WriteOnboardingUseCase,
     private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
     private val createHabitAchievementUseCase: CreateHabitAchievementUseCase,
     private val deleteHabitAchievementUseCase: DeleteHabitAchievementUseCase,
-//    private val updateHabitUseCase: UpdateHabitUseCase,
     private val deleteHabitUseCase: DeleteHabitUseCase,
 ) : BaseViewModel() {
 
@@ -38,6 +42,25 @@ class HomeViewModel @Inject constructor(
 
     init {
         fetchGoals()
+    }
+
+    fun checkIsFirstVisitor() {
+        viewModelScope.launch {
+            if (uiState.value.isFirstVisitor.not()) {
+                val response = readOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
+                _uiState.update {
+                    it.copy(
+                        isFirstVisitor = (response == null)
+                    )
+                }
+                writeOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
+                _uiState.update {
+                    it.copy(
+                        isFirstVisitor = false
+                    )
+                }
+            }
+        }
     }
 
     fun setDeviceNotificationState(isDeviceNotificationOn: Boolean) {
@@ -228,6 +251,7 @@ class HomeViewModel @Inject constructor(
 
 data class UiState (
     val isDeviceNotificationOn: Boolean = true,
+    val isFirstVisitor: Boolean = false,
 )
 
 sealed interface UiEffect {

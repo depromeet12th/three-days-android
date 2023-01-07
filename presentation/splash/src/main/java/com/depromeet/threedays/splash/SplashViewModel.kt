@@ -3,6 +3,7 @@ package com.depromeet.threedays.splash
 import com.depromeet.threedays.domain.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,18 +28,14 @@ class SplashViewModel @Inject constructor(
 
     private fun checkIsFirstVisitor() {
         viewModelScope.launch {
-            val response = readOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_AFTER_SPLASH)
+            val response = readOnboardingUseCase.execute(OnboardingType.AFTER_SPLASH)
             _isFirstVisitor.update {
-                (response == null || response == "true")
+                response == null
             }
         }
     }
     
     fun isSignedUp(): Boolean {
         return authRepository.getAccessTokenFromLocal().isNotEmpty()
-    }
-
-    companion object {
-        private const val IS_FIRST_VISIT_ONBOARDING_AFTER_SPLASH = "IS_FIRST_VISIT_ONBOARDING_AFTER_SPLASH"
     }
 }

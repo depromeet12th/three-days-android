@@ -3,11 +3,14 @@ package com.depromeet.threedays.mate
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.usecase.mate.DeleteMateUseCase
 import com.depromeet.threedays.domain.usecase.mate.GetMatesUseCase
+import com.depromeet.threedays.domain.usecase.max_level_mate.ReadMaxLevelMateUseCase
+import com.depromeet.threedays.domain.usecase.max_level_mate.WriteMaxLevelMateUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import com.depromeet.threedays.mate.create.step1.model.MateUI
@@ -26,6 +29,8 @@ class MateViewModel @Inject constructor(
     private val readOnboardingUseCase: ReadOnboardingUseCase,
     private val deleteMateUseCase: DeleteMateUseCase,
     private val habitRepository: HabitRepository,
+    private val readMaxLevelMateUseCase: ReadMaxLevelMateUseCase,
+    private val writeMaxLevelMateUseCase: WriteMaxLevelMateUseCase,
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -68,6 +73,7 @@ class MateViewModel @Inject constructor(
                         myMate?.let {
                             fetchHabit(it.habitId)
                         }
+                        checkMateAchieveMaxLevel(uiState.value.mate)
                     }
                     Status.ERROR -> {
 
@@ -99,9 +105,9 @@ class MateViewModel @Inject constructor(
     private fun checkIsFirstVisitor() {
         viewModelScope.launch {
             if (isFirstVisitor.value.not()) {
-                val response = readOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_MATE)
+                val response = readOnboardingUseCase.execute(OnboardingType.MATE)
                 _isFirstVisitor.update {
-                    response == null || response == "true"
+                    response == null
                 }
             }
         }
@@ -109,7 +115,7 @@ class MateViewModel @Inject constructor(
 
     fun writeIsFirstVisitor() {
         viewModelScope.launch {
-            writeOnboardingUseCase.execute(IS_FIRST_VISIT_ONBOARDING_MATE, "false")
+            writeOnboardingUseCase.execute(OnboardingType.MATE)
         }
     }
 
@@ -191,8 +197,29 @@ class MateViewModel @Inject constructor(
         )
     }
 
+    private fun checkMateAchieveMaxLevel(mate: MateUI?) {
+        mate?.let {
+            if((mate.levelUpSectioin?.last() ?: MATE_MAX_CLAP) == mate.reward) {
+
+                viewModelScope.launch {
+                    val isShown = readMaxLevelMateUseCase.execute("${KEY_MAX_LEVEL_DIALOG_SHOWN}:${mate.id}")
+
+                    if(isShown == null) {
+                        _uiEffect.emit(
+                            UiEffect.ShowAchieveMaxLevel(
+                                mateLevel = mate.level
+                            )
+                        )
+                        writeMaxLevelMateUseCase.execute("${KEY_MAX_LEVEL_DIALOG_SHOWN}:${mate.id}", "TRUE")
+                    }
+                }
+            }
+        }
+    }
+
     companion object {
-        private const val IS_FIRST_VISIT_ONBOARDING_MATE = "IS_FIRST_VISIT_ONBOARDING_MATE"
+        private const val MATE_MAX_CLAP = 22
+        private const val KEY_MAX_LEVEL_DIALOG_SHOWN = "KEY_MAX_LEVEL_DIALOG_SHOWN"
     }
 }
 
@@ -206,4 +233,7 @@ data class UiState(
 
 sealed interface UiEffect {
     data class ShowToastMessage(val resId: Int) : UiEffect
+    data class ShowAchieveMaxLevel(
+        val mateLevel: Int
+    ) : UiEffect
 }
