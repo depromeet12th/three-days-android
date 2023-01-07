@@ -19,4 +19,4 @@ jobs:
       - run: git config --local user.name `git log -1 --format='%an'`
       - run: git add build.gradle
       - run: "git commit -m \"docs: Increment version code\""
-      - run: git push origin `echo $GITHUB_REF | sed 's|refs/heads/||'`
+      - run: git push origin HEAD
