@@ -35,19 +35,20 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
             lifecycleScope.launch {
                 kotlin.runCatching {
                     UserApiClient.loginWithKakaoOrThrow(context)
-                }.onSuccess { OAuthToken ->
+                }.onSuccess { oAuthToken ->
                     UserApiClient.instance.me { user, _ ->
                         if (user != null) {
                             viewModel.createMember(
-                                socialToken = OAuthToken.accessToken
+                                socialToken = oAuthToken.accessToken
                             )
+                            viewModel.updateFcmToken()
                         }
                     }
                 }.onFailure { throwable ->
                     if (throwable is ClientError && throwable.reason == ClientErrorCause.Cancelled) {
                         Timber.d("사용자가 명시적으로 카카오 로그인 취소")
                     } else {
-                        Timber.d("로그인 실패 : ${throwable.message}")
+                        Timber.d(throwable, "로그인 실패 : ${throwable.message}")
                     }
                 }
             }

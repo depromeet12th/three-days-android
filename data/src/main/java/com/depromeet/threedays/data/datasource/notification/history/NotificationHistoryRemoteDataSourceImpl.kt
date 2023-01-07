@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.datasource.notification
+package com.depromeet.threedays.data.datasource.notification.history
 
 import com.depromeet.threedays.data.api.NotificationHistoryService
 import com.depromeet.threedays.data.entity.notification.NotificationHistoryEntity
