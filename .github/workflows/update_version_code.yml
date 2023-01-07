@@ -12,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - run: sed -i "s/threeDaysAppVersionCode = [0-9]*/threeDaysAppVersionCode = $((`sed -n 's/threeDaysAppVersionCode = \([0-9]*\)/\1/p' build.gradle` + 1))/" build.gradle
       - run: git config --local user.email `git log -1 --format='%ae'`
       - run: git config --local user.name `git log -1 --format='%an'`
       - run: git add build.gradle
       - run: "git commit -m \"docs: Increment version code\""
-      - run: git push origin `echo $GITHUB_REF | sed 's|refs/heads/||'`
+      - run: git push origin HEAD
