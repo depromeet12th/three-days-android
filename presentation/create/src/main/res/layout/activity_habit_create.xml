@@ -389,7 +389,6 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/selector_habit_button"
             android:gravity="center"
-            android:onClick="@{() -> viewModel.onCreateHabitClick()}"
             android:paddingVertical="18dp"
             android:text="@string/habit_create"
             android:textAppearance="@style/Typography.Button1"

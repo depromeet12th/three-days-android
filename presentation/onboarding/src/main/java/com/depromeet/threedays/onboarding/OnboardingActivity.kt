@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.onboarding.databinding.ActivityOnboardingBinding
@@ -44,6 +45,13 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
                 binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
 
+                AnalyticsUtil.event(
+                    name = getViewedEventName(this@OnboardingActivity),
+                    properties = mapOf(
+                        MixPanelEvent.ScreenName to getScreenName(this@OnboardingActivity) + "${position+1}"
+                    )
+                )
+
                 when (position) {
                     0 -> {
                         binding.btnNext.text = getString(R.string.next)
@@ -62,6 +70,14 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         })
 
         binding.btnNext.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to getScreenName(this) + "${binding.vpOnBoarding.currentItem + 1}",
+                    MixPanelEvent.ButtonType to ButtonType.Next.toString()
+                )
+            )
+
             binding.vpOnBoarding.run {
                 if (currentItem == 2) {
                     onboardingViewModel.writeIsFirstVisitor()

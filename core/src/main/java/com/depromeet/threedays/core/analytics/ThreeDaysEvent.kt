@@ -1,7 +1,24 @@
 package com.depromeet.threedays.core.analytics
 
-enum class ThreeDaysEvent {
+enum class ButtonType{
     Next,
+    Save,
+    NewHabit,
+    Check
+}
+
+enum class Screen {
+    CreateHabit,
+    HomeDefault,
+    HomeActivated,
+    MateDefault,
+    MateHome,
+    MateClap,
+    MateLevelup,
+    MateCompleted
+}
+
+enum class ThreeDaysEvent {
     SplashViewed,
     OnboardingViewed,
     SignupViewed,
@@ -11,7 +28,6 @@ enum class ThreeDaysEvent {
     HomeHabitClicked,
     HomeActivatedViewed,
     CheckClicked,
-    CreateHabit,
     MateOnboardingViewed,
     MateDefaultViewed,
     NewMateClicked,
@@ -19,4 +35,5 @@ enum class ThreeDaysEvent {
     MateShareClicked,
     MateClapOpenClicked,
     MateClapViewed,
+    NewHabitClicked,
 }

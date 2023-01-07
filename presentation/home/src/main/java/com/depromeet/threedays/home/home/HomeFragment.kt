@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.key.HABIT_ID
@@ -52,19 +53,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
-    private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val addResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
-        when(result.resultCode) {
-            RESULT_CREATE -> viewModel.fetchGoals()
-            RESULT_UPDATE -> {
-                viewModel.fetchGoals()
-                ThreeDaysToast().show(
-                    requireContext(),
-                    resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
-                )
+            when (result.resultCode) {
+                RESULT_CREATE -> viewModel.fetchGoals()
+                RESULT_UPDATE -> {
+                    viewModel.fetchGoals()
+                    ThreeDaysToast().show(
+                        requireContext(),
+                        resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
+                    )
+                }
             }
         }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,11 +79,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun checkNotificationPermission() {
-        val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+        val isDeviceNotificationOn =
+            NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
         viewModel.setDeviceNotificationState(isDeviceNotificationOn)
     }
 
     private fun onCreateHabitClick() {
+        if(viewModel.habits.value.isEmpty()) {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.NewMateClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.HomeDefault,
+                    MixPanelEvent.ButtonType to ButtonType.NewHabit.toString()
+                )
+            )
+        }
+
         addResultLauncher.launch(habitCreateNavigator.intent(requireContext()))
     }
 
@@ -90,11 +103,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         intent.putExtra(HABIT_ID, habitId)
         addResultLauncher.launch(intent)
     }
-    
+
     private fun onNotificationClick() {
         val intent = notificationNavigator.intent(requireContext())
         addResultLauncher.launch(intent)
     }
+
     private fun initAdapter() {
         habitAdapter = HabitAdapter(
             createHabitAchievement = { habitId, isThirdClap ->
@@ -138,7 +152,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         // TODO: 하드코딩되어있는거 수정 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
-        binding.tvDate.text = String.format("%02d월%02d일 %s요일", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
+        binding.tvDate.text = String.format(
+            "%02d월%02d일 %s요일",
+            now.monthValue,
+            now.dayOfMonth,
+            dayOfWeekList[now.dayOfWeek.value - 1]
+        )
     }
 
     private fun initEvent() {
@@ -193,8 +212,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun showNotiGuideBottomSheet(isDeviceNotificationOn: Boolean) {
-        if(isDeviceNotificationOn.not()) {
-            NotiGuideBottomSheet.newInstance (
+        if (isDeviceNotificationOn.not()) {
+            NotiGuideBottomSheet.newInstance(
                 moveToSettingForTurnOnPermission = { moveToSettingForTurnOnPermission() }
             ).show(parentFragmentManager, NotiGuideBottomSheet.TAG)
         }
@@ -211,6 +230,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
+                        if(list.isNotEmpty()) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                                )
+                            )
+                        }
+                        else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                                )
+                            )
+                        }
+
                         habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE
@@ -224,7 +260,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 }
                 launch {
                     viewModel.uiEffect.collect {
-                        when(it) {
+                        when (it) {
                             is UiEffect.ShowToastMessage -> showToastMessage(
                                 context = requireContext(),
                                 title = getString(it.resId),
@@ -237,7 +273,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     )
                                 },
                                 title = getString(it.titleResId),
-                                description = it.descriptionResId?.let { getString(it) } ?: String.Empty,
+                                description = it.descriptionResId?.let { getString(it) }
+                                    ?: String.Empty,
                                 cancelText = getString(it.cancelTextResId),
                                 confirmText = getString(it.confirmTextResId),
                                 buttonTopMargin = it.buttonTopMargin,
@@ -247,7 +284,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                 text = getString(it.textResId),
                                 actionText = getString(it.actionTextResId),
                                 onAction = {
-                                    addResultLauncher.launch(archivedHabitNavigator.intent(requireContext()))
+                                    addResultLauncher.launch(
+                                        archivedHabitNavigator.intent(
+                                            requireContext()
+                                        )
+                                    )
                                 }
                             )
                             UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()

@@ -20,11 +20,4 @@ object AnalyticsUtil : AnalyticsSdk {
     override fun event(name: String, properties: Map<String, Any>) {
         analyticsSdkList.forEach { it.value.event(name = name, properties = properties) }
     }
-
-    fun viewedEvent(className: String) {
-        analyticsSdkList[MIXPANEL]?.event(
-            name = getEventName(className),
-            properties = mapOf(MixPanelEvent.ScreenName to getScreenName(className))
-        )
-    }
 }

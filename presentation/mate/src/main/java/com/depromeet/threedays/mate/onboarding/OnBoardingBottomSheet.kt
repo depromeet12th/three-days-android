@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.ButtonType
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.databinding.BottomSheetMateOnBoardingBinding
@@ -67,6 +71,14 @@ class OnBoardingBottomSheet(
             dismiss()
         }
         binding.btnNext.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to "MateOnboarding${binding.vpOnBoarding.currentItem + 1}",
+                    MixPanelEvent.ButtonType to ButtonType.Next.toString()
+                )
+            )
+
             binding.vpOnBoarding.run {
                 when (currentItem) {
                     FIRST_PAGE -> currentItem = SECOND_PAGE
@@ -93,6 +105,13 @@ class OnBoardingBottomSheet(
     }
 
     private fun setContentByPosition(position: Int) {
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.MateOnboardingViewed.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to "MateOnboarding${position+1}"
+            )
+        )
+
         val (btnText, title, content) = when (position) {
             FIRST_PAGE -> Triple(
                 getString(R.string.next),

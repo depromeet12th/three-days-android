@@ -1,5 +1,7 @@
 package com.depromeet.threedays.core.analytics
 
+import android.content.Context
+
 data class MixPanelEvent (
     val eventName: String,
     val properties: Map<String, String>
@@ -10,11 +12,12 @@ data class MixPanelEvent (
     }
 }
 
-fun getEventName(className: String): String {
-    return getScreenName(className) + viewSuffix
+fun getViewedEventName(context: Context): String {
+    return getScreenName(context) + viewSuffix
 }
 
-fun getScreenName(className: String): String {
+fun getScreenName(context: Context): String {
+    val className = context.javaClass.simpleName
     val suffixLength =
         if(className.contains("Fragment")) fragmentLength
         else if(className.contains("Activity")) activityLength

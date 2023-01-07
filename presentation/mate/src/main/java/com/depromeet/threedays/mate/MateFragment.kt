@@ -12,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
