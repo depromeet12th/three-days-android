@@ -12,7 +12,7 @@ buildscript {
 
     ext {
         threeDaysApplicationId = "com.depromeet.threedays"
-        threeDaysAppVersionCode = 4
+        threeDaysAppVersionCode = 5
         threeDaysAppVersionName = "1.0.0"
     }
 }
