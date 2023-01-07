@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.DialogInfo
 import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysDialogFragment

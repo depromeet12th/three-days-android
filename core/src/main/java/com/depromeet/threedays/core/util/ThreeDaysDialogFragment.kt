@@ -12,7 +12,6 @@ import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.extensions.margin
 import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.extensions.visibleOrGone
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
 
 class ThreeDaysDialogFragment : DialogFragment() {

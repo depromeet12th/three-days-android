@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.databinding.ItemEmojiBinding
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.util.EmojiUtil

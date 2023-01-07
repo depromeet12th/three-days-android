@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.depromeet.threedays.core.R
 import com.depromeet.threedays.core.databinding.FragmentThreeDaysNoButtonDialogBinding
-import com.depromeet.threedays.core.setOnSingleClickListener
 
 class ThreeDaysNoButtonDialogFragment(val resId: Int, val content: String) : DialogFragment() {
     private var _binding: FragmentThreeDaysNoButtonDialogBinding? = null

@@ -3,7 +3,7 @@ package com.depromeet.threedays.history
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.history.databinding.ItemHabitRecordBinding
 import com.depromeet.threedays.history.model.HabitUI
 

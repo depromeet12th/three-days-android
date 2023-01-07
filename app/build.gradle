@@ -89,6 +89,8 @@ dependencies {
 
     implementation deps.login.kakao
 
+    implementation deps.mixpanel
+
     implementation deps.timber
 
     testImplementation(testDeps)

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.SnackbarArchivedHabitOnboardingBinding
 import com.google.android.material.snackbar.Snackbar

@@ -13,12 +13,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.getScreenName
+import com.depromeet.threedays.core.analytics.getViewedEventName
 import com.depromeet.threedays.navigator.HomeNavigator
-import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.navigator.OnboardingNavigator
+import com.depromeet.threedays.navigator.SignupNavigator
 import com.depromeet.threedays.splash.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -41,6 +45,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AnalyticsUtil.event(
+            name = getViewedEventName(this),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to getScreenName(this),
+            )
+        )
+
         setObserve()
 
         // onCreate 보다 먼저 호출해야함

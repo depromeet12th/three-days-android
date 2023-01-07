@@ -52,6 +52,8 @@ dependencies {
 
     implementation deps.timber
 
+    implementation deps.mixpanel
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }
