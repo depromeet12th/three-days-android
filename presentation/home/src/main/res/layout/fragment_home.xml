@@ -42,6 +42,7 @@
             android:id="@+id/iv_notification"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="@+id/gl_end_cardview"
             app:layout_constraintTop_toTopOf="@+id/tv_date"
