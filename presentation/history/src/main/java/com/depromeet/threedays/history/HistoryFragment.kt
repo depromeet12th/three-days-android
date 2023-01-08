@@ -107,6 +107,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.tvMostAchieveHabitIcon.text = emoji
         binding.tvMostAchieveHabitTitle.text = title
         binding.clMostAchieve.setBackgroundResource(cardBackgroundResId)
+        binding.ivMostAchieveHabitIcon.isVisible = emoji.isEmpty()
     }
 
     private fun setMonth(month: String) {
