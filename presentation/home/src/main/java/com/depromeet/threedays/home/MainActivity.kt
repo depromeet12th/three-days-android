@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    lateinit var onCloseClick: () -> Unit
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,19 +46,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
-    }
-
     private fun initEvent() {
         binding.ivClose.setOnSingleClickListener {
-            binding.congratulationAnimationGroup.isVisible = false
-            binding.lottieClap.cancelAnimation()
+            stopCongratulateThirdClapAnimation()
+            onCloseClick()
+
         }
     }
 
-    fun startCongratulateThirdClapAnimation() {
+    fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
+    }
+
+    fun startCongratulateThirdClapAnimation(onCloseClick: () -> Unit) {
         binding.congratulationAnimationGroup.isVisible = true
         binding.lottieClap.playAnimation()
+        this.onCloseClick = onCloseClick
+    }
+
+    fun stopCongratulateThirdClapAnimation() {
+        binding.congratulationAnimationGroup.isVisible = false
+        binding.lottieClap.cancelAnimation()
     }
 }

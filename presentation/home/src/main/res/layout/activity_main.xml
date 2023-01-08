@@ -55,6 +55,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="10dp"
+            android:src="@drawable/selector_popup_close"
+            android:visibility="gone"
+            app:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_clap"
             android:layout_width="240dp"
@@ -80,15 +93,5 @@
             app:layout_constraintEnd_toEndOf="@+id/lottie_clap"
             app:layout_constraintStart_toStartOf="@+id/lottie_clap"
             app:layout_constraintTop_toBottomOf="@+id/lottie_clap" />
-
-        <ImageView
-            android:id="@+id/iv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/selector_popup_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

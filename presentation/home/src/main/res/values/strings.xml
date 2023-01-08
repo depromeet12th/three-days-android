@@ -20,6 +20,8 @@
     <string name="move">이동</string>
     <string name="snack_bar_text_has_achievement">습관이 홈에서 삭제됐어요.\n실천 기록이 있어 보관함으로 이동됐어요.</string>
     <string name="snack_bar_text_connected_mate">습관이 홈에서 삭제됐어요.\n짝꿍과 실천 기록은 보관함으로 이동됐어요.</string>
+    <string name="level_up_title">레벨 업</string>
+    <string name="level_up_content">Lv.%d 로 레벨업 했어요!</string>
 
     <!-- 알림 권유 -->
     <string name="noti_recommend_title">셀프 잔소리로 동기부여까지</string>

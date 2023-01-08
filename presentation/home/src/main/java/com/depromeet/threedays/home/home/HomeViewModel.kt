@@ -15,6 +15,7 @@ import com.depromeet.threedays.domain.usecase.today_visit.WriteTodayFirstVisitUs
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -253,6 +254,27 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun checkLevelUpHabit() {
+        val habitWithMate = habits.value.find { it.mate != null } ?: return
+        val mate = habitWithMate.mate ?: return
+        val levelUpAt = mate.levelUpAt ?: return
+
+        val today = LocalDate.now().toString()
+        if(today == levelUpAt.toLocalDate().toString()) {
+            viewModelScope.launch {
+                _uiEffect.emit(
+                    UiEffect.ShowImageSnackBar(
+                        imageResId = levelToResourceFunction(mate.level),
+                        titleResId = R.string.level_up_title,
+                        contentResId = R.string.level_up_content,
+                        actionTextResId = R.string.move,
+                        mateLevel = mate.level,
+                    )
+                )
+            }
+        }
+    }
 }
 
 sealed interface UiEffect {
@@ -270,6 +292,13 @@ sealed interface UiEffect {
         val textResId: Int,
         val actionTextResId: Int,
     ): UiEffect
+    data class ShowImageSnackBar(
+        val imageResId: Int,
+        val titleResId: Int,
+        val contentResId: Int,
+        val actionTextResId: Int,
+        val mateLevel: Int,
+    ) : UiEffect
     object ShowClapAnimation : UiEffect
     object ShowNotiGuideBottomSheet : UiEffect
     object ShowNotiRecommendBottomSheet : UiEffect

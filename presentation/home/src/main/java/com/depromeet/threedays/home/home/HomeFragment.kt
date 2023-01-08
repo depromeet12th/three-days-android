@@ -29,10 +29,8 @@ import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.home.home.dialog.MoreActionModal
 import com.depromeet.threedays.home.home.dialog.NotiGuideBottomSheet
 import com.depromeet.threedays.home.home.dialog.NotiRecommendBottomSheet
-import com.depromeet.threedays.navigator.ArchivedHabitNavigator
-import com.depromeet.threedays.navigator.HabitCreateNavigator
-import com.depromeet.threedays.navigator.HabitUpdateNavigator
-import com.depromeet.threedays.navigator.NotificationNavigator
+import com.depromeet.threedays.mate.MateFragment
+import com.depromeet.threedays.navigator.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.ZoneId
@@ -204,6 +202,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
     }
 
+    private fun showImageSnackBar(
+        view: View,
+        imageResId: Int,
+        titleResId: Int,
+        contentResId: Int,
+        mateLevel: Int,
+        onAction: () -> Unit
+    ) {
+        ThreeDaysImageSnackBar().show(
+            view = view,
+            imageResId = imageResId,
+            title = getString(titleResId),
+            content = getString(contentResId, mateLevel),
+            actionText = getString(R.string.move),
+            onAction = onAction
+        )
+    }
+
     private fun moveToSettingForTurnOnPermission() {
         val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
@@ -288,7 +304,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     )
                                 }
                             )
-                            UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()
+                            is UiEffect.ShowImageSnackBar -> showImageSnackBar(
+                                view = binding.clTopLayout,
+                                imageResId = it.imageResId,
+                                titleResId = it.titleResId,
+                                contentResId = it.contentResId,
+                                mateLevel = it.mateLevel,
+                                onAction = {
+                                    (requireActivity() as MainActivity).changeFragment(MateFragment())
+                                }
+                            )
+                            UiEffect.ShowClapAnimation -> {
+                                (requireActivity() as MainActivity).startCongratulateThirdClapAnimation { viewModel.checkLevelUpHabit() }
+                            }
                             UiEffect.ShowNotiRecommendBottomSheet -> showNotiRecommendBottomSheet()
                             UiEffect.ShowNotiGuideBottomSheet -> checkNotificationPermission()
                         }
