@@ -52,7 +52,7 @@ class MyPageFragment :
      * 이벤트 관련 작업 초기화
      */
     private fun initEvent() {
-        binding.ivHabitArchived.setOnClickListener {
+        binding.tvHabitArchived.setOnClickListener {
             onHabitArchivedButtonClicked()
         }
         binding.ivEdit.setOnClickListener {
