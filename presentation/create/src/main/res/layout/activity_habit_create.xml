@@ -67,10 +67,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{viewModel.emoji.value}"
             android:background="@drawable/bg_rect_gray100_r10"
-            android:padding="10dp"
             android:gravity="center"
+            android:padding="10dp"
+            android:text="@{viewModel.emoji.value}"
             android:textColor="#FF000000"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/tv_habit_name"
@@ -305,11 +305,11 @@
                 android:hint="@string/notification_content_hint"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
+                android:lineSpacingExtra="5dp"
                 android:maxLength="25"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="15dp"
                 android:textAppearance="@style/Typography.Paragraph1"
-                android:lineSpacingExtra="@dimen/Typography.Paragraph1.LineSpacingExtra"
                 android:textColor="@color/gray_800"
                 app:layout_constraintEnd_toEndOf="@+id/tv_notification_time"
                 app:layout_constraintStart_toStartOf="@+id/tv_notification_time"
@@ -368,8 +368,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_blue_color_button"
-                android:button="@null"
-                />
+                android:button="@null" />
 
             <RadioButton
                 android:id="@+id/rb_pink"
@@ -389,7 +388,6 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/selector_habit_button"
             android:gravity="center"
-            android:onClick="@{() -> viewModel.onCreateHabitClick()}"
             android:paddingVertical="18dp"
             android:text="@string/habit_create"
             android:textAppearance="@style/Typography.Button1"

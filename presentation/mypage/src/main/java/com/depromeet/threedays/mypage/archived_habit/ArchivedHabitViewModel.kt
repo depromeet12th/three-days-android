@@ -2,14 +2,14 @@ package com.depromeet.threedays.mypage.archived_habit
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.habit.DeleteArchivedHabitUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetArchivedHabitsUseCase
+import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
+import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +17,8 @@ import javax.inject.Inject
 class ArchivedHabitViewModel @Inject constructor(
     private val getArchivedHabitsUseCase: GetArchivedHabitsUseCase,
     private val deleteArchivedHabitUseCase: DeleteArchivedHabitUseCase,
+    private val readOnboardingUseCase: ReadOnboardingUseCase,
+    private val writeOnboardingUseCase: WriteOnboardingUseCase,
 ) : BaseViewModel() {
     private val _archivedHabits: MutableStateFlow<List<ArchivedHabitUI>> =
         MutableStateFlow(emptyList())
@@ -27,14 +29,18 @@ class ArchivedHabitViewModel @Inject constructor(
     val editable: StateFlow<Boolean>
         get() = _editable
 
-    private val _isOnboardingEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isOnboardingEnabled: StateFlow<Boolean>
-        get() = _isOnboardingEnabled
+    private val _uiEffect: MutableSharedFlow<UiEffect> = MutableSharedFlow()
+    val uiEffect: SharedFlow<UiEffect>
+        get() = _uiEffect
+
+    init {
+        fetchArchivedHabits()
+    }
 
     /**
      * 습관 보관함 > 보관한 습관 목록 조회
      */
-    fun fetchArchivedHabits() {
+    private fun fetchArchivedHabits() {
         viewModelScope.launch {
             getArchivedHabitsUseCase().collect { response ->
                 when (response.status) {
@@ -42,7 +48,11 @@ class ArchivedHabitViewModel @Inject constructor(
                         // Do nothing
                     }
                     Status.SUCCESS -> {
-                        _archivedHabits.value = response.data!!.map { ArchivedHabitUI.from(it) }
+                        val archivedHabits = response.data!!
+                        _archivedHabits.value = archivedHabits.map { ArchivedHabitUI.from(it) }
+                        if(archivedHabits.isEmpty()) {
+                            fetchOnboardingEnabled()
+                        }
                     }
                     Status.ERROR -> TODO()
                     Status.FAIL -> TODO()
@@ -136,16 +146,20 @@ class ArchivedHabitViewModel @Inject constructor(
     /**
      * 습관 보관홤 > SnackBar
      */
-    fun fetchOnboardingEnabled() {
+    private fun fetchOnboardingEnabled() {
         viewModelScope.launch {
-            var archivedHabitsAreEmpty = false
-            archivedHabits.collect {
-                archivedHabitsAreEmpty = it.isNotEmpty()
-                var isFirst = true
-                _isOnboardingEnabled.update {
-                    archivedHabitsAreEmpty && isFirst
-                }
+            val response = readOnboardingUseCase.execute(OnboardingType.ARCHIVED_HABIT)
+            if(response == null) {
+                _uiEffect.emit(
+                    UiEffect.ShowSnackBar
+                )
+
+                writeOnboardingUseCase.execute(OnboardingType.ARCHIVED_HABIT)
             }
         }
     }
+}
+
+sealed interface UiEffect {
+    object ShowSnackBar : UiEffect
 }

@@ -1,8 +1,9 @@
-package com.depromeet.threedays.core
+package com.depromeet.threedays.core.util
 
 import android.os.SystemClock
 import android.view.View
 import androidx.databinding.BindingAdapter
+import com.depromeet.threedays.core.R
 
 class OnSingleClickListener(
     private val interval: Int,

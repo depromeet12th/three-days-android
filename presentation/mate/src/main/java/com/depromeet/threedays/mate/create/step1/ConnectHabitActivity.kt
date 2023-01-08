@@ -11,7 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseActivity
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step2.ChooseMateTypeActivity
@@ -27,6 +28,12 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.MateMakingViewed.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to "${Screen.MateMaking}1",
+            )
+        )
         initView()
         initEvent()
         setObserve()
@@ -59,10 +66,30 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
             finish()
         }
         binding.btnNext.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to "${Screen.MateMaking}1",
+                    MixPanelEvent.ButtonType to ButtonType.Next,
+                )
+            )
+
             val intent = Intent(this, ChooseMateTypeActivity::class.java)
             intent.putExtra("clickedHabit", viewModel.uiState.value.clickedHabit)
             intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             startActivity(intent)
+        }
+    }
+
+    private fun setButtonView(
+        buttonClickable: Boolean,
+        buttonBackgroundRes: Int,
+        buttonTextColor: Int
+    ) {
+        binding.btnNext.apply {
+            isClickable = buttonClickable
+            setBackgroundResource(buttonBackgroundRes)
+            setTextColor(getColor(buttonTextColor))
         }
     }
 
@@ -77,6 +104,11 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
                 launch {
                     viewModel.uiState.collect {
                         binding.ivIllustrator.setBackgroundResource(it.boxImageResId)
+                        setButtonView(
+                            buttonClickable = it.buttonClickable,
+                            buttonBackgroundRes = it.buttonBackgroundRes,
+                            buttonTextColor = it.buttonTextColor,
+                        )
                     }
                 }
             }

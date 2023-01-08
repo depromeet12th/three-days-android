@@ -16,8 +16,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
@@ -73,20 +73,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.checkIsFirstVisitor()
-        checkNotificationPermission()
         initAdapter()
         setObserve()
         initView()
         initEvent()
     }
 
-    private fun checkNotificationPermission() {
-        val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
-        viewModel.setDeviceNotificationState(isDeviceNotificationOn)
-    }
-
     private fun onCreateHabitClick() {
+        if(viewModel.habits.value.isEmpty()) {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.NewMateClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.HomeDefault,
+                    MixPanelEvent.ButtonType to ButtonType.NewHabit.toString()
+                )
+            )
+        }
+
         addResultLauncher.launch(habitCreateNavigator.intent(requireContext()))
     }
 
@@ -95,11 +98,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         intent.putExtra(HABIT_ID, habitId)
         addResultLauncher.launch(intent)
     }
-    
+
     private fun onNotificationClick() {
         val intent = notificationNavigator.intent(requireContext())
         addResultLauncher.launch(intent)
     }
+
     private fun initAdapter() {
         habitAdapter = HabitAdapter(
             createHabitAchievement = { habitId, isThirdClap ->
@@ -143,7 +147,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         // TODO: 하드코딩되어있는거 수정 
         val now = ZonedDateTime.now(ZoneId.systemDefault())
         val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
-        binding.tvDate.text = String.format("%02d월%02d일 %s요일", now.monthValue, now.dayOfMonth, dayOfWeekList[now.dayOfWeek.value - 1])
+        binding.tvDate.text = String.format(
+            "%02d월%02d일 %s요일",
+            now.monthValue,
+            now.dayOfMonth,
+            dayOfWeekList[now.dayOfWeek.value - 1]
+        )
     }
 
     private fun initEvent() {
@@ -197,26 +206,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         )
     }
 
-    private fun showBottomSheet(
-        isDeviceNotificationOn: Boolean,
-        isFirstVisitor: Boolean,
-    ) {
+    private fun moveToSettingForTurnOnPermission() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
+        startActivity(intent)
+    }
+
+    private fun showNotiRecommendBottomSheet() {
+        val modal = NotiRecommendBottomSheet(
+            onConfirmClick = { checkNotificationPermission() }
+        )
+        modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+        modal.show(parentFragmentManager, NotiGuideBottomSheet.TAG)
+    }
+
+    private fun checkNotificationPermission() {
+        val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
         if(!isDeviceNotificationOn) {
             NotiGuideBottomSheet.newInstance (
                 moveToSettingForTurnOnPermission = { moveToSettingForTurnOnPermission() }
             ).show(parentFragmentManager, NotiGuideBottomSheet.TAG)
         }
-        if(isFirstVisitor) {
-            val modal = NotiRecommendBottomSheet()
-            modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
-            modal.show(parentFragmentManager, NotiGuideBottomSheet.TAG)
-        }
-    }
-
-    private fun moveToSettingForTurnOnPermission() {
-        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
-        startActivity(intent)
     }
 
     private fun setObserve() {
@@ -224,6 +234,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
+                        if(list.isNotEmpty()) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                                )
+                            )
+                        }
+                        else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                                )
+                            )
+                        }
+
                         habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE
@@ -231,16 +258,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     }
                 }
                 launch {
-                    viewModel.uiState.collect {
-                        showBottomSheet(
-                            isDeviceNotificationOn = it.isDeviceNotificationOn,
-                            isFirstVisitor = it.isFirstVisitor,
-                        )
-                    }
-                }
-                launch {
                     viewModel.uiEffect.collect {
-                        when(it) {
+                        when (it) {
                             is UiEffect.ShowToastMessage -> showToastMessage(
                                 context = requireContext(),
                                 title = getString(it.resId),
@@ -253,7 +272,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     )
                                 },
                                 title = getString(it.titleResId),
-                                description = it.descriptionResId?.let { getString(it) } ?: String.Empty,
+                                description = it.descriptionResId?.let { getString(it) }
+                                    ?: String.Empty,
                                 cancelText = getString(it.cancelTextResId),
                                 confirmText = getString(it.confirmTextResId),
                                 buttonTopMargin = it.buttonTopMargin,
@@ -263,10 +283,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                 text = getString(it.textResId),
                                 actionText = getString(it.actionTextResId),
                                 onAction = {
-                                    addResultLauncher.launch(archivedHabitNavigator.intent(requireContext()))
+                                    addResultLauncher.launch(
+                                        archivedHabitNavigator.intent(
+                                            requireContext()
+                                        )
+                                    )
                                 }
                             )
                             UiEffect.ShowClapAnimation -> (requireActivity() as MainActivity).startCongratulateThirdClapAnimation()
+                            UiEffect.ShowNotiRecommendBottomSheet -> showNotiRecommendBottomSheet()
+                            UiEffect.ShowNotiGuideBottomSheet -> checkNotificationPermission()
                         }
                     }
                 }

@@ -34,6 +34,7 @@ class SetMateNicknameViewMoodel @Inject constructor(
                 it.copy(
                     inputText = inputText,
                     inputTextLength = inputText.length.toString(),
+                    buttonClickable = inputText.isNotEmpty(),
                     buttonBackgroundRes = if(inputText.isEmpty()) {
                         core_design.drawable.bg_rect_gray200_r15
                     } else {
@@ -111,6 +112,7 @@ class SetMateNicknameViewMoodel @Inject constructor(
 data class UiState(
     val inputText: String = "",
     val inputTextLength: String = "0",
+    val buttonClickable: Boolean = false,
     val buttonBackgroundRes: Int = core_design.drawable.bg_rect_gray200_r15,
     val buttonTextColor: Int = core_design.color.gray_450,
     val isGuideVisible: Boolean = false,

@@ -12,15 +12,16 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
 import com.depromeet.threedays.domain.key.HABIT_ID
+import com.depromeet.threedays.domain.util.EmojiUtil
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
 import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
-import com.depromeet.threedays.core_design_system.R as core_design
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.depromeet.threedays.core_design_system.R as core_design
 
 @AndroidEntryPoint
 class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.layout.fragment_history) {
@@ -104,9 +105,15 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     ) {
         binding.tvThisMonthClap.text = rewardCount
         binding.tvThisMonthAchieveDays.text = achievementCount
-        binding.tvMostAchieveHabitIcon.text = emoji
-        binding.tvMostAchieveHabitTitle.text = title
         binding.clMostAchieve.setBackgroundResource(cardBackgroundResId)
+
+        if(emoji.isEmpty()) {
+            binding.tvMostAchieveHabitIcon.text = EmojiUtil.getEmojiString(EmojiUtil.Word.QUESTION)
+            binding.tvMostAchieveHabitTitle.text = getString(R.string.no_achievement_habit_guide)
+        } else {
+            binding.tvMostAchieveHabitIcon.text = emoji
+            binding.tvMostAchieveHabitTitle.text = title
+        }
     }
 
     private fun setMonth(month: String) {

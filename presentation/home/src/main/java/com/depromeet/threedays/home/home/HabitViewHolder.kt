@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.home.databinding.ItemHabitBinding
 import com.depromeet.threedays.home.home.model.HabitUI
@@ -131,19 +133,32 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         deleteHabitAchievement: (Long, Long) -> Unit,
         onMoreClick: (HabitUI) -> Unit
     ) {
-        view.ivMore.setOnClickListener {
+        view.ivMore.setOnSingleClickListener {
             onMoreClick(habitUI)
         }
 
-        view.ivFirstDay.setOnClickListener {
+        view.ivFirstDay.setOnSingleClickListener {
+            sendEvent()
             switchHabitState(0, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
-        view.ivSecondDay.setOnClickListener {
+        view.ivSecondDay.setOnSingleClickListener {
+            sendEvent()
             switchHabitState(1, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
-        view.ivThirdDay.setOnClickListener {
+        view.ivThirdDay.setOnSingleClickListener {
+            sendEvent()
             switchHabitState(2, habitUI, createHabitAchievement, deleteHabitAchievement)
         }
+    }
+
+    private fun sendEvent() {
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.CheckClicked.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to Screen.HomeActivated.toString(),
+                MixPanelEvent.ButtonType to ButtonType.Check.toString()
+            )
+        )
     }
 
     private fun switchHabitState(

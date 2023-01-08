@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.depromeet.threedays.core.setOnSingleClickListener
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.SnackbarArchivedHabitOnboardingBinding
 import com.google.android.material.snackbar.Snackbar
@@ -14,7 +14,6 @@ class ArchivedHabitOnboardingSnackBar {
     companion object {
         fun show(
             view: View,
-            onAction: () -> Unit
         ) {
             val binding = SnackbarArchivedHabitOnboardingBinding.inflate(LayoutInflater.from(view.context), null,false)
             val snackbar = Snackbar.make(
@@ -26,7 +25,7 @@ class ArchivedHabitOnboardingSnackBar {
 
             with(snackBarLayout) {
                 removeAllViews()
-                setPadding(0, 0, 0, 0)
+                setPadding(0, 200, 0, 0)
                 setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
                 addView(binding.root, 0)
 
@@ -35,7 +34,6 @@ class ArchivedHabitOnboardingSnackBar {
             }
 
             binding.ivClose.setOnSingleClickListener {
-                onAction()
                 snackbar.dismiss()
             }
 

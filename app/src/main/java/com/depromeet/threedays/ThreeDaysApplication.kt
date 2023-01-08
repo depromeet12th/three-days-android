@@ -3,6 +3,7 @@ package com.depromeet.threedays
 import android.app.Application
 import com.depromeet.threedays.data.datasource.property.BuildConfigFieldDataSource
 import com.depromeet.threedays.data.datasource.property.BuildConfigFieldKey
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -18,6 +19,7 @@ class ThreeDaysApplication : Application() {
 
         initTimber()
         initKakaoSdk()
+        initAnalytics()
     }
 
     private fun initTimber() {
@@ -29,5 +31,9 @@ class ThreeDaysApplication : Application() {
             context = this,
             appKey = buildConfigFieldDataSource.get(BuildConfigFieldKey.KAKAO_APP_KEY),
         )
+    }
+
+    private fun initAnalytics() {
+        AnalyticsUtil.init(this)
     }
 }

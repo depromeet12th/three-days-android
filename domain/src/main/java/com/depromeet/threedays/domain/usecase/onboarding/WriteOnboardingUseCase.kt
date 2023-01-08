@@ -6,11 +6,6 @@ import javax.inject.Inject
 
 class WriteOnboardingUseCase @Inject constructor(val repository: OnboardingRepository) {
     suspend fun execute(onboardingType: OnboardingType) {
-        val key = when (onboardingType) {
-            OnboardingType.NOTIFICATION_RECOMMEND -> OnboardingType.NOTIFICATION_RECOMMEND.key
-            OnboardingType.AFTER_SPLASH -> OnboardingType.AFTER_SPLASH.key
-            OnboardingType.MATE -> OnboardingType.MATE.key
-        }
-        return repository.writeOnboardnig(key = key, value = "IS_SHWON")
+        return repository.writeOnboardnig(key = onboardingType.key, value = "IS_SHWON")
     }
 }
