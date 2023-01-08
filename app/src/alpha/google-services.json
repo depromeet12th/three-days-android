@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1091459842156",
+    "project_id": "three-days-develop",
+    "storage_bucket": "three-days-develop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091459842156:android:8f8abdfe99c268fe485849",
+        "android_client_info": {
+          "package_name": "com.depromeet.threedays.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091459842156-pjhtgjo35d6ro1ra922ngi7aabealvsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0EiDGdeC8Oxa9HvFshjg0YCZrfhzY4cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091459842156-pjhtgjo35d6ro1ra922ngi7aabealvsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
