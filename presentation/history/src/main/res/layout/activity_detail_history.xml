@@ -10,361 +10,368 @@
             type="com.depromeet.threedays.history.detail.DetailHistoryViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/gray_100"
         tools:context=".detail.DetailHistoryActivity"
         tools:ignore="ContentDescription">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_out" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/gray_100">
+            android:layout_marginTop="36dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_out" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
-            <LinearLayout
-                android:id="@+id/container_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_back">
-
-                <TextView
-                    android:id="@+id/tv_emoji"
+                <LinearLayout
+                    android:id="@+id/container_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/transparency_color"
-                    android:includeFontPadding="false"
-                    android:textSize="20sp"
-                    tools:text="\uD83D\uDE00" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_title"
+                    <TextView
+                        android:id="@+id/tv_emoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/transparency_color"
+                        android:textSize="20sp"
+                        tools:text="\uD83D\uDE00" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="7dp"
+                        android:textAppearance="@style/Typography.Heading"
+                        android:textColor="@color/gray_800"
+                        tools:text="아침 챙겨먹기" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="7dp"
-                    android:textAppearance="@style/Typography.Heading"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_title">
+
+                    <TextView
+                        android:id="@+id/tv_create_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect_green10_r5"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="5dp"
+                        android:textAppearance="@style/Typography.Body4"
+                        android:textColor="@color/green_50"
+                        tools:text="42일째" />
+
+                    <TextView
+                        android:id="@+id/tv_day_of_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_rect_gray200_r5"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="5dp"
+                        android:textAppearance="@style/Typography.Body4"
+                        android:textColor="@color/gray_500"
+                        tools:text="월, 화, 수" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="@style/Typography.Body4"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_date"
+                    tools:text="시작일 : 2022.08.15" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_clap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_rect_white_r10"
+                    app:layout_constraintEnd_toStartOf="@id/container_execute_day"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_start_date">
+
+                    <TextView
+                        android:id="@+id/tv_clap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/detail_clap"
+                        android:textAppearance="@style/Typography.Body3"
+                        android:textColor="@color/gray_500"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_clap_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_clap">
+
+
+                        <ImageView
+                            android:id="@+id/iv_clap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_clap" />
+
+                        <TextView
+                            android:id="@+id/tv_clap_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textAppearance="@style/Typography.Heading"
+                            android:textColor="@color/gray_700"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_clap"
+                            app:layout_constraintStart_toEndOf="@id/iv_clap"
+                            app:layout_constraintTop_toTopOf="@id/iv_clap"
+                            tools:text="4" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_execute_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_rect_white_r10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/container_clap"
+                    app:layout_constraintTop_toTopOf="@+id/container_clap">
+
+                    <TextView
+                        android:id="@+id/tv_execute_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/detail_habit_execute_day"
+                        android:textAppearance="@style/Typography.Body3"
+                        android:textColor="@color/gray_500"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_execute_day_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_execute_day">
+
+
+                        <ImageView
+                            android:id="@+id/iv_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_check_gray700_circle" />
+
+                        <TextView
+                            android:id="@+id/tv_execute_day_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textAppearance="@style/Typography.Heading"
+                            android:textColor="@color/gray_700"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_check"
+                            app:layout_constraintStart_toEndOf="@id/iv_check"
+                            app:layout_constraintTop_toTopOf="@id/iv_check"
+                            tools:text="26" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/v_calendar_background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/container_clap" />
+
+                <TextView
+                    android:id="@+id/tv_today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="39dp"
+                    android:textAppearance="@style/Typography.Title2"
                     android:textColor="@color/gray_800"
-                    tools:text="아침 챙겨먹기" />
-            </LinearLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/v_calendar_background"
+                    tools:text="202N년 N월" />
 
-            <LinearLayout
-                android:id="@+id/container_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_title">
-
-                <TextView
-                    android:id="@+id/tv_create_days"
+                <ImageView
+                    android:id="@+id/iv_previous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_rect_green10_r5"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_today"
+                    app:layout_constraintEnd_toStartOf="@id/tv_today"
+                    app:layout_constraintTop_toTopOf="@id/tv_today"
+                    app:srcCompat="@drawable/selector_left_arrow" />
+
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_today"
+                    app:layout_constraintStart_toEndOf="@id/tv_today"
+                    app:layout_constraintTop_toTopOf="@id/tv_today"
+                    app:srcCompat="@drawable/selector_right_arrow" />
+
+                <include
+                    android:id="@+id/layout_calendar_header"
+                    layout="@layout/calendar_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="35dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_today" />
+
+                <View
+                    android:id="@+id/v_divider_top"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_200"
+                    app:layout_constraintBottom_toTopOf="@id/cv_history"
+                    app:layout_constraintEnd_toEndOf="@id/layout_calendar_header"
+                    app:layout_constraintStart_toStartOf="@id/layout_calendar_header" />
+
+                <com.kizitonwose.calendar.view.CalendarView
+                    android:id="@+id/cv_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@color/white"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    app:cv_dayViewResource="@layout/calendar_day"
+                    app:cv_scrollPaged="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_calendar_header" />
+
+                <View
+                    android:id="@+id/v_divider_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray_200"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_calendar_header"
+                    app:layout_constraintStart_toStartOf="@id/layout_calendar_header"
+                    app:layout_constraintTop_toBottomOf="@id/cv_history" />
+
+                <View
+                    android:id="@+id/v_range"
+                    android:layout_width="14dp"
+                    android:layout_height="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_rect_green50_r4"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_clap_count_of_month"
+                    app:layout_constraintEnd_toStartOf="@id/tv_clap_count_of_month"
+                    app:layout_constraintTop_toTopOf="@id/tv_clap_count_of_month" />
+
+                <TextView
+                    android:id="@+id/tv_clap_count_of_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="37dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="40dp"
                     android:textAppearance="@style/Typography.Body4"
-                    android:textColor="@color/green_50"
-                    tools:text="42일째" />
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/v_divider_bottom"
+                    tools:text="@string/month_clap_count" />
+
+                <View
+                    android:id="@+id/v_single"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_single_selection"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_achievement_day_count_of_month"
+                    app:layout_constraintEnd_toStartOf="@id/tv_achievement_day_count_of_month"
+                    app:layout_constraintTop_toTopOf="@+id/tv_achievement_day_count_of_month" />
 
                 <TextView
-                    android:id="@+id/tv_day_of_week"
+                    android:id="@+id/tv_achievement_day_count_of_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_rect_gray200_r5"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="5dp"
+                    android:layout_marginEnd="37dp"
                     android:textAppearance="@style/Typography.Body4"
                     android:textColor="@color/gray_500"
-                    tools:text="월, 화, 수" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textAppearance="@style/Typography.Body4"
-                android:textColor="@color/gray_500"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_date"
-                tools:text="시작일 : 2022.08.15" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_clap"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_rect_white_r10"
-                app:layout_constraintEnd_toStartOf="@id/container_execute_day"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_start_date">
-
-                <TextView
-                    android:id="@+id/tv_clap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/detail_clap"
-                    android:textAppearance="@style/Typography.Body3"
-                    android:textColor="@color/gray_500"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_clap_count_of_month"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_clap_count_of_month"
+                    tools:text="@string/month_achievement_day_count" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_clap_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginBottom="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_clap">
-
-
-                    <ImageView
-                        android:id="@+id/iv_clap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_clap" />
-
-                    <TextView
-                        android:id="@+id/tv_clap_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textAppearance="@style/Typography.Heading"
-                        android:textColor="@color/gray_700"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_clap"
-                        app:layout_constraintStart_toEndOf="@id/iv_clap"
-                        app:layout_constraintTop_toTopOf="@id/iv_clap"
-                        tools:text="4" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_execute_day"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/bg_rect_white_r10"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/container_clap"
-                app:layout_constraintTop_toTopOf="@+id/container_clap">
-
-                <TextView
-                    android:id="@+id/tv_execute_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/detail_habit_execute_day"
-                    android:textAppearance="@style/Typography.Body3"
-                    android:textColor="@color/gray_500"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_execute_day_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginBottom="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_execute_day">
-
-
-                    <ImageView
-                        android:id="@+id/iv_check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_check_gray700_circle" />
-
-                    <TextView
-                        android:id="@+id/tv_execute_day_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textAppearance="@style/Typography.Heading"
-                        android:textColor="@color/gray_700"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_check"
-                        app:layout_constraintStart_toEndOf="@id/iv_check"
-                        app:layout_constraintTop_toTopOf="@id/iv_check"
-                        tools:text="26" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/v_calendar_background"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="32dp"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_clap" />
-
-            <TextView
-                android:id="@+id/tv_today"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="39dp"
-                android:textAppearance="@style/Typography.Title2"
-                android:textColor="@color/gray_800"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/v_calendar_background"
-                tools:text="202N년 N월" />
-
-            <ImageView
-                android:id="@+id/iv_previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_today"
-                app:layout_constraintEnd_toStartOf="@id/tv_today"
-                app:layout_constraintTop_toTopOf="@id/tv_today"
-                app:srcCompat="@drawable/selector_left_arrow" />
-
-            <ImageView
-                android:id="@+id/iv_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_today"
-                app:layout_constraintStart_toEndOf="@id/tv_today"
-                app:layout_constraintTop_toTopOf="@id/tv_today"
-                app:srcCompat="@drawable/selector_right_arrow" />
-
-            <include
-                android:id="@+id/layout_calendar_header"
-                layout="@layout/calendar_header"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="35dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_today" />
-
-            <View
-                android:id="@+id/v_divider_top"
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:background="@color/gray_200"
-                app:layout_constraintBottom_toTopOf="@id/cv_history"
-                app:layout_constraintEnd_toEndOf="@id/layout_calendar_header"
-                app:layout_constraintStart_toStartOf="@id/layout_calendar_header" />
-
-            <com.kizitonwose.calendar.view.CalendarView
-                android:id="@+id/cv_history"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="11dp"
-                android:background="@color/white"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"
-                app:cv_dayViewResource="@layout/calendar_day"
-                app:cv_scrollPaged="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_calendar_header" />
-
-            <View
-                android:id="@+id/v_divider_bottom"
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/gray_200"
-                app:layout_constraintEnd_toEndOf="@+id/layout_calendar_header"
-                app:layout_constraintStart_toStartOf="@id/layout_calendar_header"
-                app:layout_constraintTop_toBottomOf="@id/cv_history" />
-
-            <View
-                android:id="@+id/v_range"
-                android:layout_width="14dp"
-                android:layout_height="6dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_rect_green50_r4"
-                app:layout_constraintBottom_toBottomOf="@id/tv_clap_count_of_month"
-                app:layout_constraintEnd_toStartOf="@id/tv_clap_count_of_month"
-                app:layout_constraintTop_toTopOf="@id/tv_clap_count_of_month" />
-
-            <TextView
-                android:id="@+id/tv_clap_count_of_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:textAppearance="@style/Typography.Body4"
-                android:textColor="@color/gray_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_divider_bottom"
-                tools:text="@string/month_clap_count" />
-
-            <View
-                android:id="@+id/v_single"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_single_selection"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_achievement_day_count_of_month"
-                app:layout_constraintEnd_toStartOf="@id/tv_achievement_day_count_of_month"
-                app:layout_constraintTop_toTopOf="@+id/tv_achievement_day_count_of_month" />
-
-            <TextView
-                android:id="@+id/tv_achievement_day_count_of_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="37dp"
-                android:textAppearance="@style/Typography.Body4"
-                android:textColor="@color/gray_500"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_clap_count_of_month"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_clap_count_of_month"
-                tools:text="@string/month_achievement_day_count" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
