@@ -10,18 +10,23 @@ import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievement
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
+import com.depromeet.threedays.domain.usecase.today_visit.ReadTodayFirstVisitUseCase
+import com.depromeet.threedays.domain.usecase.today_visit.WriteTodayFirstVisitUseCase
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val readOnboardingUseCase: ReadOnboardingUseCase,
     private val writeOnboardingUseCase: WriteOnboardingUseCase,
+    private val readTodayFirstVisitUseCase: ReadTodayFirstVisitUseCase,
+    private val writeTodayFirstVisitUseCase: WriteTodayFirstVisitUseCase,
     private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
     private val createHabitAchievementUseCase: CreateHabitAchievementUseCase,
     private val deleteHabitAchievementUseCase: DeleteHabitAchievementUseCase,
@@ -66,7 +71,9 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        _habits.value = response.data!!.map { it.toHabitUI() }
+                        val list = response.data!!.map { it.toHabitUI() }
+                        _habits.value = list
+                        checkNewClap(list)
                     }
                     Status.ERROR -> {
 
@@ -96,12 +103,6 @@ class HomeViewModel @Inject constructor(
 
                     }
                 }
-            }
-
-            if(isThirdClap) {
-                _uiEffect.emit(
-                    UiEffect.ShowClapAnimation
-                )
             }
         }
     }
@@ -230,6 +231,24 @@ class HomeViewModel @Inject constructor(
                             resId = R.string.habit_delete_success_message,
                         )
                     )
+                }
+            }
+        }
+    }
+
+    private fun checkNewClap(list: List<HabitUI>) {
+        val hasNewClap = list.find { it.todayIndex == 0 && it.sequence > 0 }
+        if(hasNewClap != null) {
+            val today = LocalDate.now().toString()
+            viewModelScope.launch {
+                val response = readTodayFirstVisitUseCase.execute()
+                val isTodayFirstVisit = (response == null || response != today)
+
+                if(isTodayFirstVisit) {
+                    _uiEffect.emit(
+                        UiEffect.ShowClapAnimation
+                    )
+                    writeTodayFirstVisitUseCase.execute(today = today)
                 }
             }
         }

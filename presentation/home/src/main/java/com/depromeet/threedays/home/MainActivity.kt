@@ -1,10 +1,10 @@
 package com.depromeet.threedays.home
 
-import android.animation.Animator
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.history.HistoryFragment
 import com.depromeet.threedays.home.databinding.ActivityMainBinding
 import com.depromeet.threedays.home.home.HomeFragment
@@ -49,26 +49,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun initEvent() {
-        binding.lottieClap.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(p0: Animator) {
-                binding.congratulationAnimationGroup.isVisible = true
-            }
-
-            override fun onAnimationEnd(p0: Animator) {
-                binding.congratulationAnimationGroup.isVisible = false
-            }
-
-            override fun onAnimationCancel(p0: Animator) {
-
-            }
-
-            override fun onAnimationRepeat(p0: Animator) {
-
-            }
-        })
+        binding.ivClose.setOnSingleClickListener {
+            binding.congratulationAnimationGroup.isVisible = false
+            binding.lottieClap.cancelAnimation()
+        }
     }
 
     fun startCongratulateThirdClapAnimation() {
+        binding.congratulationAnimationGroup.isVisible = true
         binding.lottieClap.playAnimation()
     }
 }
