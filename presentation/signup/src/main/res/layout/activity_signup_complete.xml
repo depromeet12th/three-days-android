@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".complete.SignupCompleteActivity"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/iv_signup_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_signup_complete" />
+
+        <TextView
+            android:id="@+id/tv_signup_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/signup_complete"
+            android:textAppearance="@style/Typography.Heading"
+            app:layout_constraintEnd_toEndOf="@+id/iv_signup_complete"
+            app:layout_constraintStart_toStartOf="@+id/iv_signup_complete"
+            app:layout_constraintTop_toBottomOf="@+id/iv_signup_complete" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_rect_gray800_r15"
+            android:gravity="center"
+            android:paddingVertical="15dp"
+            android:text="@string/check"
+            android:textAppearance="@style/Typography.Button1"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
