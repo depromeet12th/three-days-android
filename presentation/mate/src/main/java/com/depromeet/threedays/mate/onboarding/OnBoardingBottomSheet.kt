@@ -84,8 +84,8 @@ class OnBoardingBottomSheet(
                     FIRST_PAGE -> currentItem = SECOND_PAGE
                     SECOND_PAGE -> currentItem = THIRD_PAGE
                     THIRD_PAGE -> {
-                        onWithMateClick()
                         dismiss()
+                        onWithMateClick()
                     }
                 }
             }

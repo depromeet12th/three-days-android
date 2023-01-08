@@ -41,10 +41,6 @@ class MateViewModel @Inject constructor(
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
-    private val _isFirstVisitor: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isFirstVisitor: StateFlow<Boolean>
-        get() = _isFirstVisitor
-
     init {
         checkIsFirstVisitor()
     }
@@ -104,11 +100,11 @@ class MateViewModel @Inject constructor(
 
     private fun checkIsFirstVisitor() {
         viewModelScope.launch {
-            if (isFirstVisitor.value.not()) {
-                val response = readOnboardingUseCase.execute(OnboardingType.MATE)
-                _isFirstVisitor.update {
-                    response == null
-                }
+            val response = readOnboardingUseCase.execute(OnboardingType.MATE)
+            if (response == null) {
+                _uiEffect.emit(
+                    UiEffect.ShowMateOnboarding
+                )
             }
         }
     }
@@ -236,4 +232,5 @@ sealed interface UiEffect {
     data class ShowAchieveMaxLevel(
         val mateLevel: Int
     ) : UiEffect
+    object ShowMateOnboarding : UiEffect
 }
