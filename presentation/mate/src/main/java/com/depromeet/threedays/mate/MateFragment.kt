@@ -225,7 +225,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         if(hasMate) {
             window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
         } else {
-            window.statusBarColor = ContextCompat.getColor(context!!, core_design.color.white)
+            window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.white)
         }
     }
 
