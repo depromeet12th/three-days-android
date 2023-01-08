@@ -41,22 +41,24 @@ class HistoryViewModel @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         val habits = response.data!!
-                        val sortedHabits = habits.sortedBy { it.createAt }
-                        val startDate = sortedHabits.first()
-                        val endDate = sortedHabits.last()
+                        if(habits.isNotEmpty()) {
+                            val sortedHabits = habits.sortedBy { it.createAt }
+                            val startDate = sortedHabits.first()
+                            val endDate = sortedHabits.last()
 
-                        _uiState.update {
-                            it.copy(
-                                habits = habits.map { it.toHabitUI() },
-                                startDate = getDateTimeFromString(startDate.createAt) ?: it.startDate,
-                                endDate = getDateTimeFromString(endDate.createAt) ?: it.endDate,
-                            )
-                        }
-                        _uiState.update {
-                            it.copy(
-                                previousMonthClickable = canMoveToPreviousMonth(),
-                                nextMonthClickable = canMoveToNextMonth(),
-                            )
+                            _uiState.update {
+                                it.copy(
+                                    habits = habits.map { it.toHabitUI() },
+                                    startDate = getDateTimeFromString(startDate.createAt) ?: it.startDate,
+                                    endDate = getDateTimeFromString(endDate.createAt) ?: it.endDate,
+                                )
+                            }
+                            _uiState.update {
+                                it.copy(
+                                    previousMonthClickable = canMoveToPreviousMonth(),
+                                    nextMonthClickable = canMoveToNextMonth(),
+                                )
+                            }
                         }
                     }
                     Status.ERROR -> {
