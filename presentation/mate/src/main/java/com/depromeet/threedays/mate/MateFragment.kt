@@ -19,6 +19,7 @@ import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
 import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
+import com.depromeet.threedays.mate.create.step1.ConnectHabitActivity
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
@@ -203,13 +204,8 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         when(it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
                             is UiEffect.ShowAchieveMaxLevel -> showAchieveMaxLevel(it.mateLevel)
+                            UiEffect.ShowMateOnboarding -> showMateOnboarding()
                         }
-                    }
-                }
-
-                launch {
-                    viewModel.isFirstVisitor.collect {
-                        showMateOnboarding(isFirstVisitor = it)
                     }
                 }
             }
@@ -274,14 +270,13 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         }
     }
 
-    private fun showMateOnboarding(isFirstVisitor: Boolean) {
-        if(isFirstVisitor) {
-            val modal = OnBoardingBottomSheet {
-                viewModel.writeIsFirstVisitor()
-            }
-            modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
-            modal.show(parentFragmentManager, OnBoardingBottomSheet.TAG)
+    private fun showMateOnboarding() {
+        val modal = OnBoardingBottomSheet {
+            viewModel.writeIsFirstVisitor()
+            startActivity(Intent(requireActivity(), ConnectHabitActivity::class.java))
         }
+        modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+        modal.show(parentFragmentManager, OnBoardingBottomSheet.TAG)
     }
 
     private fun showDeleteSuccessMessage(resId: Int) {
