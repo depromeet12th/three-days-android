@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.Empty
+import com.depromeet.threedays.core.extensions.gone
+import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
@@ -39,6 +42,7 @@ import com.depromeet.threedays.core_design_system.R as core_design
 class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
     override val viewModel by viewModels<MateViewModel>()
     lateinit var clapAdapter: ClapAdapter
+    lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
 
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
@@ -151,7 +155,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
         }
-        val behavior = BottomSheetBehavior.from(binding.clBottomSheet)
+        behavior = BottomSheetBehavior.from(binding.clBottomSheet)
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
@@ -159,10 +163,13 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when(newState) {
                     BottomSheetBehavior.STATE_COLLAPSED-> {
-
+                        binding.ivArrow.setImageResource(core_design.drawable.ic_arrow_up)
+                        binding.viewBg.gone()
                     }
                     BottomSheetBehavior.STATE_DRAGGING-> {
-
+                        if(!binding.viewBg.isVisible) {
+                            binding.viewBg.visible()
+                        }
                     }
                     BottomSheetBehavior.STATE_EXPANDED-> {
                         AnalyticsUtil.event(
@@ -172,6 +179,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                                 MixPanelEvent.ButtonType to ButtonType.MateClapOpen,
                             )
                         )
+                        binding.ivArrow.setImageResource(core_design.drawable.ic_arrow_down)
                     }
                     BottomSheetBehavior.STATE_HIDDEN-> {
 
@@ -182,6 +190,15 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 }
             }
         })
+        binding.ivArrow.setOnSingleClickListener {
+            if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                binding.viewBg.visible()
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            } else if(behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                binding.viewBg.gone()
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
     }
 
     private fun setObserve() {
