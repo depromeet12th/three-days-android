@@ -9,7 +9,6 @@
     <application
         android:name=".ThreeDaysApplication"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ThreeDays"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
@@ -55,24 +55,27 @@
 
         <activity
             android:name="com.depromeet.threedays.onboarding.OnboardingActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
 
         <activity
             android:name="com.depromeet.threedays.mypage.archived_habit.ArchivedHabitActivity"
             android:exported="false" />
 
         <activity android:name=".mate.create.step1.ConnectHabitActivity"
+            android:exported="false"
             android:taskAffinity="com.depromeet.threedays.mate"
-            android:exported="false" />
+            android:theme="@style/WhiteStatusTheme" />
 
         <activity android:name=".mate.create.step2.ChooseMateTypeActivity"
+            android:exported="false"
             android:taskAffinity="com.depromeet.threedays.mate"
-            android:exported="false" />
+            android:theme="@style/WhiteStatusTheme" />
 
         <activity android:name=".mate.create.step3.SetMateNicknameActivity"
+            android:exported="false"
             android:taskAffinity="com.depromeet.threedays.mate"
-            android:exported="false" />
+            android:theme="@style/WhiteStatusTheme" />
 
         <activity android:name="com.depromeet.threedays.policy.PolicyActivity"
             android:exported="false" />

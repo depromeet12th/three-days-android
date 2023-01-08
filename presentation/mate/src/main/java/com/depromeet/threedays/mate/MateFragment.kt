@@ -3,6 +3,8 @@ package com.depromeet.threedays.mate
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -32,7 +34,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as core_design
-
 
 @AndroidEntryPoint
 class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
@@ -218,6 +219,14 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         binding.groupSpeechBubble.isVisible = hasMate
         binding.clBottomSheet.isVisible = hasMate
         binding.clTopLayout.setBackgroundResource(backgroundResColor)
+
+        val window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        if(hasMate) {
+            window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
+        } else {
+            window.statusBarColor = ContextCompat.getColor(context!!, core_design.color.white)
+        }
     }
 
     private fun setMateInfo(mateUI: MateUI?) {
@@ -317,5 +326,13 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             )
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
     }
 }
