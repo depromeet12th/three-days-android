@@ -107,7 +107,6 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/create_mate_guide"
                 android:textAppearance="@style/Typography.Paragraph3"
-                android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
                 android:textColor="@color/gray_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +174,6 @@
                     android:minLines="3"
                     android:text="@string/clap_guide_content"
                     android:textAppearance="@style/Typography.Paragraph3"
-                    android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
                     android:textColor="@color/gray_600"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_tooltip_title" />

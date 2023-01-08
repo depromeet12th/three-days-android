@@ -34,7 +34,6 @@
             android:layout_marginVertical="12dp"
             android:layout_marginStart="9dp"
             android:textAppearance="@style/Typography.Paragraph3"
-            android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
             android:textColor="@color/gray_200"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

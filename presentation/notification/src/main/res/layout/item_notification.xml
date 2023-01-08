@@ -43,7 +43,6 @@
             android:minLines="2"
             android:text="짝꿍이 레벨2로 성장했어요. 성장한 짝꿍의 모습이 궁금하시다면 클릭!"
             android:textAppearance="@style/Typography.Paragraph2"
-            android:lineSpacingExtra="@dimen/Typography.Paragraph2.LineSpacingExtra"
             android:textColor="@color/gray_600"
             app:layout_constraintEnd_toEndOf="@id/gl_notification_content"
             app:layout_constraintStart_toStartOf="@id/tv_notification_title"
