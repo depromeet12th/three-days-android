@@ -80,6 +80,7 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
                 viewModel.uiState.collect {
                     setGuideTextVisible(isGuideVisible = it.isGuideVisible)
                     setButtonView(
+                        buttonClickable = it.buttonClickable,
                         buttonBackgroundRes = it.buttonBackgroundRes,
                         buttonTextColor = it.buttonTextColor,
                     )
@@ -94,9 +95,16 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
         binding.tvGuide.isVisible = isGuideVisible
     }
 
-    private fun setButtonView(buttonBackgroundRes: Int, buttonTextColor: Int) {
-        binding.btnNext.setBackgroundResource(buttonBackgroundRes)
-        binding.btnNext.setTextColor(getColor(buttonTextColor))
+    private fun setButtonView(
+        buttonClickable: Boolean,
+        buttonBackgroundRes: Int,
+        buttonTextColor: Int
+    ) {
+        binding.btnNext.apply {
+            isClickable = buttonClickable
+            setBackgroundResource(buttonBackgroundRes)
+            setTextColor(getColor(buttonTextColor))
+        }
     }
 
     private fun setAvailableInputLength(inputTextLength: String) {
