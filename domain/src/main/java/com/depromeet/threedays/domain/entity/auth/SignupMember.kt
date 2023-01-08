@@ -8,5 +8,6 @@ data class SignupMember(
     val name: String,
     val notificationConsent: Boolean,
     val resource: String,
-    val token: Token
+    val token: Token,
+    val isSignedUp: Boolean
 )
