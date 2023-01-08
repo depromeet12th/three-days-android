@@ -81,6 +81,18 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
         }
     }
 
+    private fun setButtonView(
+        buttonClickable: Boolean,
+        buttonBackgroundRes: Int,
+        buttonTextColor: Int
+    ) {
+        binding.btnNext.apply {
+            isClickable = buttonClickable
+            setBackgroundResource(buttonBackgroundRes)
+            setTextColor(getColor(buttonTextColor))
+        }
+    }
+
     private fun setObserve() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -92,6 +104,11 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
                 launch {
                     viewModel.uiState.collect {
                         binding.ivIllustrator.setBackgroundResource(it.boxImageResId)
+                        setButtonView(
+                            buttonClickable = it.buttonClickable,
+                            buttonBackgroundRes = it.buttonBackgroundRes,
+                            buttonTextColor = it.buttonTextColor,
+                        )
                     }
                 }
             }
