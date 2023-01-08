@@ -10,6 +10,9 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 33
 
@@ -36,9 +39,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key'),
+            ]
         }
         debug {
             applicationIdSuffix ".debug"
+            manifestPlaceholders = [
+                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key'),
+            ]
         }
         alpha {
             initWith debug
