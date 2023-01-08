@@ -54,7 +54,7 @@ class DetailHistoryActivity :
         binding.ivPrevious.setOnSingleClickListener {
             binding.cvHistory.findFirstVisibleMonth()?.let { calendarMonth ->
                 binding.cvHistory.smoothScrollToMonth(calendarMonth.yearMonth.previousMonth)
-                onCalendarMonthMoved(calendarMonth.yearMonth.nextMonth)
+                onCalendarMonthMoved(calendarMonth.yearMonth.previousMonth)
             }
         }
 
