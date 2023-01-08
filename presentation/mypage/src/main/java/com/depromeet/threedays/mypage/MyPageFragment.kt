@@ -44,7 +44,12 @@ class MyPageFragment :
      */
     private fun initView(view: View) {
         // FIXME: getPackageInfo(String, PackageInfoFlags) 써보려했으나 에러나서 일단 동작하는 코드 사용함
-        val versionName = view.context.packageManager.getPackageInfo("com.depromeet.threedays", 0,).versionName
+        val packageName = if (BuildConfig.DEBUG) {
+            "com.depromeet.threedays.debug"
+        } else {
+            "com.depromeet.threedays"
+        }
+        val versionName = view.context.packageManager.getPackageInfo(packageName, 0,).versionName
         binding.tvAppVersionName.text = versionName
     }
 

@@ -10,6 +10,8 @@ import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
 import com.depromeet.threedays.data.api.serializer.LocalDateSerializer
 import com.depromeet.threedays.data.api.serializer.LocalDateTimeSerializer
 import com.depromeet.threedays.data.api.serializer.LocalTimeSerializer
+import com.depromeet.threedays.data.datasource.property.BuildConfigFieldDataSource
+import com.depromeet.threedays.data.datasource.property.BuildConfigFieldKey
 import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.navigator.SignupNavigator
 import com.google.gson.Gson
@@ -86,14 +88,23 @@ class NetworkModule {
     fun providesHttpClient(
         @ApplicationContext context: Context,
         gson: Gson,
-        signupNavigator: SignupNavigator
+        signupNavigator: SignupNavigator,
+        buildConfigFieldDataSource: BuildConfigFieldDataSource,
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
             .readTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
         val clientWithAuthInterceptor = client
-            .addInterceptor(AuthInterceptor(context, client.build(), gson, signupNavigator))
+            .addInterceptor(
+                interceptor = AuthInterceptor(
+                    context = context,
+                    client = client.build(),
+                    gson = gson,
+                    signupNavigator = signupNavigator,
+                    buildConfigFieldDataSource = buildConfigFieldDataSource,
+                ),
+            )
             .addInterceptor(getLoggingInterceptor())
         return clientWithAuthInterceptor.build()
     }
@@ -107,7 +118,8 @@ class NetworkModule {
     @Singleton
     @Provides
     fun providesRetrofit(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        buildConfigFieldDataSource: BuildConfigFieldDataSource,
     ): Retrofit {
         val gsonWithAdapter: Gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeDeserializer())
@@ -120,7 +132,7 @@ class NetworkModule {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(buildConfigFieldDataSource.get(BuildConfigFieldKey.BASE_URL))
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gsonWithAdapter))
             .build()
@@ -131,5 +143,3 @@ class NetworkModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 }
-
-const val BASE_URL = "https://api.jjaksim.com"

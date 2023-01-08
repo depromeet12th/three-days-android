@@ -3,7 +3,8 @@ package com.depromeet.threedays.data.api.interceptor
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.edit
-import com.depromeet.threedays.data.di.BASE_URL
+import com.depromeet.threedays.data.datasource.property.BuildConfigFieldDataSource
+import com.depromeet.threedays.data.datasource.property.BuildConfigFieldKey
 import com.depromeet.threedays.data.entity.auth.RenewalTokenResponse
 import com.depromeet.threedays.domain.key.ACCESS_TOKEN_KEY
 import com.depromeet.threedays.domain.key.REFRESH_TOKEN_KEY
@@ -18,7 +19,8 @@ class AuthInterceptor @Inject constructor(
     @ApplicationContext private val context: Context,
     private val client: OkHttpClient,
     private val gson: Gson,
-    private val signupNavigator: SignupNavigator
+    private val signupNavigator: SignupNavigator,
+    private val buildConfigFieldDataSource: BuildConfigFieldDataSource,
 ) : Interceptor {
     private val preference by lazy {
         context.getSharedPreferences(SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE)
@@ -57,7 +59,7 @@ class AuthInterceptor @Inject constructor(
                     val requestBody: RequestBody = FormBody.Builder().build()
                     val renewalTokensRequest = chain.request().newBuilder()
                         .post(requestBody)
-                        .url("${BASE_URL}/api/v1/members/tokens")
+                        .url("${buildConfigFieldDataSource.get(BuildConfigFieldKey.BASE_URL)}/api/v1/members/tokens")
                         .addHeader(X_THREE_DAYS_REFRESH_TOKEN, refreshToken)
                         .addHeader("Content-Type", "application/json; charset=UTF-8")
                         .build()

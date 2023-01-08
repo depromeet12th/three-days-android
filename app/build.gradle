@@ -27,6 +27,7 @@ android {
     }
 
     signingConfigs {
+        // GitHub Action 으로 빌드, 배포할 때 사용함
         ciDebug {
             storeFile file("$project.rootDir/debug.keystore")
             storePassword System.getenv('DEBUG_STORE_PASSWORD')
@@ -40,14 +41,18 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
-                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key'),
+                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key')
             ]
+            buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('release.three-days.base-url')}\""
+            buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('release.kakao.app-key')}\""
         }
         debug {
-            applicationIdSuffix ".debug"
+            applicationIdSuffix '.debug'
             manifestPlaceholders = [
-                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key'),
+                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key')
             ]
+            buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('debug.three-days.base-url')}\""
+            buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('debug.kakao.app-key')}\""
         }
         alpha {
             initWith debug
