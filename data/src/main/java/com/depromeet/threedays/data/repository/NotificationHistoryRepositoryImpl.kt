@@ -1,6 +1,6 @@
 package com.depromeet.threedays.data.repository
 
-import com.depromeet.threedays.data.datasource.notification.NotificationHistoryRemoteDataSource
+import com.depromeet.threedays.data.datasource.notification.history.NotificationHistoryRemoteDataSource
 import com.depromeet.threedays.data.mapper.toNotificationHistory
 import com.depromeet.threedays.domain.entity.DataState
 import com.depromeet.threedays.domain.entity.notification.NotificationHistory

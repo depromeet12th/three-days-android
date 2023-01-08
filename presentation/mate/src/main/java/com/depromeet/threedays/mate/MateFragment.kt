@@ -11,17 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.databinding.FragmentMateBinding
 import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
+import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -36,6 +40,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     @Inject
     lateinit var connectHabitNavigator: ConnectHabitNavigator
+
+    @Inject
+    lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
     override fun onResume() {
         super.onResume()
@@ -70,11 +77,27 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             }
         }
         binding.btnCreateMate.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.MateDefaultViewed.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateDefault,
+                    MixPanelEvent.ButtonType to ButtonType.NewMate,
+                )
+            )
+
             val intent = connectHabitNavigator.intent(requireContext())
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
         binding.ivShare.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.MateShareClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateHome,
+                    MixPanelEvent.ButtonType to ButtonType.Share,
+                )
+            )
+
             val intent = Intent(requireActivity(), ShareMateActivity::class.java)
             intent.putExtra("habitId", viewModel.uiState.value.mate?.habitId)
             startActivity(intent)
@@ -106,6 +129,57 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
         }
+        binding.btnSaveMate.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.MateSaveClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateCompleted,
+                    MixPanelEvent.ButtonType to ButtonType.MateSave,
+                )
+            )
+
+            ThreeDaysDialogFragment.newInstance(
+                data = DialogInfo.EMPTY.copy(
+                    onPositiveAction = { startActivity(archivedHabitNavigator.intent(requireContext())) },
+                    iconResId = com.depromeet.threedays.core_design_system.R.drawable.ic_star_check,
+                    title = getString(R.string.max_level_dialog_title),
+                    description = getString(R.string.max_level_dialog_description, viewModel.uiState.value.mate?.level ?: 0),
+                    confirmText = getString(R.string.going_to_see),
+                    buttonTopMargin = 30f
+                )
+            ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+        }
+        val behavior = BottomSheetBehavior.from(binding.clBottomSheet)
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED-> {
+
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING-> {
+
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED-> {
+                        AnalyticsUtil.event(
+                            name = ThreeDaysEvent.MateClapOpenClicked.toString(),
+                            properties = mapOf(
+                                MixPanelEvent.ScreenName to Screen.MateDefault,
+                                MixPanelEvent.ButtonType to ButtonType.MateClapOpen,
+                            )
+                        )
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN-> {
+
+                    }
+                    BottomSheetBehavior.STATE_SETTLING-> {
+
+                    }
+                }
+            }
+        })
     }
 
     private fun setObserve() {
@@ -113,6 +187,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
+                        sendEvent(it.hasMate)
                         showMateOrDefaultView(
                             hasMate = it.hasMate,
                             backgroundResColor = it.backgroundResColor
@@ -127,6 +202,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     viewModel.uiEffect.collect {
                         when(it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
+                            is UiEffect.ShowAchieveMaxLevel -> showAchieveMaxLevel(it.mateLevel)
                         }
                     }
                 }
@@ -158,9 +234,29 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
             val clapCount = it.reward ?: 0
             val maxLevel = it.levelUpSectioin?.last() ?: 22
-            binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
             binding.tvClapCount.text = "${clapCount}개"
             binding.tvMaxLevel.text = "${maxLevel}개"
+
+            val isMaxLevel = (mateUI.levelUpSectioin?.last() ?: 22) == mateUI.reward
+            if(isMaxLevel) {
+                AnalyticsUtil.event(
+                    name = ThreeDaysEvent.MateCompletedViewed.toString(),
+                    properties = mapOf(
+                        MixPanelEvent.ScreenName to Screen.MateCompleted,
+                    )
+                )
+
+                binding.tvNextLevelGuide.text = if(mateUI.characterType == MateType.CARROT) {
+                    getString(R.string.max_level_carrot_mate_guide)
+                } else {
+                    getString(R.string.max_level_whip_mate_guide)
+                }
+            } else {
+                binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
+            }
+
+            binding.groupAchieveMaxLevel.isVisible = isMaxLevel
+            binding.groupSpeechBubble.isVisible = isMaxLevel.not()
         }
     }
 
@@ -190,5 +286,41 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     private fun showDeleteSuccessMessage(resId: Int) {
         ThreeDaysToast().show(requireActivity(), getString(resId))
+    }
+
+    private fun showAchieveMaxLevel(
+        mateLevel: Int,
+    ) {
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.MateLevelupViewed.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to Screen.MateLevelup,
+            )
+        )
+
+        ThreeDaysNoButtonDialogFragment(
+            resId = levelToResourceFunction(mateLevel),
+            content = "최종 레벨 달성"
+        ).show(
+            parentFragmentManager, ThreeDaysNoButtonDialogFragment.TAG
+        )
+    }
+
+    private fun sendEvent(hasMate: Boolean) {
+        if(hasMate) {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.MateHomeViewed.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateHome,
+                )
+            )
+        } else {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.MateDefaultViewed.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to Screen.MateDefault,
+                )
+            )
+        }
     }
 }

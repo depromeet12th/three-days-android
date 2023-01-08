@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.depromeet.threedays.core.databinding.SnackbarThreeDaysBinding
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.google.android.material.snackbar.Snackbar
 
 class ThreeDaysSnackBar {

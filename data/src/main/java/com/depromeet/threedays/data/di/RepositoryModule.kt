@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-    // DataStore
     @Binds
     @Singleton
     abstract fun bindsNotificationPermissionRepository(
@@ -24,6 +23,11 @@ abstract class RepositoryModule {
         repository: OnboardingRepositoryImpl,
     ): OnboardingRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindsMaxLevelMateRepository(
+        repository: MaxLevelMateRepositoryImpl,
+    ): MaxLevelMateRepository
 
     // Remote
     @Binds
@@ -67,4 +71,16 @@ abstract class RepositoryModule {
     abstract fun bindsRecordRepository(
         repository: RecordRepositoryImpl,
     ): RecordRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsNotificationTokenRepository(
+        repository: NotificationTokenRepositoryImpl,
+    ): NotificationTokenRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsDeviceUniqueIdRepository(
+        repository: DeviceUniqueIdRepositoryImpl,
+    ): DeviceUniqueIdRepository
 }

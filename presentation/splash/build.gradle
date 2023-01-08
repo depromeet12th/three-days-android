@@ -59,6 +59,8 @@ dependencies {
     implementation(splashDeps)
     implementation(lottieDeps)
 
+    implementation deps.timber
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

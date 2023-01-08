@@ -14,8 +14,6 @@ class DataStoreDataSourceImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : DataStoreDataSource {
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
-
     override suspend fun readDataStore(key: String): String? {
         val dataStoreKey = stringPreferencesKey(key)
         val preferences = context.dataStore.data.first()
@@ -43,6 +41,7 @@ class DataStoreDataSourceImpl @Inject constructor(
     }
 
     companion object {
-        const val DATASTORE_NAME = "THREE_DAYS"
+        private const val DATASTORE_NAME = "THREE_DAYS"
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
     }
 }

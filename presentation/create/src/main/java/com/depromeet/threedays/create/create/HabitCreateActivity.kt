@@ -11,12 +11,13 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core.util.DialogInfo
 import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.create.HabitCreateViewModel.Action
 import com.depromeet.threedays.create.databinding.ActivityHabitCreateBinding
@@ -67,6 +68,13 @@ class HabitCreateActivity :
         super.onCreate(savedInstanceState)
         this.onBackPressedDispatcher.addCallback(this, callback)
 
+        AnalyticsUtil.event(
+            name = getViewedEventName(this),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to getScreenName(this),
+            )
+        )
+
         binding.viewModel = viewModel
 
         initView()
@@ -115,6 +123,17 @@ class HabitCreateActivity :
             EmojiBottomSheetDialogFragment.newInstance { emoji ->
                 viewModel.setEmoji(emoji)
             }.show(supportFragmentManager, EmojiBottomSheetDialogFragment.TAG)
+        }
+
+        binding.tvHabitCreate.setOnSingleClickListener {
+            AnalyticsUtil.event(
+                name = ThreeDaysEvent.ButtonClicked.toString(),
+                properties = mapOf(
+                    MixPanelEvent.ScreenName to getScreenName(this),
+                    MixPanelEvent.ButtonType to ButtonType.Save.toString()
+                )
+            )
+            viewModel.onCreateHabitClick()
         }
 
         binding.groupColor.setOnCheckedChangeListener { _ , id ->

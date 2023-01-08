@@ -12,7 +12,6 @@ import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.extensions.margin
 import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.extensions.visibleOrGone
-import com.depromeet.threedays.core.setOnSingleClickListener
 import com.depromeet.threedays.core_design_system.R.drawable.bg_rect_white_r18
 
 class ThreeDaysDialogFragment : DialogFragment() {
@@ -34,7 +33,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setLayout()
-        initEmoji()
+        initIconOrEmoji()
         initView()
     }
 
@@ -55,10 +54,19 @@ class ThreeDaysDialogFragment : DialogFragment() {
         }
     }
 
-    private fun initEmoji() {
+    private fun initIconOrEmoji() {
         if (data.emoji.isNotEmpty()) {
             binding.tvEmoji.text = data.emoji
             binding.tvEmoji.visible()
+            binding.spaceEmojiArea.visible()
+        } else {
+            data.iconResId?.let {
+                binding.ivIcon.apply {
+                    setBackgroundResource(it)
+                    visible()
+                }
+                binding.spaceEmojiArea.visible()
+            }
         }
     }
 
@@ -119,6 +127,7 @@ class ThreeDaysDialogFragment : DialogFragment() {
 
 data class DialogInfo (
     val onPositiveAction: () -> Unit,
+    val iconResId: Int?,
     val emoji: String,
     val title: String,
     val description: String,
@@ -130,13 +139,14 @@ data class DialogInfo (
     companion object {
         val EMPTY = DialogInfo(
             onPositiveAction = { },
+            iconResId = null,
             emoji = String.Empty,
             title = String.Empty,
             description = String.Empty,
             confirmText = String.Empty,
             cancelText = String.Empty,
             titleTopMargin = 0f,
-            buttonTopMargin = 0f
+            buttonTopMargin = 0f,
         )
     }
 }
