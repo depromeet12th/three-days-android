@@ -31,32 +31,41 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         habitUI.run {
             view.tvHabitDayOfWeek.text = convertDayListToString(dayOfWeeks)
 
-            for (targetIndex in 0..2) {
-                if (targetIndex < todayIndex) {
+            if(todayIndex == 0 && todayHabitAchievementId != null) {
+                for (i in 0..2) {
                     setCheckedButton(
-                        targetIndex = targetIndex,
+                        targetIndex = i,
                         resId = checkedBackgroundResId
                     )
-                } else if (targetIndex == todayIndex) {
-                    if(isTodayChecked) {
+                }
+            } else {
+                for (targetIndex in 0..2) {
+                    if (targetIndex < todayIndex) {
+                        setCheckedButton(
+                            targetIndex = targetIndex,
+                            resId = checkedBackgroundResId
+                        )
+                    } else if (targetIndex == todayIndex) {
+                        if(isTodayChecked) {
+                            setUncheckedButton(
+                                targetIndex = targetIndex,
+                                resId = R.drawable.bg_oval_gray,
+                                textColor = R.color.gray_400
+                            )
+                        } else {
+                            setUncheckedButton(
+                                targetIndex = targetIndex,
+                                resId = checkableBackgroundResId,
+                                textColor = checkableTextColor
+                            )
+                        }
+                    } else {
                         setUncheckedButton(
                             targetIndex = targetIndex,
                             resId = R.drawable.bg_oval_gray,
                             textColor = R.color.gray_400
                         )
-                    } else {
-                        setUncheckedButton(
-                            targetIndex = targetIndex,
-                            resId = checkableBackgroundResId,
-                            textColor = checkableTextColor
-                        )
                     }
-                } else {
-                    setUncheckedButton(
-                        targetIndex = targetIndex,
-                        resId = R.drawable.bg_oval_gray,
-                        textColor = R.color.gray_400
-                    )
                 }
             }
         }
@@ -167,7 +176,9 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
         createHabitAchievement: (Long) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
     ) {
-        val isDeleteAchievementAvailable = habitUI.isTodayChecked && (clickedIndex == habitUI.todayIndex - 1)
+        val isDeleteAchievementAvailable =
+            (habitUI.isTodayChecked && (clickedIndex == habitUI.todayIndex - 1))
+                    || (habitUI.isTodayChecked && habitUI.todayIndex == 0)
         val isCreateAchievementAvailable = habitUI.isTodayChecked.not() && (clickedIndex == habitUI.todayIndex)
 
         if (isDeleteAchievementAvailable) {
