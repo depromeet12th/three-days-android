@@ -32,42 +32,29 @@ class HomeViewModel @Inject constructor(
     val habits: StateFlow<List<HabitUI>>
         get() = _habits
 
-    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState>
-        get() = _uiState
-
     private val _uiEffect: MutableSharedFlow<UiEffect> = MutableSharedFlow()
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
     init {
         fetchGoals()
+        checkIsFirstVisitor()
     }
 
-    fun checkIsFirstVisitor() {
+    private fun checkIsFirstVisitor() {
         viewModelScope.launch {
-            if (uiState.value.isFirstVisitor.not()) {
-                val response = readOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
-                _uiState.update {
-                    it.copy(
-                        isFirstVisitor = (response == null)
-                    )
-                }
-                writeOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
-                _uiState.update {
-                    it.copy(
-                        isFirstVisitor = false
-                    )
-                }
+            val response = readOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
+            if(response == null) {
+                _uiEffect.emit(
+                    UiEffect.ShowNotiRecommendBottomSheet
+                )
+            } else {
+                _uiEffect.emit(
+                    UiEffect.ShowNotiGuideBottomSheet
+                )
             }
-        }
-    }
 
-    fun setDeviceNotificationState(isDeviceNotificationOn: Boolean) {
-        _uiState.update {
-            it.copy(
-                isDeviceNotificationOn = isDeviceNotificationOn,
-            )
+            writeOnboardingUseCase.execute(OnboardingType.NOTIFICATION_RECOMMEND)
         }
     }
 
@@ -249,11 +236,6 @@ class HomeViewModel @Inject constructor(
     }
 }
 
-data class UiState (
-    val isDeviceNotificationOn: Boolean = true,
-    val isFirstVisitor: Boolean = false,
-)
-
 sealed interface UiEffect {
     data class ShowToastMessage(val resId: Int): UiEffect
     data class ShowDeleteHabitDialog(
@@ -269,7 +251,9 @@ sealed interface UiEffect {
         val textResId: Int,
         val actionTextResId: Int,
     ): UiEffect
-    object ShowClapAnimation: UiEffect
+    object ShowClapAnimation : UiEffect
+    object ShowNotiGuideBottomSheet : UiEffect
+    object ShowNotiRecommendBottomSheet : UiEffect
 }
 
 sealed interface HabitType {

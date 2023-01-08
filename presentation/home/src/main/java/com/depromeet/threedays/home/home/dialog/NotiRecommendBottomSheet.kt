@@ -9,7 +9,9 @@ import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.home.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class NotiRecommendBottomSheet : BottomSheetDialogFragment()  {
+class NotiRecommendBottomSheet(
+    val onConfirmClick: () -> Unit
+) : BottomSheetDialogFragment()  {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,6 +27,7 @@ class NotiRecommendBottomSheet : BottomSheetDialogFragment()  {
         val btnConfirm = view.findViewById<Button>(R.id.btn_confirm)
         btnConfirm.setOnSingleClickListener {
             dismiss()
+            onConfirmClick()
         }
     }
 
