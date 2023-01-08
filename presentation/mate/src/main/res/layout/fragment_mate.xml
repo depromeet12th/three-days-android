@@ -105,7 +105,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
                 android:text="@string/create_mate_guide"
                 android:textAppearance="@style/Typography.Paragraph3"
                 android:textColor="@color/gray_500"
@@ -172,7 +171,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:elevation="8dp"
-                    android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
                     android:minLines="3"
                     android:text="@string/clap_guide_content"
                     android:textAppearance="@style/Typography.Paragraph3"
@@ -378,6 +376,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="34dp"
                 android:layout_marginTop="36dp"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_next_level_guide" />
