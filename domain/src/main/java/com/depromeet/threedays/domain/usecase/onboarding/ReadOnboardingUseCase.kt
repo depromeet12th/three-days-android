@@ -10,6 +10,7 @@ class ReadOnboardingUseCase @Inject constructor(val repository: OnboardingReposi
             OnboardingType.NOTIFICATION_RECOMMEND -> OnboardingType.NOTIFICATION_RECOMMEND.key
             OnboardingType.AFTER_SPLASH -> OnboardingType.AFTER_SPLASH.key
             OnboardingType.MATE -> OnboardingType.MATE.key
+            OnboardingType.ARCHIVED_HABIT -> OnboardingType.ARCHIVED_HABIT.key
         }
         return repository.readOnboardnig(key)
     }

@@ -14,7 +14,6 @@ class ArchivedHabitOnboardingSnackBar {
     companion object {
         fun show(
             view: View,
-            onAction: () -> Unit
         ) {
             val binding = SnackbarArchivedHabitOnboardingBinding.inflate(LayoutInflater.from(view.context), null,false)
             val snackbar = Snackbar.make(
@@ -35,7 +34,6 @@ class ArchivedHabitOnboardingSnackBar {
             }
 
             binding.ivClose.setOnSingleClickListener {
-                onAction()
                 snackbar.dismiss()
             }
 

@@ -10,6 +10,7 @@ class WriteOnboardingUseCase @Inject constructor(val repository: OnboardingRepos
             OnboardingType.NOTIFICATION_RECOMMEND -> OnboardingType.NOTIFICATION_RECOMMEND.key
             OnboardingType.AFTER_SPLASH -> OnboardingType.AFTER_SPLASH.key
             OnboardingType.MATE -> OnboardingType.MATE.key
+            OnboardingType.ARCHIVED_HABIT -> OnboardingType.ARCHIVED_HABIT.key
         }
         return repository.writeOnboardnig(key = key, value = "IS_SHWON")
     }
