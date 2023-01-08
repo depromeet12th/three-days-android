@@ -42,7 +42,7 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/bg_rect_gray800_r15"
             android:gravity="center"
-            android:paddingVertical="15dp"
+            android:paddingVertical="18dp"
             android:text="@string/check"
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@color/white"
