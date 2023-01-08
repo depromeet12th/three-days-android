@@ -106,9 +106,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun initAdapter() {
         habitAdapter = HabitAdapter(
-            createHabitAchievement = { habitId, isThirdClap ->
-                viewModel.createHabitAchievement(habitId, isThirdClap)
-            },
+            createHabitAchievement = { viewModel.createHabitAchievement(it) },
             deleteHabitAchievement = { habitId, habitAchievementId ->
                 viewModel.deleteHabitAchievement(
                     habitId = habitId,

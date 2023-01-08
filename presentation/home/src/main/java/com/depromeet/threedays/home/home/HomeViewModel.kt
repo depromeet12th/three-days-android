@@ -86,7 +86,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun createHabitAchievement(habitId: Long, isThirdClap: Boolean) {
+    fun createHabitAchievement(habitId: Long) {
         viewModelScope.launch {
             createHabitAchievementUseCase(habitId).collect { response ->
                 when(response.status) {
