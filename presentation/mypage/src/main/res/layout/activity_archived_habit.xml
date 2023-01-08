@@ -112,6 +112,7 @@
             android:id="@+id/rv_archived_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             android:paddingTop="14dp"
             android:paddingBottom="22dp"
             android:clipToPadding="false"
