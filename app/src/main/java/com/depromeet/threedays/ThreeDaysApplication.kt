@@ -1,8 +1,8 @@
 package com.depromeet.threedays
 
 import android.app.Application
-import com.depromeet.threedays.data.datasource.property.BuildConfigFieldDataSource
-import com.depromeet.threedays.data.datasource.property.BuildConfigFieldKey
+import com.depromeet.threedays.buildproperty.BuildProperty
+import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.core.analytics.AnalyticsUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class ThreeDaysApplication : Application() {
     @Inject
-    lateinit var buildConfigFieldDataSource: BuildConfigFieldDataSource
+    lateinit var buildPropertyRepository: BuildPropertyRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -29,7 +29,7 @@ class ThreeDaysApplication : Application() {
     private fun initKakaoSdk() {
         KakaoSdk.init(
             context = this,
-            appKey = buildConfigFieldDataSource.get(BuildConfigFieldKey.KAKAO_APP_KEY),
+            appKey = buildPropertyRepository.get(BuildProperty.KAKAO_APP_KEY),
         )
     }
 

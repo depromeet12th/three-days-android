@@ -1,6 +1,8 @@
 package com.depromeet.threedays.data.di
 
 import android.content.Context
+import com.depromeet.threedays.buildproperty.BuildProperty
+import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.data.api.*
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
@@ -10,8 +12,6 @@ import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
 import com.depromeet.threedays.data.api.serializer.LocalDateSerializer
 import com.depromeet.threedays.data.api.serializer.LocalDateTimeSerializer
 import com.depromeet.threedays.data.api.serializer.LocalTimeSerializer
-import com.depromeet.threedays.data.datasource.property.BuildConfigFieldDataSource
-import com.depromeet.threedays.data.datasource.property.BuildConfigFieldKey
 import com.depromeet.threedays.domain.entity.mate.MateType
 import com.depromeet.threedays.navigator.SignupNavigator
 import com.google.gson.Gson
@@ -89,7 +89,7 @@ class NetworkModule {
         @ApplicationContext context: Context,
         gson: Gson,
         signupNavigator: SignupNavigator,
-        buildConfigFieldDataSource: BuildConfigFieldDataSource,
+        buildPropertyRepository: BuildPropertyRepository,
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
             .readTimeout(10, TimeUnit.SECONDS)
@@ -102,7 +102,7 @@ class NetworkModule {
                     client = client.build(),
                     gson = gson,
                     signupNavigator = signupNavigator,
-                    buildConfigFieldDataSource = buildConfigFieldDataSource,
+                    buildPropertyRepository = buildPropertyRepository,
                 ),
             )
             .addInterceptor(getLoggingInterceptor())
@@ -119,7 +119,7 @@ class NetworkModule {
     @Provides
     fun providesRetrofit(
         okHttpClient: OkHttpClient,
-        buildConfigFieldDataSource: BuildConfigFieldDataSource,
+        buildPropertyRepository: BuildPropertyRepository,
     ): Retrofit {
         val gsonWithAdapter: Gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeDeserializer())
@@ -132,7 +132,7 @@ class NetworkModule {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl(buildConfigFieldDataSource.get(BuildConfigFieldKey.BASE_URL))
+            .baseUrl(buildPropertyRepository.get(BuildProperty.BASE_URL))
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gsonWithAdapter))
             .build()
