@@ -26,7 +26,7 @@ class ArchivedHabitOnboardingSnackBar {
 
             with(snackBarLayout) {
                 removeAllViews()
-                setPadding(0, 0, 0, 0)
+                setPadding(0, 200, 0, 0)
                 setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
                 addView(binding.root, 0)
 
