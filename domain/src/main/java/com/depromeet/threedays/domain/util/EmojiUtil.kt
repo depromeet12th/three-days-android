@@ -6,6 +6,7 @@ object EmojiUtil{
         Word.TRASH to 0x1F5D1,
         Word.CLOCK to 0x23F0,
         Word.SMILE to 0x1F600,
+        Word.QUESTION to 0x2754,
     )
 
     fun getEmojiString(numberCode: Int?): String {
@@ -24,7 +25,8 @@ object EmojiUtil{
         FIRE,
         TRASH,
         CLOCK,
-        SMILE
+        SMILE,
+        QUESTION
     }
 
     enum class Category {

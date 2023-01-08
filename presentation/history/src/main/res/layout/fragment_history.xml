@@ -256,17 +256,6 @@
                         tools:text="@string/medicine" />
 
                     <ImageView
-                        android:id="@+id/iv_most_achieve_habit_icon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="77dp"
-                        android:src="@drawable/ic_question"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
                         android:id="@+id/iv_emoji_shadow"
                         android:layout_width="50dp"
                         android:layout_height="16dp"
