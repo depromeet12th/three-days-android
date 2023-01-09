@@ -59,10 +59,7 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
                 }.onSuccess { oAuthToken ->
                     UserApiClient.instance.me { user, _ ->
                         if (user != null) {
-                            viewModel.createMember(
-                                socialToken = oAuthToken.accessToken
-                            )
-                            viewModel.updateFcmToken()
+                            viewModel.createMember(socialToken = oAuthToken.accessToken)
                         }
                     }
                 }.onFailure { throwable ->
