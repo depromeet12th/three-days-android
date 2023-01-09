@@ -25,10 +25,22 @@ class MyPageViewModel @Inject constructor(
     val nickname: StateFlow<String>
         get() = _nickname
 
+    private val _logoutSucceed: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val logoutSucceed: StateFlow<Boolean>
+        get() = _logoutSucceed
+
+    private val _signoutSucceed: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val signoutSucceed: StateFlow<Boolean>
+        get() = _signoutSucceed
+
+    init {
+        fetchMyInfo()
+    }
+
     /**
      * 내 정보 조회
      */
-    fun fetchMyInfo() {
+    private fun fetchMyInfo() {
         viewModelScope.launch {
             getMyInfoUseCase().collect { response ->
                 when (response.status) {
@@ -72,6 +84,8 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             kotlin.runCatching {
                 logoutUseCase()
+            }.onSuccess {
+                _logoutSucceed.emit(true)
             }.onFailure {
                 sendErrorMessage(it.message ?: "로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
             }
@@ -85,6 +99,8 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             kotlin.runCatching {
                 withdrawUseCase()
+            }.onSuccess {
+                _signoutSucceed.emit(true)
             }.onFailure {
                 sendErrorMessage(it.message ?: "회원탈퇴를 실패했습니다. 잠시 후 다시 시도해주세요.")
             }
