@@ -314,8 +314,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     (requireActivity() as MainActivity).changeFragment(MateFragment())
                                 }
                             )
-                            UiEffect.ShowClapAnimation -> {
-                                (requireActivity() as MainActivity).startCongratulateThirdClapAnimation { viewModel.checkLevelUpHabit() }
+                            is UiEffect.ShowClapAnimation -> {
+                                (requireActivity() as MainActivity).startCongratulateThirdClapAnimation { viewModel.checkLevelUpHabit(it.habitId) }
                             }
                             UiEffect.ShowNotiRecommendBottomSheet -> showNotiRecommendBottomSheet()
                             UiEffect.ShowNotiGuideBottomSheet -> checkNotificationPermission()

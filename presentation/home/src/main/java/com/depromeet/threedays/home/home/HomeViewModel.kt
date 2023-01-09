@@ -10,8 +10,6 @@ import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievement
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
-import com.depromeet.threedays.domain.usecase.today_visit.ReadTodayFirstVisitUseCase
-import com.depromeet.threedays.domain.usecase.today_visit.WriteTodayFirstVisitUseCase
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
@@ -26,8 +24,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val readOnboardingUseCase: ReadOnboardingUseCase,
     private val writeOnboardingUseCase: WriteOnboardingUseCase,
-    private val readTodayFirstVisitUseCase: ReadTodayFirstVisitUseCase,
-    private val writeTodayFirstVisitUseCase: WriteTodayFirstVisitUseCase,
     private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
     private val createHabitAchievementUseCase: CreateHabitAchievementUseCase,
     private val deleteHabitAchievementUseCase: DeleteHabitAchievementUseCase,
@@ -72,9 +68,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        val list = response.data!!.map { it.toHabitUI() }
-                        _habits.value = list
-                        checkNewClap(list)
+                        _habits.value = response.data!!.map { it.toHabitUI() }
                     }
                     Status.ERROR -> {
 
@@ -87,15 +81,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun createHabitAchievement(habitId: Long) {
+    fun createHabitAchievement(habitUI: HabitUI) {
         viewModelScope.launch {
-            createHabitAchievementUseCase(habitId).collect { response ->
+            createHabitAchievementUseCase(habitUI.habitId).collect { response ->
                 when(response.status) {
                     Status.LOADING -> {
 
                     }
                     Status.SUCCESS -> {
                         fetchGoals()
+                        checkNewClap(habitUI)
                     }
                     Status.ERROR -> {
 
@@ -237,30 +232,24 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun checkNewClap(list: List<HabitUI>) {
-        val hasNewClap = list.find { it.todayIndex == 0 && it.sequence > 0 }
-        if(hasNewClap != null) {
-            val today = LocalDate.now().toString()
+    private fun checkNewClap(habitUI: HabitUI) {
+        val hasNewClap = habitUI.todayIndex == 2 && habitUI.sequence == 2 && !habitUI.isTodayChecked
+        if(hasNewClap) {
             viewModelScope.launch {
-                val response = readTodayFirstVisitUseCase.execute()
-                val isTodayFirstVisit = (response == null || response != today)
-
-                if(isTodayFirstVisit) {
-                    _uiEffect.emit(
-                        UiEffect.ShowClapAnimation
-                    )
-                    writeTodayFirstVisitUseCase.execute(today = today)
-                }
+                _uiEffect.emit(
+                    UiEffect.ShowClapAnimation(habitUI.habitId)
+                )
             }
         }
     }
 
-    fun checkLevelUpHabit() {
-        val habitWithMate = habits.value.find { it.mate != null } ?: return
+    fun checkLevelUpHabit(habitId: Long) {
+        val habitWithMate = habits.value.find { it.mate != null && it.todayIndex == 0 && it.sequence > 0 && it.isTodayChecked } ?: return
+        if(habitWithMate.habitId != habitId) return
         val mate = habitWithMate.mate ?: return
         val levelUpAt = mate.levelUpAt ?: return
-
         val today = LocalDate.now().toString()
+
         if(today == levelUpAt.toLocalDate().toString()) {
             viewModelScope.launch {
                 _uiEffect.emit(
@@ -299,7 +288,9 @@ sealed interface UiEffect {
         val actionTextResId: Int,
         val mateLevel: Int,
     ) : UiEffect
-    object ShowClapAnimation : UiEffect
+    data class ShowClapAnimation(
+        val habitId: Long,
+    ) : UiEffect
     object ShowNotiGuideBottomSheet : UiEffect
     object ShowNotiRecommendBottomSheet : UiEffect
 }

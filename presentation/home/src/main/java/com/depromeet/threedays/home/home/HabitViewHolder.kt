@@ -17,7 +17,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
     fun onBind(
         habitUI: HabitUI,
         context: Context,
-        createHabitAchievement: (Long) -> Unit,
+        createHabitAchievement: (HabitUI) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
         onMoreClick: (HabitUI) -> Unit
     ) {
@@ -138,7 +138,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
 
     private fun initEvent(
         habitUI: HabitUI,
-        createHabitAchievement: (Long) -> Unit,
+        createHabitAchievement: (HabitUI) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
         onMoreClick: (HabitUI) -> Unit
     ) {
@@ -173,7 +173,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
     private fun switchHabitState(
         clickedIndex: Int,
         habitUI: HabitUI,
-        createHabitAchievement: (Long) -> Unit,
+        createHabitAchievement: (HabitUI) -> Unit,
         deleteHabitAchievement: (Long, Long) -> Unit,
     ) {
         val isDeleteAchievementAvailable =
@@ -192,7 +192,7 @@ class HabitViewHolder(private val view: ItemHabitBinding) : RecyclerView.ViewHol
                 textColor = habitUI.checkableTextColor
             )
         } else if(isCreateAchievementAvailable) {
-            createHabitAchievement(habitUI.habitId)
+            createHabitAchievement(habitUI)
             setCheckedButton(
                 targetIndex = clickedIndex,
                 resId = habitUI.checkedBackgroundResId
