@@ -3,9 +3,7 @@ package com.depromeet.threedays.mypage
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.*
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.domain.key.WEB_VIEW_URL
@@ -14,6 +12,7 @@ import com.depromeet.threedays.mypage.nickname.EditNicknameDialogFragment
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.LicenseNavigator
 import com.depromeet.threedays.navigator.PolicyNavigator
+import com.depromeet.threedays.navigator.SignupNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,10 +28,11 @@ class MyPageFragment :
     lateinit var policyNavigator: PolicyNavigator
     @Inject
     lateinit var licenseNavigator: LicenseNavigator
+    @Inject
+    lateinit var signupNavigator: SignupNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchMyInfo()
 
         initEvent()
         initView(view)
@@ -86,8 +86,24 @@ class MyPageFragment :
     private fun setObserve() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nickname.collect { nickname ->
-                    binding.tvNickname.text = nickname
+                launch {
+                    viewModel.nickname.collect { nickname ->
+                        binding.tvNickname.text = nickname
+                    }
+                }
+                launch {
+                    viewModel.logoutSucceed.collect { logoutSucceed ->
+                        if (logoutSucceed) {
+                            startActivity(signupNavigator.intent(requireContext()))
+                        }
+                    }
+                }
+                launch {
+                    viewModel.signoutSucceed.collect { signoutSucceed ->
+                        if (signoutSucceed) {
+                            startActivity(signupNavigator.intent(requireContext()))
+                        }
+                    }
                 }
             }
         }
@@ -151,7 +167,6 @@ class MyPageFragment :
      */
     private fun onLogoutButtonClicked() {
         viewModel.logout()
-        // TODO: login 페이지로 이동
     }
 
     /**
@@ -159,6 +174,5 @@ class MyPageFragment :
      */
     private fun onWithdrawButtonClicked() {
         viewModel.withdraw()
-        // TODO: 로그인 페이지로 이동
     }
 }
