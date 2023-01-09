@@ -22,6 +22,9 @@ jobs:
       - run: echo $DEBUG_KEYSTORE_FILE | base64 -d > debug.keystore
         env:
           DEBUG_KEYSTORE_FILE: ${{ secrets.DEBUG_KEYSTORE_FILE }}
+      - run: echo $LOCAL_PROPERTIES_FILE | base64 -d > local.properties
+        env:
+          LOCAL_PROPERTIES_FILE: ${{ secrets.LOCAL_PROPERTIES_FILE }}
       - name: Build
         run: chmod +x ./gradlew && ./gradlew :app::assembleAlpha --quiet
         env:

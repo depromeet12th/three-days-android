@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace 'com.depromeet.threedays.core'
+    namespace 'com.depromeet.threedays.buildproperty'
     compileSdk 33
 
     defaultConfig {
@@ -41,19 +41,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-design-system"))
-    implementation(project(":build-property"))
-
     implementation(jetpackDeps)
     implementation(coroutines)
 
     implementation deps.hilt.core
     kapt deps.hilt.compiler
-    implementation deps.glide.core
 
     implementation deps.timber
-
-    implementation deps.mixpanel
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)

@@ -1,13 +1,19 @@
 package com.depromeet.threedays
 
 import android.app.Application
+import com.depromeet.threedays.buildproperty.BuildProperty
+import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.core.analytics.AnalyticsUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class ThreeDaysApplication : Application() {
+    @Inject
+    lateinit var buildPropertyRepository: BuildPropertyRepository
+
     override fun onCreate() {
         super.onCreate()
 
@@ -21,7 +27,10 @@ class ThreeDaysApplication : Application() {
     }
 
     private fun initKakaoSdk() {
-        KakaoSdk.init(this, "f0c0458b5837b0f245c73b5a22908319")
+        KakaoSdk.init(
+            context = this,
+            appKey = buildPropertyRepository.get(BuildProperty.KAKAO_APP_KEY),
+        )
     }
 
     private fun initAnalytics() {
