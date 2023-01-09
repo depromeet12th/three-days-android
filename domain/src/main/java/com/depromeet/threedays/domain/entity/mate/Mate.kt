@@ -7,7 +7,7 @@ data class Mate(
     val habitId: Long,
     val memberId: Long,
     val title: String,
-    val createAt: LocalDateTime,
+    val createAt: LocalDateTime?, // TODO: null로 들어와서 임시 조치
     val level: Int,
     val reward: Int,
     val rewardHistory: List<RewardHistory>?,
@@ -18,6 +18,6 @@ data class Mate(
     val status: String,
 ) {
     data class RewardHistory(
-        val createAt: LocalDateTime,
+        val createAt: LocalDateTime?,
     )
 }
