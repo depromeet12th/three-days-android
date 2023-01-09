@@ -95,6 +95,7 @@ class MyPageFragment :
                     viewModel.logoutSucceed.collect { logoutSucceed ->
                         if (logoutSucceed) {
                             startActivity(signupNavigator.intent(requireContext()))
+                            activity?.finish()
                         }
                     }
                 }
@@ -102,6 +103,7 @@ class MyPageFragment :
                     viewModel.signoutSucceed.collect { signoutSucceed ->
                         if (signoutSucceed) {
                             startActivity(signupNavigator.intent(requireContext()))
+                            activity?.finish()
                         }
                     }
                 }
