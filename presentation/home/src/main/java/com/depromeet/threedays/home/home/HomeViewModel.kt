@@ -13,9 +13,11 @@ import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
 import com.depromeet.threedays.home.R
 import com.depromeet.threedays.home.home.model.HabitUI
 import com.depromeet.threedays.home.home.model.toHabitUI
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -79,15 +81,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun createHabitAchievement(habitId: Long, isThirdClap: Boolean) {
+    fun createHabitAchievement(habitUI: HabitUI) {
         viewModelScope.launch {
-            createHabitAchievementUseCase(habitId).collect { response ->
+            createHabitAchievementUseCase(habitUI.habitId).collect { response ->
                 when(response.status) {
                     Status.LOADING -> {
 
                     }
                     Status.SUCCESS -> {
                         fetchGoals()
+                        checkNewClap(habitUI)
                     }
                     Status.ERROR -> {
 
@@ -96,12 +99,6 @@ class HomeViewModel @Inject constructor(
 
                     }
                 }
-            }
-
-            if(isThirdClap) {
-                _uiEffect.emit(
-                    UiEffect.ShowClapAnimation
-                )
             }
         }
     }
@@ -234,6 +231,39 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private fun checkNewClap(habitUI: HabitUI) {
+        val hasNewClap = habitUI.todayIndex == 2 && habitUI.sequence == 2 && !habitUI.isTodayChecked
+        if(hasNewClap) {
+            viewModelScope.launch {
+                _uiEffect.emit(
+                    UiEffect.ShowClapAnimation(habitUI.habitId)
+                )
+            }
+        }
+    }
+
+    fun checkLevelUpHabit(habitId: Long) {
+        val habitWithMate = habits.value.find { it.mate != null && it.todayIndex == 0 && it.sequence > 0 && it.isTodayChecked } ?: return
+        if(habitWithMate.habitId != habitId) return
+        val mate = habitWithMate.mate ?: return
+        val levelUpAt = mate.levelUpAt ?: return
+        val today = LocalDate.now().toString()
+
+        if(today == levelUpAt.toLocalDate().toString()) {
+            viewModelScope.launch {
+                _uiEffect.emit(
+                    UiEffect.ShowImageSnackBar(
+                        imageResId = levelToResourceFunction(mate.level),
+                        titleResId = R.string.level_up_title,
+                        contentResId = R.string.level_up_content,
+                        actionTextResId = R.string.move,
+                        mateLevel = mate.level,
+                    )
+                )
+            }
+        }
+    }
 }
 
 sealed interface UiEffect {
@@ -251,7 +281,16 @@ sealed interface UiEffect {
         val textResId: Int,
         val actionTextResId: Int,
     ): UiEffect
-    object ShowClapAnimation : UiEffect
+    data class ShowImageSnackBar(
+        val imageResId: Int,
+        val titleResId: Int,
+        val contentResId: Int,
+        val actionTextResId: Int,
+        val mateLevel: Int,
+    ) : UiEffect
+    data class ShowClapAnimation(
+        val habitId: Long,
+    ) : UiEffect
     object ShowNotiGuideBottomSheet : UiEffect
     object ShowNotiRecommendBottomSheet : UiEffect
 }

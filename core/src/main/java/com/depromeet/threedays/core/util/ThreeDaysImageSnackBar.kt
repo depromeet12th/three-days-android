@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 class ThreeDaysImageSnackBar {
     fun show(
         view: View,
+        imageResId: Int,
         title: String,
         content: String,
         actionText: String,
@@ -30,6 +31,7 @@ class ThreeDaysImageSnackBar {
             params.gravity = Gravity.TOP
         }
 
+        binding.ivIllustrator.setImageResource(imageResId)
         binding.tvTitle.text = title
         binding.tvContent.text = content
         binding.tvActionButton.text = actionText
