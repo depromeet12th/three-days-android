@@ -24,18 +24,21 @@ import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import com.depromeet.threedays.home.MainActivity
 import com.depromeet.threedays.home.R
-import com.depromeet.threedays.core_design_system.R as core_design
 import com.depromeet.threedays.home.databinding.FragmentHomeBinding
 import com.depromeet.threedays.home.home.dialog.MoreActionModal
 import com.depromeet.threedays.home.home.dialog.NotiGuideBottomSheet
 import com.depromeet.threedays.home.home.dialog.NotiRecommendBottomSheet
 import com.depromeet.threedays.mate.MateFragment
-import com.depromeet.threedays.navigator.*
+import com.depromeet.threedays.navigator.ArchivedHabitNavigator
+import com.depromeet.threedays.navigator.HabitCreateNavigator
+import com.depromeet.threedays.navigator.HabitUpdateNavigator
+import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import javax.inject.Inject
+import com.depromeet.threedays.core_design_system.R as core_design
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
@@ -80,9 +83,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun onCreateHabitClick() {
         if(viewModel.habits.value.isEmpty()) {
             AnalyticsUtil.event(
-                name = ThreeDaysEvent.NewMateClicked.toString(),
+                name = ThreeDaysEvent.NewHabitClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.HomeDefault,
+                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString(),
                     MixPanelEvent.ButtonType to ButtonType.NewHabit.toString()
                 )
             )
@@ -248,21 +251,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        if(list.isNotEmpty()) {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                        if(!viewModel.isInitialized) {
+                            if (list.isEmpty()) {
+                                AnalyticsUtil.event(
+                                    name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                    properties = mapOf(
+                                        MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                                    )
                                 )
-                            )
-                        }
-                        else {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                            } else {
+                                AnalyticsUtil.event(
+                                    name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                    properties = mapOf(
+                                        MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                                    )
                                 )
-                            )
+                            }
+                            viewModel.isInitialized = true
                         }
 
                         habitAdapter.submitList(list.sortedBy { it.createAt })
