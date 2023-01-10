@@ -251,23 +251,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        if(!viewModel.isInitialized) {
-                            if (list.isEmpty()) {
-                                AnalyticsUtil.event(
-                                    name = ThreeDaysEvent.HomeDefaultViewed.toString(),
-                                    properties = mapOf(
-                                        MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
-                                    )
+                        if (list.isEmpty()) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
                                 )
-                            } else {
-                                AnalyticsUtil.event(
-                                    name = ThreeDaysEvent.HomeActivatedViewed.toString(),
-                                    properties = mapOf(
-                                        MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
-                                    )
+                            )
+                        } else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
                                 )
-                            }
-                            viewModel.isInitialized = true
+                            )
                         }
 
                         habitAdapter.submitList(list.sortedBy { it.createAt })

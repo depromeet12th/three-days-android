@@ -41,8 +41,6 @@ class HomeViewModel @Inject constructor(
     val uiEffect: SharedFlow<UiEffect>
         get() = _uiEffect
 
-    var isInitialized: Boolean = false
-
     init {
         fetchGoals()
         checkIsFirstVisitor()
