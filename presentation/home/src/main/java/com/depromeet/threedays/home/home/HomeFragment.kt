@@ -230,6 +230,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun showNotiRecommendBottomSheet() {
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.PushViewed.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to Screen.Push.toString()
+            )
+        )
+
         val modal = NotiRecommendBottomSheet(
             onConfirmClick = { checkNotificationPermission() }
         )
@@ -238,6 +245,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun checkNotificationPermission() {
+        AnalyticsUtil.event(
+            name = ThreeDaysEvent.ButtonClicked.toString(),
+            properties = mapOf(
+                MixPanelEvent.ScreenName to Screen.Push.toString(),
+                MixPanelEvent.ButtonType to ButtonType.Next.toString()
+            )
+        )
+
         val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
         if(!isDeviceNotificationOn) {
             NotiGuideBottomSheet.newInstance (

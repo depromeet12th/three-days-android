@@ -27,6 +27,7 @@ enum class Screen {
     MateCompleted,
     MateShare,
     MateMaking,
+    Push
 }
 
 enum class ThreeDaysEvent {
@@ -53,4 +54,5 @@ enum class ThreeDaysEvent {
     MateLevelupViewed,
     MateCompletedViewed,
     MateSaveClicked,
+    PushViewed
 }
