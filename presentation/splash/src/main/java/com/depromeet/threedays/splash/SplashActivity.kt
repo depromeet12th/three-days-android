@@ -79,7 +79,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             layoutParams.width = (width * 0.61).toInt() // 220/360 = 0.611
             layoutParams.height = layoutParams.width
             setAnimation(R.raw.lottie_splash)
-            repeatCount = 1
             playAnimation()
         }
     }
@@ -112,6 +111,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     }
 
     companion object {
-        private const val DELAYED_MILLIS = 1000L
+        private const val DELAYED_MILLIS = 2000L
     }
 }

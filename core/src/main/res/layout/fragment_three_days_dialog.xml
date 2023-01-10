@@ -65,7 +65,6 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:textAppearance="@style/Typography.Paragraph2"
-            android:lineSpacingExtra="@dimen/Typography.Paragraph2.LineSpacingExtra"
             android:textColor="@color/gray_500"
             app:layout_constraintEnd_toEndOf="@+id/tv_title"
             app:layout_constraintStart_toStartOf="@+id/tv_title"

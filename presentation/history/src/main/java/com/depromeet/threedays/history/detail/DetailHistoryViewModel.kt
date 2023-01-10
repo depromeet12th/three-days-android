@@ -53,17 +53,19 @@ class DetailHistoryViewModel @Inject constructor(
                     habitId = habitId,
                     from = state.value.fromDate,
                     to = state.value.toDate,
-                ).map { achievement ->
-                    achievement.achievementDate
-                }
-            }.onSuccess { habitAchievementDateList ->
-                val sortedHabitAchievementDateList = habitAchievementDateList.sorted()
+                )
+            }.onSuccess { achievement ->
+                val sortedHabitAchievementDateList = achievement.map { it.achievementDate }.sorted()
+
                 _state.value = _state.value.copy(
                     isAchievementInitialized = true,
                     achievementDateList = sortedHabitAchievementDateList,
-                    achievementDateWithStatusList = getAchievementDateWithStatusList(sortedHabitAchievementDateList)
+                    achievementDateWithStatusList = getAchievementDateWithStatusList(sortedHabitAchievementDateList),
+                    currentMonthStatic = MonthStatic(
+                        achievements = achievement.size,
+                        claps = achievement.filter { it.sequence == 3 }.size
+                    )
                 )
-                setCurrentMonthStatic()
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
             }
@@ -125,24 +127,13 @@ class DetailHistoryViewModel @Inject constructor(
                     }
                 }
             }
+            /**
+             * 위의 검증 로직은 추후 업데이트 버전에서 재사용 될 가능성이 있어 삭제하지 않고 유지합니다
+             * 다만 연속이 아닌 하나의 동그라미로만 표시돼야 하기 때문에 Status.SINGLE 로 모든 상태를 재할당합니다 */
+            map[achievementDateList[index]] = Status.SINGLE
         }
 
         return map
-    }
-
-    private fun setCurrentMonthStatic() {
-        val achievements = state.value.achievementDateWithStatusList.filter {
-            it.key.monthValue == state.value.currentCalendarDate.monthValue
-        }.size
-        val claps = state.value.achievementDateWithStatusList.filter {
-            it.key.monthValue == state.value.currentCalendarDate.monthValue && it.value == Status.END
-        }.size
-        _state.value = _state.value.copy(
-            currentMonthStatic = MonthStatic(
-                achievements = achievements,
-                claps = claps
-            )
-        )
     }
 
     data class State(
@@ -200,16 +191,13 @@ class DetailHistoryViewModel @Inject constructor(
         val fromDate: LocalDate
             get() {
                 val date = currentCalendarDate
-                return date.minusMonths(1)
+                return date.withDayOfMonth(1)
             }
 
         val toDate: LocalDate
             get() {
                 val date = currentCalendarDate
-                return if (currentCalendarDate.year == today.year && currentCalendarDate.monthValue == today.monthValue) {
-                    date
-                } else
-                    date.plusMonths(1)
+                return date.withDayOfMonth(date.lengthOfMonth())
             }
     }
 

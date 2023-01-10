@@ -61,7 +61,10 @@ class ConnectHabitViewModel @Inject constructor(
                     Color.PINK -> R.drawable.bg_box_mate_default_pink
                     Color.BLUE -> R.drawable.bg_box_mate_default_blue
                     Color.GREEN -> R.drawable.bg_box_mate_default_green
-                }
+                },
+                buttonClickable = true,
+                buttonBackgroundRes = com.depromeet.threedays.core_design_system.R.drawable.bg_rect_gray800_r15,
+                buttonTextColor = com.depromeet.threedays.core_design_system.R.color.white
             )
         }
     }
@@ -70,4 +73,7 @@ class ConnectHabitViewModel @Inject constructor(
 data class UiState(
     val clickedHabit: HabitUI? = null,
     val boxImageResId: Int = R.drawable.bg_box_mate_default,
+    val buttonClickable: Boolean = false,
+    val buttonBackgroundRes: Int = com.depromeet.threedays.core_design_system.R.drawable.bg_rect_gray200_r15,
+    val buttonTextColor: Int = com.depromeet.threedays.core_design_system.R.color.gray_450,
 )

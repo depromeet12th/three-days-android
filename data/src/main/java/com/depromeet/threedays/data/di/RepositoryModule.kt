@@ -25,6 +25,12 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
+    abstract fun bindsTodayFirstVisitRepository(
+        repository: TodayFirstVisitRepositoryImpl,
+    ): TodayFirstVisitRepository
+
+    @Binds
+    @Singleton
     abstract fun bindsMaxLevelMateRepository(
         repository: MaxLevelMateRepositoryImpl,
     ): MaxLevelMateRepository

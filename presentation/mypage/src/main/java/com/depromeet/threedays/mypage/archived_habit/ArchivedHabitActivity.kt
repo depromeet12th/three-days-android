@@ -49,8 +49,7 @@ class ArchivedHabitActivity :
                 )
             }
         )
-        viewModel.fetchArchivedHabits()
-        viewModel.fetchOnboardingEnabled()
+
         initView()
         setObserve()
         initEvent()
@@ -86,9 +85,9 @@ class ArchivedHabitActivity :
                     }
                 }
                 launch {
-                    viewModel.isOnboardingEnabled.collect {
-                        if (it) {
-                            showSnackBar()
+                    viewModel.uiEffect.collect {
+                        when(it) {
+                            UiEffect.ShowSnackBar -> showSnackBar()
                         }
                     }
                 }
@@ -169,9 +168,6 @@ class ArchivedHabitActivity :
     private fun showSnackBar() {
         ArchivedHabitOnboardingSnackBar.show(
             view = binding.flArchivedHabitOnboarding,
-            onAction = {
-                // TODO: 읽었다고 저장
-            }
         )
     }
 }

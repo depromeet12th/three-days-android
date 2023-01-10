@@ -8,7 +8,7 @@ import com.depromeet.threedays.home.home.model.HabitUI
 import kotlin.reflect.KFunction0
 
 class HabitAdapter(
-    private val createHabitAchievement: (Long, Boolean) -> Unit,
+    private val createHabitAchievement: (HabitUI) -> Unit,
     private val deleteHabitAchievement: (Long, Long) -> Unit,
     private val onCreateHabitClick: KFunction0<Unit>,
     private val onMoreClick: (HabitUI) -> Unit,

@@ -28,6 +28,9 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - run: echo $LOCAL_PROPERTIES_FILE | base64 -d > local.properties
+        env:
+          LOCAL_PROPERTIES_FILE: ${{ secrets.LOCAL_PROPERTIES_FILE }}
       - name: Build and analyze
         uses: gradle/gradle-build-action@v2
         env:

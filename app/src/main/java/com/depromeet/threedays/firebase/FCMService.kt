@@ -13,8 +13,6 @@ import com.depromeet.threedays.domain.usecase.notification.token.UpdateNotificat
 import com.depromeet.threedays.home.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
@@ -25,18 +23,6 @@ class FCMService @Inject constructor() : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.i(TAG, "onNewToken: $token")
-        try {
-            // FIXME:
-            //  - useCase initialize 안되었다는 에러 발생함.
-            //  - 앱 처음 설치하면 스플래시 화면에서 호출되는데 이 때 memberId 없음
-            runBlocking {
-                updateNotificationTokenUseCase(token)
-            }
-        } catch (e: Exception) {
-            Timber.w(
-                e, "Failed to update fcm registration token"
-            )
-        }
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

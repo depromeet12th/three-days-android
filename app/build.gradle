@@ -10,6 +10,9 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 33
 
@@ -24,6 +27,7 @@ android {
     }
 
     signingConfigs {
+        // GitHub Action 으로 빌드, 배포할 때 사용함
         ciDebug {
             storeFile file("$project.rootDir/debug.keystore")
             storePassword System.getenv('DEBUG_STORE_PASSWORD')
@@ -36,6 +40,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key')
+            ]
+            buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('release.three-days.base-url')}\""
+            buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('release.kakao.app-key')}\""
+        }
+        debug {
+            applicationIdSuffix '.debug'
+            manifestPlaceholders = [
+                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key')
+            ]
+            buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('debug.three-days.base-url')}\""
+            buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('debug.kakao.app-key')}\""
         }
         alpha {
             initWith debug
@@ -57,6 +74,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":build-property"))
     implementation(project(":core"))
     implementation(project(":navigator"))
     implementation(project(":presentation:home"))

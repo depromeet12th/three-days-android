@@ -13,6 +13,7 @@
     <string name="history_tooltip_guide">히스토리에 저장되지 않고 삭제된 습관은\n나의 기록에서 확인할 수 없어요. 🥲</string>
     <string name="no_habit_guide">아직 습관이 없어요.\n새로운 습관을 만들어볼까요?</string>
     <string name="create_habit">습관 만들기</string>
+    <string name="no_achievement_habit_guide">아직 실행한\n습관이없어요</string>
 
     <!-- emoji -->
     <string name="clap">👏🏻</string>

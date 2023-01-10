@@ -1,5 +1,6 @@
 package com.depromeet.threedays.signup
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -7,12 +8,16 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.navigator.HomeNavigator
+import com.depromeet.threedays.signup.SignupViewModel.Action
+import com.depromeet.threedays.signup.complete.SignupCompleteActivity
 import com.depromeet.threedays.signup.databinding.ActivitySignupBinding
 import com.depromeet.threedays.signup.extension.loginWithKakaoOrThrow
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -54,10 +59,7 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
                 }.onSuccess { oAuthToken ->
                     UserApiClient.instance.me { user, _ ->
                         if (user != null) {
-                            viewModel.createMember(
-                                socialToken = oAuthToken.accessToken
-                            )
-                            viewModel.updateFcmToken()
+                            viewModel.createMember(socialToken = oAuthToken.accessToken)
                         }
                     }
                 }.onFailure { throwable ->
@@ -72,12 +74,17 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
     }
 
     private fun observe() {
-        viewModel.isSuccess.observe(this) { isSuccess ->
-            if (isSuccess) {
-                val intent = homeNavigator.intent(this)
-                startActivity(intent)
-                finish()
+        viewModel.action.onEach { action ->
+            val intent = when(action) {
+                Action.AlreadySignedUp -> {
+                    homeNavigator.intent(this)
+                }
+                Action.FirstSignup -> {
+                    Intent(this@SignupActivity, SignupCompleteActivity::class.java)
+                }
             }
-        }
+            startActivity(intent)
+            finish()
+        }.launchIn(lifecycleScope)
     }
 }

@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(project(":core-design-system"))
+    implementation(project(":build-property"))
 
     implementation(jetpackDeps)
     implementation(coroutines)

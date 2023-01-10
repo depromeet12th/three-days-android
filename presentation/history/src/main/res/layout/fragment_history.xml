@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -47,9 +47,9 @@
             android:layout_marginEnd="12dp"
             android:padding="8dp"
             android:src="@drawable/ic_left_arrow_default"
-            app:layout_constraintTop_toTopOf="@+id/tv_this_month"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
-            app:layout_constraintEnd_toStartOf="@+id/tv_this_month"/>
+            app:layout_constraintEnd_toStartOf="@+id/tv_this_month"
+            app:layout_constraintTop_toTopOf="@+id/tv_this_month"/>
 
         <TextView
             android:id="@+id/tv_this_month"
@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:textAppearance="@style/Typography.Heading"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/this_month_history_title"/>
 
         <ImageView
@@ -69,32 +69,31 @@
             android:layout_marginStart="12dp"
             android:padding="8dp"
             android:src="@drawable/ic_right_arrow_default"
-            app:layout_constraintTop_toTopOf="@+id/tv_this_month"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
-            app:layout_constraintStart_toEndOf="@+id/tv_this_month"/>
+            app:layout_constraintStart_toEndOf="@+id/tv_this_month"
+            app:layout_constraintTop_toTopOf="@+id/tv_this_month"/>
 
         <ImageView
             android:id="@+id/iv_tooltip"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_tooltip"
-            app:layout_constraintTop_toTopOf="@+id/iv_next_month"
             app:layout_constraintBottom_toBottomOf="@+id/iv_next_month"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"/>
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintTop_toTopOf="@+id/iv_next_month"/>
 
         <TextView
             android:id="@+id/tv_tooltip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/bg_rect_white_r10"
+            android:elevation="4dp"
             android:paddingHorizontal="20dp"
             android:paddingVertical="16dp"
-            android:background="@drawable/bg_rect_white_r10"
-            android:textAppearance="@style/Typography.Paragraph3"
-            android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
             android:text="@string/history_tooltip_guide"
-            android:elevation="4dp"
+            android:textAppearance="@style/Typography.Paragraph3"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_tooltip" />
@@ -110,10 +109,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar"
-            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
+            app:layout_constraintTop_toBottomOf="@+id/space_bottom_of_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -145,20 +144,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clap"
-                        app:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_this_month_clap"
                         app:layout_constraintEnd_toStartOf="@+id/tv_this_month_clap"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:tint="@color/white"
                         tools:tint="@color/white"/>
 
                     <TextView
                         android:id="@+id/tv_this_month_clap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginBottom="24dp"
                         android:textAppearance="@style/Typography.Heading"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -174,8 +173,8 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/bg_rect_gray700_r10"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/gl_middle"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cl_this_month_clap">
 
                     <TextView
@@ -205,8 +204,8 @@
                         android:id="@+id/tv_this_month_achieve_days"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginBottom="24dp"
                         android:textAppearance="@style/Typography.Heading"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -220,8 +219,8 @@
                     android:id="@+id/gl_middle"
                     android:layout_width="12dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_most_achieve"
@@ -239,7 +238,6 @@
                         android:gravity="center"
                         android:text="@string/this_month_most_achieve_habit_guide"
                         android:textAppearance="@style/Typography.Paragraph3"
-                        android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -250,12 +248,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="77dp"
-                        android:text="@string/medicine"
                         android:textAppearance="@style/Typography.Body1"
                         android:textSize="38sp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/medicine" />
 
                     <ImageView
                         android:id="@+id/iv_emoji_shadow"
@@ -263,8 +261,8 @@
                         android:layout_height="16dp"
                         android:layout_marginTop="6dp"
                         android:src="@drawable/ic_emoji_shadow"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_most_achieve_habit_icon" />
 
                     <TextView
@@ -274,11 +272,10 @@
                         android:gravity="center"
                         android:textAppearance="@style/Typography.Paragraph2"
                         android:textColor="#FDFDFD"
-                        android:lineSpacingExtra="@dimen/Typography.Paragraph2.LineSpacingExtra"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_emoji_shadow"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_emoji_shadow"
                         tools:text="가장 많이 실천한\n습관입니당"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -299,10 +296,11 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="12dp"
                     android:clipToPadding="false"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
                     tools:listitem="@layout/item_habit_record"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -325,13 +323,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="@string/no_habit_guide"
             android:textAppearance="@style/Typography.Paragraph3"
-            android:lineSpacingExtra="@dimen/Typography.Paragraph3.LineSpacingExtra"
-            android:gravity="center"
             android:textColor="@color/gray_500"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -342,12 +339,12 @@
             android:background="@drawable/bg_rect_gray800_r30"
             android:gravity="center"
             android:paddingHorizontal="44dp"
+            android:stateListAnimator="@null"
             android:text="@string/create_habit"
             android:textAppearance="@style/Typography.Button1"
             android:textColor="@color/white"
-            android:stateListAnimator="@null"
-            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

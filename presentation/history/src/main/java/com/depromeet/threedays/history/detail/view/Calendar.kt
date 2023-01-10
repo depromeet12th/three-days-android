@@ -45,9 +45,11 @@ class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = em
         val rangeBetweenBackground = context.getDrawableCompat(R.drawable.bg_range_middle) as GradientDrawable
         val singleBackground = context.getDrawableCompat(R.drawable.bg_single_selection) as GradientDrawable
         val todayBackground = context.getDrawableCompat(R.drawable.bg_today)
+        val achievedTodayBackground = context.getDrawableCompat(R.drawable.bg_today_selection) as GradientDrawable
 
         rangeBetweenBackground.setColor(context.getHabitColor(color))
         singleBackground.setColor(context.getHabitColor(color))
+        achievedTodayBackground.setColor(context.getHabitColor(color))
 
         container.textView.text = data.date.dayOfMonth.toString()
         roundBgView.visibility = View.INVISIBLE
@@ -90,7 +92,10 @@ class DayBind(private val executeDateWithStatusList: Map<LocalDate, Status> = em
                         roundBgView.applyBackground(singleBackground)
                     }
                     Status.SINGLE -> {
-                        roundBgView.applyBackground(singleBackground)
+                        roundBgView.applyBackground(
+                            if(data.date == today) achievedTodayBackground
+                            else singleBackground
+                        )
                     }
                 }
             }

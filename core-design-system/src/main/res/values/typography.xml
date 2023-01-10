@@ -64,19 +64,22 @@
     <!-- Paragraph1 -->
     <style name="Typography.Paragraph1">
         <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
+        <item name="lineHeight">24dp</item>
         <item name="fontFamily">@font/suit_medium</item>
     </style>
 
     <!-- Paragraph2 -->
     <style name="Typography.Paragraph2">
-        <item name="fontFamily">@font/suit_medium</item>
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="lineHeight">22dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
     </style>
 
     <!-- Paragraph3 -->
     <style name="Typography.Paragraph3">
-        <item name="fontFamily">@font/suit_medium</item>
         <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
+        <item name="fontFamily">@font/suit_medium</item>
+        <item name="lineHeight">20dp</item>
     </style>
 
     <!-- Caption -->
@@ -106,12 +109,14 @@
     <!-- Display1 -->
     <style name="Typography.Display1">
         <item name="android:textSize" tools:ignore="SpUsage">26dp</item>
+        <item name="lineHeight">36dp</item>
         <item name="fontFamily">@font/suit_semi_bold</item>
     </style>
 
     <!-- Display2 -->
     <style name="Typography.Display2">
         <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
+        <item name="lineHeight">26dp</item>
         <item name="fontFamily">@font/suit_bold</item>
     </style>
 

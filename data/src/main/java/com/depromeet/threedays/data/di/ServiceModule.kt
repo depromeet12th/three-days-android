@@ -1,6 +1,8 @@
 package com.depromeet.threedays.data.di
 
 import android.content.Context
+import com.depromeet.threedays.buildproperty.BuildProperty
+import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.data.api.*
 import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
@@ -86,14 +88,23 @@ class NetworkModule {
     fun providesHttpClient(
         @ApplicationContext context: Context,
         gson: Gson,
-        signupNavigator: SignupNavigator
+        signupNavigator: SignupNavigator,
+        buildPropertyRepository: BuildPropertyRepository,
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
             .readTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
         val clientWithAuthInterceptor = client
-            .addInterceptor(AuthInterceptor(context, client.build(), gson, signupNavigator))
+            .addInterceptor(
+                interceptor = AuthInterceptor(
+                    context = context,
+                    client = client.build(),
+                    gson = gson,
+                    signupNavigator = signupNavigator,
+                    buildPropertyRepository = buildPropertyRepository,
+                ),
+            )
             .addInterceptor(getLoggingInterceptor())
         return clientWithAuthInterceptor.build()
     }
@@ -107,7 +118,8 @@ class NetworkModule {
     @Singleton
     @Provides
     fun providesRetrofit(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        buildPropertyRepository: BuildPropertyRepository,
     ): Retrofit {
         val gsonWithAdapter: Gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeDeserializer())
@@ -120,7 +132,7 @@ class NetworkModule {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(buildPropertyRepository.get(BuildProperty.BASE_URL))
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gsonWithAdapter))
             .build()
@@ -131,5 +143,3 @@ class NetworkModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 }
-
-const val BASE_URL = "https://api.jjaksim.com"
