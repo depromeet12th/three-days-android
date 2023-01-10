@@ -86,8 +86,8 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.MateDefaultViewed.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateDefault,
-                    MixPanelEvent.ButtonType to ButtonType.NewMate,
+                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.NewMate.toString(),
                 )
             )
 
@@ -99,8 +99,8 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.MateShareClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateHome,
-                    MixPanelEvent.ButtonType to ButtonType.Share,
+                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.Share.toString(),
                 )
             )
 
@@ -139,8 +139,8 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.MateSaveClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateCompleted,
-                    MixPanelEvent.ButtonType to ButtonType.MateSave,
+                    MixPanelEvent.ScreenName to Screen.MateCompleted.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.MateSave.toString(),
                 )
             )
 
@@ -175,8 +175,8 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         AnalyticsUtil.event(
                             name = ThreeDaysEvent.MateClapOpenClicked.toString(),
                             properties = mapOf(
-                                MixPanelEvent.ScreenName to Screen.MateDefault,
-                                MixPanelEvent.ButtonType to ButtonType.MateClapOpen,
+                                MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
+                                MixPanelEvent.ButtonType to ButtonType.MateClapOpen.toString(),
                             )
                         )
                         binding.ivArrow.setImageResource(core_design.drawable.ic_arrow_down)
@@ -264,7 +264,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 AnalyticsUtil.event(
                     name = ThreeDaysEvent.MateCompletedViewed.toString(),
                     properties = mapOf(
-                        MixPanelEvent.ScreenName to Screen.MateCompleted,
+                        MixPanelEvent.ScreenName to Screen.MateCompleted.toString(),
                     )
                 )
 
@@ -315,7 +315,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         AnalyticsUtil.event(
             name = ThreeDaysEvent.MateLevelupViewed.toString(),
             properties = mapOf(
-                MixPanelEvent.ScreenName to Screen.MateLevelup,
+                MixPanelEvent.ScreenName to Screen.MateLevelup.toString(),
             )
         )
 
@@ -332,14 +332,14 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.MateHomeViewed.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateHome,
+                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
                 )
             )
         } else {
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.MateDefaultViewed.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateDefault,
+                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
                 )
             )
         }

@@ -19,8 +19,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
-import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.mate.databinding.ActivityShareMateBinding
@@ -48,8 +48,8 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.ButtonClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateShare,
-                    MixPanelEvent.ButtonType to ButtonType.Close,
+                    MixPanelEvent.ScreenName to Screen.MateShare.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.Close.toString(),
                 )
             )
 
@@ -59,8 +59,8 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.SharedPathClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateShare,
-                    MixPanelEvent.ButtonType to ButtonType.SaveImg,
+                    MixPanelEvent.ScreenName to Screen.MateShare.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.SaveImg.toString(),
                 )
             )
 
@@ -70,8 +70,8 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.SharedPathClicked.toString(),
                 properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateShare,
-                    MixPanelEvent.ButtonType to ButtonType.Insta,
+                    MixPanelEvent.ScreenName to Screen.MateShare.toString(),
+                    MixPanelEvent.ButtonType to ButtonType.Insta.toString(),
                 )
             )
 

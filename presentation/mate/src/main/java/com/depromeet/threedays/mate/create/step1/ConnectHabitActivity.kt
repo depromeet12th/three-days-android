@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
-import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.core.util.dpToPx
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step2.ChooseMateTypeActivity
 import com.depromeet.threedays.mate.databinding.ActivityConnectHabitBinding
@@ -70,7 +70,7 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
                 name = ThreeDaysEvent.ButtonClicked.toString(),
                 properties = mapOf(
                     MixPanelEvent.ScreenName to "${Screen.MateMaking}1",
-                    MixPanelEvent.ButtonType to ButtonType.Next,
+                    MixPanelEvent.ButtonType to ButtonType.Next.toString(),
                 )
             )
 
