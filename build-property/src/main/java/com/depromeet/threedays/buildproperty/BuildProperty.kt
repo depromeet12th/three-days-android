@@ -8,6 +8,7 @@ enum class BuildProperty(
 ) {
     BASE_URL("api 서버 주소"),
     KAKAO_APP_KEY("Kakao native app key"),
+    MIXPANEL_PROJECT_TOKEN("Mixpanel project token")
     ;
 
     /**

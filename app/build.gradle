@@ -45,6 +45,7 @@ android {
             ]
             buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('release.three-days.base-url')}\""
             buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('release.kakao.app-key')}\""
+            buildConfigField 'String', 'MIXPANEL_PROJECT_TOKEN', "\"${properties.getProperty('release.mixpanel.project-token')}\""
         }
         debug {
             applicationIdSuffix '.debug'
@@ -53,6 +54,7 @@ android {
             ]
             buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('debug.three-days.base-url')}\""
             buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('debug.kakao.app-key')}\""
+            buildConfigField 'String', 'MIXPANEL_PROJECT_TOKEN', "\"${properties.getProperty('debug.mixpanel.project-token')}\""
         }
         alpha {
             initWith debug
