@@ -26,12 +26,10 @@ ext {
             "leakcanary"            : "2.9.1",
             "chucker"               : "3.5.2",
             "google"                : "20.2.0",
-            "room"                  : "2.4.3",
             "emoji"                 : "1.0.0-alpha03",
             "lottie"                : "5.2.0",
             "datastore"             : "1.0.0",
             "ossLicenses"           : "17.0.0",
-            "facebook"              : "15.2.0",
             "mixpanel"             : "7.+",
     ]
     deps = [
@@ -107,13 +105,6 @@ ext {
                     "kakao"                : "com.kakao.sdk:v2-user:${versions.kakao}",
                     "google"               : "com.google.android.gms:play-services-auth:${versions.google}"
             ],
-            "room"                         : [
-                    "roomCommon"           : "androidx.room:room-common:${versions.room}",
-                    "roomCompiler"         : "androidx.room:room-compiler:${versions.room}",
-                    "roomKtx"              : "androidx.room:room-ktx:${versions.room}",
-                    "roomRuntime"          : "androidx.room:room-runtime:${versions.room}",
-                    "roomRxjava2"          : "androidx.room:room-rxjava2:${versions.room}"
-            ],
             "emoji"                        : [
                     "emoji2"               : "androidx.emoji2:emoji2:${versions.emoji}",
                     "emoji2View"           : "androidx.emoji2:emoji2-views:${versions.emoji}"
@@ -121,8 +112,7 @@ ext {
             "lottie"                       : "com.airbnb.android:lottie:${versions.lottie}",
             "splash"                       : "androidx.core:core-splashscreen:1.0.0",
             "ossLicenses"                  : "com.google.android.gms:play-services-oss-licenses:${versions.ossLicenses}",
-            "facebook"                     : "com.facebook.android:facebook-share:${versions.facebook}",
-            "mixpanel"                     : "com.mixpanel.android:mixpanel-android:${versions.mixpanel}"
+            "mixpanel"                     : "com.mixpanel.android:mixpanel-android:${versions.mixpanel}",
     ]
 
     coroutines = [
@@ -169,13 +159,6 @@ ext {
     loginDeps = [
             deps.login.kakao,
             deps.login.google
-    ]
-
-    roomDeps = [
-            deps.room.roomCommon,
-            deps.room.roomKtx,
-            deps.room.roomRuntime,
-            deps.room.roomRxjava2
     ]
 
     emojiDeps = [

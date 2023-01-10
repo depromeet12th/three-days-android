@@ -53,6 +53,4 @@ dependencies {
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
-
-    implementation deps.facebook
 }
