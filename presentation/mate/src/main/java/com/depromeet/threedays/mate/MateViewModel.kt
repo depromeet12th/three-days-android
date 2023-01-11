@@ -63,7 +63,8 @@ class MateViewModel @Inject constructor(
                                 } else {
                                     core_design.color.gray_100
                                 },
-                                stamps = getStampsFromMate(myMate?.toMateUI())
+                                stamps = getStampsFromMate(myMate?.toMateUI()),
+                                isMateInitialized = true
                             )
                         }
                         myMate?.let {
@@ -89,7 +90,8 @@ class MateViewModel @Inject constructor(
             }.onSuccess { habit ->
                 _uiState.update {
                     it.copy(
-                        habit = habit
+                        habit = habit,
+                        isHabitInitialized = true
                     )
                 }
             }.onFailure { throwable ->
@@ -225,6 +227,8 @@ data class UiState(
     val hasMate: Boolean = false,
     val backgroundResColor: Int = core_design.color.gray_100,
     val stamps: List<StampUI> = emptyList(),
+    val isMateInitialized: Boolean = false,
+    val isHabitInitialized: Boolean = false
 )
 
 sealed interface UiEffect {

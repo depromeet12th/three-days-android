@@ -347,7 +347,7 @@
                 android:id="@+id/tv_habit_emoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/medicine"
+                tools:text="@string/medicine"
                 android:textAppearance="@style/Typography.Body1"
                 android:textColor="@color/gray_700"
                 app:layout_constraintEnd_toStartOf="@+id/tv_habit_title"
@@ -360,7 +360,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/habit_sample_title"
+                tools:text="@string/habit_sample_title"
                 android:textAppearance="@style/Typography.Body1"
                 android:textColor="@color/gray_800"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
@@ -425,5 +425,17 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_mate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/gray_800"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
