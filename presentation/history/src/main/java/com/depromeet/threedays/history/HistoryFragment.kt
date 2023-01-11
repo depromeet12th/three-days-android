@@ -156,6 +156,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
                         }
                         else {
                             binding.ncvHasHabit.gone()
+                            binding.groupToolbar.gone()
                             binding.progressHistory.visible()
                         }
 

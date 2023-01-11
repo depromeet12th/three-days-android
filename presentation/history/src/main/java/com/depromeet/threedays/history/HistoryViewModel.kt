@@ -41,6 +41,9 @@ class HistoryViewModel @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         val habits = response.data!!
+                        _uiState.update {
+                            it.copy(isHabitInitialized = true)
+                        }
                         if(habits.isNotEmpty()) {
                             val sortedHabits = habits.sortedBy { it.createAt }
                             val startDate = sortedHabits.first()
@@ -51,7 +54,6 @@ class HistoryViewModel @Inject constructor(
                                     habits = habits.map { it.toHabitUI() },
                                     startDate = getDateTimeFromString(startDate.createAt) ?: it.startDate,
                                     endDate = getDateTimeFromString(endDate.createAt) ?: it.endDate,
-                                    isHabitInitialized = true
                                 )
                             }
                             _uiState.update {
