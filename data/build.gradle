@@ -52,9 +52,6 @@ dependencies {
     implementation deps.network.adapter
     implementation deps.network.interceptor
 
-    implementation(roomDeps)
-    kapt deps.room.roomCompiler
-
     implementation deps.timber
 
     testImplementation(testDeps)

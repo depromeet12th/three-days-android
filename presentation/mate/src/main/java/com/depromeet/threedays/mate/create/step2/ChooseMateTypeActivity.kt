@@ -45,7 +45,7 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                 name = ThreeDaysEvent.MateSelected.toString(),
                 properties = mapOf(
                     MixPanelEvent.ScreenName to "${Screen.MateMaking}2",
-                    MixPanelEvent.ButtonType to ButtonType.Sparta,
+                    MixPanelEvent.ButtonType to ButtonType.Sparta.toString(),
                 )
             )
 
@@ -56,7 +56,7 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                 name = ThreeDaysEvent.MateSelected.toString(),
                 properties = mapOf(
                     MixPanelEvent.ScreenName to "${Screen.MateMaking}2",
-                    MixPanelEvent.ButtonType to ButtonType.Carrot,
+                    MixPanelEvent.ButtonType to ButtonType.Carrot.toString(),
                 )
             )
 
@@ -70,7 +70,7 @@ class ChooseMateTypeActivity : BaseActivity<ActivityChooseMateTypeBinding>(R.lay
                 name = ThreeDaysEvent.ButtonClicked.toString(),
                 properties = mapOf(
                     MixPanelEvent.ScreenName to "${Screen.MateMaking}2",
-                    MixPanelEvent.ButtonType to ButtonType.Next,
+                    MixPanelEvent.ButtonType to ButtonType.Next.toString(),
                 )
             )
 

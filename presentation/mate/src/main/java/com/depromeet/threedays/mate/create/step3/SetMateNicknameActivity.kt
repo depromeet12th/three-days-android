@@ -66,7 +66,7 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
                 name = ThreeDaysEvent.ButtonClicked.toString(),
                 properties = mapOf(
                     MixPanelEvent.ScreenName to "${Screen.MateMaking}3",
-                    MixPanelEvent.ButtonType to ButtonType.Next,
+                    MixPanelEvent.ButtonType to ButtonType.Next.toString(),
                 )
             )
             viewModel.createMate()
