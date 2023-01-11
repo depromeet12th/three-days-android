@@ -41,6 +41,9 @@ class HistoryViewModel @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         val habits = response.data!!
+                        _uiState.update {
+                            it.copy(isHabitInitialized = true)
+                        }
                         if(habits.isNotEmpty()) {
                             val sortedHabits = habits.sortedBy { it.createAt }
                             val startDate = sortedHabits.first()
@@ -95,6 +98,7 @@ class HistoryViewModel @Inject constructor(
                                 cardBackgroundResId = getCardBackgroundResId(
                                     recordUI.frequentHabitUI?.color ?: "GREEN"
                                 ),
+                                isRecordInitialized = true
                             )
                         }
                     }
@@ -183,4 +187,7 @@ data class UiState(
     val emoji: String = String.Empty,
     val title: String  = String.Empty,
     val cardBackgroundResId: Int = R.drawable.bg_rect_green50_r10,
+
+    val isHabitInitialized: Boolean = false,
+    val isRecordInitialized: Boolean = false
 )

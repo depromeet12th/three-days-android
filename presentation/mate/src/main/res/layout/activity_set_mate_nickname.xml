@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -40,8 +40,8 @@
             android:id="@+id/iv_illustrator"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:background="@drawable/bg_box_mate_completion_carrot_blue"
             android:layout_marginTop="32dp"
+            android:background="@drawable/bg_box_mate_completion_carrot_blue"
             android:paddingHorizontal="49dp"
             android:paddingVertical="62dp"
             app:layout_constraintEnd_toEndOf="@+id/gl_end"
@@ -62,55 +62,56 @@
             android:id="@+id/et_nickname"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:background="@drawable/selector_edittext"
             android:layout_marginTop="24dp"
-            android:paddingStart="16dp"
+            android:background="@drawable/selector_edittext"
             android:hint="@string/input_nickname_hint"
-            android:textColorHint="@color/gray_400"
-            android:textColor="@color/gray_800"
-            android:textAppearance="@style/Typography.Body1"
-            android:inputType="text"
-            android:importantForAutofill="no"
             android:imeOptions="actionDone"
-            app:layout_constraintTop_toBottomOf="@+id/tv_set_mate_nickname_guide"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="10"
+            android:paddingStart="16dp"
+            android:textAppearance="@style/Typography.Body1"
+            android:textColor="@color/gray_800"
+            android:textColorHint="@color/gray_400"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
-            app:layout_constraintEnd_toEndOf="@id/gl_end" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_set_mate_nickname_guide" />
 
         <TextView
             android:id="@+id/tv_count_nickname_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/count_nickname_length"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
-            android:text="@string/count_nickname_length"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname_max_length"
             app:layout_constraintBottom_toBottomOf="@id/tv_nickname_max_length"
-            app:layout_constraintEnd_toStartOf="@+id/tv_nickname_max_length" />
+            app:layout_constraintEnd_toStartOf="@+id/tv_nickname_max_length"
+            app:layout_constraintTop_toTopOf="@id/tv_nickname_max_length" />
 
         <TextView
             android:id="@+id/tv_nickname_max_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:text="@string/count_nickname_max_length"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/gray_500"
-            android:text="@string/count_nickname_max_length"
-            app:layout_constraintTop_toTopOf="@id/et_nickname"
             app:layout_constraintBottom_toBottomOf="@id/et_nickname"
-            app:layout_constraintEnd_toEndOf="@+id/et_nickname" />
+            app:layout_constraintEnd_toEndOf="@+id/et_nickname"
+            app:layout_constraintTop_toTopOf="@id/et_nickname" />
 
         <TextView
             android:id="@+id/tv_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:text="@string/available_nickname_guide"
             android:textAppearance="@style/Typography.Body4.Medium"
             android:textColor="@color/green_system_color"
-            android:text="@string/available_nickname_guide"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/et_nickname"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
-            tools:visibility="visible"/>
+            app:layout_constraintTop_toBottomOf="@+id/et_nickname"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"
@@ -118,13 +119,13 @@
             android:layout_height="56dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bg_rect_gray200_r15"
-            android:textAppearance="@style/Typography.Button1"
-            android:text="@string/step_3_button_text"
-            android:textColor="@color/gray_450"
             android:gravity="center"
             android:stateListAnimator="@null"
+            android:text="@string/step_3_button_text"
+            android:textAppearance="@style/Typography.Button1"
+            android:textColor="@color/gray_450"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/gl_begin"
-            app:layout_constraintEnd_toEndOf="@id/gl_end" />
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_begin" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

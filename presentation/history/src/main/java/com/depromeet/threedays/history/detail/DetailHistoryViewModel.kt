@@ -93,40 +93,40 @@ class DetailHistoryViewModel @Inject constructor(
         var status = Status.SINGLE
 
         for (index in achievementDateList.indices) {
-            if (index + 1 < achievementDateList.size) {
-                val current = achievementDateList[index]
-                val tomorrow = achievementDateList[index + 1]
-                when (status) {
-                    Status.SINGLE, Status.END -> {
-                        if (index + 2 < achievementDateList.size) {
-                            val afterTomorrow = achievementDateList[index + 2]
-                            if (current.plusDays(1) == tomorrow && current.plusDays(2) == afterTomorrow) {
-                                status = Status.START
-                                map[achievementDateList[index]] = status
-                                continue
-                            }
-                        }
-                        status = Status.SINGLE
-                    }
-                    Status.START -> {
-                        status = Status.BETWEEN
-                    }
-                    Status.BETWEEN -> {
-                        status = Status.END
-                    }
-                }
-
-                map[achievementDateList[index]] = status
-            } else {
-                when (status) {
-                    Status.START, Status.SINGLE, Status.END -> {
-                        map[achievementDateList[index]] = Status.SINGLE
-                    }
-                    Status.BETWEEN -> {
-                        map[achievementDateList[index]] = Status.END
-                    }
-                }
-            }
+//            if (index + 1 < achievementDateList.size) {
+//                val current = achievementDateList[index]
+//                val tomorrow = achievementDateList[index + 1]
+//                when (status) {
+//                    Status.SINGLE, Status.END -> {
+//                        if (index + 2 < achievementDateList.size) {
+//                            val afterTomorrow = achievementDateList[index + 2]
+//                            if (current.plusDays(1) == tomorrow && current.plusDays(2) == afterTomorrow) {
+//                                status = Status.START
+//                                map[achievementDateList[index]] = status
+//                                continue
+//                            }
+//                        }
+//                        status = Status.SINGLE
+//                    }
+//                    Status.START -> {
+//                        status = Status.BETWEEN
+//                    }
+//                    Status.BETWEEN -> {
+//                        status = Status.END
+//                    }
+//                }
+//
+//                map[achievementDateList[index]] = status
+//            } else {
+//                when (status) {
+//                    Status.START, Status.SINGLE, Status.END -> {
+//                        map[achievementDateList[index]] = Status.SINGLE
+//                    }
+//                    Status.BETWEEN -> {
+//                        map[achievementDateList[index]] = Status.END
+//                    }
+//                }
+//            }
             /**
              * 위의 검증 로직은 추후 업데이트 버전에서 재사용 될 가능성이 있어 삭제하지 않고 유지합니다
              * 다만 연속이 아닌 하나의 동그라미로만 표시돼야 하기 때문에 Status.SINGLE 로 모든 상태를 재할당합니다 */

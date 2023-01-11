@@ -206,11 +206,25 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
-                        sendEvent(it.hasMate)
-                        showMateOrDefaultView(
-                            hasMate = it.hasMate,
-                            backgroundResColor = it.backgroundResColor
-                        )
+                        if (it.isMateInitialized) {
+                            if( (it.hasMate && it.isHabitInitialized) || !it.hasMate) {
+                                binding.progressMate.gone()
+                                sendEvent(it.hasMate)
+                                showMateOrDefaultView(
+                                    hasMate = it.hasMate,
+                                    backgroundResColor = it.backgroundResColor
+                                )
+                            }
+                        }
+                        else {
+                            binding.groupHasMate.gone()
+                            binding.groupNoHabit.gone()
+                            binding.groupSpeechBubble.gone()
+                            binding.clBottomSheet.gone()
+
+                            binding.progressMate.visible()
+                        }
+
                         setMateInfo(mateUI = it.mate)
                         setHabitInfo(habit = it.habit)
                         clapAdapter.submitList(it.stamps)
