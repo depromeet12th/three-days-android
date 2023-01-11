@@ -50,17 +50,29 @@
                 app:layout_constraintTop_toBottomOf="@id/space_header"
                 tools:text="이승승장구" />
 
-            <ImageView
-                android:id="@+id/iv_edit"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="13dp"
-                android:background="@drawable/bg_oval_gray200"
-                android:padding="4dp"
-                android:src="@drawable/ic_edit_gray450"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
                 app:layout_constraintStart_toEndOf="@id/tv_nickname"
-                app:layout_constraintTop_toTopOf="@id/tv_nickname" />
+                app:layout_constraintTop_toTopOf="@id/tv_nickname"
+                >
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_oval_gray200"
+                    android:padding="4dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_edit_gray450"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                 />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_habit_archived"
