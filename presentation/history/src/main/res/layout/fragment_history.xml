@@ -49,7 +49,7 @@
             android:src="@drawable/ic_left_arrow_default"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
             app:layout_constraintEnd_toStartOf="@+id/tv_this_month"
-            app:layout_constraintTop_toTopOf="@+id/tv_this_month"/>
+            app:layout_constraintTop_toTopOf="@+id/tv_this_month" />
 
         <TextView
             android:id="@+id/tv_this_month"
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/this_month_history_title"/>
+            tools:text="@string/this_month_history_title" />
 
         <ImageView
             android:id="@+id/iv_next_month"
@@ -71,7 +71,7 @@
             android:src="@drawable/ic_right_arrow_default"
             app:layout_constraintBottom_toBottomOf="@+id/tv_this_month"
             app:layout_constraintStart_toEndOf="@+id/tv_this_month"
-            app:layout_constraintTop_toTopOf="@+id/tv_this_month"/>
+            app:layout_constraintTop_toTopOf="@+id/tv_this_month" />
 
         <ImageView
             android:id="@+id/iv_tooltip"
@@ -80,7 +80,7 @@
             android:src="@drawable/ic_tooltip"
             app:layout_constraintBottom_toBottomOf="@+id/iv_next_month"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintTop_toTopOf="@+id/iv_next_month"/>
+            app:layout_constraintTop_toTopOf="@+id/iv_next_month" />
 
         <TextView
             android:id="@+id/tv_tooltip"
@@ -102,13 +102,14 @@
             android:id="@+id/space_bottom_of_toolbar"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_this_month"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_this_month" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ncv_has_habit"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_begin"
@@ -116,7 +117,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_this_month_clap"
@@ -137,7 +138,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/this_month_clap_title"/>
+                        tools:text="@string/this_month_clap_title" />
 
                     <ImageView
                         android:id="@+id/iv_clap"
@@ -150,7 +151,7 @@
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:tint="@color/white"
-                        tools:tint="@color/white"/>
+                        tools:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/tv_this_month_clap"
@@ -164,7 +165,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/iv_clap"
-                        tools:text="4"/>
+                        tools:text="4" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -187,7 +188,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/this_month_achieve_days_title"/>
+                        tools:text="@string/this_month_achieve_days_title" />
 
                     <ImageView
                         android:id="@+id/iv_watch"
@@ -276,7 +277,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_emoji_shadow"
-                        tools:text="가장 많이 실천한\n습관입니당"/>
+                        tools:text="가장 많이 실천한\n습관입니당" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -302,7 +303,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_habit"
-                    tools:listitem="@layout/item_habit_record"/>
+                    tools:listitem="@layout/item_habit_record" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -345,6 +346,17 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_habit_guide" />
+
+        <ProgressBar
+            android:id="@+id/progress_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/gray_800"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
