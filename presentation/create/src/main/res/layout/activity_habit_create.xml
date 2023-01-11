@@ -307,6 +307,7 @@
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="5dp"
                 android:maxLength="25"
+                android:maxLines="2"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="15dp"
                 android:textAppearance="@style/Typography.Paragraph1"
