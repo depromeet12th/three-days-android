@@ -47,6 +47,8 @@ class MateViewModel @Inject constructor(
 
     fun fetchMate() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isMateInitialized = false) }
+
             getMatesUseCase().collect { response ->
                 when (response.status) {
                     Status.LOADING -> {
@@ -63,8 +65,7 @@ class MateViewModel @Inject constructor(
                                 } else {
                                     core_design.color.gray_100
                                 },
-                                stamps = getStampsFromMate(myMate?.toMateUI()),
-                                isMateInitialized = true
+                                stamps = getStampsFromMate(myMate?.toMateUI())
                             )
                         }
                         myMate?.let {
@@ -80,23 +81,28 @@ class MateViewModel @Inject constructor(
                     }
                 }
             }
+
+            _uiState.update { it.copy(isMateInitialized = true) }
         }
     }
 
     fun fetchHabit(habitId: Long) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isHabitInitialized = false) }
+
             kotlin.runCatching {
                 habitRepository.getHabit(habitId = habitId)
             }.onSuccess { habit ->
                 _uiState.update {
                     it.copy(
-                        habit = habit,
-                        isHabitInitialized = true
+                        habit = habit
                     )
                 }
             }.onFailure { throwable ->
                 sendErrorMessage(throwable.message)
             }
+
+            _uiState.update { it.copy(isHabitInitialized = true) }
         }
     }
 
