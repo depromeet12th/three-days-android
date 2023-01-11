@@ -89,4 +89,10 @@ abstract class RepositoryModule {
     abstract fun bindsDeviceUniqueIdRepository(
         repository: DeviceUniqueIdRepositoryImpl,
     ): DeviceUniqueIdRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsLocalDataRepository(
+        repository: LocalDataRepositoryImpl,
+    ): LocalDataRepository
 }
