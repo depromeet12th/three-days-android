@@ -33,6 +33,8 @@ import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -202,6 +204,10 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

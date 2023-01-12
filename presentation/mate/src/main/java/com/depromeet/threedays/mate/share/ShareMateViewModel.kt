@@ -2,10 +2,10 @@ package com.depromeet.threedays.mate.share
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
-import com.depromeet.threedays.domain.entity.habit.SingleHabit
-import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,18 +25,17 @@ class ShareMateViewModel @Inject constructor(
     fun fetchMate(habitId: Long) {
         if(habitId != INVALID_HABIT_ID) {
             viewModelScope.launch {
-                kotlin.runCatching {
-                    habitRepository.getHabit(habitId = habitId)
-                }.onSuccess { singleHabit ->
-                    _uiState.update {
-                        it.copy(
-                            singleHabit = singleHabit,
-                            backgroundResId = getBackgroundResIdByColor(singleHabit.color)
-                        )
+                habitRepository.getHabit(habitId = habitId)
+                    .onSuccess { singleHabit ->
+                        _uiState.update {
+                            it.copy(
+                                singleHabit = singleHabit,
+                                backgroundResId = getBackgroundResIdByColor(singleHabit.color)
+                            )
+                        }
+                    }.onFailure { throwable ->
+                        sendErrorMessage(throwable.message)
                     }
-                }.onFailure { throwable ->
-                    sendErrorMessage(throwable.message)
-                }
             }
         }
     }

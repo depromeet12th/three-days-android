@@ -1,7 +1,7 @@
 package com.depromeet.threedays.data.datasource.mate
 
 import com.depromeet.threedays.data.api.MateService
-import com.depromeet.threedays.data.entity.base.ApiResponse
+import com.depromeet.threedays.data.entity.base.getResult
 import com.depromeet.threedays.data.entity.mate.MateEntity
 import com.depromeet.threedays.data.entity.mate.PostMateRequest
 import javax.inject.Inject
@@ -13,20 +13,20 @@ class MateRemoteDataSourceImpl @Inject constructor(
     override suspend fun postMate(
         habitId: Long,
         mateEntity: PostMateRequest
-    ): ApiResponse<MateEntity> {
-        return mateService.postMate(habitId, mateEntity)
+    ): Result<MateEntity> {
+        return mateService.postMate(habitId, mateEntity).getResult()
     }
 
-    override suspend fun getMateDetail(habitId: Long, mateId: Long): ApiResponse<MateEntity> {
+    override suspend fun getMateDetail(habitId: Long, mateId: Long): Result<MateEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteMate(habitId: Long, mateId: Long): ApiResponse<MateEntity?> {
-        return mateService.deleteMate(habitId, mateId)
+    override suspend fun deleteMate(habitId: Long, mateId: Long): Result<MateEntity?> {
+        return mateService.deleteMate(habitId, mateId).getResult()
     }
 
-    override suspend fun getMates(): ApiResponse<List<MateEntity>> {
-        return mateService.getMates()
+    override suspend fun getMates(): Result<List<MateEntity>> {
+        return mateService.getMates().getResult()
     }
 
 }

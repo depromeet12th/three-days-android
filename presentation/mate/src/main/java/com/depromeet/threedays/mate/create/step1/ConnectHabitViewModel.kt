@@ -3,7 +3,7 @@ package com.depromeet.threedays.mate.create.step1
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Color
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
@@ -35,19 +35,12 @@ class ConnectHabitViewModel @Inject constructor(
     private fun fetchHabits() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
+                response.onSuccess {
+                    _habits.value = it.map { habit -> habit.toHabitUI() }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-                        _habits.value = response.data!!.map { it.toHabitUI() }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

@@ -25,6 +25,8 @@ import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.mate.databinding.ActivityShareMateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.io.*
 import java.util.*
@@ -80,6 +82,10 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {

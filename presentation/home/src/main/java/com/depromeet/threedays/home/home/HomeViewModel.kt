@@ -3,7 +3,7 @@ package com.depromeet.threedays.home.home
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.OnboardingType
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
 import com.depromeet.threedays.domain.usecase.achievement.CreateHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievementUseCase
@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -66,19 +67,13 @@ class HomeViewModel @Inject constructor(
     fun fetchGoals() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
+                response.onSuccess { habitList ->
+                    _habits.value = habitList.map { it.toHabitUI() }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-                        _habits.value = response.data!!.map { it.toHabitUI() }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -87,20 +82,14 @@ class HomeViewModel @Inject constructor(
     fun createHabitAchievement(habitUI: HabitUI) {
         viewModelScope.launch {
             createHabitAchievementUseCase(habitUI.habitId).collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
+                response.onSuccess {
+                    fetchGoals()
+                    checkNewClap(habitUI)
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-                        fetchGoals()
-                        checkNewClap(habitUI)
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -112,19 +101,13 @@ class HomeViewModel @Inject constructor(
                 habitId = habitId,
                 habitAchievementId = habitAchievementId,
             ).collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
+                response.onSuccess {
+                    fetchGoals()
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-                        fetchGoals()
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -186,20 +169,14 @@ class HomeViewModel @Inject constructor(
         
         viewModelScope.launch {
             deleteHabitUseCase(habitId).collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
+                response.onSuccess {
+                    onSuccessDeleteHabit(habitType)
+                    fetchGoals()
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-                        onSuccessDeleteHabit(habitType)
-                        fetchGoals()
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

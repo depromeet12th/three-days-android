@@ -14,11 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.databinding.ActivitySetMateNicknameBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -96,6 +99,10 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
     }
 
     private fun setUiStateObserver() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {

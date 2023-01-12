@@ -19,6 +19,8 @@ import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.ActivityArchivedHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import com.depromeet.threedays.core_design_system.R as CoreDesignSystemResources
 
@@ -56,6 +58,10 @@ class ArchivedHabitActivity :
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
                 launch {

@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step2.ChooseMateTypeActivity
 import com.depromeet.threedays.mate.databinding.ActivityConnectHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -94,6 +97,10 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

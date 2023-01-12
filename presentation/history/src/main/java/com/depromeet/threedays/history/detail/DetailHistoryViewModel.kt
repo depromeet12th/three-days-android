@@ -3,6 +3,7 @@ package com.depromeet.threedays.history.detail
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.repository.AchievementRepository
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.history.detail.view.Status
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -33,40 +35,44 @@ class DetailHistoryViewModel @Inject constructor(
 
     fun getHabit(habitId: Long) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                habitRepository.getHabit(habitId = habitId)
-            }.onSuccess { habit ->
-                _state.value = _state.value.copy(
-                    isInitialized = true,
-                    habit = habit
-                )
-            }.onFailure { throwable ->
-                sendErrorMessage(throwable.message)
-            }
+            habitRepository.getHabit(habitId = habitId)
+                .onSuccess { habit ->
+                    _state.value = _state.value.copy(
+                        isInitialized = true,
+                        habit = habit
+                    )
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    Timber.e("--- HabitUpdateViewModel code: ${throwable.code}, message: ${throwable.message}")
+                    sendErrorMessage(throwable.message)
+                }
         }
     }
 
     fun getHabitAchievementDateList(habitId: Long) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                achievementRepository.getHabitAchievements(
-                    habitId = habitId,
-                    from = state.value.fromDate,
-                    to = state.value.toDate,
-                )
-            }.onSuccess { achievement ->
-                val sortedHabitAchievementDateList = achievement.map { it.achievementDate }.sorted()
+            achievementRepository.getHabitAchievements(
+                habitId = habitId,
+                from = state.value.fromDate,
+                to = state.value.toDate,
+            ).onSuccess { achievement ->
+                val sortedHabitAchievementDateList =
+                    achievement.map { it.achievementDate }.sorted()
 
                 _state.value = _state.value.copy(
                     isAchievementInitialized = true,
                     achievementDateList = sortedHabitAchievementDateList,
-                    achievementDateWithStatusList = getAchievementDateWithStatusList(sortedHabitAchievementDateList),
+                    achievementDateWithStatusList = getAchievementDateWithStatusList(
+                        sortedHabitAchievementDateList
+                    ),
                     currentMonthStatic = MonthStatic(
                         achievements = achievement.size,
                         claps = achievement.filter { it.sequence == 3 }.size
                     )
                 )
             }.onFailure { throwable ->
+                throwable as ThreeDaysException
+                Timber.e("--- HabitUpdateViewModel code: ${throwable.code}, message: ${throwable.message}")
                 sendErrorMessage(throwable.message)
             }
         }

@@ -10,5 +10,5 @@ interface RecordService {
     suspend fun getRecords(
         @Query("datePeriod.to") to: String,
         @Query("datePeriod.from") from: String
-    ): ApiResponse<RecordEntity>
+    ): Result<ApiResponse<RecordEntity>>
 }

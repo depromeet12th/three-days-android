@@ -1,6 +1,5 @@
 package com.depromeet.threedays.domain.usecase.notification
 
-import com.depromeet.threedays.domain.entity.DataState
 import com.depromeet.threedays.domain.entity.notification.NotificationHistory
 import com.depromeet.threedays.domain.entity.notification.NotificationHistoryStatus
 import com.depromeet.threedays.domain.repository.NotificationHistoryRepository
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class MarkAsReadUseCase @Inject constructor(
     private val notificationHistoryRepository: NotificationHistoryRepository,
 ) {
-    operator fun invoke(notificationHistoryId: Long): Flow<DataState<NotificationHistory>> {
+    operator fun invoke(notificationHistoryId: Long): Flow<Result<NotificationHistory>> {
         return notificationHistoryRepository.updateStatus(
             notificationHistoryId = notificationHistoryId,
             notificationHistoryStatus = NotificationHistoryStatus.CHECKED,

@@ -3,7 +3,7 @@ package com.depromeet.threedays.mypage.archived_habit
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.OnboardingType
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.habit.DeleteArchivedHabitUseCase
 import com.depromeet.threedays.domain.usecase.habit.GetArchivedHabitsUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
@@ -43,19 +43,15 @@ class ArchivedHabitViewModel @Inject constructor(
     private fun fetchArchivedHabits() {
         viewModelScope.launch {
             getArchivedHabitsUseCase().collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        // Do nothing
+                response.onSuccess { archivedHabits ->
+                    _archivedHabits.value = archivedHabits.map { ArchivedHabitUI.from(it) }
+                    if(archivedHabits.isEmpty()) {
+                        fetchOnboardingEnabled()
                     }
-                    Status.SUCCESS -> {
-                        val archivedHabits = response.data!!
-                        _archivedHabits.value = archivedHabits.map { ArchivedHabitUI.from(it) }
-                        if(archivedHabits.isEmpty()) {
-                            fetchOnboardingEnabled()
-                        }
-                    }
-                    Status.ERROR -> TODO()
-                    Status.FAIL -> TODO()
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
