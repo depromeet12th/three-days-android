@@ -12,6 +12,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
+import com.depromeet.threedays.core.extensions.gone
+import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
 import com.depromeet.threedays.domain.key.HABIT_ID
@@ -148,7 +150,16 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
-                        fetchHabits(it.habits)
+                        if (it.isHabitInitialized && it.isRecordInitialized) {
+                            binding.progressHistory.gone()
+                            fetchHabits(it.habits)
+                        }
+                        else {
+                            binding.ncvHasHabit.gone()
+                            binding.groupToolbar.gone()
+                            binding.progressHistory.visible()
+                        }
+
                         setMonth(it.thisMonth.month.value.toString())
                         setThisMonthInfo(
                             rewardCount = it.rewardCount,

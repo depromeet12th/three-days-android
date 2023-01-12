@@ -60,7 +60,7 @@ class MyPageFragment :
         binding.tvHabitArchived.setOnClickListener {
             onHabitArchivedButtonClicked()
         }
-        binding.ivEdit.setOnClickListener {
+        binding.clEdit.setOnClickListener {
             onEditButtonClicked()
         }
         binding.tvPolicyService.setOnClickListener {
