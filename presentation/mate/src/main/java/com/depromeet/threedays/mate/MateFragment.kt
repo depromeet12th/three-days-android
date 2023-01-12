@@ -31,6 +31,7 @@ import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
+import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -49,6 +50,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
+
+    @Inject
+    lateinit var habitCreateNavigator: HabitCreateNavigator
 
     override fun onResume() {
         super.onResume()
@@ -91,9 +95,24 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             )
 
-            val intent = connectHabitNavigator.intent(requireContext())
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            if (viewModel.uiState.value.hasHabit) {
+                val intent = connectHabitNavigator.intent(requireContext())
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            } else {
+                ThreeDaysDialogFragment.newInstance(
+                    DialogInfo.EMPTY.copy(
+                        onPositiveAction = {
+                            val intent = habitCreateNavigator.intent(requireContext())
+                            startActivity(intent)
+                        },
+                        title = getString(R.string.no_habit_dialog_title),
+                        description = getString(R.string.no_habit_dialog_description),
+                        confirmText = getString(R.string.no_habit_dialog_confirm_text),
+                        buttonTopMargin = 30f,
+                    )
+                ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+            }
         }
         binding.ivShare.setOnSingleClickListener {
             AnalyticsUtil.event(

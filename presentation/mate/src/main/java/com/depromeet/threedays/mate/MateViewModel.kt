@@ -11,6 +11,7 @@ import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.repository.HabitRepository
+import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.domain.usecase.mate.DeleteMateUseCase
 import com.depromeet.threedays.domain.usecase.mate.GetMatesUseCase
 import com.depromeet.threedays.domain.usecase.max_level_mate.ReadMaxLevelMateUseCase
@@ -35,6 +36,7 @@ class MateViewModel @Inject constructor(
     private val readOnboardingUseCase: ReadOnboardingUseCase,
     private val deleteMateUseCase: DeleteMateUseCase,
     private val habitRepository: HabitRepository,
+    private val getActiveHabitsUseCase: GetActiveHabitsUseCase,
     private val readMaxLevelMateUseCase: ReadMaxLevelMateUseCase,
     private val writeMaxLevelMateUseCase: WriteMaxLevelMateUseCase,
 ) : BaseViewModel() {
@@ -49,6 +51,7 @@ class MateViewModel @Inject constructor(
 
     init {
         checkIsFirstVisitor()
+        fetchHabits()
     }
 
     fun fetchMate() {
@@ -108,7 +111,32 @@ class MateViewModel @Inject constructor(
         }
     }
 
-    fun fetchHabit(habitId: Long) {
+    private fun fetchHabits() {
+        viewModelScope.launch {
+            getActiveHabitsUseCase().collect { response ->
+                when(response.status) {
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        _uiState.update {
+                            it.copy(
+                                hasHabit = response.data!!.isNotEmpty()
+                            )
+                        }
+                    }
+                    Status.ERROR -> {
+
+                    }
+                    Status.FAIL -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun fetchHabit(habitId: Long) {
         viewModelScope.launch {
             _uiState.update { it.copy(isHabitInitialized = false) }
 
@@ -248,6 +276,7 @@ class MateViewModel @Inject constructor(
 data class UiState(
     val mate: MateUI? = null,
     val habit: SingleHabit? = null,
+    val hasHabit: Boolean = false,
     val hasMate: Boolean = false,
     val backgroundResColor: Int = core_design.color.gray_100,
     val stamps: List<StampUI> = emptyList(),
