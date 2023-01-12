@@ -246,7 +246,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     private fun showMateOrDefaultView(hasMate: Boolean, backgroundResColor: Int) {
         binding.groupHasMate.isVisible = hasMate
         binding.groupNoHabit.isVisible = hasMate.not()
-        binding.groupSpeechBubble.isVisible = hasMate
         binding.clBottomSheet.isVisible = hasMate
         binding.clTopLayout.setBackgroundResource(backgroundResColor)
 
@@ -291,7 +290,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             }
 
             binding.groupAchieveMaxLevel.isVisible = isMaxLevel
-            binding.groupSpeechBubble.isVisible = isMaxLevel.not()
         }
     }
 
