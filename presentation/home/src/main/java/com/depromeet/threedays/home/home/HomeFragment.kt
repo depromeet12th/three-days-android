@@ -60,9 +60,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
         when(result.resultCode) {
-            RESULT_CREATE -> viewModel.fetchGoals()
+            RESULT_CREATE -> viewModel.fetchHabits()
             RESULT_UPDATE -> {
-                viewModel.fetchGoals()
+                viewModel.fetchHabits()
                 ThreeDaysToast().show(
                     requireContext(),
                     resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
@@ -251,22 +251,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        if (list.isEmpty()) {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
-                                )
-                            )
-                        } else {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
-                                )
-                            )
-                        }
-
                         habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE

@@ -209,7 +209,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         if (it.isMateInitialized) {
                             if( (it.hasMate && it.isHabitInitialized) || !it.hasMate) {
                                 binding.progressMate.gone()
-                                sendEvent(it.hasMate)
                                 showMateOrDefaultView(
                                     hasMate = it.hasMate,
                                     backgroundResColor = it.backgroundResColor
@@ -339,24 +338,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         ).show(
             parentFragmentManager, ThreeDaysNoButtonDialogFragment.TAG
         )
-    }
-
-    private fun sendEvent(hasMate: Boolean) {
-        if(hasMate) {
-            AnalyticsUtil.event(
-                name = ThreeDaysEvent.MateHomeViewed.toString(),
-                properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
-                )
-            )
-        } else {
-            AnalyticsUtil.event(
-                name = ThreeDaysEvent.MateDefaultViewed.toString(),
-                properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
-                )
-            )
-        }
     }
 
     override fun onStop() {
