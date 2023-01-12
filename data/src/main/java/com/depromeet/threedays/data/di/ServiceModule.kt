@@ -8,6 +8,7 @@ import com.depromeet.threedays.data.api.deserializer.LocalDateDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalDateTimeDeserializer
 import com.depromeet.threedays.data.api.deserializer.LocalTimeDeserializer
 import com.depromeet.threedays.data.api.deserializer.MateTypeDeserializer
+import com.depromeet.threedays.data.api.exception.ResultCallAdapterFactory
 import com.depromeet.threedays.data.api.interceptor.AuthInterceptor
 import com.depromeet.threedays.data.api.serializer.LocalDateSerializer
 import com.depromeet.threedays.data.api.serializer.LocalDateTimeSerializer
@@ -115,11 +116,18 @@ class NetworkModule {
         return GsonConverterFactory.create()
     }
 
+    @Provides
+    @Singleton
+    fun providesResultCallAdapterFactory(
+        gson: Gson,
+    ): ResultCallAdapterFactory = ResultCallAdapterFactory(gson)
+
     @Singleton
     @Provides
     fun providesRetrofit(
         okHttpClient: OkHttpClient,
         buildPropertyRepository: BuildPropertyRepository,
+        resultCallAdapterFactory: ResultCallAdapterFactory
     ): Retrofit {
         val gsonWithAdapter: Gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeDeserializer())
@@ -135,6 +143,7 @@ class NetworkModule {
             .baseUrl(buildPropertyRepository.get(BuildProperty.BASE_URL))
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gsonWithAdapter))
+            .addCallAdapterFactory(resultCallAdapterFactory)
             .build()
     }
 
