@@ -128,12 +128,14 @@ class MateViewModel @Inject constructor(
                         _uiEffect.emit(
                             value = UiEffect.ShowToastMessage(R.string.delete_mate)
                         )
-                    }.onFailure {
+                    }.onFailure { throwable ->
                         // TODO: 받아오는 값이 null인데 타입이 안맞아서 에러뜨고 있음. 요청은 정상적으로 잘 돼서 임시로 ㅠㅠ
-                        fetchMate()
-                        _uiEffect.emit(
-                            value = UiEffect.ShowToastMessage(R.string.delete_mate)
-                        )
+//                        fetchMate()
+//                        _uiEffect.emit(
+//                            value = UiEffect.ShowToastMessage(R.string.delete_mate)
+//                        )
+                        throwable as ThreeDaysException
+                        sendErrorMessage(throwable.message)
                     }
                 }
             }
