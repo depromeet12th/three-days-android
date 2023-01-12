@@ -17,6 +17,8 @@ import com.depromeet.threedays.domain.usecase.max_level_mate.ReadMaxLevelMateUse
 import com.depromeet.threedays.domain.usecase.max_level_mate.WriteMaxLevelMateUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.ReadOnboardingUseCase
 import com.depromeet.threedays.domain.usecase.onboarding.WriteOnboardingUseCase
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToIconResourceFunction
+import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToLockResourceFunction
 import com.depromeet.threedays.mate.create.step1.model.MateUI
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.mate.model.StampUI
@@ -182,7 +184,7 @@ class MateViewModel @Inject constructor(
             val maxLevel = mate.levelUpSectioin.last()
             for (stampCount in 1..maxLevel) {
                 if (mate.levelUpSectioin.contains(stampCount)) {
-                    stamps.add(getCharacterStamp(stampCount, mate.levelUpSectioin.indexOf(stampCount)))
+                    stamps.add(getCharacterStamp(stampCount, mate.levelUpSectioin.indexOf(stampCount), mate.level))
                 } else if (stampCount <= (mate.reward ?: 0)) {
                     stamps.add(getColorStamp(stampCount))
                 } else {
@@ -195,18 +197,14 @@ class MateViewModel @Inject constructor(
         return stamps
     }
 
-    private fun getCharacterStamp(stampCount: Int, mateLevel: Int): StampUI {
-        val mates = listOf(
-            core_design.drawable.bg_mate_level_1,
-            core_design.drawable.bg_mate_level_2,
-            core_design.drawable.bg_mate_level_3,
-            core_design.drawable.bg_mate_level_4,
-            core_design.drawable.bg_mate_level_5,
-        )
-
+    private fun getCharacterStamp(stampCount: Int, mateLevel: Int, myMateLevel: Int): StampUI {
         return StampUI(
             stampCount = stampCount.toLong(),
-            backgroundResId = mates[mateLevel],
+            backgroundResId = if(myMateLevel >= mateLevel) {
+                levelToIconResourceFunction(mateLevel)
+            } else {
+                levelToLockResourceFunction(mateLevel + 1)
+            }
         )
     }
 
