@@ -2,6 +2,10 @@ package com.depromeet.threedays.mate
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.Screen
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
@@ -58,7 +62,7 @@ class MateViewModel @Inject constructor(
                         val myMate = response.data!!.find { it.status == "ACTIVE" }
                         _uiState.update {
                             it.copy(
-                                mate = myMate?.toMateUI() ,
+                                mate = myMate?.toMateUI(),
                                 hasMate = myMate != null,
                                 backgroundResColor = if(myMate == null) {
                                     core_design.color.white
@@ -72,6 +76,22 @@ class MateViewModel @Inject constructor(
                             fetchHabit(it.habitId)
                         }
                         checkMateAchieveMaxLevel(uiState.value.mate)
+
+                        if (myMate == null) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.MateDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
+                                )
+                            )
+                        } else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.MateHomeViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
+                                )
+                            )
+                        }
                     }
                     Status.ERROR -> {
 

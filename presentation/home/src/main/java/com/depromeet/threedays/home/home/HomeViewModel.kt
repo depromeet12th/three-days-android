@@ -2,6 +2,10 @@ package com.depromeet.threedays.home.home
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.Screen
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.domain.entity.OnboardingType
 import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
@@ -42,7 +46,7 @@ class HomeViewModel @Inject constructor(
         get() = _uiEffect
 
     init {
-        fetchGoals()
+        fetchHabits()
         checkIsFirstVisitor()
     }
 
@@ -63,7 +67,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchGoals() {
+    fun fetchHabits() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
                 when(response.status) {
@@ -71,7 +75,23 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        _habits.value = response.data!!.map { it.toHabitUI() }
+                        val habits = response.data!!
+                        _habits.value = habits.map { it.toHabitUI() }
+                        if (habits.isEmpty()) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                                )
+                            )
+                        } else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                                )
+                            )
+                        }
                     }
                     Status.ERROR -> {
 
@@ -92,7 +112,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        fetchGoals()
+                        fetchHabits()
                         checkNewClap(habitUI)
                     }
                     Status.ERROR -> {
@@ -117,7 +137,7 @@ class HomeViewModel @Inject constructor(
 
                     }
                     Status.SUCCESS -> {
-                        fetchGoals()
+                        fetchHabits()
                     }
                     Status.ERROR -> {
 
@@ -192,7 +212,7 @@ class HomeViewModel @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         onSuccessDeleteHabit(habitType)
-                        fetchGoals()
+                        fetchHabits()
                     }
                     Status.ERROR -> {
 
