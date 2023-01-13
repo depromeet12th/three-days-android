@@ -51,33 +51,32 @@
 ## 🛠️ Infrastructure
 ### Continuous Integration
 Pull Request 가 생성되면 GitHub Actions 을 통해 다음 작업들을 자동으로 진행합니다.
-- Pull Request author 를 assinee 지정
-- debug 앱으로 빌드가 잘 되는지 확인
-- sonarlint 앱을 사용해 정적분석을 하고, 결과를 코멘트로 추가
+- Pull Request Author 를 assignee 로 지정
+- `debug` buildType 으로 빌드가 잘 되는지 확인
+- SonarCloud GitHub App 으로 정적 분석 결과를 코멘트로 추가
 
 ### Continuous Delivery
 #### Debug
 develop 브랜치로 머지되면 GitHub Actions 을 통해 다음 작업들을 자동으로 진행합니다.
-1. alpha buildType 으로 빌드해서 apk 파일을 생성
-2. 1에서 생성한 파일을 Firebase App Distribution 으로 배포
+1. `alpha` buildType 으로 빌드해서 apk 파일을 생성
+2. 1.에서 생성한 파일을 Firebase App Distribution 으로 배포
 
 #### Release
 새 버전을 플레이스토어에 배포하는 경우, 다음 작업들을 수동으로 진행합니다. <br>
-(release keystore 필요, https://github.com/depromeet12th/three-days-android-credentials)
+(release keystore 파일 필요, https://github.com/depromeet12th/three-days-android-credentials)
 
-1. release/{버전이름} 형태로 브랜치를 생성
-2. 버전 코드 및 이름을 변경
-3. release buildType 으로 빌드해서 .aab 파일을 생성
-4. 3에서 생성한 파일을 Google Play Console 에 업로드하고 앱 버전 변경 검토를 요청
+1. develop 브랜치에서 새 브랜치를 생성 (`release/{버전이름}`)
+2. 버전 코드 및 버전 이름을 변경
+3. `release` buildType 으로 빌드해서 .aab 파일을 생성
+4. 3.에서 생성한 파일을 Google Play Console 에 업로드하고 앱 버전 변경 검토를 요청
     1. 리젝되면 이슈를 해결하고, 버전을 변경
-    2. 3번부터 다시 진행
+    2. 2.부터 다시 진행
 5. 앱 버전 변경이 승인되면,
-    1. release 브랜치를 develop, main 브랜치에 각각 머지하고 (`git merge release/.. --no-ff`)
+    1. `release` 브랜치를 `develop`, `main` 브랜치에 각각 머지하고 (`git merge release/.. --no-ff`)
     2. 버전이름으로 태그를 생성
     3. 변경내역을 푸시 
 
 ## 📄 Contributing
-
 See the [contributing docs](./CONTRIBUTING.md) for more information.
 
 ## 🙋 Contributors
