@@ -1,13 +1,13 @@
-<div align="center">
-
 ## 🙋Android Developers
+
+<div align="center">
 
 |                           Android                            |                           Android                            |                           Android                            |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |  <img width=300 src="https://avatars.githubusercontent.com/u/76620764?v=4"> | <img width=300 src="https://avatars.githubusercontent.com/u/68214704?v=4">| <img width=300 src="https://avatars.githubusercontent.com/u/4813025?v=4"> |
 |             [김주환](https://github.com/juhwankim-dev)             |             [김혜인](https://github.com/kimhyeing)              |            [전해성](https://github.com/junhaesung)            |
 
-
+</div>
 
 ## 🛠️ Tech Stack
 
@@ -29,7 +29,7 @@
 또한 공통 로직과 디자인을 포함하는 Core 모듈을 만들고 <br>
 presentation 레이어를 기능별로 세분화하여 유지 보수성을 높였습니다.
 
-</div>
+
 
 ## 🗺️Information Architecture(IA)
 
