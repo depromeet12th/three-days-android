@@ -75,7 +75,7 @@ develop 브랜치로 머지되면 GitHub Actions 을 통해 다음 작업들을 
 
 ## 📄 Contributing
 
-See the [contributing docs](./CONTRIBUTING) for more information.
+See the [contributing docs](./CONTRIBUTING.md) for more information.
 
 ## 🙋 Contributors
 

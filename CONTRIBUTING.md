@@ -23,7 +23,7 @@ Please make sure your code follows the style and conventions of the existing cod
 
 ## Code of Conduct
 
-Please also be sure to read and follow our [Code of Conduct](./CODE_OF_CONDUCT).
+Please also be sure to read and follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Thanks!
 
