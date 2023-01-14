@@ -1,9 +1,7 @@
 package com.depromeet.threedays.data.api.exception
 
-import com.depromeet.threedays.data.entity.base.ErrorResponse
+import com.depromeet.threedays.data.entity.base.ApiResponse
 import com.depromeet.threedays.domain.exception.ThreeDaysException
-import com.depromeet.threedays.domain.key.NO_INTERNET_CONNECTION
-import com.depromeet.threedays.domain.key.UNKNOWN_ERROR
 import com.google.gson.Gson
 import okhttp3.Request
 import okio.Timeout
@@ -22,10 +20,15 @@ class ResultCall<T>(private val call: Call<T>, private val gson: Gson) : Call<Re
                 val jsonBody = gson.toJson(response.body())
                 val body = gson.fromJson(
                     jsonBody,
-                    ErrorResponse::class.java
+                    ApiResponse::class.java
                 )
-                val code = body.code
+                Timber.tag("ResultCall - onResponse").d("response : $response")
+                Timber.tag("ResultCall - onResponse").d("response.body() : ${response.body()}")
+                Timber.tag("ResultCall - onResponse").d("jsonBody : $jsonBody")
+                Timber.tag("ResultCall - onResponse").d("body : $body")
+                val message: String = body.message
                 if (response.isSuccessful) {
+                    Timber.tag("ResultCall - onResponse").d("response.isSuccessful")
                     callback.onResponse(
                         this@ResultCall,
                         Response.success(
@@ -34,13 +37,13 @@ class ResultCall<T>(private val call: Call<T>, private val gson: Gson) : Call<Re
                         )
                     )
                 } else {
-                    Timber.tag("ResultCall - onResponse").e("code: $code, error: ${ThreeDaysException(code, HttpException(response))}")
+                    Timber.tag("ResultCall - onResponse").e("error: ${ThreeDaysException(message, HttpException(response))}")
 
                     callback.onResponse(
                         this@ResultCall,
                         Response.success(
                             Result.failure(
-                                ThreeDaysException(code, HttpException(response))
+                                ThreeDaysException(message, HttpException(response))
                             )
                         )
                     )
@@ -48,17 +51,17 @@ class ResultCall<T>(private val call: Call<T>, private val gson: Gson) : Call<Re
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                val code = when (t) {
-                    is IOException -> NO_INTERNET_CONNECTION
-                    is HttpException -> UNKNOWN_ERROR
+                val message = when (t) {
+                    is IOException -> "인터넷 연결이 끊겼습니다."
+                    is HttpException -> "알 수 없는 오류가 발생했어요."
                     else -> t.localizedMessage
                 }
                 callback.onResponse(
                     this@ResultCall,
-                    Response.success(Result.failure(ThreeDaysException(code, t)))
+                    Response.success(Result.failure(ThreeDaysException(message, t)))
                 )
 
-                Timber.tag("ResultCall - onFailure").e("code : $code / ${ThreeDaysException(code, t)}")
+                Timber.tag("ResultCall - onFailure").e("${ThreeDaysException(message, t)}")
             }
         })
     }

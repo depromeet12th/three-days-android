@@ -94,7 +94,7 @@ class HabitCreateViewModel @Inject constructor(
                     else true
                 title.isNotEmpty() && dayOfWeekList.size >= MIN_DAY_OF_WEEK_NUM && notificationEnable
             }.collect {
-                _isSaveHabitEnable.value = it
+                _isSaveHabitEnable.value = true
             }
         }
     }

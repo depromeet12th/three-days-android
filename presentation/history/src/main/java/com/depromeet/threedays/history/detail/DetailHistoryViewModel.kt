@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -43,7 +42,6 @@ class DetailHistoryViewModel @Inject constructor(
                     )
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    Timber.e("--- HabitUpdateViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
         }
@@ -72,7 +70,6 @@ class DetailHistoryViewModel @Inject constructor(
                 )
             }.onFailure { throwable ->
                 throwable as ThreeDaysException
-                Timber.e("--- HabitUpdateViewModel code: ${throwable.code}, message: ${throwable.message}")
                 sendErrorMessage(throwable.message)
             }
         }

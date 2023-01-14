@@ -15,7 +15,6 @@ import com.depromeet.threedays.domain.util.EmojiUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.LocalTime
 import javax.inject.Inject
@@ -88,7 +87,6 @@ class HabitUpdateViewModel @Inject constructor(
                     setOldData(habit)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    Timber.e("--- HabitUpdateViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
         }

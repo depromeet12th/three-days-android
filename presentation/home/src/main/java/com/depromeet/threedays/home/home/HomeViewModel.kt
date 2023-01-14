@@ -72,7 +72,6 @@ class HomeViewModel @Inject constructor(
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
 
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }
@@ -87,8 +86,6 @@ class HomeViewModel @Inject constructor(
                     checkNewClap(habitUI)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }
@@ -105,8 +102,6 @@ class HomeViewModel @Inject constructor(
                     fetchGoals()
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }
@@ -174,8 +169,6 @@ class HomeViewModel @Inject constructor(
                     fetchGoals()
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }

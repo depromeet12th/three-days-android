@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -62,8 +61,6 @@ class HistoryViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }
@@ -94,8 +91,6 @@ class HistoryViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    Timber.e("--- HomeViewModel code: ${throwable.code}, message: ${throwable.message}")
                     sendErrorMessage(throwable.message)
                 }
             }
