@@ -69,7 +69,9 @@
                 android:id="@+id/group_speech_bubble"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon" />
+                android:visibility="gone"
+                app:constraint_referenced_ids="tv_speech_bubble, iv_polygon"
+                tools:visibility="visible"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_achieve_max_level"
@@ -347,26 +349,26 @@
                 android:id="@+id/tv_habit_emoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/medicine"
                 android:textAppearance="@style/Typography.Body1"
                 android:textColor="@color/gray_700"
                 app:layout_constraintEnd_toStartOf="@+id/tv_habit_title"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_habit_title" />
+                app:layout_constraintTop_toTopOf="@+id/tv_habit_title"
+                tools:text="@string/medicine" />
 
             <TextView
                 android:id="@+id/tv_habit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                tools:text="@string/habit_sample_title"
                 android:textAppearance="@style/Typography.Body1"
                 android:textColor="@color/gray_800"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_habit_emoji"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_habit_emoji"
-                app:layout_constraintTop_toBottomOf="@id/iv_arrow" />
+                app:layout_constraintTop_toBottomOf="@id/iv_arrow"
+                tools:text="@string/habit_sample_title" />
 
             <TextView
                 android:id="@+id/tv_next_level_guide"
@@ -430,8 +432,8 @@
             android:id="@+id/progress_mate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/gray_800"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/gray_800"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
