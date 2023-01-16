@@ -1,16 +1,12 @@
 package com.depromeet.threedays.data.api.exception
 
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
-import javax.inject.Inject
 
-class ResultCallAdapterFactory @Inject constructor(
-    private val gson: Gson
-) : CallAdapter.Factory() {
+class ResultCallAdapterFactory: CallAdapter.Factory() {
 
     override fun get(
         returnType: Type,
@@ -27,7 +23,7 @@ class ResultCallAdapterFactory @Inject constructor(
                 override fun responseType(): Type = getParameterUpperBound(0, upperBound)
 
                 override fun adapt(call: Call<Any>): Call<Result<*>> =
-                    ResultCall(call, gson) as Call<Result<*>>
+                    ResultCall(call, retrofit) as Call<Result<*>>
             }
         } else {
             null

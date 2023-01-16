@@ -118,9 +118,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesResultCallAdapterFactory(
-        gson: Gson,
-    ): ResultCallAdapterFactory = ResultCallAdapterFactory(gson)
+    fun providesResultCallAdapterFactory(): ResultCallAdapterFactory = ResultCallAdapterFactory()
 
     @Singleton
     @Provides
