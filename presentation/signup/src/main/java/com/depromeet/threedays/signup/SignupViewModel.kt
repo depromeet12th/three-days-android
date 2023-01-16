@@ -1,8 +1,5 @@
 package com.depromeet.threedays.signup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.auth.SignupMember
@@ -24,9 +21,6 @@ class SignupViewModel @Inject constructor(
    private val _action = MutableSharedFlow<Action>()
     val action: SharedFlow<Action>
         get() = _action.asSharedFlow()
-
-    private val _isSuccess = MutableLiveData(false)
-    val isSuccess: LiveData<Boolean> = _isSuccess.distinctUntilChanged()
 
     fun createMember(certificationSubject: AuthenticationProvider = AuthenticationProvider.KAKAO, socialToken: String) {
         viewModelScope.launch {

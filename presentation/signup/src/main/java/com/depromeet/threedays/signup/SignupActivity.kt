@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.navigator.HomeNavigator
 import com.depromeet.threedays.signup.SignupViewModel.Action
@@ -43,7 +44,6 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
     }
 
     private fun startKakaoLogin() {
-        val context = this
         binding.containerSignup.setOnSingleClickListener {
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.ButtonClicked.toString(),
@@ -55,7 +55,7 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
 
             lifecycleScope.launch {
                 kotlin.runCatching {
-                    UserApiClient.loginWithKakaoOrThrow(context)
+                    UserApiClient.loginWithKakaoOrThrow(this@SignupActivity)
                 }.onSuccess { oAuthToken ->
                     UserApiClient.instance.me { user, _ ->
                         if (user != null) {
@@ -66,7 +66,8 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
                     if (throwable is ClientError && throwable.reason == ClientErrorCause.Cancelled) {
                         Timber.d("사용자가 명시적으로 카카오 로그인 취소")
                     } else {
-                        Timber.d(throwable, "로그인 실패 : ${throwable.message}")
+                        ThreeDaysToast().error(this@SignupActivity, "로그인에 실패했어요.")
+                        Timber.e(throwable, "로그인 실패 : ${throwable.message}")
                     }
                 }
             }
