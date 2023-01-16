@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.auth.SignupMember
 import com.depromeet.threedays.domain.entity.member.AuthenticationProvider
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.auth.CreateMemberUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,18 +25,24 @@ class SignupViewModel @Inject constructor(
 
     fun createMember(certificationSubject: AuthenticationProvider = AuthenticationProvider.KAKAO, socialToken: String) {
         viewModelScope.launch {
-            createMemberUserCase.invoke(
-                certificationSubject = certificationSubject,
-                socialToken = socialToken
-            ).runCatching {
-                this.getOrThrow()
-            }.onSuccess { value: SignupMember ->
-                _action.emit(
-                    if(value.isSignedUp) Action.AlreadySignedUp
-                    else Action.FirstSignup
-                )
-                Timber.i("--- SignupViewModel - token : ${value.token}")
+            kotlin.runCatching {
+                createMemberUserCase.invoke(
+                    certificationSubject = certificationSubject,
+                    socialToken = socialToken
+                ).onSuccess { value: SignupMember ->
+                    _action.emit(
+                        if(value.isSignedUp) Action.AlreadySignedUp
+                        else Action.FirstSignup
+                    )
+                    Timber.i("--- SignupViewModel - token : ${value.token}")
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
+                    Timber.e("--- SignupViewModel - Signup error: ${throwable.message}")
+                }
             }.onFailure { throwable ->
+                throwable as ThreeDaysException
+                sendErrorMessage(throwable.message)
                 Timber.e("--- SignupViewModel - Signup error: ${throwable.message}")
             }
         }

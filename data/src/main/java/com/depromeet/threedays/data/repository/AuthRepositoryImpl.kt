@@ -19,12 +19,12 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun createMember(
         certificationSubject: AuthenticationProvider,
         socialToken: String
-    ): SignupMember {
+    ): Result<SignupMember> {
         val request = PostSignupRequest(
             certificationSubject = AuthenticationProvider.from(certificationSubject),
             socialToken = socialToken
         )
-        return authRemoteDataSource.postSignup(request = request).toSignupMember()
+        return authRemoteDataSource.postSignup(request = request).map{ it.toSignupMember() }
     }
 
     override fun saveTokensToLocal(tokens: Token) {

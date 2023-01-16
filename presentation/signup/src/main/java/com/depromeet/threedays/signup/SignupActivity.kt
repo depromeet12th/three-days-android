@@ -87,5 +87,9 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
             startActivity(intent)
             finish()
         }.launchIn(lifecycleScope)
+
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
     }
 }
