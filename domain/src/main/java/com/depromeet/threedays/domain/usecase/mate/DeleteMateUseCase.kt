@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DeleteMateUseCase @Inject constructor(
     private val mateRepository: MateRepository
 ) {
-    suspend operator fun invoke(habitId: Long, mateId: Long): Flow<Result<Mate?>> {
+    suspend operator fun invoke(habitId: Long, mateId: Long): Flow<Result<Unit>> {
         return mateRepository.deleteMate(habitId, mateId)
     }
 

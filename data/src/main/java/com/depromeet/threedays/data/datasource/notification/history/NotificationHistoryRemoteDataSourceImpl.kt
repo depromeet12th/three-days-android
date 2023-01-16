@@ -5,13 +5,14 @@ import com.depromeet.threedays.data.entity.base.getResult
 import com.depromeet.threedays.data.entity.notification.NotificationHistoryEntity
 import com.depromeet.threedays.data.entity.notification.NotificationHistoryReadRequest
 import com.depromeet.threedays.domain.entity.notification.NotificationHistoryStatus
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import javax.inject.Inject
 
 class NotificationHistoryRemoteDataSourceImpl @Inject constructor(
     private val notificationHistoryService: NotificationHistoryService,
 ) : NotificationHistoryRemoteDataSource {
     override suspend fun getNotificationHistories(): Result<List<NotificationHistoryEntity>> {
-        return notificationHistoryService.getNotificationHistories().getResult()
+        return notificationHistoryService.getNotificationHistories().getResult() ?: Result.success(emptyList())
     }
 
     override suspend fun updateStatus(
@@ -23,6 +24,6 @@ class NotificationHistoryRemoteDataSourceImpl @Inject constructor(
             notificationHistoryReadRequest = NotificationHistoryReadRequest(
                 status = notificationHistoryStatus,
             ),
-        ).getResult()
+        ).getResult() ?: Result.failure(ThreeDaysException("데이터가 비어있습니다.", IllegalStateException()))
     }
 }

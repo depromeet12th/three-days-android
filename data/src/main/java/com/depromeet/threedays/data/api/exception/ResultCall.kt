@@ -17,13 +17,13 @@ class ResultCall<T>(private val call: Call<T>, private val gson: Gson) : Call<Re
     override fun enqueue(callback: Callback<Result<T>>) {
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
+                Timber.tag("ResultCall - onResponse").d("response : $response")
+                Timber.tag("ResultCall - onResponse").d("response.body() : ${response.body()}")
                 val jsonBody = gson.toJson(response.body())
                 val body = gson.fromJson(
                     jsonBody,
                     ApiResponse::class.java
                 )
-                Timber.tag("ResultCall - onResponse").d("response : $response")
-                Timber.tag("ResultCall - onResponse").d("response.body() : ${response.body()}")
                 Timber.tag("ResultCall - onResponse").d("jsonBody : $jsonBody")
                 Timber.tag("ResultCall - onResponse").d("body : $body")
                 val message: String = body.message

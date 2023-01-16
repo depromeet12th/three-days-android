@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface MateRepository {
     suspend fun createMate(habitId: Long, mate: CreateMate): Flow<Result<Mate>>
     suspend fun getMateDetail(habitId: Long, mateId: Long): Flow<Result<Mate>>
-    suspend fun deleteMate(habitId: Long, mateId: Long): Flow<Result<Mate?>>
+    suspend fun deleteMate(habitId: Long, mateId: Long): Flow<Result<Unit>>
     suspend fun getMates(): Flow<Result<List<Mate>>>
 }

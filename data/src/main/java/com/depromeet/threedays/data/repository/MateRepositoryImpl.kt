@@ -28,10 +28,10 @@ class MateRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun deleteMate(habitId: Long, mateId: Long): Flow<Result<Mate?>> = flow {
+    override suspend fun deleteMate(habitId: Long, mateId: Long): Flow<Result<Unit>> = flow {
         mateRemoteDataSource.deleteMate(habitId, mateId)
             .onSuccess { response ->
-                emit(Result.success(value =  response?.toMate()))
+                emit(Result.success(value =  response))
             }.onFailure { throwable ->
                 throwable as ThreeDaysException
                 emit(Result.failure(throwable))

@@ -23,7 +23,7 @@ interface MateService {
     suspend fun deleteMate(
         @Path("habitId") habitId: Long,
         @Path("mateId") mateId: Long,
-    ): Result<ApiResponse<MateEntity?>>
+    ): Result<ApiResponse<Unit>>
 
     @GET("/api/v1/mates")
     suspend fun getMates(

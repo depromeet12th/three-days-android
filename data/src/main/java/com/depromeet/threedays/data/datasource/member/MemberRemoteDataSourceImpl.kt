@@ -5,13 +5,14 @@ import com.depromeet.threedays.data.entity.base.getResult
 import com.depromeet.threedays.data.entity.member.LogoutRequest
 import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.data.entity.member.UpdateNicknameRequest
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import javax.inject.Inject
 
 class MemberRemoteDataSourceImpl @Inject constructor(
     private val memberService: MemberService
 ) : MemberRemoteDataSource {
     override suspend fun getMyInfo(): Result<MemberEntity> {
-        return memberService.getMyInfo().getResult()
+        return memberService.getMyInfo().getResult() ?: Result.failure(ThreeDaysException("데이터가 비어있습니다.", IllegalStateException()))
     }
 
     override suspend fun updateNickname(nickname: String): Result<MemberEntity> {
@@ -19,7 +20,7 @@ class MemberRemoteDataSourceImpl @Inject constructor(
             updateNicknameRequest = UpdateNicknameRequest(
                 name = nickname,
             ),
-        ).getResult()
+        ).getResult() ?: Result.failure(ThreeDaysException("데이터가 비어있습니다.", IllegalStateException()))
     }
 
     override suspend fun logout(deviceId: String) {
