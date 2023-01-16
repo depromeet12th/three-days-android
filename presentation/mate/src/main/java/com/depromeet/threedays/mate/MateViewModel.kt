@@ -106,26 +106,22 @@ class MateViewModel @Inject constructor(
 
     private fun fetchHabits() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isHabitListInitialized = false) }
+
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
+                response.onSuccess { habitList ->
+                    _uiState.update {
+                        it.copy(
+                            hasHabit = habitList.isNotEmpty()
+                        )
                     }
-                    Status.SUCCESS -> {
-                        _uiState.update {
-                            it.copy(
-                                hasHabit = response.data!!.isNotEmpty()
-                            )
-                        }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
+
+            _uiState.update { it.copy(isHabitListInitialized = true) }
         }
     }
 
@@ -268,7 +264,8 @@ data class UiState(
     val backgroundResColor: Int = core_design.color.gray_100,
     val stamps: List<StampUI> = emptyList(),
     val isMateInitialized: Boolean = false,
-    val isHabitInitialized: Boolean = false
+    val isHabitInitialized: Boolean = false,
+    val isHabitListInitialized: Boolean = false
 )
 
 sealed interface UiEffect {

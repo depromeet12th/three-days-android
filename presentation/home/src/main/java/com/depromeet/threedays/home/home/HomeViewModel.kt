@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -74,7 +73,7 @@ class HomeViewModel @Inject constructor(
                 response.onSuccess { habitList ->
                     _habits.value = habitList.map { it.toHabitUI() }
                     
-                    if (habits.isEmpty()) {
+                    if (habits.value.isEmpty()) {
                             AnalyticsUtil.event(
                                 name = ThreeDaysEvent.HomeDefaultViewed.toString(),
                                 properties = mapOf(
@@ -91,6 +90,7 @@ class HomeViewModel @Inject constructor(
                         }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

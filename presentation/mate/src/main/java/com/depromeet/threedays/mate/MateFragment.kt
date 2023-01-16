@@ -231,7 +231,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
-                        if (it.isMateInitialized) {
+                        if (it.isMateInitialized && it.isHabitListInitialized) {
                             if( (it.hasMate && it.isHabitInitialized) || !it.hasMate) {
                                 binding.progressMate.gone()
                                 showMateOrDefaultView(
