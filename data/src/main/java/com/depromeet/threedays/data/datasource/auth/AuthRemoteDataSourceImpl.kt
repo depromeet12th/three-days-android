@@ -9,7 +9,7 @@ import javax.inject.Inject
 class AuthRemoteDataSourceImpl@Inject constructor(
     private val authService: AuthService
 ) : AuthRemoteDataSource {
-    override suspend fun postSignup(request: PostSignupRequest): ApiResponse<SignupMemberEntity> {
+    override suspend fun postSignup(request: PostSignupRequest): Result<ApiResponse<SignupMemberEntity>> {
         return authService.postSignup(request = request)
     }
 }

@@ -5,9 +5,9 @@ import com.depromeet.threedays.data.entity.habit.PostHabitRequest
 import com.depromeet.threedays.data.entity.habit.SingleHabitEntity
 
 interface HabitRemoteDataSource {
-    suspend fun postHabit(request: PostHabitRequest)
-    suspend fun getHabits(status: String): List<HabitEntity>
-    suspend fun getHabit(habitId: Long): SingleHabitEntity
-    suspend fun updateHabit(habitId: Long, request: PostHabitRequest)
-    suspend fun deleteHabit(habitId: Long)
+    suspend fun postHabit(request: PostHabitRequest): Result<SingleHabitEntity>
+    suspend fun getHabits(status: String): Result<List<HabitEntity>>
+    suspend fun getHabit(habitId: Long): Result<SingleHabitEntity>
+    suspend fun updateHabit(habitId: Long, request: PostHabitRequest): Result<SingleHabitEntity>
+    suspend fun deleteHabit(habitId: Long): Result<Unit>
 }

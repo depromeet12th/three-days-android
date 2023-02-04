@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.extensions.gone
 import com.depromeet.threedays.core.extensions.visible
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
 import com.depromeet.threedays.domain.key.HABIT_ID
@@ -22,6 +23,8 @@ import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
 import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import com.depromeet.threedays.core_design_system.R as core_design
 
@@ -146,6 +149,10 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

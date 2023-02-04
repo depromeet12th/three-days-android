@@ -8,8 +8,8 @@ import com.depromeet.threedays.core.analytics.Screen
 import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.OnboardingType
-import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.domain.usecase.mate.DeleteMateUseCase
@@ -59,51 +59,44 @@ class MateViewModel @Inject constructor(
             _uiState.update { it.copy(isMateInitialized = false) }
 
             getMatesUseCase().collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-
+                response.onSuccess { mates ->
+                    val myMate = mates.find { it.status == "ACTIVE" }
+                    _uiState.update {
+                        it.copy(
+                            mate = myMate?.toMateUI() ,
+                            hasMate = myMate != null,
+                            backgroundResColor = if(myMate == null) {
+                                core_design.color.white
+                            } else {
+                                core_design.color.gray_100
+                            },
+                            stamps = getStampsFromMate(myMate?.toMateUI())
+                        )
                     }
-                    Status.SUCCESS -> {
-                        val myMate = response.data!!.find { it.status == "ACTIVE" }
-                        _uiState.update {
-                            it.copy(
-                                mate = myMate?.toMateUI(),
-                                hasMate = myMate != null,
-                                backgroundResColor = if(myMate == null) {
-                                    core_design.color.white
-                                } else {
-                                    core_design.color.gray_100
-                                },
-                                stamps = getStampsFromMate(myMate?.toMateUI())
-                            )
-                        }
-                        myMate?.let {
-                            fetchHabit(it.habitId)
-                        }
-                        checkMateAchieveMaxLevel(uiState.value.mate)
-
-                        if (myMate == null) {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.MateDefaultViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
-                                )
-                            )
-                        } else {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.MateHomeViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
-                                )
-                            )
-                        }
+                    myMate?.let {
+                        fetchHabit(it.habitId)
                     }
-                    Status.ERROR -> {
+                    checkMateAchieveMaxLevel(uiState.value.mate)
+                    
+                    if (myMate == null) {
+                          AnalyticsUtil.event(
+                              name = ThreeDaysEvent.MateDefaultViewed.toString(),
+                              properties = mapOf(
+                                  MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
+                              )
+                          )
+                      } else {
+                          AnalyticsUtil.event(
+                              name = ThreeDaysEvent.MateHomeViewed.toString(),
+                              properties = mapOf(
+                                  MixPanelEvent.ScreenName to Screen.MateHome.toString(),
+                              )
+                          )
+                      }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    sendErrorMessage(throwable.message)
                 }
             }
 
@@ -113,26 +106,22 @@ class MateViewModel @Inject constructor(
 
     private fun fetchHabits() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isHabitListInitialized = false) }
+
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
+                response.onSuccess { habitList ->
+                    _uiState.update {
+                        it.copy(
+                            hasHabit = habitList.isNotEmpty()
+                        )
                     }
-                    Status.SUCCESS -> {
-                        _uiState.update {
-                            it.copy(
-                                hasHabit = response.data!!.isNotEmpty()
-                            )
-                        }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
+
+            _uiState.update { it.copy(isHabitListInitialized = true) }
         }
     }
 
@@ -140,17 +129,17 @@ class MateViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isHabitInitialized = false) }
 
-            kotlin.runCatching {
-                habitRepository.getHabit(habitId = habitId)
-            }.onSuccess { habit ->
-                _uiState.update {
-                    it.copy(
-                        habit = habit
-                    )
+            habitRepository.getHabit(habitId = habitId)
+                .onSuccess { habit ->
+                    _uiState.update {
+                        it.copy(
+                            habit = habit
+                        )
+                    }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
-            }.onFailure { throwable ->
-                sendErrorMessage(throwable.message)
-            }
 
             _uiState.update { it.copy(isHabitInitialized = true) }
         }
@@ -180,25 +169,19 @@ class MateViewModel @Inject constructor(
                     habitId = it.habitId,
                     mateId = it.id,
                 ).collect { response ->
-                    when (response.status) {
-                        Status.LOADING -> {
-                        }
-                        Status.SUCCESS -> {
-                            fetchMate()
-                            _uiEffect.emit(
-                                value = UiEffect.ShowToastMessage(R.string.delete_mate)
-                            )
-                        }
+                    response.onSuccess {
+                        fetchMate()
+                        _uiEffect.emit(
+                            value = UiEffect.ShowToastMessage(R.string.delete_mate)
+                        )
+                    }.onFailure { throwable ->
                         // TODO: 받아오는 값이 null인데 타입이 안맞아서 에러뜨고 있음. 요청은 정상적으로 잘 돼서 임시로 ㅠㅠ
-                        Status.ERROR -> {
-                            fetchMate()
-                            _uiEffect.emit(
-                                value = UiEffect.ShowToastMessage(R.string.delete_mate)
-                            )
-                        }
-                        Status.FAIL -> {
-
-                        }
+//                        fetchMate()
+//                        _uiEffect.emit(
+//                            value = UiEffect.ShowToastMessage(R.string.delete_mate)
+//                        )
+                        throwable as ThreeDaysException
+                        sendErrorMessage(throwable.message)
                     }
                 }
             }
@@ -281,7 +264,8 @@ data class UiState(
     val backgroundResColor: Int = core_design.color.gray_100,
     val stamps: List<StampUI> = emptyList(),
     val isMateInitialized: Boolean = false,
-    val isHabitInitialized: Boolean = false
+    val isHabitInitialized: Boolean = false,
+    val isHabitListInitialized: Boolean = false
 )
 
 sealed interface UiEffect {

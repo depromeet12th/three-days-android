@@ -11,22 +11,22 @@ interface MateService {
     suspend fun postMate(
         @Path("habitId") habitId: Long,
         @Body request: PostMateRequest,
-    ): ApiResponse<MateEntity>
+    ): Result<ApiResponse<MateEntity>>
 
     @GET("/api/v1/habits/{habitId}/mates/{mateId}")
     suspend fun getMateDetail(
         @Query("habitId") habitId: Long,
         @Query("mateId") mateId: Long,
-    ): ApiResponse<MateEntity>
+    ): Result<ApiResponse<MateEntity>>
 
     @DELETE("/api/v1/habits/{habitId}/mates/{mateId}")
     suspend fun deleteMate(
         @Path("habitId") habitId: Long,
         @Path("mateId") mateId: Long,
-    ): ApiResponse<MateEntity?>
+    ): Result<ApiResponse<Unit>>
 
     @GET("/api/v1/mates")
     suspend fun getMates(
 
-    ): ApiResponse<List<MateEntity>>
+    ): Result<ApiResponse<List<MateEntity>>>
 }

@@ -3,8 +3,8 @@ package com.depromeet.threedays.mate.create.step3
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.domain.entity.Color
-import com.depromeet.threedays.domain.entity.Status
 import com.depromeet.threedays.domain.entity.mate.CreateMate
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.mate.CreateMateUseCase
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
@@ -86,19 +86,12 @@ class SetMateNicknameViewMoodel @Inject constructor(
                     characterType = mateType,
                 )
             ).collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
+                response.onSuccess {
+                    // TODO
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
 
-                    }
-                    Status.SUCCESS -> {
-
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

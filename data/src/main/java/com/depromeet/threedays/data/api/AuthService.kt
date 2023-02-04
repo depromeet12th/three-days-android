@@ -10,5 +10,5 @@ interface AuthService {
     @POST("/api/v1/members")
     suspend fun postSignup(
         @Body request: PostSignupRequest,
-    ): ApiResponse<SignupMemberEntity>
+    ): Result<ApiResponse<SignupMemberEntity>>
 }

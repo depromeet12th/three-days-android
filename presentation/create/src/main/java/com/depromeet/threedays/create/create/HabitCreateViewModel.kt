@@ -7,6 +7,7 @@ import com.depromeet.threedays.create.CreateNotification
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.util.EmojiUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -115,27 +116,27 @@ class HabitCreateViewModel @Inject constructor(
 
     fun onCreateHabitClick() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                val notification = if (notification.value.notificationInfoActive) {
-                    CreateHabit.Notification (
-                        contents = notification.value.notificationContent,
-                        notificationTime = notification.value.notificationTime,
-                    )
-                } else null
-
-                val habit = CreateHabit(
-                    title = title.value,
-                    emoji = emoji.value,
-                    dayOfWeeks = dayOfWeekList.value,
-                    notification = notification,
-                    color = color.value
+            val notification = if (notification.value.notificationInfoActive) {
+                CreateHabit.Notification (
+                    contents = notification.value.notificationContent,
+                    notificationTime = notification.value.notificationTime,
                 )
-                habitRepository.createHabit(habit)
-            }.onSuccess {
-                _action.emit(Action.SaveClick)
-            }.onFailure { throwable ->
-                sendErrorMessage(throwable.message)
-            }
+            } else null
+
+            val habit = CreateHabit(
+                title = title.value,
+                emoji = emoji.value,
+                dayOfWeeks = dayOfWeekList.value,
+                notification = notification,
+                color = color.value
+            )
+            habitRepository.createHabit(habit)
+                .onSuccess {
+                    _action.emit(Action.SaveClick)
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
+                }
         }
     }
 

@@ -34,6 +34,8 @@ import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -247,6 +249,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

@@ -5,5 +5,5 @@ import com.depromeet.threedays.data.entity.auth.SignupMemberEntity
 import com.depromeet.threedays.data.entity.base.ApiResponse
 
 interface AuthRemoteDataSource {
-    suspend fun postSignup(request: PostSignupRequest): ApiResponse<SignupMemberEntity>
+    suspend fun postSignup(request: PostSignupRequest): Result<ApiResponse<SignupMemberEntity>>
 }
