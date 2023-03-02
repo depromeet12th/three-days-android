@@ -41,10 +41,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                binding.viewFirstIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
-                binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
-                binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
-
                 AnalyticsUtil.event(
                     name = getViewedEventName(this@OnboardingActivity),
                     properties = mapOf(
@@ -56,10 +52,13 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                     0 -> {
                         binding.btnNext.text = getString(R.string.next)
                         binding.viewFirstIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                        binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
+                        binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
                     }
                     1 -> {
                         binding.btnNext.text = getString(R.string.next)
                         binding.viewSecondIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray500_r4)
+                        binding.viewThirdIndicator.setBackgroundResource(core_R.drawable.bg_rect_gray200_r4)
                     }
                     else -> {
                         binding.btnNext.text = getString(R.string.start)
