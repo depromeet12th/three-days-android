@@ -2,8 +2,12 @@ package com.depromeet.threedays.home.home
 
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.Screen
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.domain.entity.OnboardingType
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.DeleteHabitUseCase
 import com.depromeet.threedays.domain.usecase.achievement.CreateHabitAchievementUseCase
 import com.depromeet.threedays.domain.usecase.achievement.DeleteHabitAchievementUseCase
@@ -42,7 +46,7 @@ class HomeViewModel @Inject constructor(
         get() = _uiEffect
 
     init {
-        fetchGoals()
+        fetchHabits()
         checkIsFirstVisitor()
     }
 
@@ -63,22 +67,30 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchGoals() {
+    fun fetchHabits() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
-                    }
-                    Status.SUCCESS -> {
-                        _habits.value = response.data!!.map { it.toHabitUI() }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                response.onSuccess { habitList ->
+                    _habits.value = habitList.map { it.toHabitUI() }
+                    
+                    if (habits.value.isEmpty()) {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
+                                )
+                            )
+                        } else {
+                            AnalyticsUtil.event(
+                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
+                                properties = mapOf(
+                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
+                                )
+                            )
+                        }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -87,20 +99,12 @@ class HomeViewModel @Inject constructor(
     fun createHabitAchievement(habitUI: HabitUI) {
         viewModelScope.launch {
             createHabitAchievementUseCase(habitUI.habitId).collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
-                    }
-                    Status.SUCCESS -> {
-                        fetchGoals()
-                        checkNewClap(habitUI)
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                response.onSuccess {
+                    fetchHabits()
+                    checkNewClap(habitUI)
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -112,19 +116,11 @@ class HomeViewModel @Inject constructor(
                 habitId = habitId,
                 habitAchievementId = habitAchievementId,
             ).collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
-                    }
-                    Status.SUCCESS -> {
-                        fetchGoals()
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                response.onSuccess {
+                    fetchHabits()
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -186,20 +182,12 @@ class HomeViewModel @Inject constructor(
         
         viewModelScope.launch {
             deleteHabitUseCase(habitId).collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-
-                    }
-                    Status.SUCCESS -> {
-                        onSuccessDeleteHabit(habitType)
-                        fetchGoals()
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                response.onSuccess {
+                    onSuccessDeleteHabit(habitType)
+                    fetchHabits()
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

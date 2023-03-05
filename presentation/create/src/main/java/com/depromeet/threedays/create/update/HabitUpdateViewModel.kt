@@ -9,6 +9,7 @@ import com.depromeet.threedays.domain.entity.emoji.Emoji
 import com.depromeet.threedays.domain.entity.habit.CreateHabit
 import com.depromeet.threedays.domain.entity.habit.HabitNotification
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.repository.HabitRepository
 import com.depromeet.threedays.domain.util.EmojiUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -80,16 +81,16 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun getHabit(habitId: Long) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                habitRepository.getHabit(habitId = habitId)
-            }.onSuccess { habit ->
-                _oldHabit.value = habit
-                setOldData(habit)
-            }.onFailure { throwable ->
-                sendErrorMessage(throwable.message)
-            }
+            habitRepository.getHabit(habitId = habitId)
+                .onSuccess { habit ->
+                    _oldHabit.value = habit
+                    setOldData(habit)
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
+                }
         }
-    }
+   }
 
     private fun setOldData(oldData: SingleHabit) {
         title.value = oldData.title
@@ -175,26 +176,26 @@ class HabitUpdateViewModel @Inject constructor(
 
     fun onUpdateHabitClick() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                val notification = if (notification.value.notificationInfoActive) {
-                    CreateHabit.Notification (
-                        contents = notification.value.notificationContent,
-                        notificationTime = notification.value.notificationTime,
-                    )
-                } else null
-                val habit = CreateHabit(
-                    title = title.value,
-                    emoji = emoji.value,
-                    dayOfWeeks = dayOfWeekList.value,
-                    notification = notification,
-                    color = color.value
+            val notification = if (notification.value.notificationInfoActive) {
+                CreateHabit.Notification (
+                    contents = notification.value.notificationContent,
+                    notificationTime = notification.value.notificationTime,
                 )
-                habitRepository.updateHabit(habitId = habitId, habit = habit)
-            }.onSuccess {
-                _action.emit(Action.UpdateClick)
-            }.onFailure { throwable ->
-                sendErrorMessage(throwable.message)
-            }
+            } else null
+            val habit = CreateHabit(
+                title = title.value,
+                emoji = emoji.value,
+                dayOfWeeks = dayOfWeekList.value,
+                notification = notification,
+                color = color.value
+            )
+            habitRepository.updateHabit(habitId = habitId, habit = habit)
+                .onSuccess {
+                    _action.emit(Action.UpdateClick)
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
+                }
         }
     }
 

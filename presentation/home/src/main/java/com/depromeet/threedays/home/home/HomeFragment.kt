@@ -34,6 +34,8 @@ import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -60,9 +62,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
         when(result.resultCode) {
-            RESULT_CREATE -> viewModel.fetchGoals()
+            RESULT_CREATE -> viewModel.fetchHabits()
             RESULT_UPDATE -> {
-                viewModel.fetchGoals()
+                viewModel.fetchHabits()
                 ThreeDaysToast().show(
                     requireContext(),
                     resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
@@ -247,26 +249,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.habits.collect { list ->
-                        if (list.isEmpty()) {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeDefaultViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeDefault.toString()
-                                )
-                            )
-                        } else {
-                            AnalyticsUtil.event(
-                                name = ThreeDaysEvent.HomeActivatedViewed.toString(),
-                                properties = mapOf(
-                                    MixPanelEvent.ScreenName to Screen.HomeActivated.toString()
-                                )
-                            )
-                        }
-
                         habitAdapter.submitList(list.sortedBy { it.createAt })
                         binding.clNoGoal.visibility =
                             if (list.isEmpty()) View.VISIBLE else View.GONE

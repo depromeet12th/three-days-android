@@ -32,7 +32,7 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun sendErrorMessage(message: String?) {
         viewModelScope.launch {
-            _error.emit(message ?: "오류가 발생했습니다.")
+            _error.emit(message ?: "알 수 없는 오류가 발생했어요.")
         }
     }
 }

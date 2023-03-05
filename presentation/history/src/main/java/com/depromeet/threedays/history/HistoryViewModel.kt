@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core_design_system.R
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.habit.GetActiveHabitsUseCase
 import com.depromeet.threedays.domain.usecase.record.GetRecordUseCase
 import com.depromeet.threedays.domain.util.GetDateTimeFromString
@@ -35,41 +35,33 @@ class HistoryViewModel @Inject constructor(
     fun fetchHabits() {
         viewModelScope.launch {
             getActiveHabitsUseCase().collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
+                response.onSuccess { habits ->
+                    _uiState.update {
+                        it.copy(isHabitInitialized = true)
                     }
-                    Status.SUCCESS -> {
-                        val habits = response.data!!
+
+                    if(habits.isNotEmpty()) {
+                        val sortedHabits = habits.sortedBy { it.createAt }
+                        val startDate = sortedHabits.first()
+                        val endDate = sortedHabits.last()
+
+                        _uiState.update { uiState ->
+                            uiState.copy(
+                                habits = habits.map { it.toHabitUI() },
+                                startDate = getDateTimeFromString(startDate.createAt) ?: uiState.startDate,
+                                endDate = getDateTimeFromString(endDate.createAt) ?: uiState.endDate,
+                            )
+                        }
                         _uiState.update {
-                            it.copy(isHabitInitialized = true)
-                        }
-                        if(habits.isNotEmpty()) {
-                            val sortedHabits = habits.sortedBy { it.createAt }
-                            val startDate = sortedHabits.first()
-                            val endDate = sortedHabits.last()
-
-                            _uiState.update {
-                                it.copy(
-                                    habits = habits.map { it.toHabitUI() },
-                                    startDate = getDateTimeFromString(startDate.createAt) ?: it.startDate,
-                                    endDate = getDateTimeFromString(endDate.createAt) ?: it.endDate,
-                                )
-                            }
-                            _uiState.update {
-                                it.copy(
-                                    previousMonthClickable = canMoveToPreviousMonth(),
-                                    nextMonthClickable = canMoveToNextMonth(),
-                                )
-                            }
+                            it.copy(
+                                previousMonthClickable = canMoveToPreviousMonth(),
+                                nextMonthClickable = canMoveToNextMonth(),
+                            )
                         }
                     }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -83,31 +75,23 @@ class HistoryViewModel @Inject constructor(
 
         viewModelScope.launch {
             getRecordUseCase(to = to, from = from).collect { response ->
-                when(response.status) {
-                    Status.LOADING -> {
-
+                response.onSuccess { record ->
+                    val recordUI = record.toPresentationModel()
+                    _uiState.update {
+                        it.copy(
+                            rewardCount = recordUI.rewardCount.toString(),
+                            achievementCount = recordUI.achievementCount.toString(),
+                            emoji = recordUI.frequentHabitUI?.imojiPath ?: String.Empty,
+                            title = recordUI.frequentHabitUI?.title ?: String.Empty,
+                            cardBackgroundResId = getCardBackgroundResId(
+                                recordUI.frequentHabitUI?.color ?: "GREEN"
+                            ),
+                            isRecordInitialized = true
+                        )
                     }
-                    Status.SUCCESS -> {
-                        val recordUI = response.data!!.toPresentationModel()
-                        _uiState.update {
-                            it.copy(
-                                rewardCount = recordUI.rewardCount.toString(),
-                                achievementCount = recordUI.achievementCount.toString(),
-                                emoji = recordUI.frequentHabitUI?.imojiPath ?: String.Empty,
-                                title = recordUI.frequentHabitUI?.title ?: String.Empty,
-                                cardBackgroundResId = getCardBackgroundResId(
-                                    recordUI.frequentHabitUI?.color ?: "GREEN"
-                                ),
-                                isRecordInitialized = true
-                            )
-                        }
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.FAIL -> {
-
-                    }
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

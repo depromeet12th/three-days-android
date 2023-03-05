@@ -8,8 +8,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.depromeet.threedays.core.BaseActivity
+import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.notification.databinding.ActivityNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 
@@ -41,6 +44,10 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
                 viewModel.apply {

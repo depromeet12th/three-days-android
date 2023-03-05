@@ -18,6 +18,9 @@
     <string name="max_level_dialog_title">함께한 짝꿍에 저장됐어요.</string>
     <string name="max_level_dialog_description">%d개의 박수를 모두 모았어요!\n최종 레벨을 달성한 짝꿍은\n마이페이지 > 함께한 짝꿍에 저장돼요.</string>
     <string name="going_to_see">보러가기</string>
+    <string name="no_habit_dialog_title">습관을 만들어주세요.</string>
+    <string name="no_habit_dialog_description">짝꿍과 함께하기 위해서는 미리 생성된\n습관이 있어야 해요.</string>
+    <string name="no_habit_dialog_confirm_text">습관 만들기</string>
 
     <!-- step1 -->
     <string name="connect_habit_guide">어떤 습관을 연결하시겠어요?</string>

@@ -3,7 +3,7 @@ package com.depromeet.threedays.mypage
 import androidx.lifecycle.viewModelScope
 import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core.extensions.Empty
-import com.depromeet.threedays.domain.entity.Status
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.usecase.member.GetMyInfoUseCase
 import com.depromeet.threedays.domain.usecase.member.LogoutUseCase
 import com.depromeet.threedays.domain.usecase.member.UpdateNicknameUseCase
@@ -43,15 +43,12 @@ class MyPageViewModel @Inject constructor(
     private fun fetchMyInfo() {
         viewModelScope.launch {
             getMyInfoUseCase().collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        // Do nothing
-                    }
-                    Status.SUCCESS -> {
-                        _nickname.value = response.data!!.name
-                    }
-                    Status.ERROR -> TODO()
-                    Status.FAIL -> TODO()
+                response.onSuccess {
+                    _nickname.value = it.name
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+
+                    sendErrorMessage(throwable.message)
                 }
             }
         }
@@ -63,15 +60,12 @@ class MyPageViewModel @Inject constructor(
     fun updateNickname(nickname: String) {
         viewModelScope.launch {
             updateNicknameUseCase(nickname = nickname).collect { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        // Do nothing
-                    }
-                    Status.SUCCESS -> {
-                        _nickname.value = response.data!!.name
-                    }
-                    Status.ERROR -> TODO()
-                    Status.FAIL -> TODO()
+                response.onSuccess {
+                    _nickname.value = it.name
+                }.onFailure { throwable ->
+                    throwable as ThreeDaysException
+
+                    sendErrorMessage(throwable.message)
                 }
             }
         }

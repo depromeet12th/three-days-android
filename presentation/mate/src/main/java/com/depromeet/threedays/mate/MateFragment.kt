@@ -31,8 +31,11 @@ import com.depromeet.threedays.mate.onboarding.OnBoardingBottomSheet
 import com.depromeet.threedays.mate.share.ShareMateActivity
 import com.depromeet.threedays.navigator.ArchivedHabitNavigator
 import com.depromeet.threedays.navigator.ConnectHabitNavigator
+import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -49,6 +52,9 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
+
+    @Inject
+    lateinit var habitCreateNavigator: HabitCreateNavigator
 
     override fun onResume() {
         super.onResume()
@@ -91,9 +97,24 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 )
             )
 
-            val intent = connectHabitNavigator.intent(requireContext())
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            if (viewModel.uiState.value.hasHabit) {
+                val intent = connectHabitNavigator.intent(requireContext())
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            } else {
+                ThreeDaysDialogFragment.newInstance(
+                    DialogInfo.EMPTY.copy(
+                        onPositiveAction = {
+                            val intent = habitCreateNavigator.intent(requireContext())
+                            startActivity(intent)
+                        },
+                        title = getString(R.string.no_habit_dialog_title),
+                        description = getString(R.string.no_habit_dialog_description),
+                        confirmText = getString(R.string.no_habit_dialog_confirm_text),
+                        buttonTopMargin = 30f,
+                    )
+                ).show(parentFragmentManager, ThreeDaysDialogFragment.TAG)
+            }
         }
         binding.ivShare.setOnSingleClickListener {
             AnalyticsUtil.event(
@@ -202,14 +223,17 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     }
 
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect {
-                        if (it.isMateInitialized) {
+                        if (it.isMateInitialized && it.isHabitListInitialized) {
                             if( (it.hasMate && it.isHabitInitialized) || !it.hasMate) {
                                 binding.progressMate.gone()
-                                sendEvent(it.hasMate)
                                 showMateOrDefaultView(
                                     hasMate = it.hasMate,
                                     backgroundResColor = it.backgroundResColor
@@ -247,7 +271,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
     private fun showMateOrDefaultView(hasMate: Boolean, backgroundResColor: Int) {
         binding.groupHasMate.isVisible = hasMate
         binding.groupNoHabit.isVisible = hasMate.not()
-        binding.groupSpeechBubble.isVisible = hasMate
         binding.clBottomSheet.isVisible = hasMate
         binding.clTopLayout.setBackgroundResource(backgroundResColor)
 
@@ -292,7 +315,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             }
 
             binding.groupAchieveMaxLevel.isVisible = isMaxLevel
-            binding.groupSpeechBubble.isVisible = isMaxLevel.not()
         }
     }
 
@@ -339,24 +361,6 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         ).show(
             parentFragmentManager, ThreeDaysNoButtonDialogFragment.TAG
         )
-    }
-
-    private fun sendEvent(hasMate: Boolean) {
-        if(hasMate) {
-            AnalyticsUtil.event(
-                name = ThreeDaysEvent.MateHomeViewed.toString(),
-                properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateHome.toString(),
-                )
-            )
-        } else {
-            AnalyticsUtil.event(
-                name = ThreeDaysEvent.MateDefaultViewed.toString(),
-                properties = mapOf(
-                    MixPanelEvent.ScreenName to Screen.MateDefault.toString(),
-                )
-            )
-        }
     }
 
     override fun onStop() {

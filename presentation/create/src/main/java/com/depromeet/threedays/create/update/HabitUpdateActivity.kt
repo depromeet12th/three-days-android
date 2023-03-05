@@ -13,11 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.extensions.formatHourMinute
 import com.depromeet.threedays.core.extensions.visibleOrGone
-import com.depromeet.threedays.core.util.setOnSingleClickListener
-import com.depromeet.threedays.core.util.DialogInfo
-import com.depromeet.threedays.core.util.RangeTimePickerDialogFragment
-import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
-import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.core.util.*
 import com.depromeet.threedays.create.R
 import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
@@ -214,7 +210,7 @@ class HabitUpdateActivity :
             }.launchIn(lifecycleScope)
 
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().show(this, errorMessage) }
+            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
             .launchIn(lifecycleScope)
     }
 

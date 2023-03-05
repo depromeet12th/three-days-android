@@ -14,6 +14,8 @@ import com.depromeet.threedays.navigator.LicenseNavigator
 import com.depromeet.threedays.navigator.PolicyNavigator
 import com.depromeet.threedays.navigator.SignupNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -84,6 +86,10 @@ class MyPageFragment :
      * observer 초기화
      */
     private fun setObserve() {
+        viewModel.error
+            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
