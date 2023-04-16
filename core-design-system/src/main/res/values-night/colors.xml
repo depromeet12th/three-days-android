@@ -7,7 +7,7 @@
     <color name="disable">#ACACAC</color>
     <color name="toast">#3C3C3C</color>
 
-    <color name="main">#1A1E27</color>
+    <color name="main">#FFFFFF</color>
 
     <!-- sub color -->
     <color name="green_50">#34C185</color>
@@ -18,18 +18,18 @@
     <color name="pink_10">#FFE0F6</color>
 
     <!-- gray -->
-    <color name="white">#FFFFFF</color>
+    <color name="white">#17171B</color>
     <color name="gray_background">#F6F7F9</color>
-    <color name="gray_100">#F4F6F8</color>
-    <color name="gray_200">#E8EBF0</color>
-    <color name="gray_300">#D8DCE2</color>
-    <color name="gray_400">#C4CAD4</color>
-    <color name="gray_450">#A5ADBD</color>
-    <color name="gray_500">#8E95A3</color>
-    <color name="gray_600">#5B616C</color>
-    <color name="gray_700">#353C49</color>
-    <color name="gray_800">#1A1E27</color>
-    <color name="black">#121213</color>
+    <color name="gray_100">#2C2C34</color>
+    <color name="gray_200">#3D3D58</color>
+    <color name="gray_300">#62626C</color>
+    <color name="gray_400">#7E7E86</color>
+    <color name="gray_450">#7E7E86</color>
+    <color name="gray_500">#9E9EA3</color>
+    <color name="gray_600">#C3C3C6</color>
+    <color name="gray_700">#E4E4E5</color>
+    <color name="gray_800">#FFFFFF</color>
+    <color name="black">#101012</color>
 
     <!-- system color -->
     <color name="green_system_color">#09BC7B</color>
@@ -38,10 +38,10 @@
     <color name="transparency_color">#FF000000</color>
 
     <!-- 다크모드 지원을 위해 따로 관리하는 색상 -->
-    <color name="home_background">#F4F6F8</color>
-    <color name="habit_card_background">#FFFFFF</color>
-    <color name="add_icon_background">#D8DCE2</color>
-    <color name="add_icon_plus">#8E95A3</color>
-    <color name="noti_icon">#8E95A3</color>
+    <color name="home_background">#101012</color>
+    <color name="habit_card_background">#2C2C34</color>
+    <color name="add_icon_background">#3D3D58</color>
+    <color name="add_icon_plus">#E4E4E5</color>
+    <color name="noti_icon">#7E7E86</color>
 
 </resources>
