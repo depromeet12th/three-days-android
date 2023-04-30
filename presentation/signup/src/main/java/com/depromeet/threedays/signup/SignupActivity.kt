@@ -13,6 +13,7 @@ import com.depromeet.threedays.signup.SignupViewModel.Action
 import com.depromeet.threedays.signup.complete.SignupCompleteActivity
 import com.depromeet.threedays.signup.databinding.ActivitySignupBinding
 import com.depromeet.threedays.signup.extension.loginWithKakaoOrThrow
+import com.depromeet.threedays.signup.palette.ChoicePaletteActivity
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -41,6 +42,14 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
 
         startKakaoLogin()
         observe()
+        initPalette()
+    }
+
+    private fun initPalette() {
+        binding.containerSignup.setOnLongClickListener {
+            startActivity(Intent(this, ChoicePaletteActivity::class.java))
+            true
+        }
     }
 
     private fun startKakaoLogin() {
