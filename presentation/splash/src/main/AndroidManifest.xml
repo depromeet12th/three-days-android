@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.depromeet.threedays.splash" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.depromeet.threedays.splash">
+
+    <application>
+        <activity
+            android:name="com.depromeet.threedays.signup.palette.ChoicePaletteActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.depromeet.threedays.signup.palette.PaletteActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

@@ -1,7 +1,6 @@
 package com.depromeet.threedays.home
 
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.depromeet.threedays.core.BaseActivity
@@ -68,14 +67,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     fun stopCongratulateThirdClapAnimation() {
         binding.congratulationAnimationGroup.isVisible = false
         binding.lottieClap.cancelAnimation()
-    }
-
-    // 다크모드 준비하는 디자이너분들을 위해 임시로 추가
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        when(keyCode) {
-            KeyEvent.KEYCODE_VOLUME_UP -> binding.llColorPalette.isVisible = true
-            KeyEvent.KEYCODE_VOLUME_DOWN -> binding.llColorPalette.isVisible = false
-        }
-        return super.onKeyDown(keyCode, event)
     }
 }
