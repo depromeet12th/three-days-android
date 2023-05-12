@@ -25,28 +25,29 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:background="@drawable/ic_edit"
+                android:backgroundTint="@color/gray_700"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/edit"
-                android:textColor="@color/gray_700"
-                android:textAppearance="@style/Typography.Body1"
                 android:layout_marginStart="8dp"
+                android:text="@string/edit"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_700"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_edit"
                 app:layout_constraintStart_toEndOf="@+id/iv_edit"
-                app:layout_constraintTop_toTopOf="@+id/iv_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_edit" />
+                app:layout_constraintTop_toTopOf="@+id/iv_edit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_100"
-            android:layout_margin="16dp"/>
-        
+            android:layout_margin="16dp"
+            android:background="@color/gray_100" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_delete"
             android:layout_width="match_parent"
@@ -59,20 +60,20 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/ic_delete"
                 android:backgroundTint="@color/gray_700"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/delete"
-                android:textColor="@color/gray_700"
-                android:textAppearance="@style/Typography.Body1"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@id/iv_delete"
+                android:text="@string/delete"
+                android:textAppearance="@style/Typography.Body1"
+                android:textColor="@color/gray_700"
+                app:layout_constraintBottom_toBottomOf="@id/iv_delete"
                 app:layout_constraintStart_toEndOf="@+id/iv_delete"
-                app:layout_constraintBottom_toBottomOf="@id/iv_delete"/>
+                app:layout_constraintTop_toTopOf="@id/iv_delete" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Space

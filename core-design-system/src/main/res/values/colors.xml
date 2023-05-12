@@ -43,5 +43,6 @@
     <color name="add_icon_background">#D8DCE2</color>
     <color name="add_icon_plus">#8E95A3</color>
     <color name="noti_icon">#8E95A3</color>
+    <color name="check_icon">#FFFFFF</color>
 
 </resources>
