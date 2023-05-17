@@ -38,6 +38,7 @@ android {
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
@@ -48,6 +49,7 @@ android {
             buildConfigField 'String', 'MIXPANEL_PROJECT_TOKEN', "\"${properties.getProperty('release.mixpanel.project-token')}\""
         }
         debug {
+            debuggable true
             applicationIdSuffix '.debug'
             manifestPlaceholders = [
                     KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key')
