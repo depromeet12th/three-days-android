@@ -4,6 +4,7 @@ import android.app.Application
 import com.depromeet.threedays.buildproperty.BuildProperty
 import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.timber.ReleaseTree
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -23,7 +24,12 @@ class ThreeDaysApplication : Application() {
     }
 
     private fun initTimber() {
-        Timber.plant(Timber.DebugTree())
+        if(BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+        else {
+            Timber.plant(ReleaseTree())
+        }
     }
 
     private fun initKakaoSdk() {

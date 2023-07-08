@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.di
 
 import android.content.Context
+import com.depromeet.threedays.buildproperty.BuildConfig
 import com.depromeet.threedays.buildproperty.BuildProperty
 import com.depromeet.threedays.buildproperty.BuildPropertyRepository
 import com.depromeet.threedays.data.api.*
@@ -96,8 +97,8 @@ class NetworkModule {
             .readTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
-        val clientWithAuthInterceptor = client
-            .addInterceptor(
+        val clientWithAuthInterceptor = client.apply {
+            addInterceptor(
                 interceptor = AuthInterceptor(
                     context = context,
                     client = client.build(),
@@ -106,7 +107,10 @@ class NetworkModule {
                     buildPropertyRepository = buildPropertyRepository,
                 ),
             )
-            .addInterceptor(getLoggingInterceptor())
+            if(BuildConfig.DEBUG) {
+                addInterceptor(getLoggingInterceptor())
+            }
+        }
         return clientWithAuthInterceptor.build()
     }
 
