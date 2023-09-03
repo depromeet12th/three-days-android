@@ -90,7 +90,7 @@ class HomeViewModel @Inject constructor(
                         }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -104,7 +104,7 @@ class HomeViewModel @Inject constructor(
                     checkNewClap(habitUI)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -120,7 +120,7 @@ class HomeViewModel @Inject constructor(
                     fetchHabits()
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -187,7 +187,7 @@ class HomeViewModel @Inject constructor(
                     fetchHabits()
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

@@ -14,14 +14,25 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.depromeet.threedays.core.BaseFragment
-import com.depromeet.threedays.core.analytics.*
+import com.depromeet.threedays.core.analytics.AnalyticsUtil
+import com.depromeet.threedays.core.analytics.ButtonType
+import com.depromeet.threedays.core.analytics.MixPanelEvent
+import com.depromeet.threedays.core.analytics.Screen
+import com.depromeet.threedays.core.analytics.ThreeDaysEvent
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.extensions.gone
 import com.depromeet.threedays.core.extensions.visible
-import com.depromeet.threedays.core.util.*
+import com.depromeet.threedays.core.util.DialogInfo
+import com.depromeet.threedays.core.util.OneButtonDialogInfo
+import com.depromeet.threedays.core.util.ThreeDaysDialogFragment
+import com.depromeet.threedays.core.util.ThreeDaysNoButtonDialogFragment
+import com.depromeet.threedays.core.util.ThreeDaysOneButtonDialogFragment
+import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
 import com.depromeet.threedays.domain.entity.mate.MateType
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.util.GetStringFromDateTime
 import com.depromeet.threedays.mate.MateImageResourceResolver.Companion.levelToResourceFunction
 import com.depromeet.threedays.mate.create.step1.ConnectHabitActivity
@@ -34,6 +45,7 @@ import com.depromeet.threedays.navigator.ConnectHabitNavigator
 import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -42,7 +54,7 @@ import javax.inject.Inject
 import com.depromeet.threedays.core_design_system.R as core_design
 
 @AndroidEntryPoint
-class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
+class MateFragment : BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fragment_mate) {
     override val viewModel by viewModels<MateViewModel>()
     lateinit var clapAdapter: ClapAdapter
     lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -145,7 +157,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
         binding.ivDelete.setOnSingleClickListener {
             // TODO: move to strings.xml and viewModel
             ThreeDaysDialogFragment.newInstance(
-                data = DialogInfo.EMPTY.copy (
+                data = DialogInfo.EMPTY.copy(
                     title = "정말 삭제하시겠어요?",
                     description = "지금까지의 짝꿍과 함께한 기록이\n전부 사라져요.",
                     cancelText = "아니요",
@@ -170,7 +182,10 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     onPositiveAction = { startActivity(archivedHabitNavigator.intent(requireContext())) },
                     iconResId = com.depromeet.threedays.core_design_system.R.drawable.ic_star_check,
                     title = getString(R.string.max_level_dialog_title),
-                    description = getString(R.string.max_level_dialog_description, viewModel.uiState.value.mate?.level ?: 0),
+                    description = getString(
+                        R.string.max_level_dialog_description,
+                        viewModel.uiState.value.mate?.level ?: 0
+                    ),
                     confirmText = getString(R.string.going_to_see),
                     buttonTopMargin = 30f
                 )
@@ -181,18 +196,21 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
+
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED-> {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
                         binding.ivArrow.setImageResource(core_design.drawable.ic_arrow_up)
                         binding.viewBg.gone()
                     }
-                    BottomSheetBehavior.STATE_DRAGGING-> {
-                        if(!binding.viewBg.isVisible) {
+
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        if (!binding.viewBg.isVisible) {
                             binding.viewBg.visible()
                         }
                     }
-                    BottomSheetBehavior.STATE_EXPANDED-> {
+
+                    BottomSheetBehavior.STATE_EXPANDED -> {
                         AnalyticsUtil.event(
                             name = ThreeDaysEvent.MateClapOpenClicked.toString(),
                             properties = mapOf(
@@ -202,20 +220,22 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                         )
                         binding.ivArrow.setImageResource(core_design.drawable.ic_arrow_down)
                     }
-                    BottomSheetBehavior.STATE_HIDDEN-> {
+
+                    BottomSheetBehavior.STATE_HIDDEN -> {
 
                     }
-                    BottomSheetBehavior.STATE_SETTLING-> {
+
+                    BottomSheetBehavior.STATE_SETTLING -> {
 
                     }
                 }
             }
         })
         binding.ivArrow.setOnSingleClickListener {
-            if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
                 binding.viewBg.visible()
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            } else if(behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            } else if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
                 binding.viewBg.gone()
                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
@@ -224,7 +244,12 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(requireContext(), error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         lifecycleScope.launch {
@@ -232,15 +257,14 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                 launch {
                     viewModel.uiState.collect {
                         if (it.isMateInitialized && it.isHabitListInitialized) {
-                            if( (it.hasMate && it.isHabitInitialized) || !it.hasMate) {
+                            if ((it.hasMate && it.isHabitInitialized) || !it.hasMate) {
                                 binding.progressMate.gone()
                                 showMateOrDefaultView(
                                     hasMate = it.hasMate,
                                     backgroundResColor = it.backgroundResColor
                                 )
                             }
-                        }
-                        else {
+                        } else {
                             binding.groupHasMate.gone()
                             binding.groupNoHabit.gone()
                             binding.groupSpeechBubble.gone()
@@ -257,7 +281,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
                 launch {
                     viewModel.uiEffect.collect {
-                        when(it) {
+                        when (it) {
                             is UiEffect.ShowToastMessage -> showDeleteSuccessMessage(it.resId)
                             is UiEffect.ShowAchieveMaxLevel -> showAchieveMaxLevel(it.mateLevel)
                             UiEffect.ShowMateOnboarding -> showMateOnboarding()
@@ -276,10 +300,12 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
         val window = requireActivity().window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        if(hasMate) {
-            window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
+        if (hasMate) {
+            window.statusBarColor =
+                ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
         } else {
-            window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.white)
+            window.statusBarColor =
+                ContextCompat.getColor(requireActivity(), core_design.color.white)
         }
     }
 
@@ -288,7 +314,10 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvSpeechBubble.text = it.bubble
             binding.tvLevel.text = getString(R.string.level, it.level)
             binding.tvMateNickname.text = it.title
-            binding.tvStartDate.text = getString(R.string.start_date_with_mate, it.createAt.toString().substring(0, 10).replace("-", "."))
+            binding.tvStartDate.text = getString(
+                R.string.start_date_with_mate,
+                it.createAt.toString().substring(0, 10).replace("-", ".")
+            )
             binding.ivIllustration.setImageResource(it.resolveMateImageResource())
 
             val clapCount = it.reward ?: 0
@@ -297,7 +326,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvMaxLevel.text = "${maxLevel}개"
 
             val isMaxLevel = (mateUI.levelUpSectioin?.last() ?: 22) == mateUI.reward
-            if(isMaxLevel) {
+            if (isMaxLevel) {
                 AnalyticsUtil.event(
                     name = ThreeDaysEvent.MateCompletedViewed.toString(),
                     properties = mapOf(
@@ -305,13 +334,14 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
                     )
                 )
 
-                binding.tvNextLevelGuide.text = if(mateUI.characterType == MateType.CARROT) {
+                binding.tvNextLevelGuide.text = if (mateUI.characterType == MateType.CARROT) {
                     getString(R.string.max_level_carrot_mate_guide)
                 } else {
                     getString(R.string.max_level_whip_mate_guide)
                 }
             } else {
-                binding.tvNextLevelGuide.text = getString(R.string.next_level_guide, (maxLevel - clapCount) )
+                binding.tvNextLevelGuide.text =
+                    getString(R.string.next_level_guide, (maxLevel - clapCount))
             }
 
             binding.groupAchieveMaxLevel.isVisible = isMaxLevel
@@ -323,7 +353,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             binding.tvHabitEmoji.text = habit.emoji.value
             binding.tvHabitTitle.text = habit.title
             binding.tvLevel.setBackgroundResource(
-                when(habit.color) {
+                when (habit.color) {
                     Color.GREEN -> core_design.drawable.bg_rect_green50_r10
                     Color.PINK -> core_design.drawable.bg_rect_pink50_r10
                     Color.BLUE -> core_design.drawable.bg_rect_blue50_r10
@@ -337,7 +367,10 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
             viewModel.writeIsFirstVisitor()
             startActivity(Intent(requireActivity(), ConnectHabitActivity::class.java))
         }
-        modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+        modal.setStyle(
+            DialogFragment.STYLE_NORMAL,
+            core_design.style.RoundCornerBottomSheetDialogTheme
+        )
         modal.show(parentFragmentManager, OnBoardingBottomSheet.TAG)
     }
 
@@ -368,6 +401,7 @@ class MateFragment: BaseFragment<FragmentMateBinding, MateViewModel>(R.layout.fr
 
         val window = requireActivity().window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
+        window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), core_design.color.gray_background)
     }
 }

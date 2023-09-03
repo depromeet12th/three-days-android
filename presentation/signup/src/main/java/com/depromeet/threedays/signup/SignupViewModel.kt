@@ -37,12 +37,14 @@ class SignupViewModel @Inject constructor(
                     Timber.i("--- SignupViewModel - token : ${value.token}")
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    throwable.defaultMessage = ThreeDaysException.LOGIN_FAIL
+                    sendError(throwable)
                     Timber.e("--- SignupViewModel - Signup error: ${throwable.message}")
                 }
             }.onFailure { throwable ->
                 throwable as ThreeDaysException
-                sendErrorMessage(throwable.message)
+                throwable.defaultMessage = ThreeDaysException.LOGIN_FAIL
+                sendError(throwable)
                 Timber.e("--- SignupViewModel - Signup error: ${throwable.message}")
             }
         }

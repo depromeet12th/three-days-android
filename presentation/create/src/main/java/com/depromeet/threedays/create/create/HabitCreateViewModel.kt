@@ -135,7 +135,7 @@ class HabitCreateViewModel @Inject constructor(
                     _action.emit(Action.SaveClick)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
         }
     }

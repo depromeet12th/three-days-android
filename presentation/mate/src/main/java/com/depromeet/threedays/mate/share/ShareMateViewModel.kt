@@ -5,6 +5,7 @@ import com.depromeet.threedays.core.BaseViewModel
 import com.depromeet.threedays.core_design_system.R
 import com.depromeet.threedays.domain.entity.Color
 import com.depromeet.threedays.domain.entity.habit.SingleHabit
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,8 @@ class ShareMateViewModel @Inject constructor(
                             )
                         }
                     }.onFailure { throwable ->
-                        sendErrorMessage(throwable.message)
+                        throwable as ThreeDaysException
+                        sendError(throwable)
                     }
             }
         }

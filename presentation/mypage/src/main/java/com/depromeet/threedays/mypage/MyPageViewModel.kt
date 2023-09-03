@@ -47,8 +47,7 @@ class MyPageViewModel @Inject constructor(
                     _nickname.value = it.name
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -64,8 +63,7 @@ class MyPageViewModel @Inject constructor(
                     _nickname.value = it.name
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -80,8 +78,10 @@ class MyPageViewModel @Inject constructor(
                 logoutUseCase()
             }.onSuccess {
                 _logoutSucceed.emit(true)
-            }.onFailure {
-                sendErrorMessage(it.message ?: "로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
+            }.onFailure { throwable ->
+                throwable as ThreeDaysException
+                throwable.defaultMessage = ThreeDaysException.LOGOUT_FAIL
+                sendError(throwable)
             }
         }
     }
@@ -95,8 +95,10 @@ class MyPageViewModel @Inject constructor(
                 withdrawUseCase()
             }.onSuccess {
                 _signoutSucceed.emit(true)
-            }.onFailure {
-                sendErrorMessage(it.message ?: "회원탈퇴를 실패했습니다. 잠시 후 다시 시도해주세요.")
+            }.onFailure { throwable ->
+                throwable as ThreeDaysException
+                throwable.defaultMessage = ThreeDaysException.MEMBERSHIP_WITHDRAWAL_FAIL
+                sendError(throwable)
             }
         }
     }

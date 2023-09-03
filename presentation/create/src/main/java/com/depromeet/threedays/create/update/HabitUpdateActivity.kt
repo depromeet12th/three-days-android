@@ -19,9 +19,11 @@ import com.depromeet.threedays.create.databinding.ActivityHabitUpdateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import com.depromeet.threedays.create.update.HabitUpdateViewModel.Action
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.DayOfWeek
@@ -156,21 +158,27 @@ class HabitUpdateActivity :
                         DayOfWeek.MONDAY -> {
                             binding.cbMonday.isChecked = true
                         }
+
                         DayOfWeek.TUESDAY -> {
                             binding.cbTuesday.isChecked = true
                         }
+
                         DayOfWeek.WEDNESDAY -> {
                             binding.cbWednesday.isChecked = true
                         }
+
                         DayOfWeek.THURSDAY -> {
                             binding.cbThursday.isChecked = true
                         }
+
                         DayOfWeek.FRIDAY -> {
                             binding.cbFriday.isChecked = true
                         }
+
                         DayOfWeek.SATURDAY -> {
                             binding.cbSaturday.isChecked = true
                         }
+
                         DayOfWeek.SUNDAY -> {
                             binding.cbSunday.isChecked = true
                         }
@@ -203,6 +211,7 @@ class HabitUpdateActivity :
                         setResult(RESULT_UPDATE)
                         finish()
                     }
+
                     is Action.NotificationTimeClick -> {
                         showTimePicker(action.currentTime)
                     }
@@ -210,7 +219,12 @@ class HabitUpdateActivity :
             }.launchIn(lifecycleScope)
 
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
     }
 

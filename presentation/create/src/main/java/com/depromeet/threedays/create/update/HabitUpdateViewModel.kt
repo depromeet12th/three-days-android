@@ -87,7 +87,7 @@ class HabitUpdateViewModel @Inject constructor(
                     setOldData(habit)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
         }
    }
@@ -194,7 +194,7 @@ class HabitUpdateViewModel @Inject constructor(
                     _action.emit(Action.UpdateClick)
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
         }
     }

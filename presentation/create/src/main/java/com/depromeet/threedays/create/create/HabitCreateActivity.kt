@@ -20,8 +20,10 @@ import com.depromeet.threedays.create.create.HabitCreateViewModel.Action
 import com.depromeet.threedays.create.databinding.ActivityHabitCreateBinding
 import com.depromeet.threedays.create.emoji.EmojiBottomSheetDialogFragment
 import com.depromeet.threedays.domain.entity.Color
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.DayOfWeek
@@ -133,9 +135,9 @@ class HabitCreateActivity :
             viewModel.onCreateHabitClick()
         }
 
-        binding.groupColor.setOnCheckedChangeListener { _ , id ->
+        binding.groupColor.setOnCheckedChangeListener { _, id ->
             viewModel.setColor(
-                when(id) {
+                when (id) {
                     R.id.rb_green -> Color.GREEN
                     R.id.rb_blue -> Color.BLUE
                     R.id.rb_pink -> Color.PINK
@@ -155,18 +157,19 @@ class HabitCreateActivity :
     }
 
     private fun observe() {
-       viewModel.isSaveHabitEnable
-           .onEach {
-               binding.tvHabitCreate.isEnabled = it
-           }.launchIn(lifecycleScope)
+        viewModel.isSaveHabitEnable
+            .onEach {
+                binding.tvHabitCreate.isEnabled = it
+            }.launchIn(lifecycleScope)
 
         viewModel.action
             .onEach { action ->
-                when(action) {
+                when (action) {
                     is Action.SaveClick -> {
                         setResult(RESULT_CREATE)
                         finish()
                     }
+
                     is Action.NotificationTimeClick -> {
                         showTimePicker(action.currentTime)
                     }
@@ -174,7 +177,12 @@ class HabitCreateActivity :
             }.launchIn(lifecycleScope)
 
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
     }
 
@@ -189,7 +197,7 @@ class HabitCreateActivity :
     }
 
     fun setBackBtnClickEvent() {
-        if(viewModel.isInformationEntered.value) {
+        if (viewModel.isInformationEntered.value) {
             ThreeDaysDialogFragment.newInstance(
                 data = DialogInfo.EMPTY.copy(
                     onPositiveAction = { finish() },
@@ -199,8 +207,7 @@ class HabitCreateActivity :
                     confirmText = getString(com.depromeet.threedays.core.R.string.reply_go_out)
                 )
             ).show(supportFragmentManager, ThreeDaysDialogFragment.TAG)
-        }
-        else {
+        } else {
             finish()
         }
     }

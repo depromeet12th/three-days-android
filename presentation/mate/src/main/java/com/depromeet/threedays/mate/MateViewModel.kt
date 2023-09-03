@@ -95,8 +95,7 @@ class MateViewModel @Inject constructor(
                       }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
 
@@ -117,7 +116,7 @@ class MateViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
 
@@ -138,7 +137,7 @@ class MateViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
 
             _uiState.update { it.copy(isHabitInitialized = true) }
@@ -181,7 +180,7 @@ class MateViewModel @Inject constructor(
 //                            value = UiEffect.ShowToastMessage(R.string.delete_mate)
 //                        )
                         throwable as ThreeDaysException
-                        sendErrorMessage(throwable.message)
+                        sendError(throwable)
                     }
                 }
             }

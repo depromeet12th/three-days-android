@@ -61,7 +61,7 @@ class HistoryViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -91,7 +91,7 @@ class HistoryViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

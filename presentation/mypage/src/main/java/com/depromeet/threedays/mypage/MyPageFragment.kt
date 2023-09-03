@@ -3,9 +3,12 @@ package com.depromeet.threedays.mypage
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.key.WEB_VIEW_URL
 import com.depromeet.threedays.mypage.databinding.FragmentMyPageBinding
 import com.depromeet.threedays.mypage.nickname.EditNicknameDialogFragment
@@ -14,6 +17,7 @@ import com.depromeet.threedays.navigator.LicenseNavigator
 import com.depromeet.threedays.navigator.PolicyNavigator
 import com.depromeet.threedays.navigator.SignupNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -26,10 +30,13 @@ class MyPageFragment :
 
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
+
     @Inject
     lateinit var policyNavigator: PolicyNavigator
+
     @Inject
     lateinit var licenseNavigator: LicenseNavigator
+
     @Inject
     lateinit var signupNavigator: SignupNavigator
 
@@ -51,7 +58,7 @@ class MyPageFragment :
         } else {
             "com.depromeet.threedays"
         }
-        val versionName = view.context.packageManager.getPackageInfo(packageName, 0,).versionName
+        val versionName = view.context.packageManager.getPackageInfo(packageName, 0).versionName
         binding.tvAppVersionName.text = versionName
     }
 
@@ -87,7 +94,12 @@ class MyPageFragment :
      */
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(requireContext(), error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         lifecycleScope.launch {
@@ -148,7 +160,10 @@ class MyPageFragment :
     private fun onServicePolicyButtonClicked() {
         val intent = policyNavigator.intent(requireContext())
         // FIXME: debug, release 빌드 환경 따라 url 변경
-        intent.putExtra(WEB_VIEW_URL, "https://zzaksim.notion.site/78e26f25307e4fcb9c6bc453e341e834")
+        intent.putExtra(
+            WEB_VIEW_URL,
+            "https://zzaksim.notion.site/78e26f25307e4fcb9c6bc453e341e834"
+        )
         startActivity(intent)
     }
 
@@ -158,7 +173,10 @@ class MyPageFragment :
     private fun onPrivacyPolicyButtonClicked() {
         val intent = policyNavigator.intent(requireContext())
         // FIXME: debug, release 빌드 환경 따라 url 변경
-        intent.putExtra(WEB_VIEW_URL, "https://zzaksim.notion.site/a1e85e0b71ae42a4a970770f5b6cc885")
+        intent.putExtra(
+            WEB_VIEW_URL,
+            "https://zzaksim.notion.site/a1e85e0b71ae42a4a970770f5b6cc885"
+        )
         startActivity(intent)
     }
 

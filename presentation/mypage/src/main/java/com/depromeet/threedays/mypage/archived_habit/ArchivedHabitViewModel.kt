@@ -50,8 +50,7 @@ class ArchivedHabitViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

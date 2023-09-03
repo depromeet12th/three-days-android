@@ -42,7 +42,7 @@ class DetailHistoryViewModel @Inject constructor(
                     )
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
         }
     }
@@ -70,7 +70,7 @@ class DetailHistoryViewModel @Inject constructor(
                 )
             }.onFailure { throwable ->
                 throwable as ThreeDaysException
-                sendErrorMessage(throwable.message)
+                sendError(throwable)
             }
         }
     }

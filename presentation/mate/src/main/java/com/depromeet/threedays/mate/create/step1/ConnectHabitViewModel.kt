@@ -39,8 +39,7 @@ class ConnectHabitViewModel @Inject constructor(
                     _habits.value = it.map { habit -> habit.toHabitUI() }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

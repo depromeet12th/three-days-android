@@ -15,16 +15,19 @@ import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
 import com.depromeet.threedays.core.util.setOnSingleClickListener
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step2.ChooseMateTypeActivity
 import com.depromeet.threedays.mate.databinding.ActivityConnectHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.activity_connect_habit) {
+class ConnectHabitActivity :
+    BaseActivity<ActivityConnectHabitBinding>(R.layout.activity_connect_habit) {
     private val viewModel by viewModels<ConnectHabitViewModel>()
     lateinit var connectHabitAdatper: ConnectHabitAdapter
 
@@ -98,8 +101,14 @@ class ConnectHabitActivity : BaseActivity<ActivityConnectHabitBinding>(R.layout.
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
+
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
