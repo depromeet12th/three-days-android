@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":core-design-system"))
     implementation(project(":build-property"))
+    implementation(project(":domain"))
 
     implementation(jetpackDeps)
     implementation(coroutines)
@@ -54,6 +55,8 @@ dependencies {
     implementation deps.timber
 
     implementation deps.mixpanel
+
+    implementation deps.sentry
 
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)

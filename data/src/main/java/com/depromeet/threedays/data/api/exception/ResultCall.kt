@@ -18,7 +18,7 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit) :
                     if(response.body() == null) {
                         callback.onResponse(
                             this@ResultCall,
-                            Response.success(Result.failure(ThreeDaysException("body가 비었습니다.", HttpException(response))))
+                            Response.success(Result.failure(ThreeDaysException(ThreeDaysException.NO_BODY_RESPONSE, HttpException(response))))
                         )
                     }
                     else {
@@ -32,7 +32,7 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit) :
 
                     if(response.errorBody() == null) {
                         callback.onResponse( this@ResultCall,
-                            Response.success(Result.failure(ThreeDaysException("errorBody가 비었습니다.", HttpException(response))))
+                            Response.success(Result.failure(ThreeDaysException(ThreeDaysException.NO_ERROR_BODY_RESPONSE, HttpException(response))))
                         )
                     }
                     else {
@@ -41,7 +41,7 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit) :
                             ErrorResponse::class.java.annotations
                         ).convert(response.errorBody()!!)
 
-                        val message: String = errorBody?.message ?: "errorBody가 비었습니다"
+                        val message: String = errorBody?.message ?: ThreeDaysException.NO_ERROR_MESSAGE_RESPONSE
 
                         callback.onResponse(this@ResultCall,
                             Response.success(Result.failure(ThreeDaysException(message, HttpException(response))))
@@ -55,8 +55,8 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit) :
 
             override fun onFailure(call: Call<T>, t: Throwable) {
                 val message = when (t) {
-                    is IOException -> "인터넷 연결이 끊겼습니다."
-                    is HttpException -> "알 수 없는 오류가 발생했어요."
+                    is IOException -> ThreeDaysException.INTERNET_CONNECTION_WAS_LOST
+                    is HttpException -> ThreeDaysException.UNKNOWN_EXCEPTION
                     else -> t.localizedMessage
                 }
                 callback.onResponse(
