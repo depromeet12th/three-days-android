@@ -41,20 +41,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
-                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key')
+                    KAKAO_APP_KEY: properties.getProperty('release.kakao.app-key'),
+                    SENTRY_DSN: properties.getProperty('release.sentry.dsn')
             ]
             buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('release.three-days.base-url')}\""
             buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('release.kakao.app-key')}\""
             buildConfigField 'String', 'MIXPANEL_PROJECT_TOKEN', "\"${properties.getProperty('release.mixpanel.project-token')}\""
+            buildConfigField 'String', 'SENTRY_DSN', "\"${properties.getProperty('release.sentry.dsn')}\""
         }
         debug {
             applicationIdSuffix '.debug'
             manifestPlaceholders = [
-                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key')
+                    KAKAO_APP_KEY: properties.getProperty('debug.kakao.app-key'),
+                    SENTRY_DSN: properties.getProperty('debug.sentry.dsn')
             ]
             buildConfigField 'String', 'BASE_URL', "\"${properties.getProperty('debug.three-days.base-url')}\""
             buildConfigField 'String', 'KAKAO_APP_KEY', "\"${properties.getProperty('debug.kakao.app-key')}\""
             buildConfigField 'String', 'MIXPANEL_PROJECT_TOKEN', "\"${properties.getProperty('debug.mixpanel.project-token')}\""
+            buildConfigField 'String', 'SENTRY_DSN', "\"${properties.getProperty('debug.sentry.dsn')}\""
         }
         alpha {
             initWith debug
