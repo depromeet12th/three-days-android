@@ -55,6 +55,8 @@ dependencies {
 
     implementation deps.login.kakao
 
+    implementation deps.sentry
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

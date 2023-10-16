@@ -1,5 +1,7 @@
 package com.depromeet.threedays.data.entity.base
 
+import com.depromeet.threedays.domain.exception.ThreeDaysException
+
 data class ApiResponse<T>(
     val data: T?,
     val message: String,
@@ -13,5 +15,5 @@ fun <T>Result<ApiResponse<T>>.getResult(): Result<T>? {
     }.onFailure { throwable ->
         return Result.failure(throwable)
     }
-    return Result.failure(IllegalStateException("알 수 없는 오류가 발생했습니다."))
+    return Result.failure(IllegalStateException(ThreeDaysException.UNKNOWN_EXCEPTION))
 }

@@ -17,19 +17,22 @@ import com.depromeet.threedays.core.extensions.visible
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
 import com.depromeet.threedays.create.create.HabitCreateActivity
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.util.EmojiUtil
 import com.depromeet.threedays.history.databinding.FragmentHistoryBinding
 import com.depromeet.threedays.history.detail.DetailHistoryActivity
 import com.depromeet.threedays.history.model.HabitUI
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import com.depromeet.threedays.core_design_system.R as core_design
 
 @AndroidEntryPoint
-class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.layout.fragment_history) {
+class HistoryFragment :
+    BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.layout.fragment_history) {
     override val viewModel by viewModels<HistoryViewModel>()
     lateinit var habitAdapter: HabitAdapter
 
@@ -49,7 +52,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     }
 
     private fun initView() {
-        habitAdapter = HabitAdapter (
+        habitAdapter = HabitAdapter(
             onHabitClick = {
                 val intent = Intent(requireActivity(), DetailHistoryActivity::class.java)
                 intent.putExtra(HABIT_ID, it)
@@ -59,8 +62,13 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.rvHabit.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = habitAdapter
-            addItemDecoration(object : RecyclerView.ItemDecoration(){
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
                     outRect.bottom = 20
                 }
             })
@@ -93,7 +101,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.groupNoHabit.isVisible = habits.isEmpty()
         binding.ncvHasHabit.isVisible = habits.isNotEmpty()
 
-        if(habits.isEmpty()) {
+        if (habits.isEmpty()) {
             binding.groupToolbar.visibility = View.INVISIBLE
             binding.tvTooltip.isVisible = false
         } else {
@@ -112,7 +120,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         binding.tvThisMonthAchieveDays.text = achievementCount
         binding.clMostAchieve.setBackgroundResource(cardBackgroundResId)
 
-        if(emoji.isEmpty()) {
+        if (emoji.isEmpty()) {
             binding.tvMostAchieveHabitIcon.text = EmojiUtil.getEmojiString(EmojiUtil.Word.QUESTION)
             binding.tvMostAchieveHabitTitle.text = getString(R.string.no_achievement_habit_guide)
         } else {
@@ -124,7 +132,8 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
     private fun setMonth(month: String) {
         binding.tvThisMonth.text = getString(R.string.this_month_history_title, month)
         binding.tvThisMonthClapTitle.text = getString(R.string.this_month_clap_title, month)
-        binding.tvThisMonthAchieveDaysTitle.text = getString(R.string.this_month_achieve_days_title, month)
+        binding.tvThisMonthAchieveDaysTitle.text =
+            getString(R.string.this_month_achieve_days_title, month)
     }
 
     private fun setPreviousNextButtonState(
@@ -132,7 +141,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         nextMonthClickable: Boolean,
     ) {
         binding.ivPrevMonth.setImageResource(
-            if(previousMonthClickable) {
+            if (previousMonthClickable) {
                 core_design.drawable.ic_left_arrow_default
             } else {
                 core_design.drawable.ic_left_arrow_disable
@@ -140,7 +149,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
         )
 
         binding.ivNextMonth.setImageResource(
-            if(nextMonthClickable) {
+            if (nextMonthClickable) {
                 core_design.drawable.ic_right_arrow_default
             } else {
                 core_design.drawable.ic_right_arrow_disable
@@ -150,7 +159,12 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(requireContext(), error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         lifecycleScope.launch {
@@ -160,8 +174,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, HistoryViewModel>(R.
                         if (it.isHabitInitialized && it.isRecordInitialized) {
                             binding.progressHistory.gone()
                             fetchHabits(it.habits)
-                        }
-                        else {
+                        } else {
                             binding.ncvHasHabit.gone()
                             binding.groupToolbar.gone()
                             binding.progressHistory.visible()

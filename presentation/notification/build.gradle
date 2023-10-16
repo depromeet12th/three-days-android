@@ -50,6 +50,8 @@ dependencies {
     implementation deps.hilt.core
     kapt deps.hilt.compiler
 
+    implementation deps.sentry
+
     testImplementation(testDeps)
     androidTestImplementation(androidTestDeps)
 }

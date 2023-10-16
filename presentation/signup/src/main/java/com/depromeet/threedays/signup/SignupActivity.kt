@@ -8,6 +8,7 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.navigator.HomeNavigator
 import com.depromeet.threedays.signup.SignupViewModel.Action
 import com.depromeet.threedays.signup.complete.SignupCompleteActivity
@@ -17,6 +18,7 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -24,7 +26,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
+class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
     private val viewModel by viewModels<SignupViewModel>()
 
     @Inject
@@ -38,7 +40,6 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
                 MixPanelEvent.ScreenName to getScreenName(this)
             )
         )
-
         startKakaoLogin()
         observe()
     }
@@ -67,6 +68,7 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
                         Timber.d("사용자가 명시적으로 카카오 로그인 취소")
                     } else {
                         ThreeDaysToast().error(this@SignupActivity, "로그인에 실패했어요.")
+                        Sentry.captureException(throwable)
                         Timber.e(throwable, "로그인 실패 : ${throwable.message}")
                     }
                 }
@@ -76,10 +78,11 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
 
     private fun observe() {
         viewModel.action.onEach { action ->
-            val intent = when(action) {
+            val intent = when (action) {
                 Action.AlreadySignedUp -> {
                     homeNavigator.intent(this)
                 }
+
                 Action.FirstSignup -> {
                     Intent(this@SignupActivity, SignupCompleteActivity::class.java)
                 }
@@ -89,7 +92,12 @@ class SignupActivity: BaseActivity<ActivitySignupBinding>(R.layout.activity_sign
         }.launchIn(lifecycleScope)
 
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
     }
 }

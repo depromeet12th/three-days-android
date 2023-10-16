@@ -21,10 +21,12 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.toMateUI
 import com.depromeet.threedays.mate.databinding.ActivityShareMateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -83,7 +85,12 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
 
         lifecycleScope.launch {
@@ -121,7 +128,7 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
 
         var fos: OutputStream? = null
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             this.contentResolver?.also { resolver ->
 
                 val contentValues = ContentValues().apply {
@@ -130,11 +137,13 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
 
-                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                val imageUri: Uri? =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 fos = imageUri?.let { resolver.openOutputStream(it) }
             }
         } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             val image = File(imagesDir, "$title.png")
             fos = FileOutputStream(image)
         }
@@ -176,9 +185,18 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
         val backgroundWidth = resources.displayMetrics.widthPixels
         val backgroundHeight = resources.displayMetrics.heightPixels
 
-        val backgroundBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888) // 비트맵 생성
+        val backgroundBitmap = Bitmap.createBitmap(
+            backgroundWidth,
+            backgroundHeight,
+            Bitmap.Config.ARGB_8888
+        ) // 비트맵 생성
         val canvas = Canvas(backgroundBitmap) // 캔버스에 비트맵을 Mapping.
-        canvas.drawColor(ContextCompat.getColor(this, com.depromeet.threedays.core_design_system.R.color.black)) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
+        canvas.drawColor(
+            ContextCompat.getColor(
+                this,
+                com.depromeet.threedays.core_design_system.R.color.black
+            )
+        ) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
 
         return backgroundBitmap
     }
@@ -194,7 +212,8 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
-        val imageViewBitmap = Bitmap.createBitmap(imageView.width, imageView.height, Bitmap.Config.ARGB_8888)
+        val imageViewBitmap =
+            Bitmap.createBitmap(imageView.width, imageView.height, Bitmap.Config.ARGB_8888)
         val imageViewCanvas = Canvas(imageViewBitmap)
         imageView.draw(imageViewCanvas)
 
@@ -219,14 +238,15 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
         }
 
         // 이미지를 저장할 uri를 미리 설정해놓는다.
-        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        val uri =
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
         try {
-            if(uri != null) {
+            if (uri != null) {
                 val image = contentResolver.openFileDescriptor(uri, "w", null)
                 // write 모드로 file을 open한다.
 
-                if(image != null) {
+                if (image != null) {
                     val fos = FileOutputStream(image.fileDescriptor)
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
                     //비트맵을 FileOutputStream를 통해 compress한다.
@@ -237,7 +257,7 @@ class ShareMateActivity : BaseActivity<ActivityShareMateBinding>(R.layout.activi
                     contentResolver.update(uri, contentValues, null, null)
                 }
             }
-        } catch(e: FileNotFoundException) {
+        } catch (e: FileNotFoundException) {
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()

@@ -16,17 +16,20 @@ import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.setOnSingleClickListener
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.mate.R
 import com.depromeet.threedays.mate.create.step1.model.HabitUI
 import com.depromeet.threedays.mate.databinding.ActivitySetMateNicknameBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 @AndroidEntryPoint
-class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.layout.activity_set_mate_nickname) {
+class SetMateNicknameActivity :
+    BaseActivity<ActivitySetMateNicknameBinding>(R.layout.activity_set_mate_nickname) {
     private val viewModel by viewModels<SetMateNicknameViewMoodel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,7 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
             )
         )
 
-        if(intent.hasExtra("clickedHabit")) {
+        if (intent.hasExtra("clickedHabit")) {
             val clickedHabit = intent.getParcelableExtra<HabitUI>("clickedHabit")
             val mateType = intent.getStringExtra("mateType")
             viewModel.setClickHabit(clickedHabit!!, mateType!!)
@@ -100,8 +103,14 @@ class SetMateNicknameActivity : BaseActivity<ActivitySetMateNicknameBinding>(R.l
 
     private fun setUiStateObserver() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
+
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {

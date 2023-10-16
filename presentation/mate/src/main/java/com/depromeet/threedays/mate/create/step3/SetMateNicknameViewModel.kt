@@ -90,8 +90,7 @@ class SetMateNicknameViewMoodel @Inject constructor(
                     // TODO
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

@@ -19,6 +19,7 @@ import com.depromeet.threedays.core.BaseFragment
 import com.depromeet.threedays.core.analytics.*
 import com.depromeet.threedays.core.extensions.Empty
 import com.depromeet.threedays.core.util.*
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.domain.key.HABIT_ID
 import com.depromeet.threedays.domain.key.RESULT_CREATE
 import com.depromeet.threedays.domain.key.RESULT_UPDATE
@@ -34,6 +35,7 @@ import com.depromeet.threedays.navigator.HabitCreateNavigator
 import com.depromeet.threedays.navigator.HabitUpdateNavigator
 import com.depromeet.threedays.navigator.NotificationNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -59,19 +61,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     @Inject
     lateinit var archivedHabitNavigator: ArchivedHabitNavigator
 
-    private val addResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val addResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
-        when(result.resultCode) {
-            RESULT_CREATE -> viewModel.fetchHabits()
-            RESULT_UPDATE -> {
-                viewModel.fetchHabits()
-                ThreeDaysToast().show(
-                    requireContext(),
-                    resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
-                )
+            when (result.resultCode) {
+                RESULT_CREATE -> viewModel.fetchHabits()
+                RESULT_UPDATE -> {
+                    viewModel.fetchHabits()
+                    ThreeDaysToast().show(
+                        requireContext(),
+                        resources.getString(com.depromeet.threedays.core.R.string.toast_habit_modify_complete)
+                    )
+                }
             }
         }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,7 +86,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun onCreateHabitClick() {
-        if(viewModel.habits.value.isEmpty()) {
+        if (viewModel.habits.value.isEmpty()) {
             AnalyticsUtil.event(
                 name = ThreeDaysEvent.NewHabitClicked.toString(),
                 properties = mapOf(
@@ -235,14 +238,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         val modal = NotiRecommendBottomSheet(
             onConfirmClick = { checkNotificationPermission() }
         )
-        modal.setStyle(DialogFragment.STYLE_NORMAL, core_design.style.RoundCornerBottomSheetDialogTheme)
+        modal.setStyle(
+            DialogFragment.STYLE_NORMAL,
+            core_design.style.RoundCornerBottomSheetDialogTheme
+        )
         modal.show(parentFragmentManager, NotiGuideBottomSheet.TAG)
     }
 
     private fun checkNotificationPermission() {
-        val isDeviceNotificationOn = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
-        if(!isDeviceNotificationOn) {
-            NotiGuideBottomSheet.newInstance (
+        val isDeviceNotificationOn =
+            NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+        if (!isDeviceNotificationOn) {
+            NotiGuideBottomSheet.newInstance(
                 moveToSettingForTurnOnPermission = { moveToSettingForTurnOnPermission() }
             ).show(parentFragmentManager, NotiGuideBottomSheet.TAG)
         }
@@ -250,7 +257,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(requireContext(), errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(requireContext(), error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         lifecycleScope.launch {
@@ -270,6 +282,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                 context = requireContext(),
                                 title = getString(it.resId),
                             )
+
                             is UiEffect.ShowDeleteHabitDialog -> showDeleteHabitDialog(
                                 onPositiveAction = {
                                     viewModel.onDeleteHabitClick(
@@ -284,6 +297,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                 confirmText = getString(it.confirmTextResId),
                                 buttonTopMargin = it.buttonTopMargin,
                             )
+
                             is UiEffect.ShowSnackBar -> showSnackBar(
                                 view = binding.clTopLayout,
                                 text = getString(it.textResId),
@@ -296,6 +310,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     )
                                 }
                             )
+
                             is UiEffect.ShowImageSnackBar -> showImageSnackBar(
                                 view = binding.clTopLayout,
                                 imageResId = it.imageResId,
@@ -306,9 +321,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                                     (requireActivity() as MainActivity).changeFragment(MateFragment())
                                 }
                             )
+
                             is UiEffect.ShowClapAnimation -> {
-                                (requireActivity() as MainActivity).startCongratulateThirdClapAnimation { viewModel.checkLevelUpHabit(it.habitId) }
+                                (requireActivity() as MainActivity).startCongratulateThirdClapAnimation {
+                                    viewModel.checkLevelUpHabit(
+                                        it.habitId
+                                    )
+                                }
                             }
+
                             UiEffect.ShowNotiRecommendBottomSheet -> showNotiRecommendBottomSheet()
                             UiEffect.ShowNotiGuideBottomSheet -> checkNotificationPermission()
                         }

@@ -26,19 +26,17 @@ class ThreeDaysToast {
 
     fun error(
         context: Context,
-        title: String?,
+        title: String,
         duration: Int = Toast.LENGTH_SHORT
     ) {
-        if(title != null) {
-            val inflater = LayoutInflater.from(context)
-            val toast = Toast(context)
-            val view = inflater.inflate(R.layout.error_toast_three_days, null)
-            val textView: TextView = view.findViewById(R.id.tv_toast)
-            textView.text = title
-            toast.setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)
-            toast.view = view
-            toast.duration = duration
-            toast.show()
-        }
+        val inflater = LayoutInflater.from(context)
+        val toast = Toast(context)
+        val view = inflater.inflate(R.layout.error_toast_three_days, null)
+        val textView: TextView = view.findViewById(R.id.tv_toast)
+        textView.text = title
+        toast.setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)
+        toast.view = view
+        toast.duration = duration
+        toast.show()
     }
 }

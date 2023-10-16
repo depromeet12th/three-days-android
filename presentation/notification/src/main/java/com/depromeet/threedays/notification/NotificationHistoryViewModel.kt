@@ -32,8 +32,7 @@ class NotificationHistoryViewModel @Inject constructor(
                     _notifications.value = notifications.map { NotificationHistoryUI.from(it) }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }
@@ -57,8 +56,7 @@ class NotificationHistoryViewModel @Inject constructor(
                     }
                 }.onFailure { throwable ->
                     throwable as ThreeDaysException
-
-                    sendErrorMessage(throwable.message)
+                    sendError(throwable)
                 }
             }
         }

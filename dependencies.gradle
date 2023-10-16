@@ -30,7 +30,8 @@ ext {
             "lottie"                : "5.2.0",
             "datastore"             : "1.0.0",
             "ossLicenses"           : "17.0.0",
-            "mixpanel"             : "7.+",
+            "mixpanel"              : "7.+",
+            "sentry"                : "6.28.0",
     ]
     deps = [
             "kotlin"          : [
@@ -113,6 +114,7 @@ ext {
             "splash"                       : "androidx.core:core-splashscreen:1.0.0",
             "ossLicenses"                  : "com.google.android.gms:play-services-oss-licenses:${versions.ossLicenses}",
             "mixpanel"                     : "com.mixpanel.android:mixpanel-android:${versions.mixpanel}",
+            "sentry"                       : "io.sentry:sentry-android:${versions.sentry}"
     ]
 
     coroutines = [

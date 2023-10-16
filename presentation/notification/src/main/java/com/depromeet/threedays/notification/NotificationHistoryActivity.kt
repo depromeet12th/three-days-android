@@ -9,15 +9,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.depromeet.threedays.core.BaseActivity
 import com.depromeet.threedays.core.util.ThreeDaysToast
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.notification.databinding.ActivityNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
+class NotificationHistoryActivity :
+    BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
     private val viewModel by viewModels<NotificationHistoryViewModel>()
     lateinit var notificationAdapter: NotificationHistoryAdapter
 
@@ -45,7 +48,12 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
 
         lifecycleScope.launch {
@@ -53,7 +61,8 @@ class NotificationHistoryActivity : BaseActivity<ActivityNotificationBinding>(R.
                 viewModel.apply {
                     notifications.collect {
                         notificationAdapter.submitList(it)
-                        binding.containerNotificationEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+                        binding.containerNotificationEmpty.visibility =
+                            if (it.isEmpty()) View.VISIBLE else View.GONE
                     }
                 }
             }

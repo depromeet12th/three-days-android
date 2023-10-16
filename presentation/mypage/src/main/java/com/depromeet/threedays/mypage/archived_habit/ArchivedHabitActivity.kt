@@ -16,9 +16,11 @@ import com.depromeet.threedays.core.util.OneButtonDialogInfo
 import com.depromeet.threedays.core.util.ThreeDaysOneButtonDialogFragment
 import com.depromeet.threedays.core.util.ThreeDaysToast
 import com.depromeet.threedays.core.util.dpToPx
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import com.depromeet.threedays.mypage.R
 import com.depromeet.threedays.mypage.databinding.ActivityArchivedHabitBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -59,7 +61,12 @@ class ArchivedHabitActivity :
 
     private fun setObserve() {
         viewModel.error
-            .onEach { errorMessage -> ThreeDaysToast().error(this, errorMessage) }
+            .onEach { error ->
+                ThreeDaysToast().error(this, error.message ?: error.defaultMessage)
+                if (error.message != ThreeDaysException.INTERNET_CONNECTION_WAS_LOST) {
+                    Sentry.captureException(error)
+                }
+            }
             .launchIn(lifecycleScope)
 
         lifecycleScope.launch {
@@ -92,7 +99,7 @@ class ArchivedHabitActivity :
                 }
                 launch {
                     viewModel.uiEffect.collect {
-                        when(it) {
+                        when (it) {
                             UiEffect.ShowSnackBar -> showSnackBar()
                         }
                     }

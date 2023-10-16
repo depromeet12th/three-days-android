@@ -2,6 +2,7 @@ package com.depromeet.threedays.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.depromeet.threedays.domain.exception.ThreeDaysException
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,8 +15,8 @@ abstract class BaseViewModel : ViewModel() {
     val loading: StateFlow<Boolean>
         get() = _loading
 
-    private val _error = MutableSharedFlow<String>()
-    val error: SharedFlow<String>
+    private val _error = MutableSharedFlow<ThreeDaysException>()
+    val error: SharedFlow<ThreeDaysException>
         get() = _error
 
     protected fun startLoading() {
@@ -26,13 +27,13 @@ abstract class BaseViewModel : ViewModel() {
         _loading.value = false
     }
 
-    protected fun sendErrorMessage(throwable: Throwable) {
-        sendErrorMessage(throwable.message)
-    }
+    protected fun sendError(throwable: ThreeDaysException) {
+        if (throwable.message.equals(ThreeDaysException.UNKNOWN_EXCEPTION)) {
+            throwable.message = throwable.defaultMessage
+        }
 
-    protected fun sendErrorMessage(message: String?) {
         viewModelScope.launch {
-            _error.emit(message ?: "알 수 없는 오류가 발생했어요.")
+            _error.emit(throwable)
         }
     }
 }
